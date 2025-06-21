@@ -1,0 +1,2022 @@
+<ui>
+  <controls>
+    <control id="welcome">
+      <layout>
+        <div class="welcomecontainer">
+          <!-- #welcomeintro is the first page shown, then it is hidden -->
+          <div id="welcomeintro">
+          </div>
+          <!-- #welcomemessage is first hidden, then it is shown upon getStarted() -->
+          <div id="welcomemessage">
+            <div class="horizontallogo"> </div>
+            <div class="activationtitle">Activation</div>
+            <div class="matteback">
+              <div class="welcomerowContainer">
+                <div class="welcomerow">
+                  ACTIVATE NOW<a id="leftbutton" class="button default startactivation" action="BrowseView.WelcomeControl.startActivation()" up="rightbutton" down="rightbutton" left="leftbutton" right="leftbutton"> Start Activation </a>
+                </div>
+                <div class="welcomerow">
+                  <span>Creating an account gives you immediate benefits:</span>
+                  <ul id="defaultWelcome">
+                    <li>Instant rentals and purchases are 1-click away</li>
+                    <li>Access the latest new releases every Tuesday</li>
+                    <li>Securely store movies and TV shows in your CinemaNow library!</li>
+                    <li id="uvwelcomebenefit" class="hidden">Playback UltraViolet titles across any UltraViolet-enabled device</li>
+                  </ul>
+                  <ul id="diskToDigitalWelcome" class="hidden">
+                    <li>Make digital copies of discs you already own</li>
+                    <li>Playback Disc to Digital content on any device</li>
+                    <li>Keep a safe on-line locker of all your media</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="welcomerowContainerBottom">
+              <div class="welcomerow">
+                ACTIVATE LATER<a id="rightbutton" class="button default" action="BrowseView.WelcomeControl.explore()" up="leftbutton" down="leftbutton" left="rightbutton" right="rightbutton">Explore CinemaNow</a>
+              </div>
+              <div class="welcomerow greytext">
+                If you don't want to activate just yet, feel free to explore our catalog of 15,000 movies<br/> and hit TV shows. Remember, you'll still need to activate before watching any titles. <br/>You can do this at any time by going to Settings > Activate Device.
+              </div>
+            </div>
+          </div>
+          <div id="welcomebackground"> </div>
+          <a id="welcomebutton" class="button default" action="BrowseView.WelcomeControl.getStarted()" up="welcomebutton" down="welcomebutton" left="welcomebutton" right="welcomebutton"> </a>
+          <div id="welcomebuttonmask"> </div>
+        </div>
+        <div id="d2dUnavailable">
+          <div class="header">
+            <div class="horizontallogo"> </div>
+            <div class="d2dtitle"> No Disc to digital offer available </div>
+            <div class="seperator"> </div>
+          </div>
+          <div class="content">
+            <div> There is currently no Disc to Digital offer available for this disc </div>
+            <div id="d2dbuttons">
+              <a id="d2dbrowsebutton" class="button default" action="BrowseView.WelcomeControl.hide()" up="d2dbrowsebutton" down="d2dbrowsebutton" left="d2dbrowsebutton" right="cancelbutton"> Browse Store</a>
+              <a id="cancelbutton" class="button" action="BrowseView.showExit()" up="cancelbutton" down="cancelbutton" left="d2dbrowsebutton" right="cancelbutton"> Exit </a>
+            </div>
+          </div>
+        </div>
+      </layout>
+    </control>
+    <control id="activatefullscreen">
+      <layout>
+        <div class="activationcontainer">
+          <div id="activationintro">
+            <div class="header">
+              <div class="horizontallogo"> </div>
+              <div class="activationtitle"> START ACTIVATION </div>
+              <div class="seperator"> </div>
+            </div>
+            <div class="content">
+              <div class="greytext">To get started go to the following URL:</div>
+              <div class="url"> </div>
+              <a id="okaybuttonactivation" class="button default" action="BrowseView.ActivationPcView.startFirstTime()" up="okaybuttonacitvation" down="okaybuttonactivation" left="cancelbuttonactivation" right="cancelbuttonactivation"> OK, I'm There </a>
+              <a id="cancelbuttonactivation" class="button default" action="BrowseView.ActivationPcView.cancel()" up="cancelbuttonactivation" down="cancelbuttonactivation" left="okaybuttonactivation" right="okaybuttonactivation"> Cancel </a>
+              <div class="helptext">You can do this from a web browser accessible from your PC, tablet or smartphone.</div>
+            </div>
+          </div>
+          <div id="activationbody">
+            <div class="header">
+              <div class="horizontallogo"> </div>
+              <div class="activationtitle"> Activation </div>
+              <div class="seperator"> </div>
+            </div>
+            <div class="content">
+              <div class="white">Here is your Activation code:</div>
+              <div id="ActivateViaPcCode">
+                <ul>
+                  <li id="Code0"> </li>
+                  <li id="Code1"> </li>
+                  <li id="Code2"> </li>
+                  <li id="Code3"> </li>
+                  <li id="Code4"> </li>
+                  <li id="Code5"> </li>
+                  <li id="Code6"> </li>
+                </ul>
+              </div>
+
+              <div class="clear"> </div>
+              <div class="greytext">
+                Please enter this into the "Activation Code" field at <span class="url white"> </span>
+              </div>
+              <a id="generatenewcodebutton" class="button default" action="BrowseView.ActivationPcView.start()" up="generatenewcodebutton" down="generatenewcodebutton" left="activationbodycancelbutton" right="activationbodycancelbutton"> Generate New Code </a>
+              <a id="activationbodycancelbutton" class="button default" action="BrowseView.ActivationPcView.cancel()" up="activationbodycancelbutton" down="activationbodycancelbutton" left="generatenewcodebutton" right="generatenewcodebutton"> Cancel </a>
+            </div>
+
+          </div>
+          <div id="activationsuccess">
+            <div class="header">
+              <div class="horizontallogo"> </div>
+              <div class="activationtitle"> Activation </div>
+              <div class="seperator"> </div>
+            </div>
+            <div id="activationsuccesscontent" class="content greytext">
+              <div class="white"> Device activated successfully </div>
+              <div>
+                The following name has been assigned to this device:<div id="activationdevicename" class="white"> </div>
+                <div id="accountCredit" class="billingExtras">
+                  Your account credit is <span id="acctCredit"> </span>.
+                </div>
+                <div id="accountCreditNoBilling" class="billingExtras">
+                  Once your account credit is used up, you will need to add billing info to your <br />
+                  account before buying or renting additional titles. <br />Go to <span class="white">www.cinemanow.com/billing</span> to add billing info.
+                </div>
+                <div id="noBilling" class="billingExtras">
+                  You will need to add billing info to your account before buying or renting titles. <br />Go to <span class="white">www.cinemanow.com/billing</span> to add billing info.
+                </div>
+                <a id="activationcontinuebutton" class="button default mini" action="BrowseView.ActivationPcView.hide()" up="activationcontinuebutton" down="activationcontinuebutton" left="activationcontinuebutton" right="activationcontinuebutton"> Done </a>
+              </div>
+              <div id="uvNotifyMessage">
+                <div class="uvLogo"> </div>
+                <p>Please visit the My Account section of CinemaNow.com to create or link an UltraViolet account or to learn more about the added benefits of UltraViolet!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </layout>
+    </control>
+    <control id="dock">
+      <layout>
+        <div id="dockcontainer">
+          <tpl id="dock.tpl">
+            <div>
+              <a id="dock-back" class="btnBack disableBack" action="application.state.previous()" pointerfocus="BrowseView.DockControl.dockbackPointerFocus()" focus="log.write('FirstElement Focused')" up="dock-exit" down="dock-home">
+                <span class="dockText">return</span>
+                <span class="icon"> </span>
+              </a>
+              <a id="dock-home" class="btnHome" action="BrowseView.goHome()" up="dock-back" down="dock-search">
+                <span class="dockText">store</span>
+                <span class="icon"> </span>
+              </a>
+              <a id="dock-search" class="btnSearch" action="BrowseView.goSearch()" up="dock-home" down="dock-wishlist">
+                <span class="dockText">search</span>
+                <span class="icon"> </span>
+              </a>
+              <a id="dock-wishlist" class="btnWishList double-line" action="BrowseView.goWishlist()" up="dock-search" down="dock-library">
+                <span class="dockText">
+                  my<br />wish list
+                </span>
+                <span class="icon"> </span>
+              </a>
+              <a id="dock-library" class="btnLibrary double-line" action="BrowseView.goLibrary()" up="dock-wishlist" down="dock-settings">
+                <span class="dockText">
+                  my<br />library
+                </span>
+                <span class="icon"> </span>
+              </a>
+              <a id="dock-settings" class="btnSettings" action="BrowseView.goSettings()" up="dock-library" down="btnAccount">
+                <span class="dockText">settings</span>
+                <span class="icon"> </span>
+              </a>
+              <a id="btnAccount" class="btnAccount double-line" action="BrowseView.showChangeUser()" up="dock-settings" down="dock-help">
+                <span id="SignInString" class="dockText">{SignInString}</span>
+                <span id="accountIcon" class="icon"> </span>
+              </a>
+              <a id="dock-help" class="btnHelp" action="BrowseView.showHelp()" down="dock-exit" up="btnAccount">
+                <span class="dockText">help</span>
+                <span class="icon"> </span>
+              </a>
+              <a id="dock-exit" class="btnExit" action="BrowseView.showExit()" down="dock-back" up="dock-help">
+                <span class="dockText">Exit</span>
+                <span class="icon"> </span>
+              </a>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="singlewheel">
+      <layout>
+        <div class="singlewheel-left"> </div>
+        <div class="singlewheel-right"> </div>
+        <div class="wheelControls">
+          <div id="singlemasterdatasource" class="wheelcolumn"> </div>
+          <div id="singlewheelmaskup" action="log.write('single wheel mask up.')" pointerfocus="BrowseView.WheelControl.setWheelPointerFocus('singlewheelmaskup', 'singleselectedmaster', 0.6)" pointermouseout="BrowseView.WheelControl.setWheelPointerLoseFocus('singlewheelmaskup', 'singleselectedmaster')" pointeraction="BrowseView.WheelControl.clickWheelAction('singlewheelmaskup', 'up', 'singleselectedmaster', 0.6)"> </div>
+          <div id="singlewheelmaskdown" action="log.write('single wheel mask down.')"  pointerfocus="BrowseView.WheelControl.setWheelPointerFocus('singlewheelmaskdown', 'singleselectedmaster', 0.6)" pointermouseout="BrowseView.WheelControl.setWheelPointerLoseFocus('singlewheelmaskdown', 'singleselectedmaster')" pointeraction="BrowseView.WheelControl.clickWheelAction('singlewheelmaskdown', 'down', 'singleselectedmaster', 0.6)"> </div>
+          <a id="singleselectedmaster" class="selectedmaster" action="log.write('single selected master')" focus="log.write('test')"> </a>
+        </div>
+      </layout>
+    </control>
+    <control id="wheel">
+      <layout>
+        <div class="wheelControls">
+          <div id="masterdatasource" class="wheelcolumn"> </div>
+          <div id="slavedatasource" class="wheelcolumn" > </div>
+          <div id="masterwheelmaskup" action="log.write('master wheel mask up.')" pointerfocus="BrowseView.WheelControl.setWheelPointerFocus('masterwheelmaskup', 'selectedmaster', 0.6)" pointermouseout="BrowseView.WheelControl.setWheelPointerLoseFocus('masterwheelmaskup', 'selectedmaster')" pointeraction="BrowseView.WheelControl.clickWheelAction('masterwheelmaskup', 'up', 'selectedmaster', 0.6)"> </div>
+          <div id="masterwheelmaskdown" action="log.write('master wheel mask down.')"  pointerfocus="BrowseView.WheelControl.setWheelPointerFocus('masterwheelmaskdown', 'selectedmaster', 0.6)" pointermouseout="BrowseView.WheelControl.setWheelPointerLoseFocus('masterwheelmaskdown', 'selectedmaster')" pointeraction="BrowseView.WheelControl.clickWheelAction('masterwheelmaskdown', 'down', 'selectedmaster', 0.6)"> </div>
+          <div id="slavewheelmaskup" action="log.write('slave wheel mask up.')"  pointerfocus="BrowseView.WheelControl.setWheelPointerFocus('slavewheelmaskup', 'selectedslave', 0.6)" pointermouseout="BrowseView.WheelControl.setWheelPointerLoseFocus('slavewheelmaskup', 'selectedslave')" pointeraction="BrowseView.WheelControl.clickWheelAction('slavewheelmaskup', 'up', 'selectedslave', 0.6)"> </div>
+          <div id="slavewheelmaskdown" action="log.write('slave wheel mask down.')"  pointerfocus="BrowseView.WheelControl.setWheelPointerFocus('slavewheelmaskdown', 'selectedslave', 0.6)" pointermouseout="BrowseView.WheelControl.setWheelPointerLoseFocus('slavewheelmaskdown', 'selectedslave')" pointeraction="BrowseView.WheelControl.clickWheelAction('slavewheelmaskdown', 'down', 'selectedslave', 0.6)"> </div>
+          <a id="selectedmaster" class="selectedmaster" action="log.write('selected master')" focus="log.write('test')" right="selectedslave"> </a>
+          <a id="selectedslave" class="selectedslave" action="log.write('selected slave')" focus="log.write('test')" left="selectedmaster"> </a>
+        </div>
+      </layout>
+    </control>
+    <control id="gridloader">
+      <layout>
+        <div id="gridloadercontainer">
+          <div id="GridOverlay">
+            <div id="gridspinnercontainer">
+              <div id="gridspinner"> </div>
+              <div id="gridloadingprocessstring"> </div>
+            </div>
+          </div>
+        </div>
+      </layout>
+    </control>
+    <control id="genericloader">
+      <layout>
+        <div id="genericloadercontainer">
+          <div id="GenericOverlay">
+            <div id="genericspinnercontainer">
+              <div id="genericspinner"> </div>
+              <div id="genericloadingprocessstring"> </div>
+            </div>
+          </div>
+        </div>
+      </layout>
+    </control>
+    <control id="titlegrid">
+      <layout>
+        <div id="titlegrid_container">
+          <div id="altmessage">
+            <tpl id="empty.tpl">
+              <div class="white">No Results Found.</div>
+            </tpl>
+            <tpl id="search_empty.tpl">
+              <div class="white">No Search Results</div>
+            </tpl>
+            <tpl id="recommended_empty.tpl">
+              <div id="RecommendedMessage">
+                <p id="RecommendedTitle" class="white">Tell us what you like!</p>
+                <p>
+                  Using the "Rate It" button in the title details <br />page, please rate at least 10 movies or TV <br />shows you like with 4 or 5 stars.
+                </p>
+                <p>
+                  The "Recommended For You" option will then <br />show you other titles you might like.
+                </p>
+                <p>
+                  The more you rate, the better the <br />recommendations!
+                </p>
+              </div>
+            </tpl>
+          </div>
+          <div id="titlegrid_header">
+            <tpl id="episode_header.tpl">
+              <div>
+                <div class="titlename">{show}</div>
+                <div class="ratingholder">
+                  <div class="ratingicon {mPAARating}"> </div>
+                </div>
+              </div>
+            </tpl>
+          </div>
+          <div id="titlelist">
+
+            <tpl id="titlelist.tpl">
+              <div class="title">
+                <a titleid="{titleID}" titleidx="{titleidx}" pointerfocus="BrowseView.GridControl.setPointerFocus({titleidx})" action="application.events.publish('loadtitleview', {id: {titleID}})" focus="application.events.publish('griditemselected', {id: {titleID}, type: 'title'})">
+                  <img src="http://cache.cinemanow.com/images/boxart/v2_107/{boxartPrefix}v2_107.jpg" />
+                </a>
+                <div class="title-text">
+                  <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                    <tr>
+                      <td align="center">{name}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="titlelistmask" pointerfocus="log.write('titlemask focus')" action="BrowseView.GridControl.clickAction()" focus="log.write('titlemask focus')"> </div>
+              </div>
+            </tpl>
+            <tpl id="similarlist.tpl">
+              <div class="title">
+                <a titleid="{titleID}" titleidx="{titleidx}" pointerfocus="BrowseView.GridControl.setPointerFocus({titleidx})" action="application.events.publish('loadtitleview', {id: {titleID}, checklibrary: true})" focus="application.events.publish('griditemselected', {id: {titleID}, type: 'similar'})">
+                  <img src="http://cache.cinemanow.com/images/boxart/v2_107/{boxartPrefix}v2_107.jpg" />
+                </a>
+                <div class="title-text">
+                  <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                    <tr>
+                      <td align="center">{name}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="titlelistmask" pointerfocus="log.write('titlemask focus')" action="BrowseView.GridControl.clickAction()" focus="log.write('titlemask focus')"> </div>
+              </div>
+            </tpl>
+            <tpl id="searchtitlelist.tpl">
+              <div class="title">
+                <a titleid="{titleID}" titleidx="{titleidx}" pointerfocus="BrowseView.GridControl.setPointerFocus({titleidx})" action="application.events.publish('loadtitleview', {id: {titleID}, checklibrary: true})" focus="application.events.publish('griditemselected', {id: {titleID}, type: 'search'})">
+                  <img src="http://cache.cinemanow.com/images/boxart/v2_107/{boxartPrefix}v2_107.jpg" />
+                </a>
+                <div class="title-text">
+                  <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                    <tr>
+                      <td align="center">{name}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="titlelistmask" pointerfocus="log.write('titlemask focus')" action="BrowseView.GridControl.clickAction()" focus="log.write('titlemask focus')"> </div>
+              </div>
+            </tpl>
+            <tpl id="refinementgrid.tpl">
+              <div class="listtitle">
+                <a titleid="{titleID}" titleidx="{titleidx}" action="application.events.publish('refineselection', {id: {castID}})" focus="application.events.publish('griditemselected', {id: {castID}, type: 'cast'})">
+                  <span>{name}</span>
+                </a>
+              </div>
+            </tpl>
+            <tpl id="listgrid.tpl">
+              <div class="listtitle">
+                <a titleid="{titleID}" titleidx="{titleidx}" action="BrowseView.EpisodePanel.onItemSelected({titleID})" focus="application.events.publish('griditemselected', {id: {titleID}, type: 'episode'})">
+                  <span>@@$cn.utilities.addEpisodeColons('{itemNumber}') @@ @@$cn.utilities.ellipsis('##{name}##', 35)@@</span>
+                </a>
+              </div>
+            </tpl>
+            <tpl id="librarylist.tpl">
+              <div class="title">
+                <a titleid="{titleID}" titleidx="{titleidx}" pointerfocus="BrowseView.GridControl.setPointerFocus({titleidx})" action="application.events.publish('loadtitleview', {id: {titleID}, passID: {passID}, type: 'library'})" focus="application.events.publish('griditemselected', {id: {titleID}, type: 'library', passID: {passID}})">
+                  <img src="http://cache.cinemanow.com/images/boxart/v2_107/{boxartPrefix}v2_107.jpg" />
+                </a>
+                <div class="title-text">
+                  <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                    <tr>
+                      <td align="center">{name}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="titlelistmask" pointerfocus="log.write('titlemask focus')" action="BrowseView.GridControl.clickAction()" focus="log.write('titlemask focus')"> </div>
+              </div>
+            </tpl>
+            <tpl id="wishlist.tpl">
+              <div class="title">
+                <a titleid="{titleID}" titleidx="{titleidx}" pointerfocus="BrowseView.GridControl.setPointerFocus({titleidx})" action="application.events.publish('wishlistitem', {id: {titleID}})" focus="application.events.publish('griditemselected', {id: {titleID}, type: 'title'})">
+                  <img src="http://cache.cinemanow.com/images/boxart/v2_107/{boxartPrefix}v2_107.jpg" />
+                </a>
+                <div class="title-text">
+                  <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                    <tr>
+                      <td align="center">{name}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="titlelistmask" pointerfocus="log.write('titlemask focus')" action="BrowseView.GridControl.clickAction()" focus="log.write('titlemask focus')"> </div>
+              </div>
+            </tpl>
+          </div>
+          <div id="titlemeta">
+            <div class="titlemetamask" pointerfocus="log.write('titlemeta pointerfocus')" pointermove="log.write('titlemeta pointermove')" action="BrowseView.GridControl.metaClickAction()"> </div>
+            <div id="titlemetacontainer">
+              <tpl id="titlelist.titlemeta">
+                <div class="metapanel">
+                  <div id="RatingTitleHolder">
+                    <div id="titlemeta_title" class="titlename">{name}</div><!-- fixed inline-block gap issue,no space charactor between two divs
+                 --><div class="ratingholder">
+                      <div class="uvicon {UVAvailable}"> </div>
+                    </div><!--
+                 --><div class="ratingholder">
+                      <div class="ratingicon {mPAARating}"> </div>
+                    </div><!--
+                 --><div class="ratingholder">
+                      <div class="ratingicon {hasClosedCaption}"> </div>
+                    </div>
+                  </div>
+                  <div id="EpisodeHolder" class="titleepisode">{Episode}</div>
+                  <div id="priceSummaryGridString" class="defaultfont white c">@@$cn.utilities.getPricingSummaryString("{titleID}", "Buy from", "Rent from")@@</div>
+                  <div class="synopsis ellipsis hid">{synopsys}</div>
+                </div>
+              </tpl>
+              <tpl id="titlelist.similarmeta">
+                <div class="metapanel">
+                  <div id="RatingTitleHolder">
+                    <div id="titlemeta_title" class="titlename">{name}</div>
+                    <div class="ratingholder">
+                      <div class="ratingicon {mPAARating}"> </div>
+                    </div>
+                  </div>
+                  <div class="synopsis ellipsis hid">{synopsys}</div>
+                </div>
+              </tpl>
+              <tpl id="titlelist.librarymeta">
+                <div class="metapanel library">
+                  <div id="RatingTitleHolder">
+                    <div id="titlemeta_title" class="titlename">{name}</div><!--fixed inline-block gap issue,no space charactor between two divs
+                 --><div class="ratingholder">
+                      <div class="uvicon {UVAvailable}"> </div>
+                    </div><!--
+                 --><div class="ratingholder">
+                      <div class="ratingicon {mPAARating}"> </div>
+                    </div><!--
+                 --><div class="ratingholder">
+                      <div class="ratingicon {hasClosedCaption}"> </div>
+                    </div>
+                  </div>
+                  <div id="EpisodeHolder" class="titleepisode">{Episode}</div>
+                  <div class="synopsis ellipsis hid">{synopsys}</div>
+                </div>
+              </tpl>
+              <tpl id="titlelist.searchmeta">
+                <div class="metapanel search">
+                  <div id="RatingTitleHolder">
+                    <div id="titlemeta_title" class="titlename"> </div>
+                    <div class="ratingholder">
+                      <div class="uvicon {UVAvailable}"> </div>
+                    </div>
+                    <div class="ratingholder">
+                      <div class="ratingicon {mPAARating}"> </div>
+                    </div>
+                  </div>
+                  <div id="EpisodeHolder" class="titleepisode">{Episode}</div>
+                  <div class="synopsis ellipsis hid">{synopsys}</div>
+                </div>
+              </tpl>
+              <tpl id="titlelist.castmeta">
+                <div id="castmeta" class="metapanel">
+
+                  <div class="castimage">
+                    <img src="{snapURL}" />
+                  </div>
+                  <div class="castname white">{name}</div>
+                  <div class="synopsis">{bio}</div>
+                </div>
+              </tpl>
+              <tpl id="titlelist.episodemeta">
+                <div class="metapanel">
+                  <div class="synopsis ellipsis hid">{synopsys}</div>
+                </div>
+              </tpl>
+            </div>
+          </div>
+        </div>
+      </layout>
+    </control>
+    <control id="imagegrid">
+      <layout>
+        <div id="imagelist">
+          <tpl id="imagegrid.tpl">
+            <div class="imagelist.item">
+              <a action="BrowseView.ImagePopup.show({idx})">
+                <img src="{imageURL}" onerror="" />
+              </a>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="biogrid">
+      <layout>
+        <div id="imagelist">
+          <tpl id="biogrid.tpl">
+            <div>
+              <img id="bioimg" src="{snapURL}" class="bioimg resize" />
+              <div id="griddefaultbg" class="bioimgcontainer"> </div>
+              <div class="white">{name}</div>
+              <div class="role">"{role}"</div>
+              <p>{bio}</p>
+              <div style="clear:both;"> </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="reviewgrid">
+      <layout>
+        <div id="imagelist">
+          <tpl id="reviewgrid.tpl">
+            <div class="reviewgrid.item">
+              <table>
+                <tr>
+                  <td>
+                    <div class="imageContainer">
+                      <img class="reviewerImage" src="{reviewerImage}" />
+                      <div id="griddefaultbg" class="imgcontainer"> </div>
+                    </div>
+                  </td>
+                  <td class="reviewerInfo">
+                    <div class="reviewer">{reviewer}</div>
+                    <div class="publication">{publication}</div>
+                  </td>
+                  <td>
+                    <div class="publicationImage @@BrowseView.TitleViewControl.reviewIcon(##'{reviewFreshnessScore}'##)@@"> </div>
+                  </td>
+                </tr>
+              </table>
+
+              <p class="review">{review}</p>
+              <p>@@BrowseView.TitleViewControl.formatReviewDate(##'{reviewDate}'##)@@</p>
+              <p class="footer"> </p>
+            </div>
+          </tpl>
+          <tpl id="userreviewgrid.tpl">
+            <div class="reviewgrid.item">
+              <!--<a action="application.events.publish('showimage', {url: {reviewerImage}})"><img src="{reviewerImage}" /> </a>-->
+              <table>
+                <tr>
+                  <td>
+                    <div class="imageContainer">
+                      <img class="reviewerImage" src="{reviewerImage}" />
+                      <div id="griddefaultbg" class="imgcontainer"> </div>
+                    </div>
+                  </td>
+                  <td class="reviewerInfo">
+                    <div class="reviewer">{reviewer}</div>
+                    <div class="stars stars{rating}">
+                      <div> </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <p class="review">{review}</p>
+              <p>@@BrowseView.TitleViewControl.formatReviewDate(##'{reviewDate}'##)@@</p>
+              <p class="footer"> </p>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="creditsgrid">
+      <layout>
+
+        <div id="creditsgridcontainer">
+          <tpl id="creditsgrid.tpl">
+            <div class="castgrid.item">
+              <p class="productioncrew">{keyName}</p>
+              <p>{keyValue}</p>
+              <br/>
+            </div>
+          </tpl>
+          <tpl id="productiongrid.tpl">
+            <div class="castgrid.item">
+              <p class="reviewer">{keyName} </p>
+              <p>{keyValue}</p>
+            </div>
+          </tpl>
+        </div>
+
+      </layout>
+    </control>
+    <control id="techgrid">
+      <layout>
+        <div id="techgridcontainer">
+          <tpl id="techgrid.tpl">
+            <div class="techgrid.item">
+              <div id="videoTech" class="hidden">
+                <p class="videoaudio">Video</p>
+                <p>{videoRecordingFormat}</p>
+                <p>{videoEncoding} ({availableBitRates})</p>
+              </div>
+              <div id="uv-technical-details" class="hidden">
+                <span class="white">@@BrowseView.TitleViewControl.showUVTechnicalDetails('{name}')@@</span>
+                <ul>
+                  <li id="tech-streaming" class="hidden">SD and HD streaming</li>
+                  <li id="tech-downloads" class="hidden">SD and HD download to {availableDevices} devices</li>
+                </ul>
+                <div class="supportString">
+                  For more info, go to <span class="white url">www.uvvu.com</span>
+                </div>
+              </div>
+              <div id="audioTech" class="hidden">
+                <p class="videoaudio">Audio</p>
+                <div class="audioitems">
+                  <div class="audioitem aac">
+                    <div id="aacaudio" class="icon"> </div>
+                    <div class="label aac">stereo ({audioBitRate})</div>
+                  </div>
+                  <div class="audioitem audio@@BrowseView.TitleViewControl.showAudioTechnicalField('{name}', 'DTS_Express_51')@@">
+                    <div id="dtsexpress51" class="icon"> </div>
+                    <div class="label">(256 Kbps)</div>
+                  </div>
+                  <div class="audioitem audio@@BrowseView.TitleViewControl.showAudioTechnicalField('{name}', 'DTS_Express_Stereo')@@">
+                    <div id="dtsexpress20" class="icon"> </div>
+                    <div class="label">(256 Kbps)</div>
+                  </div>
+                  <div class="audioitem audio@@BrowseView.TitleViewControl.showAudioTechnicalField('{name}', 'Dolby_Digital_Plus_51')@@">
+                    <div id="dolby51" class="icon"> </div>
+                    <div class="label">(256 Kbps)</div>
+                  </div>
+                  <div class="audioitem audio@@BrowseView.TitleViewControl.showAudioTechnicalField('{name}', 'Dolby_Digital_Plus_Stereo')@@">
+                    <div id="dolbyplus" class="icon"> </div>
+                    <div class="label dolbyplus">(256 Kbps)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="disctodigitalgrid">
+      <layout>
+        <div id="d2dinfocontainer">
+          <tpl id="disctodigitalgrid.tpl">
+            <div class="disctodigitalgrid.item">
+              <div>
+                <p class="white heading">{title}</p>
+                <ul>
+                  <li>{step1}</li>
+                  <li>{step2}</li>
+                  <li>{step3}</li>
+                </ul>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="titledetails">
+      <layout>
+        <div id="titledetailscontainer">
+          <tpl id="buttonpanel.title">
+            <div class="buttonpanel">
+              <a id="tdbuttonCheckout" action="BrowseView.showCheckOut({titleID})" rightaction="BrowseView.showCheckOut({titleID}, true)">@@BrowseView.TitleViewControl.getPurchaseButtonText()@@</a>
+              <a id="tdbuttonEpisodes" class="hideextra" action="BrowseView.TitleViewControl.onEpisodes({titleID})" rightaction="BrowseView.showTvEpisodes({showTitleID})">Seasons/Episodes</a>
+              <a id="tdbuttonSimilar" action="BrowseView.showSimilar({titleID})" rightaction="BrowseView.showSimilar({titleID})">Similar</a>
+              <div class="half">
+                <a id="tdbuttonWatchTrailer" action="BrowseView.showTrailer({titleID},@@BrowseView.TitleViewControl.getTrailer()@@)" class="@@BrowseView.TitleViewControl.displayBonusAsset('Trailer')@@">Watch Trailer</a>
+                <a id="tdbuttonWishlist" action="BrowseView.addToWishList({titleID})" class="@@BrowseView.TitleViewControl.displayExtra('InUserWishlist', true)@@">+ Wish List</a>
+                <div id="tdbuttonWishlist-1" class="@@BrowseView.TitleViewControl.displayExtra('InUserWishlist')@@">On Wish List</div>
+              </div>
+              <div class="half">
+                <a id="tdbuttonRating" action="BrowseView.showRate({titleID})">@@BrowseView.TitleViewControl.getRateButtonText()@@</a>
+                <a id="tdbuttonMoreInfo" class="@@BrowseView.TitleViewControl.displayMoreInfo()@@" action="BrowseView.showMoreInfo()" rightaction="BrowseView.showMoreInfo()">More Info</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="buttonpanel.library">
+            <div class="buttonpanel redbuttons">
+              <div id="tdbuttonExpired" class="hideextra emphasis">@@BrowseView.TitleViewControl.getRentalStatus()@@</div>
+              <a id="tdbuttonPlay" class="@@BrowseView.TitleViewControl.displayAvailability(true)@@" action="BrowseView.showPlay({titleID}, {passID}, 0)">Play @@BrowseView.TitleViewControl.getRentalStatus()@@</a>
+              <div id="tdbuttonUnavailable" class="@@BrowseView.TitleViewControl.displayAvailability()@@ emphasis">Currently Unavailable</div>
+              <a id="tdbuttonAvailability" class="@@BrowseView.TitleViewControl.displayAvailability()@@" action="BrowseView.TitleViewControl.showAvailability()">Availability Info</a>
+              <a id="tdbuttonEpisodes" class="hideextra" action="BrowseView.TitleViewControl.onEpisodes({titleID})" rightaction="BrowseView.showTvEpisodes({showTitleID})">Seasons/Episodes</a>
+              <div class="half">
+                <a id="tdbuttonResumePlay" action="BrowseView.showPlay({titleID}, {passID}, {streamStartTimeSeconds})" class="hideextra">Resume Play</a>
+                <a id="tdbuttonNextEpisode" action="application.events.publish('loadtitleview', {id: {nextEpisodeID}, checklibrary: true, action: 'checkout'})">Next Episode</a>
+                <a id="tdbuttonRating" action="BrowseView.showRate({titleID})">@@BrowseView.TitleViewControl.getRateButtonText()@@</a>
+              </div>
+              <div class="half">
+                <a id="tdbuttonSimilar" action="BrowseView.showSimilar({titleID})" rightaction="BrowseView.showSimilar({titleID})">Similar</a>
+                <a id="tdbuttonMoreInfo"  class="@@BrowseView.TitleViewControl.displayMoreInfo()@@" action="BrowseView.showMoreInfo()" rightaction="BrowseView.showMoreInfo()">More Info</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="buttonpanel.library.alternate">
+            <div class="buttonpanel redbuttons">
+              <div id="tdbuttonUnavailable" class="@@BrowseView.TitleViewControl.displayAvailability()@@ emphasis">Currently Unavailable</div>
+              <a id="tdbuttonAvailability" class="@@BrowseView.TitleViewControl.displayAvailability()@@" action="BrowseView.TitleViewControl.showAvailability()">Availability Info</a>
+              <a id="tdbuttonEpisodes" class="hideextra" action="BrowseView.TitleViewControl.onEpisodes({titleID})" rightaction="BrowseView.showTvEpisodes({showTitleID})">Seasons/Episodes</a>
+              <a id="tdbuttonSimilar" action="BrowseView.showSimilar({titleID})" rightaction="BrowseView.showSimilar({titleID})">Similar</a>
+              <div class="half">
+                <a id="tdbuttonRating" action="BrowseView.showRate({titleID})">@@BrowseView.TitleViewControl.getRateButtonText()@@</a>
+              </div>
+              <div class="half">
+                <a id="tdbuttonMoreInfo"  class="@@BrowseView.TitleViewControl.displayMoreInfo()@@" action="BrowseView.showMoreInfo()" rightaction="BrowseView.showMoreInfo()">More Info</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="titleview.title">
+            <div>
+              <div class="columnleft">
+                <div class="titledetailsboxartcontainer">
+                  <div id="titledetailsboxartwrap">
+                    <img id="TitleBoxArt" class="titledetailsboxart" width="232" src="http://cache.cinemanow.com/images/boxart/v2_232/{boxartPrefix}v2_232.jpg" />
+                  </div>
+                  <div class="title-text">
+                    <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                      <tr>
+                        <td align="center">{name}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="badges">
+                  <div id="threedbadge" class="@@BrowseView.TitleViewControl.displayExtra('3D')@@"> </div>
+                  <div id="hdbadge" class="@@BrowseView.TitleViewControl.displayExtra('HD')@@"> </div>
+                  <div id="fiveonebadge" class="@@BrowseView.TitleViewControl.displaySurroundSoundBadge()@@"> </div>
+                  <div id="ccbadge" class="@@BrowseView.TitleViewControl.displayCCbadge()@@"> </div>
+                  <div id="dtsbadge" class="@@BrowseView.TitleViewControl.displayExtra('DTSAud')@@" customwidth="109"> </div>
+                  <div id="extrasbadge" class="@@BrowseView.TitleViewControl.displayExtra('Extras')@@"> </div>
+                  <div id="uvbadge"  class="@@BrowseView.TitleViewControl.displayExtra('HasUV')@@"> </div>
+                </div>
+                <div id="ButtonPanel">
+                </div>
+              </div>
+              <div class="columnright">
+                <div class="titlemetacontainer">
+                  <div class="tv title">@@BrowseView.TitleViewControl.getEpisodeShowTitle()@@</div>
+                  <div class="tv season">@@BrowseView.TitleViewControl.getEpisodeShowSeason()@@</div>
+                  <div class="tv episode">"@@$cn.utilities.ellipsis('##{name}##', 48)@@"</div>
+                  <div class="movie title">{name}</div>
+                  <div id="titlemeta_duration" class="duration">
+                    <span>@@BrowseView.TitleViewControl.drawDurationString()@@</span>
+                  </div>
+                  <div id="titlemeta_dateintheathers" class="dateintheaters @@BrowseView.TitleViewControl.displayExtraIfPresent('dateInTheaters')@@">
+                    <span id="releaseyear">{dateInTheaters}</span>
+                  </div>
+                  <div class="rating">
+                    <div id="ratingdescription">
+                      <div id="ratingicon" class="{mPAARating}"> </div>{ratingReason}
+                    </div>
+                  </div>
+
+                  <div class="reviewcontainer">
+                    <div class="metafield@@BrowseView.TitleViewControl.showMetaField('CriticsReview')@@" id="titlemeta_criticsreview">
+                      <table>
+                        <tr>
+                          <td width="53">Critics:</td>
+                          <td width="34">
+                            <span id="@@BrowseView.TitleViewControl.drawTomatoFactor('CriticsReview')@@"> </span>
+                          </td>
+                          <td>@@BrowseView.TitleViewControl.drawMeta('CriticsReview')@@</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="metafield@@BrowseView.TitleViewControl.showMetaField('Flixster Users')@@" id="titlemeta_flixsterusers">
+                      <table>
+                        <tr>
+                          <td width="49">Users:</td>
+                          <td width="28">
+                            <span id="popcorn"> </span>
+                          </td>
+                          <td>@@BrowseView.TitleViewControl.drawMeta('Flixster Users')@@</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="titlemeta_rating" class="metafield end">
+                      <table>
+                        <tr>
+                          <td>You:</td>
+                          <td>
+                            <div class="star{userRating} display_@@BrowseView.TitleViewControl.getUserRating()@@" id="ratingstar">
+                              <div class="userrating">
+                                <ul>
+                                  <li id="TitleStar1"> </li>
+                                  <li id="TitleStar2"> </li>
+                                  <li id="TitleStar3"> </li>
+                                  <li id="TitleStar4"> </li>
+                                  <li id="TitleStar5"> </li>
+                                </ul>
+                              </div>
+                            </div>
+                            <span id='YourRating' class="display_@@BrowseView.TitleViewControl.getUserRating()@@">Not Rated</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+
+                  <div id="hdonly" class="metafield@@BrowseView.TitleViewControl.getSurroundAudioCssClass()@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@">*5.1 surround audio only available with HD (on select devices)*</div>
+                  <div class="synopsis metafield">{synopsys}</div>
+                  <div class="cast metafield@@BrowseView.TitleViewControl.getCastCssClass()@@ ellipsis">
+                    Starring: <span class="castlist">@@BrowseView.TitleViewControl.getActors()@@</span>
+                  </div>
+                  <div class="directors metafield@@BrowseView.TitleViewControl.getDirectorCssClass()@@">
+                    Directed by: <span class="directorlist">{directors}</span>
+                  </div>
+                  <div class="audio metafield_show">
+                    <span id="dtsexpress51" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('DTS_Express_51')@@"> </span>
+                    <span id="dtsexpress20" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('DTS_Express_Stereo')@@"> </span>
+                    <span id="dolby51" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('Dolby_Digital_Plus_51')@@"> </span>
+                    <span id="dolbyplus" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('Dolby_Digital_Plus_Stereo')@@"> </span>
+                  </div>
+                </div>
+                <div class="titlemetafooter">
+                  <div id="priceSummaryString" class="titlePurchaseSummary">
+                    <div id="purchaseinfostring" class="c">
+                      <span id="purchaseinfostringdetails">@@$cn.utilities.getPricingSummaryString({titleID}, "Buy from", "Rent from")@@</span>
+                      <span id="titlepurchasedstring" class="hidden">Purchased on @@$cn.utilities.formatDate("{datePurchased}", "short")@@</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"> </div>
+              <div class="c"> </div>
+            </div>
+          </tpl>
+          <tpl id="titleview.tvtitle">
+            <div>
+              <div class="columnleft">
+                <div class="titledetailsboxartcontainer">
+                  <div id="titledetailsboxartwrap">
+                    <img  id="TitleBoxArt" class="titledetailsboxart" width="232" src="http://cache.cinemanow.com/images/boxart/v2_232/{boxartPrefix}v2_232.jpg" />
+                  </div>
+                  <div class="title-text">
+                    <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                      <tr>
+                        <td align="center">{name}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="badges">
+                  <div id="threedbadge" class="@@BrowseView.TitleViewControl.displayExtra('3D')@@"> </div>
+                  <div id="hdbadge" class="@@BrowseView.TitleViewControl.displayExtra('HD')@@"> </div>
+                  <div id="fiveonebadge" class="@@BrowseView.TitleViewControl.displaySurroundSoundBadge()@@"> </div>
+                  <div id="ccbadge" class="@@BrowseView.TitleViewControl.displayCCbadge()@@"> </div>
+                  <div id="dtsbadge" class="@@BrowseView.TitleViewControl.displayExtra('DTSAud')@@" customwidth="109"> </div>
+                  <div id="extrasbadge" class="@@BrowseView.TitleViewControl.displayExtra('Extras')@@"> </div>
+                </div>
+                <div id="ButtonPanel" class="buttonpanel">
+                  <a id="tdbuttonEpisodes" action="BrowseView.TitleViewControl.onEpisodes({titleID})" rightaction="BrowseView.showTvEpisodes({showTitleID})">Seasons/Episodes</a>
+                  <a id="tdbuttonSimilar" action="BrowseView.showSimilar({titleID})" class="hideextra" rightaction="BrowseView.showSimilar({titleID})">Similar</a>
+                  <div class="half">
+                    <a id="tdbuttonWishlist" action="BrowseView.addToWishList({titleID})" class="@@BrowseView.TitleViewControl.displayExtra('InUserWishlist', true)@@">+ Wish List</a>
+                    <div id="tdbuttonWishlist-1" class="@@BrowseView.TitleViewControl.displayExtra('InUserWishlist')@@">On Wish List</div>
+                  </div>
+                  <div class="half">
+                    <a id="tdbuttonRating" action="BrowseView.showRate({titleID})">@@BrowseView.TitleViewControl.getRateButtonText()@@</a>
+                    <a id="tdbuttonMoreInfo"  class="@@BrowseView.TitleViewControl.displayMoreInfo()@@" action="BrowseView.showMoreInfo()" rightaction="BrowseView.showMoreInfo()">More Info</a>
+                  </div>
+                </div>
+              </div>
+              <div class="columnright">
+                <div class="titlemetacontainer">
+                  <div class="tv title">@@BrowseView.TitleViewControl.getEpisodeShowTitle()@@</div>
+                  <div class="tv season">@@BrowseView.TitleViewControl.getEpisodeShowSeason()@@</div>
+                  <div class="tv episode">"@@$cn.utilities.ellipsis('##{name}##', 48)@@"</div>
+                  <div class="movie title">{name}</div>
+                  <div id="titlemeta_duration" class="duration hidden">
+                    <span id="releaseyear">{releaseYear}</span> / <span id="duration">@@BrowseView.TitleViewControl.drawMeta('RunTime')@@ </span>
+                  </div>
+                  <div id="titlemeta_dateintheathers" class="dateintheaters hidden">
+                    <span id="releaseyear">{dateInTheaters}</span>
+                  </div>
+                  <div class="rating">
+                    <div id="ratingicon" class="{mPAARating}"> </div>
+                    <div id="ratingdescription">{ratingReason}</div>
+                  </div>
+                  <div class="reviewcontainer">
+                    <div class="metafield@@BrowseView.TitleViewControl.showMetaField('CriticsReview')@@" id="titlemeta_criticsreview">
+                      <table>
+                        <tr>
+                          <td width="53">Critics:</td>
+                          <td width="34">
+                            <span id="@@BrowseView.TitleViewControl.drawTomatoFactor('CriticsReview')@@"> </span>
+                          </td>
+                          <td>@@BrowseView.TitleViewControl.drawMeta('CriticsReview')@@</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="metafield@@BrowseView.TitleViewControl.showMetaField('Flixster Users')@@" id="titlemeta_flixsterusers">
+                      <table>
+                        <tr>
+                          <td width="49">Users:</td>
+                          <td width="28">
+                            <span id="popcorn"> </span>
+                          </td>
+                          <td>@@BrowseView.TitleViewControl.drawMeta('Flixster Users')@@</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="titlemeta_rating" class="metafield end">
+                      <table>
+                        <tr>
+                          <td>You:</td>
+                          <td>
+                            <div class="star{userRating} display_@@BrowseView.TitleViewControl.getUserRating()@@" id="ratingstar">
+                              <div class="userrating">
+                                <ul>
+                                  <li id="TitleStar1"> </li>
+                                  <li id="TitleStar2"> </li>
+                                  <li id="TitleStar3"> </li>
+                                  <li id="TitleStar4"> </li>
+                                  <li id="TitleStar5"> </li>
+                                </ul>
+                              </div>
+                            </div>
+                            <span id='YourRating' class="display_@@BrowseView.TitleViewControl.getUserRating()@@">Not Rated</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+                  <div id="hdonly" class="metafield@@BrowseView.TitleViewControl.getSurroundAudioCssClass()@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@">*5.1 surround audio only available with HD (on select devices)*</div>
+                  <div class="synopsis metafield">{synopsys}</div>
+                  <div class="cast metafield@@BrowseView.TitleViewControl.getCastCssClass()@@">
+                    Starring: <span class="castlist">{actors}</span>
+                  </div>
+                  <div class="directors metafield@@BrowseView.TitleViewControl.getDirectorCssClass()@@">
+                    Directed by: <span class="directorlist">{directors}</span>
+                  </div>
+                  <div class="audio metafield_show">
+                    <span id="dtsexpress51" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('DTS_Express_51')@@"> </span>
+                    <span id="dtsexpress20" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('DTS_Express_Stereo')@@"> </span>
+                    <span id="dolby51" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('Dolby_Digital_Plus_51')@@"> </span>
+                    <span id="dolbyplus" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('Dolby_Digital_Plus_Stereo')@@"> </span>
+                  </div>
+                </div>
+                <div class="titlemetafooter">
+                  <div id="priceSummaryString" class="titlePurchaseSummary">
+                    <div id="purchaseinfostring" class="c">
+                      <span id="purchaseinfostringdetails">@@$cn.utilities.getPricingSummaryString({titleID}, "Buy from", "Rent from")@@</span>
+                      <span id="titlepurchasedstring" class="hidden">Purchased on @@$cn.utilities.formatDate("{datePurchased}", "short")@@</span>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="divider"> </div>
+              <div class="c"> </div>
+            </div>
+
+          </tpl>
+          <tpl id="titleview.episodetitle">
+            <div>
+              <div class="columnleft">
+                <div class="titledetailsboxartcontainer">
+                  <div id="titledetailsboxartwrap">
+                    <img id="TitleBoxArt" class="titledetailsboxart" width="232" src="http://cache.cinemanow.com/images/boxart/v2_232/{boxartPrefix}v2_232.jpg" />
+                  </div>
+                  <div class="title-text">
+                    <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                      <tr>
+                        <td align="center">{name}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="badges">
+                  <div id="threedbadge" class="@@BrowseView.TitleViewControl.displayExtra('3D')@@"> </div>
+                  <div id="hdbadge" class="@@BrowseView.TitleViewControl.displayExtra('HD')@@"> </div>
+                  <div id="fiveonebadge" class="@@BrowseView.TitleViewControl.displaySurroundSoundBadge()@@"> </div>
+                  <div id="ccbadge" class="@@BrowseView.TitleViewControl.displayCCbadge()@@"> </div>
+                  <div id="dtsbadge" class="@@BrowseView.TitleViewControl.displayExtra('DTSAud')@@" customwidth="109"> </div>
+                  <div id="extrasbadge" class="@@BrowseView.TitleViewControl.displayExtra('Extras')@@"> </div>
+                </div>
+                <div id="ButtonPanel" class="buttonpanel">
+                  <a id="tdbutton1" action="BrowseView.showCheckOut({titleID})" rightaction="BrowseView.showCheckOut({titleID})">Buy @@BrowseView.TitleViewControl.drawMeta('PromoString')@@</a>
+                  <a id="tdbutton2" action="BrowseView.showTvEpisodes({titleID})" rightaction="BrowseView.showTvEpisodes({showTitleID})">Seasons/Episodes</a>
+                  <a id="tdbuttonSimilar" action="BrowseView.showSimilar({titleID})" rightaction="BrowseView.showSimilar({titleID})">Similar</a>
+                  <div class="half">
+                    <a id="tdbuttonWishlist" action="BrowseView.addToWishList({titleID})" class="@@BrowseView.TitleViewControl.displayExtra('InUserWishlist', true)@@">+ Wish List</a>
+                    <div id="tdbuttonWishlist-1" class="@@BrowseView.TitleViewControl.displayExtra('InUserWishlist')@@">On Wish List</div>
+                  </div>
+                  <div class="half">
+                    <a id="tdbuttonMoreInfo"  class="@@BrowseView.TitleViewControl.displayMoreInfo()@@" action="BrowseView.showMoreInfo()" rightaction="BrowseView.showMoreInfo()">More Info</a>
+                  </div>
+                </div>
+              </div>
+              <div class="columnright">
+                <div class="titlemetacontainer">
+                  <div class="title">{name}</div>
+                  <div class="episode">{episode}</div>
+                  <div class="duration metafield">
+                    <span id="releaseyear">{releaseYear}</span> / <span id="duration">@@BrowseView.TitleViewControl.drawMeta('RunTime')@@ </span>
+                  </div>
+                  <div class="rating metafield">
+                    <div id="ratingicon" class="{mPAARating}"> </div>
+                    <div id="ratingdescription">{ratingReason}</div>
+                  </div>
+                  <div class="reviewcontainer">
+                    <div class="metafield@@BrowseView.TitleViewControl.showMetaField('CriticsReview')@@" id="titlemeta_criticsreview">
+                      <table>
+                        <tr>
+                          <td width="53">Critics:</td>
+                          <td width="34">
+                            <span id="@@BrowseView.TitleViewControl.drawTomatoFactor('CriticsReview')@@"> </span>
+                          </td>
+                          <td>@@BrowseView.TitleViewControl.drawMeta('CriticsReview')@@</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="metafield@@BrowseView.TitleViewControl.showMetaField('Flixster Users')@@" id="titlemeta_flixsterusers">
+                      <table>
+                        <tr>
+                          <td width="49">Users:</td>
+                          <td width="28">
+                            <span id="popcorn"> </span>
+                          </td>
+                          <td>@@BrowseView.TitleViewControl.drawMeta('Flixster Users')@@</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="titlemeta_rating" class="metafield end">
+                      <table>
+                        <tr>
+                          <td>You:</td>
+                          <td>
+                            <div class="star{userRating} display_@@BrowseView.TitleViewControl.getUserRating()@@" id="ratingstar">
+                              <div class="userrating">
+                                <ul>
+                                  <li id="TitleStar1"> </li>
+                                  <li id="TitleStar2"> </li>
+                                  <li id="TitleStar3"> </li>
+                                  <li id="TitleStar4"> </li>
+                                  <li id="TitleStar5"> </li>
+                                </ul>
+                              </div>
+                            </div>
+                            <span id='YourRating' class="display_@@BrowseView.TitleViewControl.getUserRating()@@">Not Rated</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+                  <div id="hdonly" class="metafield@@BrowseView.TitleViewControl.getSurroundAudioCssClass()@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@">*5.1 surround audio only available with HD (on select devices)*</div>
+                  <div class="synopsis metafield">{synopsys}</div>
+                  <div class="cast metafield@@BrowseView.TitleViewControl.getCastCssClass()@@">
+                    Starring: <span class="castlist">{actors}</span>
+                  </div>
+                  <div class="directors metafield@@BrowseView.TitleViewControl.getDirectorCssClass()@@">
+                    Directed by: <span class="directorlist">{directors}</span>
+                  </div>
+                  <div class="audio metafield_show">
+                    <span id="dtsexpress51" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('DTS_Express_51')@@"> </span>
+                    <span id="dtsexpress20" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('DTS_Express_Stereo')@@"> </span>
+                    <span id="dolby51" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('Dolby_Digital_Plus_51')@@"> </span>
+                    <span id="dolbyplus" class="hd@@BrowseView.TitleViewControl.showAudioMetaField('HDOnly')@@ audiofield@@BrowseView.TitleViewControl.showAudioMetaField('Dolby_Digital_Plus_Stereo')@@"> </span>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"> </div>
+              <div class="c"> </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="modalcontrol">
+      <layout>
+        <div id="modalcontainer">
+          <div id="Overlay"> </div>
+          <div id="ModalWindow">
+            <div class="modal-bg-wrap">
+              <div class="modal-bg modal-n"> </div>
+              <div class="modal-bg modal-ne"> </div>
+              <div class="modal-bg modal-e"> </div>
+              <div class="modal-bg modal-se"> </div>
+              <div class="modal-bg modal-s"> </div>
+              <div class="modal-bg modal-sw"> </div>
+              <div class="modal-bg modal-w"> </div>
+              <div class="modal-bg modal-nw"> </div>
+            </div>
+            <div id="ModalContentWrap">
+              <div id="ModalContent">
+              </div>
+            </div>
+          </div>
+        </div>
+      </layout>
+    </control>
+    <control id="legal">
+      <layout>
+        <div id="legal">
+          <tpl id="eula.tpl">
+            <div>
+              <div class="title">{title}</div>
+              <div class="scroll">
+                <div class="descriptionContainer">
+                  <div class="description" id="LegalText" pageHeight="180">{text}</div>
+                </div>
+                <div class="scrollbar" id="scrollbar.legal"> </div>
+                <div class="fade"> </div>
+              </div>
+              <div class="buttons">
+                <a id="EulaDecline" class="button" action="application.exit()" up="LegalThumb" right="LegalOK" left="EulaDecline" down="EulaDecline">Decline</a>
+                <a id="LegalOK" class="button accept" action="BrowseView.acceptEula()" up="LegalThumb" left="EulaDecline" right="LegalThumb" down="LegalOK">Accept</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="legal.tpl">
+            <div>
+              <div class="title">{title}</div>
+              <div class="scroll">
+                <div class="descriptionContainer">
+                  <div class="description" id="LegalText"  pageHeight="180">{text}</div>
+                </div>
+                <div class="scrollbar" id="scrollbar.legal"> </div>
+                <div class="fade"> </div>
+              </div>
+              <div class="buttons">
+                <a id="LegalOK" class="button close" action="BrowseView.Legal.hide()" up="LegalThumb" right="LegalThumb" left="LegalOK" down="LegalOK">Close</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="uvtermsofservice.tpl">
+            <div>
+              <div class="title">{title}</div>
+              <div class="subtitle">{content}</div>
+              <div class="scroll">
+                <div class="descriptionContainer">
+                  <div class="description" id="LegalText"  pageHeight="180">{text}</div>
+                </div>
+                <div class="scrollbar" id="scrollbar.legal"> </div>
+                <div class="fade"> </div>
+              </div>
+              <div class="buttons">
+                <a id="LegalClose" class="button close" action="{CloseAction}" up="LegalClose" right="LegalThumb" left="LegalClose" down="LegalOK">{Close}</a>
+                <a id="LegalOK" class="button accept" action="{AcceptAction}" up="LegalClose" right="LegalThumb" left="LegalOK" down="LegalOK">{OK}</a>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="changeuserpopup">
+      <layout>
+        <div id="ChangeUserWindow">
+          <tpl id="changeuserpopup.tpl">
+            <div>
+              <div id="changeuserdefault" class="changeuserpopup_container">
+                <div id="CurrentUserHolder">
+                  Current User: <span id="CurrentUserName">{CurrentUserName}</span>
+                </div>
+                <div class="white sep">Choose a New User:</div>
+                <div class="user-button">
+                  <a id="ChangeUser0" up="ChangeUser0" left="ChangeUser0" right="ChangeUser0" down="ChangeUserCancel" class="button" action="BrowseView.changeUserConfirm(0)">All Users</a>
+                </div>
+                <div>
+                  <a id="ChangeUserCancel" up="ChangeUser0" left="ChangeUserCancel" right="ChangeUserCancel" down="ChangeUserCancel" class="button" action="BrowseView.ChangeUserPopup.hide()">Cancel</a>
+                </div>
+              </div>
+              <div id="changeuserconfirmation" class="changeuserpopup_container">
+                <div class="white">
+                  <strong>Are you sure you want to sign out?</strong>
+                </div>
+                <div class="sepsmall">This will switch parental controls to All Users.</div>
+                <div class="user-button">
+                  <a id="ChangeUserConfirm0" up="ChangeUserConfirm0" left="ChangeUserConfirm0" right="ChangeUserConfirm0" down="ChangeUserConfirmCancel" class="button" action="BrowseView.changeUser(0)">Yes</a>
+                </div>
+                <div>
+                  <a id="ChangeUserConfirmCancel" up="ChangeUserConfirm0" left="ChangeUserConfirmCancel" right="ChangeUserConfirmCancel" down="ChangeUserConfirmCancel" class="button" action="BrowseView.ChangeUserPopup.hide()">No</a>
+                </div>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="messagepopup">
+      <layout>
+        <div id="MessageWindow">
+          <tpl id="message_service.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div id="messagebuttons">
+                <a id="messageexit" class="button default" action="application.exit()" up="messageexit" down="messageexit" left="messageexit" right="messageexit">Exit</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_system_details.tpl">
+            <div id="messagemodalwrap" class="modalwrap systemStatus">
+              <div class="statusTitle">{Title}</div>
+              <div id="moreInfoText">{InformativeText}</div>
+              <div class="supportstring">
+                Still having trouble? Please go to <br/> <span class="url">www.cinemanow.com/support</span><br/> and type the following error code in the search box:<br/>157.A
+              </div>
+              <div id="messagebuttons">
+                <a id="messageexit" class="button default" up="messageexit" down="messageexit" left="messageexit" right="messageexit" action="BrowseView.MessagePopup.hide()">{Cancel}</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_error_default.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons" class="msg_2btns">
+                <a id="messageexit" class="button btn1" action="BrowseView.MessagePopup.hide()" up="messageexit" down="messageexit" left="messageexit" right="messageretry">Cancel</a>
+                <a id="messageretry" class="button default btn2" action="BrowseView.MessagePopup.hide(true)" up="messageretry" down="messageretry" left="messageexit" right="messageretry">Try Again</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="message_error_purchase.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg"> {Message} </div>
+              <div class="content"> {Content} </div>
+              <div id="messagebuttons" class="purchaseError">
+                <a id="messageexit" class="button" action="BrowseView.MessagePopup.hide()" up="messageLibrary" down="messageLibrary" right="messageexit" left="messageexit"> Close </a>
+                <a id="messageLibrary" action="BrowseView.MessagePopup.hide(true)" left="messageLibrary" right="messageLibrary" up="messageexit" down="messageexit" class="button default"> Go to My Library </a>
+              </div>
+              <div class="supportstring"> {Footer} </div>
+            </div>
+          </tpl>
+          <tpl id="message_error_connectiontooslow.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messagespeedtestcancel" class="button" action="BrowseView.MessagePopup.hide(false)" up="messagespeedtest" down="messagespeedtestcontinue" left="messagespeedtestcancel" right="messagespeedtestcancel">Cancel</a>
+                <a id="messagespeedtestcontinue" class="button" action="BrowseView.MessagePopup.hide(true)" up="messagespeedtestcancel" down="messagespeedtest" left="messagespeedtestcontinue" right="messagespeedtestcontinue">Continue Anyway</a>
+                <a id="messagespeedtest" class="button default" action="BrowseView.showSpeed()" up="messagespeedtestcontinue" down="messagespeedtestcancel" left="messagespeedtest" right="messagespeedtest">Run Internet Speed Test</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_error_connectiontooslow_player.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messagespeedteststop" class="button" action="BrowseView.MessagePopup.hide(false)" up="messagespeedteststop" down="messagespeedteststop" left="messagespeedteststop" right="messagespeedtestcontinue">Stop</a>
+                <a id="messagespeedtestcontinue" class="button default" action="BrowseView.MessagePopup.hide(true)" up="messagespeedtestcontinue" down="messagespeedtestcontinue" left="messagespeedteststop" right="messagespeedtestcontinue">Continue</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_error_askabouthd.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div id="askabouthd_bg">
+                <div class="content">{Content}</div>
+                <div id="messagebuttons1">
+                  <a id="messagetryagain" class="button default" action="BrowseView.MessagePopup.hide('tryagain')" up="messageok" down="messageok" left="messagetryagain" right="messagetryagain">{TryAgain}</a>
+                </div>
+              </div>
+              <div class="supportstring">{Footer}</div>
+              <div id="messagebuttons2">
+                <a id="messageok" class="button" action="BrowseView.MessagePopup.hide('ok')" up="messagetryagain" down="messagetryagain" left="messagecancel" right="messagecancel">{OK}</a>
+                <a id="messagecancel" class="button" action="BrowseView.MessagePopup.hide('cancel')" up="messagetryagain" down="messagetryagain" left="messageok" right="messageok">{Cancel}</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_error_playback.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default" action="BrowseView.MessagePopup.hide()" up="messageclose" down="messageclose" left="messageclose" right="messageclose">OK</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="message_error_unrecoverable.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div id="messagebuttons">
+                <a id="messageexit" class="button default" action="application.exit()" up="messageexit" down="messageexit" left="messageexit" right="messageexit">Reload</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_standard.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default" action="BrowseView.MessagePopup.hide()" up="messageclose" down="messageclose" left="messageclose" right="messageclose">Close</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_parentalcontrols.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default" action="BrowseView.MessagePopup.hide()" up="messageclose" down="messageclose" left="messageclose" right="messageclose">OK</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_loading.tpl">
+            <div id="messagemodalwrap" class="modalwrap message_loading">
+              <div class="spinnercontainer">
+                <div id="messagespinner"> </div>
+              </div>
+              <div class="msg">{Message}</div>
+            </div>
+          </tpl>
+          <tpl id="transition_loading.tpl">
+            <div id="transitionmodalwrap" class="modalwrap">
+              <div class="spinnercontainer">
+                <div id="messagespinner"> </div>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_content.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default" action="BrowseView.MessagePopup.hide()" up="messageclose" down="messageclose" left="messageclose" right="messageclose">{Close}</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_d2d_content.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default middle" action="BrowseView.MessagePopup.hide()" up="messageclose" down="messageclose" left="messageclose" right="messageclose">{Close}</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_content_callback.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default" action="BrowseView.MessagePopup.hide(true)" up="messageclose" down="messageclose" left="messageclose" right="messageclose">{Close}</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="message_region_reset.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageok" class="button default" action="BrowseView.MessagePopup.hide(false)" up="messageok" down="messageok" left="messageclose" right="messageclose">{OK}</a>
+                <a id="messageclose" class="button" action="BrowseView.MessagePopup.hide(true)" up="messageclose" down="messageclose" left="messageok" right="messageok">{Close}</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="message_region_notdefault.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageok" class="button default" action="BrowseView.MessagePopup.hide(false)" up="messageok" down="messageok" left="messageclose" right="messageclose">{OK}</a>
+                <a id="messageclose" class="button" action="BrowseView.MessagePopup.hide(true)" up="messageclose" down="messageclose" left="messageok" right="messageok">{Close}</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+
+          <tpl id="message_okcancel.tpl">
+            <div id="messagemodalwrap" class="modalwrap {Class}">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button" action="BrowseView.MessagePopup.hide(false)" up="messageclose" down="messageclose" left="messageclose" right="messageok">{Close}</a>
+                <a id="messageok" class="button default" action="BrowseView.MessagePopup.hide(true)" up="messageok" down="messageok" left="messageclose" right="messageok">{OK}</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="message_okcancel_vert.tpl">
+            <div id="messagemodalwrap" class="modalwrap {uvMsg}">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <div id="button1wrap">
+                  <a id="messageclose" class="button" action="BrowseView.MessagePopup.hide(false)" up="messageclose" down="messageok" left="messageclose" right="messageclose">{Close}</a>
+                </div>
+                <div id="button2wrap">
+                  <a id="messageok" class="button default" action="BrowseView.MessagePopup.hide(true)" up="messageclose" down="messageok" left="messageok" right="messageok">{OK}</a>
+                </div>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_three_button_vert.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <div id="button1wrap">
+                  <a id="messageclose" class="button" action="BrowseView.MessagePopup.hide(false)" up="messageclose" down="messageok" left="messageclose" right="messageclose">{Close}</a>
+                </div>
+                <div id="button2wrap">
+                  <a id="messageok" class="button" action="BrowseView.MessagePopup.hide(true)" up="messageclose" down="messageplay" left="messageok" right="messageok">{OK}</a>
+                </div>
+                <div id="button3wrap">
+                  <a id="messageplay" class="button default" action="BrowseView.MessagePopup.hide(true)" up="messageok" down="messageplay" left="messageplay" right="messageplay">{Action}</a>
+                </div>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_restart.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageclose" class="button" action="BrowseView.exitStore()" up="messageclose" down="messageclose" left="messageok" right="messageok">{Close}</a>
+                <a id="messageok" class="button default" action="BrowseView.MessagePopup.hide(true)" up="messageok" down="messageok" right="messageclose" left="messageclose">{OK}</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="message_alreadyownuv.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <div id="button1wrap">
+                  <a id="messageclose" class="button" action="BrowseView.MessagePopup.hide(false)" up="messageclose" down="messageok" left="messageclose" right="messageclose">{Close}</a>
+                </div>
+                <div id="button2wrap">
+                  <a id="messageok" class="button" action="BrowseView.MessagePopup.hide('buy')" up="messageclose" down="messageplay" left="messageok" right="messageok">{OK}</a>
+                </div>
+                <div id="button3wrap">
+                  <a id="messageplay" class="button default" action="BrowseView.MessagePopup.hide('play')" up="messageok" down="messageplay" left="messageplay" right="messageplay">{Action}</a>
+                </div>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="payment_table_popup.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">{Message}</div>
+              <div class="content">{Content}</div>
+              <div id="messagebuttons">
+                <a id="messageok" class="button default" action="BrowseView.MessagePopup.hide(true)" up="messageok" down="messageok" left="messageclose" right="messageok">{OK}</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="wishlist_options.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div>
+                <div class="msg ellipsis">
+                  {Title}<span class="ratingicon {mPAARating}"> </span>
+                </div>
+                <div>{Season}</div>
+                <div>{Episode}</div>
+              </div>
+              <div id="messagebuttons">
+                <a id="wo_cancel" class="button" action="BrowseView.MessagePopup.hide()" up="wo_remove" down="wo_details" left="wo_cancel" right="wo_cancel">Cancel</a>
+                <a id="wo_details" class="button default" action="BrowseView.WishList.showDetail({TitleID})" up="wo_cancel" down="wo_remove" left="wo_details" right="wo_details">View Details</a>
+                <a id="wo_remove" class="button" action="BrowseView.WishList.remove({TitleID}, {Index})" up="wo_details" down="wo_cancel" left="wo_remove" right="wo_remove">Remove From Wish List</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="wishlist_options_buy.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div>
+                <div class="msg ellipsis">
+                  {Title}<span class="ratingicon {mPAARating}"> </span>
+                </div>
+                <div>{Season}</div>
+                <div>{Episode}</div>
+              </div>
+              <div id="messagebuttons">
+                <a id="wo_cancel" class="button" action="BrowseView.MessagePopup.hide()" up="wo_remove" down="wo_purchase" left="wo_cancel" right="wo_cancel">Cancel</a>
+                <a id="wo_purchase" class="button default" style="{BuyStyle}" action="BrowseView.WishList.showPurchase({TitleID})" up="wo_cancel" down="wo_details" left="wo_purchase" right="wo_purchase">{PurchaseText}</a>
+                <a id="wo_details" class="button" action="BrowseView.WishList.showDetail({TitleID})" up="wo_purchase" down="wo_remove" left="wo_details" right="wo_details">View Details</a>
+                <a id="wo_remove" class="button" action="BrowseView.WishList.remove({TitleID}, {Index})" up="wo_details" down="wo_cancel" left="wo_remove" right="wo_remove">Remove From Wish List</a>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="message_exit.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">Are you sure you want to quit?</div>
+
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default" action="BrowseView.exitStore()" up="messageclose" down="messageclose" left="messageclose" right="messageok">Yes</a>
+                <a id="messageok" class="button" action="BrowseView.MessagePopup.hide(false)" up="messageok" down="messageok" left="messageclose" right="messageok">No</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+          <tpl id="message_return.tpl">
+            <div id="messagemodalwrap" class="modalwrap">
+              <div class="msg">Are you sure you want to quit?</div>
+
+              <div id="messagebuttons">
+                <a id="messageclose" class="button default" action="BrowseView.returnStore()" up="messageclose" down="messageclose" left="messageclose" right="messageok">Yes</a>
+                <a id="messageok" class="button" action="BrowseView.MessagePopup.hide(false)" up="messageok" down="messageok" left="messageclose" right="messageok">No</a>
+              </div>
+              <div class="supportstring">{Footer}</div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="imagepopup">
+      <layout>
+        <div id="ImageWindow">
+          <div id="rightArrow"> </div>
+          <div id="leftArrow"> </div>
+          <div id="ImageContent">
+            <tpl id="imagepopup.tpl">
+              <div class="imageholder">
+                <img src="{imageURL}" class="logo" />
+              </div>
+            </tpl>
+          </div>
+          <div>
+            <a id="closeImagePopup" action="BrowseView.ImagePopup.hide()">Press Enter button to close</a>
+          </div>
+
+        </div>
+      </layout>
+    </control>
+    <control id="confirmpopup">
+      <layout>
+        <div id="PurchaseConfirmationWindow">
+          <tpl id="confirmpopup.tpl">
+            <div id="ConfirmationContainer">
+              <div id="ConfirmBuy" class="hidden confirm-title white">You now own:</div>
+              <div id="ConfirmRent" class="hidden confirm-title white">You have rented:</div>
+              <div id="ConfirmTitle" class="white">
+                <span>{name}</span>
+                <span id="ConfirmHD" class="hidden"> </span>
+                <span id="ConfirmSurround" class="hidden"> </span>
+              </div>
+              <div>{season}</div>
+              <div>{episode}</div>
+              <div id="AddedToLibrary" class="hidden confirm-desc">This video has been added to your library.</div>
+              <div id="Rental24" class="hidden confirm-desc">You have 30 days to watch the movie. Once you start watching, you have 24 hours to finish.</div>
+              <div id="Rental48" class="hidden confirm-desc">You have 30 days to watch the movie. Once you start watching, you have 48 hours to finish.</div>
+              <div id="PreOrder" class="hidden confirm-desc">The movie will be available for playback from your library on {preorder}.</div>
+              <div id="SeasonPass" class="hidden confirm-desc">Episodes will be automatically added to your library when they become available.</div>
+              <div id="ConfirmButtons">
+                <a id="ConfirmClose" action="BrowseView.ConfirmPopup.hide(null)" up="ConfirmPlay" left="ConfirmClose" right="ConfirmClose" down="ConfirmLibrary"  class="button">Close</a>
+                <a id="ConfirmLibrary" action="BrowseView.ConfirmPopup.goLibrary({titleID}, {passID})" left="ConfirmLibrary" right="ConfirmLibrary" up="ConfirmClose" class="button">Go to My Library</a>
+                <a id="ConfirmPlay" action="BrowseView.ConfirmPopup.startPlay({titleID}, {passID}, 0)" up="ConfirmLibrary" down="ConfirmClose" left="ConfirmPlay" right="ConfirmPlay" class="hidden button">Play</a>
+                <a id="ConfirmPlayEpisode1" action="BrowseView.ConfirmPopup.startPlay({titleID}, {passID}, 0)" up="ConfirmLibrary" down="ConfirmPlayEpisode1" left="ConfirmPlayEpisode1" right="ConfirmPlayEpisode1" class="hidden button">Play Episode 1</a>
+                <a id="ConfirmResumePlay" up="ConfirmLibrary" down="ConfirmResumePlay" left="ConfirmResumePlay" right="ConfirmResumePlay" class="hidden button">Resume Play</a>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="speedpopup">
+      <layout>
+        <div id="SpeedPopupWindow">
+          <tpl id="speedpopup.tpl">
+            <div id="SpeedContainer">
+              <div id="SpeedTest">
+                <div class="speed-message white">Please wait a moment while we test the speed of your Internet connection.</div>
+                <div id="SpeedControlBG">
+                  <div id="SpeedStatusBar"> </div>
+                </div>
+                <div id="SpeedStatusMessage">Preparing Download...</div>
+                <div id="SpeedButtonContainer" class="redbuttons">
+                  <a action="BrowseView.SpeedPopup.hide()" class="button" left="SpeedCancel" right="SpeedCancel" up="SpeedCancel" down="SpeedCancel" id="SpeedCancel">{cancel}</a>
+                </div>
+              </div>
+              <div id="SpeedResult">
+                <div class="speed-message white">
+                  <div id="SpeedResult1" class="result-message">Your Internet connection is too slow to instantly stream videos.</div>
+                  <div id="SpeedResult2" class="result-message">Your Internet connection is fast enough to instantly stream SD video, but too slow for HD.</div>
+                  <div id="SpeedResult3" class="result-message">Your Internet connection is fast enough to instantly stream SD and HD video.</div>
+                </div>
+                <div id="SpeedDetails">
+                  Download Speed: <span class="white" id="SpeedDownload"> </span>
+                </div>
+                <div id="SpeedNotice">The speed of your Internet connection will vary depending on the time of day and the current Internet activity in your local area.</div>
+                <div id="SpeedResultButtonContainer" class="redbuttons">
+                  <a id="SpeedUpgradeButton" down="SpeedClose" up="SpeedUpgradeButton" left="SpeedUpgradeButton" right="SpeedUpgradeButton" action="BrowseView.SpeedPopup.showUpgrade()" class="button">Upgrade My Internet Connection</a>
+                  <a id="SpeedClose" up="SpeedUpgradeButton" down="SpeedClose" left="SpeedClose" right="SpeedClose" action="BrowseView.SpeedPopup.hide()" class="button">Close</a>
+                </div>
+              </div>
+              <div id="SpeedUpgrade">
+                <div class="speed-message white">
+                  <div id="SpeedCurrent">
+                    Your Internet connection speed is currently <span id="SpeedDownload2"> </span>.
+                  </div>
+                </div>
+                <div id="SpeedUpgradeDetails">
+                  For a good video experience, we recommend 4 Mbps.<br/>
+                  For the best HD experience, we recommend at least 8 Mbps.<br/><br/>
+                  To find what broadband services are available for your home, visit <span class="link">www.cinemanow.com/highspeed</span>
+                </div>
+                <div id="SpeedUpgradeButtonContainer" class="redbuttons">
+                  <a id="SpeedClose2" down="SpeedClose2" up="SpeedClose2" left="SpeedClose2" right="SpeedClose2" action="BrowseView.SpeedPopup.hide()" class="button">Close</a>
+                </div>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="systemstatuspopup">
+      <layout>
+        <div id="SystemStatusPopupWindow">
+          <tpl id="systemstatuspopup.tpl">
+            <div id="SystemStatusContainer">
+              <div id="SystemStatusUnique">
+                <div class="system-message white">
+                  This may take up to <span id="SystemTestTimeRemaining">30</span> seconds
+                </div>
+                <div id="SystemStatusControlBG">
+                  <div id="SystemStatusBar"> </div>
+                </div>
+                <div id="SystemStatusMessage">Initializing</div>
+                <div id="SystemButtonContainer">
+                  <a action="BrowseView.SystemStatusPopup.hide()" class="button" left="SystemStatusCancel" right="SystemStatusCancel" up="SystemStatusCancel" down="SystemStatusCancel" id="SystemStatusCancel">Cancel</a>
+                </div>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="pinpopup">
+      <layout>
+        <div id="PinPopupWindow">
+          <tpl id="pinpopup.tpl">
+            <div id="PinContainer">
+              <div id="PinTitle" class="white">ENTER PIN</div>
+              <div id="PinAbsent">
+                Don't have a PIN? Go to <span class="url white">www.cinemanow.com/parent</span>
+              </div>
+              <div id="PinForgot">
+                Forgot your PIN? Go to <span class="url white">www.cinemanow.com/forgot</span>
+              </div>
+              <ul id="PinControls">
+                <li>
+                  <a id="Pin0" class="numeric" left="PinCancel" right="Pin1" action="log.write('Pin0 action')" pointeraction="BrowseView.PinPopup.clickPincodeField(0)" pointerfocus="BrowseView.PinPopup.setPointerFocus(0)"> </a>
+                </li>
+                <li>
+                  <a id="Pin1" class="numeric" left="Pin0" right="Pin2" action="log.write('Pin1 action')" pointeraction="BrowseView.PinPopup.clickPincodeField(1)" pointerfocus="BrowseView.PinPopup.setPointerFocus(1)"> </a>
+                </li>
+                <li>
+                  <a id="Pin2" class="numeric" left="Pin1" right="Pin3" action="log.write('Pin2 action')" pointeraction="BrowseView.PinPopup.clickPincodeField(2)" pointerfocus="BrowseView.PinPopup.setPointerFocus(2)"> </a>
+                </li>
+                <li>
+                  <a id="Pin3" class="numeric" left="Pin2" right="Pin3" action="log.write('Pin3 action')" pointeraction="BrowseView.PinPopup.clickPincodeField(3)" pointerfocus="BrowseView.PinPopup.setPointerFocus(3)"> </a>
+                </li>
+                <li>
+                  <a id="Pin4" class="numeric" left="Pin3" right="PinOK" action="log.write('Pin4 action')" pointeraction="BrowseView.PinPopup.clickPincodeField(4)" pointerfocus="BrowseView.PinPopup.setPointerFocus(4)"> </a>
+                </li>
+              </ul>
+              <div id="PinFocusUp" style="display: none"> </div>
+              <div id="PinFocusDown" style="display: none"> </div>
+              <div id="PinFocusUpMask" action="BrowseView.PinPopup.setPinCode('up')" pointerfocus="BrowseView.PinPopup.setPinFocusArrow('up',true)" pointermouseout="BrowseView.PinPopup.setPinFocusArrow('up', false)"> </div>
+              <div id="PinFocusDownMask" action="BrowseView.PinPopup.setPinCode('down')" pointerfocus="BrowseView.PinPopup.setPinFocusArrow('down',true)" pointermouseout="BrowseView.PinPopup.setPinFocusArrow('down', false)"> </div>
+              <div id="PinButtonContainer">
+                <a action="BrowseView.PinPopup.checkPin()" class="button" left="Pin4" right="PinOK" up="PinOK" down="PinCancel" id="PinOK">OK</a>
+                <a action="BrowseView.PinPopup.cancel()" class="button" left="PinCancel" right="Pin0" up="PinCancel" down="PinCancel" id="PinCancel">{cancel}</a>
+              </div>
+              <div id="PinNav" class="white">Use Numbers or Up/Down keys on your remote control.</div>
+              <div id="PinIncorrect" class="red">Incorrect PIN. Please try again.</div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="ratepopup">
+      <layout>
+        <div id="RatePopupWindow">
+          <tpl id="ratepopup.tpl">
+            <div id="RateStars" class="modalwrap focus">
+              <div class="spacer"> </div>
+              <div class="title white field_@@BrowseView.RatePopup.hideIfNoFlixster()@@">Help us to recommend other titles you might like by rating this video.</div>
+              <div class="title white field_@@BrowseView.RatePopup.showIfNoFlixster()@@ noflixter">
+                <br/>Enter rating.
+              </div>
+              <br/>
+              <br/>
+              <a id="RateControl" up="RateControl" down="RateButton" left="RateControl" right="RateControl"> </a>
+              <div id="RatingLeftArrowMask" class="left-arrowMask"  pointerfocus="BrowseView.RatePopup.setFocusTo('RatingLeftArrow')" pointermouseout="BrowseView.RatePopup.setFocusTo('RatingLeftArrow',true)" action="application.events.publish('pointerRate',{'direction':'left'})" down="RateCancel"> </div>
+              <div id="RatingLeftArrow" class="left-arrow" action="application.events.publish('pointerRate',{'direction':'left'})" down="RateCancel"> </div>
+              <ul id="RateHolder">
+                <li class="star0"> </li>
+                <li class="star1"> </li>
+                <li class="star2"> </li>
+                <li class="star3"> </li>
+                <li class="star4"> </li>
+              </ul>
+              <div id="RatingRightArrowMask" class="right-arrowMask" pointerfocus="BrowseView.RatePopup.setFocusTo('RatingRightArrow')" pointermouseout="BrowseView.RatePopup.setFocusTo('RatingRightArrow',true)" action="application.events.publish('pointerRate',{'direction':'right'})"  down="RateButton"> </div>
+              <div id="RatingRightArrow" class="right-arrow" action="application.events.publish('pointerRate',{'direction':'right'})"  down="RateButton"> </div>
+              <div class="dialog">Use Left/Right keys on your remote control.</div>
+              <div class="buttons">
+                <a id="RateCancel" action="BrowseView.RatePopup.hide()" up="RateControl" left="RateCancel" right="RateButton" down="RateCancel" class="button">Cancel</a>
+                <a id="RateButton" action="BrowseView.RatePopup.saveRate()" up="RateControl" left="RateCancel" right="RateButton" down="RateButton" class="button">{rate}</a>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="audiopopup">
+      <layout>
+        <div id="AudioPopupWindow">
+          <tpl id="audiopopup.tpl">
+            <div class="audiopopupcontainer">
+              <div>
+                <p class="title white">Multiple audio formats are available with this title.</p>
+                <p class="subtitle">Choose an audio format preference below.</p>
+                <p>You can change the audio format at any time in Settings.</p>
+              </div>
+              <div id="messagebuttons">
+                <a id="audio_stereo" class="button default" rel="audioanchor" action="BrowseView.AudioPopup.selectAudioFormat('Stereo_Standard','{titleID}', '{passID}', '{resume}')" left="audio_stereo" right="audio_stereo">Stereo</a>
+                <a id="audio_dts" class="button hidden" rel="audioanchor" action="BrowseView.AudioPopup.selectAudioFormat('DTS_Express_51','{titleID}', '{passID}', '{resume}')" left="audio_dts" right="audio_dts">DTS-HD™</a>
+                <a id="audio_dolby" class="button hidden" rel="audioanchor" action="BrowseView.AudioPopup.selectAudioFormat('Dolby_Digital_Plus_51','{titleID}', '{passID}')" left="audio_dolby" right="audio_dolby">Dolby® Digital Plus</a>
+              </div>
+              <div id="audio_promotext">
+                <p id="aacselected" class="white audiopromo">AAC 2-channel stereo audio. AAC audio is supported by the majority of playback devices.</p>
+                <p id="dtsselected" class="hidden white audiopromo dyn">DTS-HD™ is an advanced surround sound technology that delivers a premium home theater experience.</p>
+                <p id="dolbyselected" class="hidden white audiopromo dyn">Dolby® Digital Plus brings cinematic surround sound to on-demand streaming movies. Delivering full-impact, discrete multi-channel audio, this advanced technology dramatically improves the listening experience of online entertainment. </p>
+                <p>5.1 surround available on select titles. If audio is mute, set the audio format to Stereo and try again.</p>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="activate">
+      <layout>
+        <div id="ActivateContent">
+          <tpl id="activate.tpl">
+            <div id="ActivatePanel">
+              <div class="title">
+                <span class="white">Here is your Activation code:</span>
+              </div>
+              <div id="ActivateCode">
+                <ul>
+                  <li id="Code0"> </li>
+                  <li id="Code1"> </li>
+                  <li id="Code2"> </li>
+                  <li id="Code3"> </li>
+                  <li id="Code4"> </li>
+                  <li id="Code5"> </li>
+                  <li id="Code6"> </li>
+                </ul>
+              </div>
+              <div id="ActivationFooter">
+                <p>
+                  Please enter this into the "Activation Code" field at <br> </br><span class="white url"> </span>
+                </p>
+                <p>If you are a new user to CinemaNow you will also be prompted to create an account.</p>
+              </div>
+              <div class="buttons">
+                <a class="button" action="BrowseView.ActivatePanel.displayCode()" id="ActivateGenerate" right="ActivateCancel" left="ActivateCancel" up="ActivateGenerate" down="ActivateGenerate">Generate New Code</a>
+                <a class="button default" action="BrowseView.ActivatePanel.onBack()" id="ActivateCancel" right="ActivateGenerate" left="ActivateGenerate" up="ActivateCancel" down="ActivateCancel">{buttonTxt}</a>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="scrollbar">
+      <layout>
+        <div>
+          <!-- This comment is needed so the packager does not get angry -->
+        </div>
+        <tpl id="scrollbar.tpl">
+          <div class="scrollcontainer">
+            <div class="scrollTopMask" pointerfocus="BrowseView.ScrollBar.setScrollBarFocus('scrolltop')" action="application.events.publish('scroll', {direction: 'up', rows: 1,scrollbar:BrowseView.ScrollBar})"> </div>
+            <div class="scrollBottomMask"  pointerfocus="BrowseView.ScrollBar.setScrollBarFocus('scrollbottom')" action="application.events.publish('scroll', {direction: 'down', rows: 1,scrollbar:BrowseView.ScrollBar})"> </div>
+            <div class="scrolltop" id="scrolltop" > </div>
+            <div class="scrollarea">
+              <a class="scrollthumb" action="log.write('scrollthumb')" pointerfocus="BrowseView.ScrollBar.setScrollBarFocus('app-gen-0')" mousedownaction="log.write('onmousedown click')"> </a>
+            </div>
+            <div class="scrollbottom" id="scrollbottom"> </div>
+          </div>
+        </tpl>
+        <tpl id="scrollbar.legal.tpl">
+          <div class="scrollcontainer">
+            <div class="scrollTopMask" pointerfocus="BrowseView.ScrollBar.setScrollBarFocus('legalscrolltop',true)" action="application.events.publish('scroll', {direction: 'up'})"> </div>
+            <div class="scrollBottomMask"  pointerfocus="BrowseView.ScrollBar.setScrollBarFocus('legalscrollbottom',true)" action="application.events.publish('scroll', {direction: 'down'})"> </div>
+            <div class="scrolltop" id="legalscrolltop"> </div>
+            <div class="scrollarea">
+              <a id='LegalThumb' class="scrollthumb" left="LegalOK" right="LegalThumb" action="log.write('scrollthumb')" pointerfocus="BrowseView.ScrollBar.setScrollBarFocus('LegalThumb',true)" mousedownaction="log.write('onmousedown click LegalThumb')"> </a>
+            </div>
+            <div class="scrollbottom" id="legalscrollbottom"> </div>
+          </div>
+        </tpl>
+      </layout>
+    </control>
+    <control id="keyboard">
+      <layout>
+        <div id="SearchTextWrap">
+          <div id="NoWrapSaver">
+            <div id="SearchText">_</div>
+          </div>
+        </div>
+        <a id="KeyboardKeySPACETop" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: ' '})" left="singleselectedmaster" up="KeyboardKeySPACEBottom" class="key col-3">SPACE</a>
+        <a id="KeyboardKeyBACKTop" action="application.events.publish('keyboardback', {caller: 'searchkeyboardcontrol'})" class="key col-3 key-back" up="KeyboardKeyBACKBottom"> DEL</a>
+        <a id="FirstKey" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'A'})" left="singleselectedmaster" class="key standard">A</a>
+        <a id="KeyboardKey1" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '1'})" class="key alt">1</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'B'})" up="KeyboardKeySPACETop" class="key standard">B</a>
+        <a id="KeyboardKey2" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '2'})" class="key alt">2</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'C'})" up="KeyboardKeySPACETop" class="key standard">C</a>
+        <a id="KeyboardKey3" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '3'})" class="key alt">3</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'D'})" up="KeyboardKeyBACKTop" class="key standard">D</a>
+        <a id="KeyboardKey4" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '4'})" class="key alt">4</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'E'})" up="KeyboardKeyBACKTop" class="key standard">E</a>
+        <a id="KeyboardKey5" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '5'})" class="key alt">5</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'F'})" left="singleselectedmaster" class="key standard">F</a>
+        <a id="KeyboardKey6" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '6'})" class="key alt">6</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'G'})" class="key standard">G</a>
+        <a id="KeyboardKey7" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '7'})" class="key alt">7</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'H'})" class="key standard">H</a>
+        <a id="KeyboardKey8" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '8'})" class="key alt">8</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'I'})" class="key standard">I</a>
+        <a id="KeyboardKey9" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '9'})" class="key alt">9</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'J'})" class="key standard">J</a>
+        <a id="KeyboardKey0" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '0'})" class="key alt">0</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'K'})" left="singleselectedmaster" class="key standard">K</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '-'})" class="key alt">-</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'L'})" class="key standard">L</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '/'})" class="key alt">/</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'M'})" class="key standard">M</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: ':'})" class="key alt">:</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'N'})" class="key standard">N</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: ';'})" class="key alt">;</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'O'})" class="key standard">O</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '$'})" class="key alt">$</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'P'})" left="singleselectedmaster" class="key standard">P</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '('})" class="key alt">(</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'Q'})" class="key standard">Q</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: ')'})" class="key alt">)</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'R'})" class="key standard">R</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '&amp;'})" class="key alt">&amp;</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'S'})" class="key standard">S</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '@'})"  class="key alt">@</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'T'})" class="key standard">T</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '\''})" class="key alt">'</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'U'})" left="singleselectedmaster" class="key standard">U</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '.'})" class="key alt">.</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'V'})" down="KeyboardAltSwap" class="key standard">V</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: ','})" class="key alt">,</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'W'})" down="KeyboardAltSwap" class="key standard">W</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '?'})" class="key alt">?</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'X'})" down="keyboardKeyCLEARBottom" class="key standard">X</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '!'})" class="key alt">!</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'Y'})" rightaction="focusgrid" down="KeyboardKeyCLEARBottom" class="key standard">Y</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '='})" class="key alt" rightaction="focusgrid">=</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: 'Z'})" down="KeyboardKeySPACEBottom" class="key standard">Z</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '#'})" class="key alt">#</a>
+        <a id="KeyboardAltSwap" action="application.events.publish('keyboardswap', {caller: 'searchkeyboardcontrol', value: 'alt'})" down="KeyboardKeySPACEBottom" class="key col-2 standard">123,?</a>
+        <a id="KeyboardStandardSwap" action="application.events.publish('keyboardswap', {caller: 'searchkeyboardcontrol', value: 'standard'})" class="key col-2 alt">ABC</a>
+        <a id="KeyboardKeyCLEARBottom" action="application.events.publish('keyboardclear', {caller: 'searchkeyboardcontrol'})" class="key col-2" down="KeyboardKeyBACKBottom">CLEAR</a>
+        <a id="KeyboardKeySPACEBottom" action="application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: ' '})" left="singleselectedmaster" down="KeyboardKeySPACETop" class="key col-3">SPACE</a>
+        <a id="KeyboardKeyBACKBottom" action="application.events.publish('keyboardback', {caller: 'searchkeyboardcontrol'})" class="key col-3 key-back car" up="KeyboardKeyCLEARBottom" down="KeyboardKeyBACKTop">DEL</a>
+      </layout>
+    </control>
+    <control id="skinnykeyboard">
+      <layout>
+        <div id="SkinnySearchTextWrap">
+          <div id="NoWrapSaver">
+            <div id="SkinnySearchText">_</div>
+          </div>
+        </div>
+        <a  id="SkinnyTopDash" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '-'})" left="SkinnyTopDash" up="Skinny0" class="key standard">-</a>
+        <a id="SkinnyTopClear" action="application.events.publish('keyboardclear', {caller: 'giftcardkeyboardcontrol'})" up="SkinnyBottomClear" class="key col-2">CLEAR</a>
+        <a  id="SkinnyTopBack" action="application.events.publish('keyboardback', {caller: 'giftcardkeyboardcontrol'})" class="key col-3 key-back"  right="gcredeem" up="SkinnyBottomBack">DEL</a>
+        <a id="SkinnyFirstKey" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'A'})" class="key standard" left="SkinnyFirstKey">A</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'B'})" class="key standard">B</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'C'})" class="key standard">C</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'D'})" class="key standard">D</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'E'})" class="key standard" right="gcredeem">E</a>
+        <a id="SkinnyF" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'F'})" class="key standard" right="gcredeem" left="SkinnyF">F</a>
+        <a id="SkinnyG" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'G'})" class="key standard">G</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'H'})" class="key standard">H</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'I'})" class="key standard">I</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'J'})" class="key standard" right="gcredeem">J</a>
+        <a id="SkinnyK" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'K'})" class="key standard" left="SkinnyK">K</a>
+        <a id="SkinnyL" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'L'})" class="key standard">L</a>
+        <a id="SkinnyM" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'M'})" class="key standard">M</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'N'})" class="key standard">N</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'O'})" class="key standard" right="gcredeem">O</a>
+        <a id="SkinnyP" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'P'})" class="key standard" left="SkinnyP">P</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'Q'})" class="key standard">Q</a>
+        <a id="SkinnyR" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'R'})" class="key standard">R</a>
+        <a id="SkinnyS" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'S'})" class="key standard">S</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'T'})" class="key standard" right="gcredeem">T</a>
+        <a id="SkinnyU" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'U'})" class="key standard" left="SkinnyU">U</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'V'})" class="key standard">V</a>
+        <a action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'W'})" class="key standard">W</a>
+        <a id="SkinnyX" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'X'})" class="key standard">X</a>
+        <a id="SkinnyY" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'Y'})" class="key standard" right="gcredeem">Y</a>
+        <a id="SkinnyZ" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: 'Z'})" class="key standard" left="SkinnyZ">Z</a>
+        <a id="Skinny1" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '1'})" class="key standard">1</a>
+        <a id="Skinny2" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '2'})" class="key standard">2</a>
+        <a id="Skinny3" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '3'})" class="key standard">3</a>
+        <a id="Skinny4" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '4'})" class="key standard" right="gcredeem">4</a>
+        <a id="Skinny5" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '5'})" class="key standard" left="Skinny5">5</a>
+        <a id="Skinny6" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '6'})" class="key standard">6</a>
+        <a id="Skinny7" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '7'})" class="key standard">7</a>
+        <a id="Skinny8" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '8'})" class="key standard">8</a>
+        <a id="Skinny9" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '9'})" class="key standard" right="gcredeem">9</a>
+        <a  id="Skinny0" action="application.events.publish('keyboardselect', {caller: 'giftcardkeyboardcontrol', value: '0'})" class="key standard" down="SkinnyTopDash" left="Skinny0">0</a>
+        <a id="SkinnyBottomClear" action="application.events.publish('keyboardclear', {caller: 'giftcardkeyboardcontrol'})" down="SkinnyTopClear" class="key col-2" >CLEAR</a>
+        <a  id="SkinnyBottomBack" action="application.events.publish('keyboardback', {caller: 'giftcardkeyboardcontrol'})" down="SkinnyTopBack" class="key col-3 key-back" right="gcredeem">DEL</a>
+      </layout>
+    </control>
+    <control id="settingspanel">
+      <layout>
+        <div id="SettingsPanel">
+          <tpl id="settingspanel.tpl">
+            {test}
+            <div>
+              <div id="Activate" class="panel">
+                <div id="activate_devicenotactive" class="notactive_@@BrowseView.SettingsPanel.isActivated()@@">
+                  <p>Activate CinemaNow on this device.</p>
+                  <a id="btnsettingsactivate" class="button" action="BrowseView.showActivate()" down="btnsettingsactivate">Activate Device</a>
+                </div>
+                <div id="activate_deviceactive" class="active_@@BrowseView.SettingsPanel.isActivated()@@">
+                  <p>
+                    CinemaNow is activated on this device.<br /><span class="grey">Go to </span><span class="url">www.cinemanow.com/device</span> <span class="grey"> to de-activate.</span>
+                  </p>
+                </div>
+              </div>
+              <div id="Updates" class="panel">
+                <div>
+                  <p class="white">Check for new CinemaNow updates.</p>
+                  <a id="btnsettingsupdates" class="button" action="BrowseView.checkForUpdates()" down="btnsettingsupdates">Check for Updates</a>
+                </div>
+              </div>
+              <div id="GiftCards" class="panel">
+                <div>
+                  <p class="white">Redeem gift card for account credit.</p>
+                  <a id="btnsettingsgc" class="button" action="BrowseView.goGiftCard(false)" left="selectedslave" down="btnsettingsgc">Redeem Gift Card</a>
+                </div>
+              </div>
+              <div id="Reset" class="panel">
+                <div>
+                  <a id="btnsettingsdefault" class="button" down="btnsettingsdefault">Reset Settings to Defaults</a>
+                  <p>Resets all application settings to default values.</p>
+                </div>
+              </div>
+              <div id="RequirePIN" class="panel">
+                <div>
+                  <div id="purchasepincheck" class="checkbox_@@BrowseView.SettingsPanel.requiresPurchasePin()@@">
+                    <a id="btnsettingpin" action="BrowseView.SettingsPanel.togglePurchasePin()" down="btnsettingpin"> </a>
+                  </div>
+                  <div id="requirePinLabel">
+                    <p class="white heading">Require PIN for purchases </p>
+                    <div>
+                      Requires a PIN to be entered when making <br />purchases.
+                    </div>
+                  </div>
+                  <div id="requirePinHelpText">
+                    You can also change these settings via the website.<br />Go to <span class="white url">www.cinemanow.com/parent</span> to configure parental controls or change settings.
+                  </div>
+                </div>
+              </div>
+              <div id="Parental" class="panel">
+                <div>
+                  <div id="parentcheck" class="checkbox_@@BrowseView.SettingsPanel.requiresParentalControls()@@">
+                    <a id="btnsettingsparental" action="BrowseView.SettingsPanel.toggleParentalControls()" down="btnsettingsparentalstartup"> </a>
+                  </div>
+                  <div id="parentcheckonstartup" class="checkbox_@@BrowseView.SettingsPanel.requiresParentalControlsOnStartUp()@@">
+                    <a id="btnsettingsparentalstartup" action="BrowseView.SettingsPanel.toggleParentalControlsOnStartUp()" up="btnsettingsparental" down="btnsettingsparentalstartup"> </a>
+                  </div>
+
+                  <div id="parentchecklabel">
+                    <p id="pparentchecklabel" class="white heading">Parental Controls</p>
+                    <div style="text-align:left">
+                      Restrict access to content based on your <br />account settings.
+                    </div>
+                  </div>
+
+                  <div id="parentchecklaunchlabel">
+                    <p class="white heading">Automatically enable parental controls on launch</p>
+                  </div>
+
+                  <div id="requirePinHelpText">
+                    You can also change these settings via the website.<br />Go to <span class="white url">www.cinemanow.com/parent</span> to configure parental controls or change settings.
+                  </div>
+                </div>
+              </div>
+              <div id="SpeedTest" class="panel">
+                <div>
+                  <a id="btnsettingsspeedtest" class="button" action="BrowseView.showSpeed()" down="btnsettingsspeedtest">Test Speed</a>
+                  <p> </p>
+                </div>
+              </div>
+              <div id="About" class="panel">
+                <div>
+                  <p class="white">About CinemaNow</p>
+                  <p>App Version: {version}.{build}</p>
+                  <p class="settingssdkversion">SDK Version: {Major}.{Minor}.{Revision}.{Branch}.{Build}</p>
+                  <p>Device FW Version: {firmwareversion}</p>
+                  <p>
+                    CinemaNow Device Name: <span id="settingsdeviceid">{devicename}</span>
+                  </p>
+                  <p> Email Address: {email} </p>
+                  <p> Device Model: {modelnumber}</p>
+                  <p class="deviceid">
+                    Device ID: <span id="settingsdeviceid">{deviceid}({affid}:{devicetype})</span>
+                  </p>
+
+                  <a id="btnsettingslegal" class="button" up="btnsettingprivacy" left="selectedslave" action="BrowseView.showLegalInfo('legal')">View Legal Info</a>
+                  <a id="btnsettingseula" class="button" action="BrowseView.showEula('legal')" left="selectedslave" down="btnsettingstos">View EULA</a>
+                  <a id="btnsettingstos" class="button" action="BrowseView.showTerms('terms')" left="selectedslave" down="btnsettingprivacy">View Terms of Service</a>
+                  <a id="btnsettingprivacy" class="button" action="BrowseView.showPrivacy('privacy')" left="selectedslave" down="btnsettingslegal">View Privacy Policy</a>
+
+                </div>
+              </div>
+              <div id="SystemStatus" class="panel">
+                <div>
+                  <div class="systemstatuscotainer">
+                    <div class="systemstatusheader">System Status</div>
+                    <div class="greytext">Curious about your bandwidth or experiencing trouble with your system?</div>
+                    <div class="testinfo">
+                      This test will determine the following:
+                      <ul>
+                        <li>Sustained bandwidth for video playback</li>
+                        <li>Connection type (wired or wireless)</li>
+                        <li>Device Status: Active/Inactive</li>
+                        <li>Store Connection: Active/Inactive</li>
+                        <li>IP Address</li>
+                        <li>Registered Email Address</li>
+                      </ul>
+                      <a id="btnBeginSystemStatus" class="button" up="btnBeginSystemStatus" down="btnBeginSystemStatus" action="BrowseView.showSystemStatus()">Begin Test</a>
+                    </div>
+                  </div>
+                  <div class="systemstatusresults">
+                    <div class="systemstatusheader">System Status Check Results</div>
+                    <div class="bwResults">
+                      Sustained Bandwidth: <span class="theResult"> </span> MBPS
+                    </div>
+                    <div class="bwMessage">
+                      <span class="theResult"> </span>
+                    </div>
+                    <div class="bwSummary">
+                      <span class="theResult"> </span>
+                    </div>
+                    <div class="connectionResults">
+                      Connection Type: <span class="theResult"> </span><span class="warning"> </span>
+                    </div>
+                    <div class="activationResults">
+                      Device Status: <span class="theResult"> </span><span class="warning"> </span>
+                    </div>
+                    <div class="resResults">
+                      Store Connection: <span class="theResult"> </sp

@@ -1,0 +1,912 @@
+a
+                    };
+                } else {
+                    _textStyle.edgeEffect.color1 = {
+                        r: syncStyle.edgeEffect.color1.r,
+                        g: syncStyle.edgeEffect.color1.g,
+                        b: syncStyle.edgeEffect.color1.b,
+                        a: syncStyle.edgeEffect.color1.a
+                    };
+                }
+            }
+
+        }
+        if(_textStyle_in.align instanceof Object)
+            _textStyle.align = _textStyle_in.align;
+        else if(_textStyle_in.align)
+            _textStyle.align = _textStyle_in.align.split(' ');
+        else if (syncStyle.align)
+            _textStyle.align = syncStyle.align;
+        for (var _s in _textStyle) {
+            var s = _textStyle[_s];
+            if(s !== undefined) {
+                if(_s == "color") {
+                    if(syncStyle[_s] &&
+                       s.r == syncStyle[_s].r && s.g == syncStyle[_s].g &&
+                       s.b == syncStyle[_s].b && s.a == syncStyle[_s].a)
+                        s = 0;
+                } else if(_s == "align") {
+                    if(syncStyle[_s] && s.join(' ') == syncStyle[_s].join(' '))
+                        s = 0;
+                } else if(_s == "shadow") {
+                    if(syncStyle[_s] && syncStyle[_s].color &&
+                       s.color.r == syncStyle[_s].color.r && s.color.g == syncStyle[_s].color.g &&
+                       s.color.b == syncStyle[_s].color.b && s.color.a == syncStyle[_s].color.a &&
+                       s.offsetX == syncStyle[_s].offsetX && s.offsetY == syncStyle[_s].offsetY)
+                        s = 0;
+                } else if(_s == "truncation") {
+                    if(syncStyle[_s] && s.position == syncStyle[_s].position && s.ellipsis == syncStyle[_s].ellipsis)
+                        s = 0;
+                } else if(_s == "cursor") {
+                    if(syncStyle[_s] && s.interval == syncStyle[_s].interval &&
+                       s.visible == syncStyle[_s].visible && s.style == syncStyle[_s].style && syncStyle[_s].color &&
+                       s.width == syncStyle[_s].width &&
+                       s.color.r == syncStyle[_s].color.r && s.color.g == syncStyle[_s].color.g &&
+                       s.color.b == syncStyle[_s].color.b && s.color.a == syncStyle[_s].color.a)
+                        s = 0;
+                } else if(_s == "typography") {
+                    if(syncStyle[_s] && s.kerning == syncStyle[_s].kerning && s.tracking == syncStyle[_s].tracking)
+                        s = 0;
+                } else if(_s == "edgeEffect") {
+                    if(syncStyle[_s] && s.type == syncStyle[_s].type && s.width == syncStyle[_s].width &&
+                       s.color1.r == syncStyle[_s].color1.r && s.color1.g == syncStyle[_s].color1.g &&
+                       s.color1.b == syncStyle[_s].color1.b && s.color1.a == syncStyle[_s].color1.a &&
+                       s.color2.r == syncStyle[_s].color2.r && s.color2.g == syncStyle[_s].color2.g &&
+                       s.color2.b == syncStyle[_s].color2.b && s.color2.a == syncStyle[_s].color2.a)
+                        s = 0;
+                } else if(s == syncStyle[_s]) {
+                    s = 0;
+                }
+            }
+            if(s !== undefined) {
+                this._push("textStyle", _textStyle);
+                break;
+            }
+        }
+    },
+
+    get transformOriginX() { return this._pull("transformOriginX"); },
+    set transformOriginX(_transformOriginX) {
+        if(_transformOriginX == this.transformOriginX)
+            return;
+        this._push("transformOriginX", _transformOriginX);
+    },
+
+    get transformOriginY() { return this._pull("transformOriginY"); },
+    set transformOriginY(_transformOriginY) {
+        if(_transformOriginY == this.transformOriginY)
+            return;
+        this._push("transformOriginY", _transformOriginY);
+    },
+
+    get erase() { return this._pull("erase"); },
+    set erase(_erase) {
+        if(_erase == this.erase)
+            return;
+        this._push("erase", _erase);
+    },
+
+    get opaque() { return this._pull("opaque"); },
+    set opaque(_opaque) {
+        if(_opaque == this.opaque)
+            return;
+        this._push("opaque", _opaque);
+    },
+
+    get layout() { return this._pull("layout"); },
+    set layout(_layout) {
+        if(_layout instanceof Object) {
+            if(this.layout instanceof Object &&
+               _layout.align == this.layout.align &&
+               _layout.layout == this.layout.layout)
+                return;
+            _layout = { layout: _layout.layout, align: _layout.align };
+            if(_layout.align instanceof Array) //force a deep copy if its an array
+                _layout.align = _layout.align.splice(0);
+        } else if(_layout == this.layout) {
+            return;
+        }
+        this._push("layout", _layout);
+    },
+
+    get layoutSpacing() { return this._pull("layoutSpacing"); },
+    set layoutSpacing(_layoutSpacing) {
+        if(_layoutSpacing == this.layoutSpacing)
+            return;
+        this._push("layoutSpacing", _layoutSpacing);
+    },
+
+    get layoutStretch() { return this._pull("layoutStretch"); },
+    set layoutStretch(_layoutStretch) {
+        if(_layoutStretch == this.layoutStretch)
+            return;
+        this._push("layoutStretch", _layoutStretch);
+    },
+
+    get rect() { return { x: this.x, y: this.y, width: this.width, height: this.height,
+                          minWidth: this.minWidth, minHeight: this.minHeight, maxWidth: this.maxWidth, maxHeight: this.maxHeight  }; },
+    set rect(_rect_in) {
+        var _rect;
+        var animate;
+        if(_rect_in.hasOwnProperty("animate")) {
+            animate = _rect_in.animate;
+        } else if(!this.visible || (!this.parent && !this._isRoot)) {
+            animate = false;
+        }
+        var rect_props = { x: 1, y: 1, width: 1, height: 1, minWidth: 0, minHeight: 0, maxWidth : 0, maxHeight: 0 };
+        for(var d in rect_props) {
+            if(d in _rect_in && _rect_in[d] != this[d]) {
+                var value;
+                if(animate !== undefined && rect_props[d] && this._hasAnimation(d))
+                    value = { value: _rect_in[d], animate: animate };
+                else if(rect_props[d] && _rect_in[d] === undefined)
+                    value = { value: _rect_in[d], animate: false };
+                else
+                    value = _rect_in[d];
+                this._push(d, value);
+            }
+        }
+    },
+
+    get x() {
+        var value = this._pull("x");
+        if(value && value instanceof Object)
+            return value.value;
+        return value;
+    },
+    set x(_x) {
+        if(_x == this.x)
+            return;
+        if(!(_x instanceof Object) && (_x === undefined || !this.visible || (!this.parent && !this._isRoot)) && this._hasAnimation("x"))
+            _x = { value: _x, animate: false };
+        this._push("x", _x);
+    },
+
+    get y() {
+        var value = this._pull("y");
+        if(value && value instanceof Object)
+            return value.value;
+        return value;
+    },
+    set y(_y) {
+        if(_y == this.y)
+            return;
+        if(!(_y instanceof Object) && (_y === undefined || !this.visible || (!this.parent && !this._isRoot)) && this._hasAnimation("y"))
+            _y = { value: _y, animate: false };
+        this._push("y", _y);
+    },
+
+    get width() {
+        var value = this._pull("width");
+        if(value && value instanceof Object)
+            return value.value;
+        return value;
+    },
+    set width(_width) {
+        if(_width == this.width)
+            return;
+        if(!(_width instanceof Object) && (_width === undefined || !this.visible || (!this.parent && !this._isRoot)) && this._hasAnimation("width"))
+            _width = { value: _width, animate: false };
+        this._push("width", _width);
+    },
+
+    get height() {
+        var value = this._pull("height");
+        if(value && value instanceof Object)
+            return value.value;
+        return value;
+    },
+    set height(_height) {
+        if(_height == this.height)
+            return;
+        if(!(_height instanceof Object) && (_height === undefined || !this.visible || (!this.parent && !this._isRoot)) && this._hasAnimation("height"))
+            _height = { value: _height, animate: false };
+        this._push("height", _height);
+    },
+
+    dump: function dump(cb) {
+        if(this._created) {
+            if (cb !== undefined) {
+                var id = this._registerCallback(cb);
+                nrdp._invoke(this._path, "dump", { id: id });
+            } else {
+                nrdp._invoke(this._path, "dump");
+            }
+        }
+    },
+    grab: function grab(cb) {
+        if(this._created) {
+            var id = this._registerCallback(cb);
+            nrdp._invoke(this._path, "grab", { id: id });
+        }
+    },
+    setDisplayFlags: function setDisplayFlags(_flags) { //compat
+        var opaque = false;
+        var erase = false;
+        var alignment = nrdp.gibbon.Image.ALIGN_NORMAL;
+        var flags = _flags.split(" ");
+        for (var f in flags) {
+            var flag = flags[f];
+            if(flag == "opaque")
+                opaque = true;
+            else if(flag == "erase")
+                erase = true;
+            else if(flag == "scale")
+                alignment = nrdp.gibbon.Image.ALIGN_STRETCH;
+            else if(flag == "tile")
+                alignment = nrdp.gibbon.Image.ALIGN_TILE;
+            else if(flag == "center")
+                alignment = nrdp.gibbon.Image.ALIGN_CENTER;
+        }
+        this.erase = erase;
+        this.opaque = opaque;
+        this.image.halign = alignment;
+        this.image.valign = alignment;
+    },
+    _hasAnimation: function _hasAnimation(property) {
+        var animations = this._pull("animations");
+        if(animations && animations[property] && animations[property].duration)
+            return true;
+        return false;
+    },
+    stopAnimation: function stopAnimation(property, end) {
+        if(this._created) {
+            if(end === undefined)
+                end = true;
+            nrdp._invoke(this._path, "stopAnimation", { property: property, end: end });
+        }
+    },
+    startAnimation: function startAnimation(property, start, end, duration, ease, append) {
+        if(append === undefined)
+            append = false;
+        if(start instanceof Object && start.relative)
+            start.relative = start.relative._id;
+        var value = { value: end, animate: { start: start, end: end, duration: duration, ease: ease, append: append } };
+        if(start === undefined)
+            value.animate.previous = this[property];
+        if(append && this.__push) {
+            var oldValue = this.__push[property];
+            if(oldValue && oldValue instanceof Object) {
+                if(oldValue.animate instanceof Array) {
+                    oldValue.value = end;
+                    oldValue.animate.push(value.animate);
+                    value = oldValue;
+                } else if(oldValue.animate instanceof Object) {
+                    var animate = [];
+                    animate.push(oldValue.animate);
+                    animate.push(value.animate);
+                    value.animate = animate;
+                }
+            }
+        }
+        this._push(property, value);
+    },
+    animate: function animate(property, duration, ease) {
+        var animations = this._pull("animations");
+        if(animations) {
+            if(!animations[property]) {
+                if(!duration)
+                    return;
+            } else if(animations[property].duration == duration &&
+                      animations[property].ease == ease) {
+                return;
+            }
+        } else {
+            animations = {};
+        }
+        animations[property] = { duration: duration, ease: ease };
+        this._push("animations", animations);
+    },
+    _updateProperty: function _updateProperty(property, value) {
+        //nrdp.log.console("Updated " + this._path + "::" + property);
+        this._syncData[property] = value;
+
+        var evt;
+        if (property == "parent") {
+            this._syncData[property] = nrdp.gibbon.widgets[nrdp.gibbon.Widget._createName(value)];
+        } else if(property.lastIndexOf("render", 0) == 0 && nrdp._hasEventListener(this, "renderpropertychange")) {
+            var renderProperty;
+            if(property == "renderX")
+                renderProperty = "x";
+            else if(property == "renderY")
+                renderProperty = "y";
+            else if(property == "renderWidth")
+                renderProperty = "width";
+            else if(property == "renderHeight")
+                renderProperty = "height";
+            else if(property == "renderTextCursorPosition")
+                renderProperty = "textCursorPosition";
+            else if(property == "renderTextLines")
+                renderProperty = "renderTextLines"
+            else if(property == "renderTextFirstLine")
+                renderProperty = "textFirstLine"
+            if(renderProperty) {
+                evt = {
+                    type: "renderpropertychange",
+                    property: property,
+                    renderProperty: renderProperty,
+                    value: value
+                };
+                //nrdp.log.error("EVENT: " + evt.type + " - p=" + evt.property + ", rP=" + evt.renderProperty + ", v=" + evt.value);
+            } else {
+                nrdp.log.error("Unhandled widget.renderProperty: " + property);
+            }
+        }
+        if (evt)
+            nrdp._callEventListeners(this, evt);
+    },
+
+    _destroyWidget: function _destroyWidget() {
+        if(nrdp.gibbon.scene.widget && nrdp.gibbon.scene.widget._id == this._id)
+            return;
+        this.image._destroyImage();
+        this.backgroundImage._destroyImage();
+        if(this._created)
+            nrdp._invoke(this._path, "destroy");
+        //nrdp.log.console("Destroy(" + this._id + ")");
+        this._created = false;
+        for(var child in this._children)
+            this._children[child]._destroyWidget();
+        delete nrdp.gibbon.widgets[this._name];
+    },
+    _createWidget: function _createWidget() {
+        if(!this._created) {
+            var pushData = this._pushData(true);
+            if(!pushData)
+                pushData = { id: this._id };
+            //nrdp.log.console("Create(" + this._id + "): " + JSON.stringify(pushData));
+            nrdp._construct("gibbon", "Widget", { data: pushData });
+            this._created = true;
+            if(!pushData["children"] && this._children.length) {
+                for(var child in this._children)
+                    this._children[child]._createWidget();
+            }
+        }
+    },
+    _handleEvent: function _handleEvent(event) {
+        var handled = true;
+        if (event.name == "imageLoaded" || event.name == "backgroundImageLoaded") {
+            if (event.data.success) {
+                if (event.name == "imageLoaded") {
+                    this._syncData.image.width = event.data.width;
+                    this._syncData.image.height = event.data.height;
+                } else {
+                    this._syncData.backgroundImage.width = event.data.width;
+                    this._syncData.backgroundImage.height = event.data.height;
+                }
+            }
+            var evt = { type: event.name, data: event.data };
+            nrdp._callEventListeners(this, evt);
+        } else if (event.name == "animationFinished") {
+            this._syncData[event.data.property] = event.data.value;
+            var evt = { type: event.name, data: event.data };
+            nrdp._callEventListeners(this, evt);
+        } else if (event.name == "text") {
+            //nrdp.log.console("text: " + JSON.stringify(event.data));
+            var evt = { type: event.name, data: event.data };
+            nrdp._callEventListeners(this, evt);
+        } else if (event.name == "grab" || event.name == "dump") {
+            this._callCallback(event);
+        } else {
+            handled = false;
+        }
+        return handled;
+    },
+    _registerCallback: function _registerCallback(cb) {
+        var id = nrdp.gibbon._setValue(cb);
+        return id;
+    },
+    _callCallback: function _callCallback(event) {
+        if (event.data.id === undefined)
+            return;
+        var cb = nrdp.gibbon._getValue(event.data.id);
+        nrdp.gibbon._deleteValue(event.data.id);
+        if (cb)
+            cb(event.data.data);
+    }
+};
+
+
+/*
+ * (c) 1997-2013 Netflix, Inc.  All content herein is protected by
+ * U.S. copyright and other applicable intellectual property laws and
+ * may not be copied without the express permission of Netflix, Inc.,
+ * which reserves all rights.  Reuse of any of this content for any
+ * purpose without the permission of Netflix, Inc. is strictly
+ * prohibited.
+ */
+
+/*
+ * all nrdp communication helpers are required to do four things:
+ *
+ * 1. add object to nrdp._backchannels for initialization
+ * 2. provide nrdp._setProperty()
+ * 3. provide nrdp._invoke()
+ * 4. call nrdp._gotEvent() when an event comes in.
+ */
+
+if(typeof window !== "undefined") {
+(function() {
+
+var evtsrc;
+var iframe;
+var nbpdUrl;
+
+nrdp._nbpdAsync = false;
+
+function _gotJSON(json) {
+    var event;
+    try {
+        event = JSON.parse(json);
+    } catch (err) {
+        console.log("unhandled exception in eventsource " + json);
+        console.log(err.toString());
+        return;
+    }
+    if (!event.object && event.name == "aboutToQuit") {
+        if (evtsrc) {
+            evtsrc.close();
+        } else {
+            iframe.contentWindow.postMessage("quit", '*');
+        }
+    }
+    nrdp._sendSyncdEvent(nrdp._gotEvent, nrdp, [event]);
+};
+
+function _POST(params, async) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", nbpdUrl + "ipc", async);
+    xhr.setRequestHeader("Content-type", "text/plain");
+    xhr.onerror = function() { console.log("lost IPC connection for POST"); };
+    xhr.onreadystatechange = function() {
+        if(this.readyState == 4) {
+            this.onreadystatechange = undefined;
+            this.onerror = undefined;
+        }
+    };
+    xhr.send(JSON.stringify(params));
+    return async || xhr.responseText;
+};
+
+function _setProperty(obj, prop, val) {
+    var args = {
+        object: obj ? "nrdp." + obj : "nrdp",
+        property: prop,
+        value: (typeof val === "undefined" ? null : val)
+    };
+    _POST(args, nrdp._nbpdAsync);
+};
+
+function _invoke(obj, method, args) {
+    if (!args) args = {};
+    args.object = obj ? "nrdp." + obj : "nrdp";
+    args.method = method;
+    _POST(args, nrdp._nbpdAsync);
+};
+
+function _construct(obj, construct, args) {
+    if (!args) args = {};
+    args.object = obj ? "nrdp." + obj : "nrdp";
+    args.construct = construct;
+    var result = _POST(args, false);
+    if (result)
+        return JSON.parse(result);
+    return undefined;
+};
+
+function _setupBackchannel() {
+    /*
+    var urlParams = location.search;
+    var getParam = function(key) {
+        var sIdx = urlParams.indexOf(key), sep, eIdx;
+        if (sIdx !== -1) {
+            sep = urlParams.charAt(sIdx - 1);
+            if (!sep || sep === "?" || sep === "&") {
+                eIdx = urlParams.indexOf("&", sIdx);
+                return urlParams.substring(sIdx + (key.length + 1), eIdx !== -1 && eIdx || urlParams.length);
+            }
+        }
+        return undefined;
+    };
+    var url = getParam("nbpdHost");
+    if (url)
+    {
+        nbpdUrl = url;
+    }
+    else
+    */
+    {
+        for (var i in document.scripts) {
+            if (/^http.*js\/NetflixBridge.js$/.test(document.scripts[i].src)) {
+                nbpdUrl = document.scripts[i].src.replace("js/NetflixBridge.js", "");
+                break;
+            }
+        }
+    }
+
+    try {
+        var evurl = nbpdUrl + "eventsource?objectFilter=-nrdp.gibbon.debugger&name=NBPDJS";
+        evtsrc = new EventSource(evurl);
+        evtsrc.onmessage = function(evt) { _gotJSON(evt.data); };
+        evtsrc.onerror = function(evt) {
+            evtsrc.close();
+            nrdp._gotEvent({type: "EventSourceError"});
+        };
+        mongooseBackchannel.evtsrc = evtsrc;
+    } catch (x) {
+        //nrdp.log.trace("Direct EventSource connection failed, using iframe");
+        window.addEventListener("message",
+                                function(e) {
+                                    if (e.origin + "/" === nbpdUrl)
+                                        _gotJSON(e.data);
+                                },
+                                false);
+
+        iframe = document.createElement('iframe');
+        iframe.style.setProperty("opacity", 0);
+        iframe.width = iframe.height = 0;
+        iframe.src = nbpdUrl + "html/iframe.html";
+        document.body.appendChild(iframe);
+    }
+
+    return true;
+};
+
+var mongooseBackchannel = {
+    name: "http",
+    isNative: false,
+    init: _setupBackchannel,
+    setProperty: _setProperty,
+    construct: _construct,
+    invoke: _invoke
+};
+
+nrdp._backchannels.push(mongooseBackchannel);
+
+})();
+}
+/*
+ * (c) 1997-2013 Netflix, Inc.  All content herein is protected by
+ * U.S. copyright and other applicable intellectual property laws and
+ * may not be copied without the express permission of Netflix, Inc.,
+ * which reserves all rights.  Reuse of any of this content for any
+ * purpose without the permission of Netflix, Inc. is strictly
+ * prohibited.
+ */
+
+
+nrdp.mdx = {
+    _path: "mdx",
+    addEventListener: function(evt, listener) { nrdp._addEventListener(this, evt, listener); },
+    removeEventListener: function(evt, listener) { nrdp._removeEventListener(this, evt, listener); },
+    _encodedList: [ { list: ['body', 'url', 'USN', 'friendlyName', 'serviceType', 'location'],
+                      decodeFn: decodeURIComponent },
+                    { list: [ 'responseHeaders' ],
+                      decodeFn: function(obj) {
+                          var decodedObj = {},
+                          member;
+                          for(member in obj) {
+                              decodedObj[member] = decodeURIComponent(obj[member]);
+                          }
+                          return decodedObj;
+                      }
+                    }
+                  ],
+    get NOT_INITIALIZED() { return 0; },
+    get INITIALIZED() { return 1; },
+
+    get NOT_ADVERTISING() { return 0; },
+    get ADVERTISING() { return 1; },
+
+    get NOT_DISCOVERING() { return 0; },
+    get DISCOVERING() { return 1; },
+
+    get interfaceName() { return this._syncData.interfaceName; },
+    get localIPAddress() { return this._syncData.localIPAddress; },
+    get nativeVersion() { return this._syncData.nativeVersion; },
+    get state() { return this._syncData.state; },
+
+    MdxConfigure: function(advertisingPeriod, 
+                           advertisingTTL, 
+                           advertisingPort, 
+                           listeningPort, 
+                           numSsdpReplies,
+                           msgLimit) {
+        nrdp._invoke("mdx", "MdxConfigure",
+                     {advertisingPeriod: advertisingPeriod,
+                      advertisingTTL: advertisingTTL,
+                      advertisingPort: advertisingPort,
+                      listeningPort: listeningPort,
+                      numSsdpReplies: numSsdpReplies,
+                      msgLimit: msgLimit});
+    },
+
+    MdxInit: function(host, port, serviceType, uuid, asyncHttpRequests) {
+        nrdp._invoke("mdx", "MdxInit",
+                     {host: encodeURIComponent(host),
+                      port: port,
+                      serviceType: encodeURIComponent(serviceType),
+                      uuid: encodeURIComponent(uuid),
+                      asyncHttpRequests: asyncHttpRequests});
+    },
+
+    MdxDeinit: function() {
+        nrdp._invoke("mdx", "MdxDeinit");
+    },
+
+
+    MdxUpnpInit: function(host) {
+        nrdp._invoke("mdx", "MdxUpnpInit",
+                     {host: encodeURIComponent(host)});
+    },
+
+    MdxUpnpDeinit: function() {
+        nrdp._invoke("mdx", "MdxUpnpDeinit");
+    },
+
+    AddInterfaceName: function(name) {
+        nrdp._invoke("mdx", "AddInterfaceName", {name: encodeURIComponent(name)});
+    },
+
+    InterfaceChanged: function(newInterface, connected, ipaddress, ssid) {
+        nrdp._invoke("mdx", "InterfaceChanged", {newInterface: encodeURIComponent(newInterface), connected: connected, ipaddress: ipaddress, ssid:ssid});
+    },
+
+    SearchForMdxDevices: function(serviceType, headerPatterns, mx, numSsdpSearches) {
+        nrdp._invoke("mdx", "SearchForMdxDevices",
+                     {serviceType: encodeURIComponent(serviceType),
+                      headerPatterns: nrdp.mdx._encodeArray(headerPatterns),
+                      mx: mx,
+                      numSsdpSearches: numSsdpSearches});
+    },
+
+    StopMdxDiscovery: function() {
+        nrdp._invoke("mdx", "StopMdxDiscovery");
+    },
+
+    RevealTargetPresence: function() {
+        nrdp._invoke("mdx", "RevealTargetPresence");
+    },
+
+    SetDeviceReplyHeaders: function(deviceReplyHeaders) {
+        nrdp._invoke("mdx", "SetDeviceReplyHeaders",
+                     {deviceReplyHeaders: nrdp.mdx._encodeArray(deviceReplyHeaders)});
+    },
+
+    HideTargetPresence: function() {
+        nrdp._invoke("mdx", "HideTargetPresence");
+    },
+
+    StartMdxAdvertising: function() {
+        nrdp._invoke("mdx", "StartMdxAdvertising");
+    },
+
+    StopMdxAdvertising: function() {
+        nrdp._invoke("mdx", "StopMdxAdvertising");
+    },
+
+    SendMdxHttpRequest: function(url, requestType, xid, curlTimeout, requestHeader, requestBody) {
+        nrdp._invoke("mdx", "SendMdxHttpRequest",
+                     {url: encodeURIComponent(url),
+                      requestType: requestType,
+                      xid: xid,
+                      curltimeout: curlTimeout,
+                      requestHeader: encodeURIComponent(requestHeader),
+                      requestBody: encodeURIComponent(requestBody)});
+    },
+
+    SendSessionMessage: function(url, requestType, xid, curlTimeout, context, requestHeader, requestBody, message, plaintext) {
+        nrdp._invoke("mdx", "SendSessionMessage",
+                     {url: encodeURIComponent(url),
+                      requestType: requestType,
+                      xid: xid,
+                      curltimeout: curlTimeout,
+                      context: encodeURIComponent(context),
+                      requestHeader: encodeURIComponent(requestHeader),
+                      requestBody: encodeURIComponent(requestBody),
+                      message: encodeURIComponent(message),
+                      plaintext: encodeURIComponent(plaintext)});
+    },
+
+    SendWebSocketMessage: function(host, xid, body) {
+        nrdp._invoke("mdx", "SendWebSocketMessage",
+                     {host: encodeURIComponent(host),
+                      xid : xid,
+                      body: encodeURIComponent(body)});
+    },
+
+    ProcessSessionMessage: function(context, xid, message, messageHmac, ciphertext, cb) {
+        nrdp.mdx._fn("ProcessSessionMessage",
+                     { context: encodeURIComponent(context),
+                       xid: xid,
+                       message: encodeURIComponent(message),
+                       messageHmac: encodeURIComponent(messageHmac),
+                       ciphertext: encodeURIComponent(ciphertext)
+                     },
+                     cb);
+    },
+
+    SendMdxHttpResponse: function(url, requestType, xid, curlTimeout, requestHeader, requestBody) {
+        nrdp._invoke("mdx", "SendMdxHttpResponse",
+                     {url: encodeURIComponent(url),
+                      requestType: requestType,
+                      xid: xid,
+                      curltimeout: curlTimeout,
+                      requestHeader: encodeURIComponent(requestHeader),
+                      requestBody: encodeURIComponent(requestBody)});
+    },
+
+    DialGetDeviceInfo: function(url, USN, serviceType, timeout) {
+        nrdp._invoke("mdx", "DialGetDeviceInfo",
+                     {url: encodeURIComponent(url),
+                      USN: encodeURIComponent(USN),
+                      serviceType: encodeURIComponent(serviceType),
+                      timeout: timeout});
+    },
+
+    beginContext: function(sharedSecret, context, cb) {
+        // Note: the parameter "context" is only included in order to make the
+        // function signature for nrdp.mdx.beginContext identical to the function
+        // signature for nrdp.ntba.beginCustomContext, it is unused (it is unused
+        // in the ntba version as well, but we don't bother to even pass it here)
+        nrdp.mdx._fn("beginContext",
+                     {sharedSecret: sharedSecret},
+                     cb);
+    },
+
+    endContext: function(context, cb) {
+        nrdp.mdx._fn("endContext",
+                     {context: context},
+                     cb);
+    },
+
+    _nextIdx: 1,
+    _cbs: [],
+    _fn: function(name, params, cb) {
+        if (!params) params = {};
+        params.idx = this._nextIdx++;
+        this._cbs[params.idx] = cb;
+        nrdp._invoke("mdx", name, params);
+        return params.idx;
+    },
+
+    _isEncodedString: function(eventkey) {
+        for ( index in nrdp.mdx._encodedStringList) {
+            if (eventkey == nrdp.mdx._encodedStringList[index])
+                return true;
+        }
+        return false;
+    },
+
+    _decodeEventData: function(data, key) {
+        var list, encodedList, item, compareKey, value;
+        // set here, so if not found in any lists, the value is returned as-is
+        value = data[key];
+        if(typeof value != null) {
+            for (list in nrdp.mdx._encodedList) {
+                if(nrdp.mdx._encodedList.hasOwnProperty(list)) {
+                    encodedList = nrdp.mdx._encodedList[list];
+                    for (item in encodedList.list) {
+                        if(encodedList.list.hasOwnProperty(item)) {
+                            compareKey = encodedList.list[item];
+                            if (compareKey === key) {
+                                return encodedList.decodeFn(value);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return value;
+    },
+
+    _handleEvent: function(event) {
+        var mydata = {};
+
+        for (key in event.data) {
+            mydata[key] = nrdp.mdx._decodeEventData(event.data, key);
+        }
+
+        if (event.name === "returnValue") {
+            if(!event.data || !event.data.idx) {
+                return false;
+            }
+
+            if (typeof this._cbs[event.data.idx] == "function") {
+                this._cbs[event.data.idx](mydata.data, mydata.data.idx);
+                delete this._cbs[event.data.idx];
+            }
+
+            return true;
+        } else {
+            nrdp._callEventListeners(this, mydata);
+            return true;
+        }
+    },
+
+    _encodeArray: function(arr) {
+        var encodedArr = [],
+        i;
+        for(i in arr) {
+            if(arr.hasOwnProperty(i)) {
+                encodedArr.push(encodeURIComponent(arr[i]));
+            }
+        }
+        return encodedArr;
+    },
+};
+/*
+ * (c) 1997-2013 Netflix, Inc.  All content herein is protected by
+ * U.S. copyright and other applicable intellectual property laws and
+ * may not be copied without the express permission of Netflix, Inc.,
+ * which reserves all rights.  Reuse of any of this content for any
+ * purpose without the permission of Netflix, Inc. is strictly
+ * prohibited.
+ */
+
+/*
+ * all nrdp communication helpers are required to do four things:
+ *
+ * 1. add object to nrdp._backchannels for initialization
+ * 2. provide nrdp._setProperty()
+ * 3. provide nrdp._invoke()
+ * 4. call nrdp._gotEvent() when an event comes in.
+ */
+
+(function() {
+function _gotEvents() {
+    var len = arguments.length;
+    for(var a = 0; a < len; ++a)
+        nrdp._sendSyncdEvent(nrdp._gotEvent, nrdp, [arguments[a]]);
+};
+
+function _setupBackchannel() {
+    if (typeof nrdp_platform === "undefined" || typeof this.platform.jscBridgeEnabled === "undefined" || !this.platform.jscBridgeEnabled() )
+        return false;
+    this.platform.jscBridgeInit(_gotEvents);
+    return true;
+};
+
+function _setProperty(subobj, prop, val) {
+    var obj = subobj ? "nrdp." + subobj : "nrdp";
+    var events = this.platform.jscBridgeSetProperty(obj, prop, val);
+    if(events)
+        _gotEvents(events);
+}
+
+function _invoke(obj, method, args) {
+    obj = obj ? "nrdp." + obj : "nrdp";
+    var events = this.platform.jscBridgeInvoke(obj, method, args);
+    if(events)
+        _gotEvents(events);
+}
+
+function _construct(obj, method, args) {
+    obj = obj ? "nrdp." + obj : "nrdp";
+    return this.platform.jscBridgeConstruct(obj, method, args);
+}
+
+function _console(msg) {
+    this.platform.console(msg);
+}
+
+function _mono() {
+    return this.platform.mono();
+}
+
+var backchannel = {
+    name: "GibbonJavaScriptCore",
+    isNative: true,
+    init: _setupBackchannel,
+    console: _console,
+    setProperty: _setProperty,
+    construct: _construct,
+    invoke: _invoke,
+    mono: _mono,
+    // I know this looks weird, but running in Chrome has a problem otherwise
+    platform: typeof nrdp_platform === "undefined" ? undefined : nrdp_platform
+};
+
+nrdp._backchannels.unshift(backchannel);
+
+})();

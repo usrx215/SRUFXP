@@ -1,0 +1,2786 @@
+//-----------------------------------------------------------------------------
+// titleview.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author tjmchattie
+ */
+var TitleViewControlProperties = {
+        id: 'titleviewcontrol',
+        persist: {},
+        controls:{},
+        tv:false,
+        episode:false,
+        season:false,
+        tvshow:false,
+        isLibrary:false,
+        showingRating: false,
+        layoutIsDirty: true,
+        noBundleError: false,
+        tpl: null,
+        initialize: function(){     
+            application.events.subscribe(this, 'elementfocus', this.updateSeparator);
+//          application.events.subscribe(application, 'goback', this.update.bind(this));
+            application.events.subscribe(this, "navigate", this.navigate.bind(this));
+            application.events.subscribe(this, "wishlistinsert", this.onWishlistInsert.bind(this));
+            application.events.subscribe(this, 'savestate', this.onSaveState.bind(this));
+            application.events.subscribe(this, 'restorestate', this.onRestoreState.bind(this));
+            // To handle #9681 - if item already in wishlist, a generic 550 error is returned
+            application.events.subscribe(this, 'updatewishlistbutton', this.onWishlistError.bind(this));
+        },
+        updateSeparator: function(payload) {
+            if (document.getElementById(payload.args[0].focusedelem) && (BrowseView.currentState == "titleview_wheel" || BrowseView.currentState == "titleview_tvepisodes")) {
+                var buttonPanel = $("titledetailscontainer").getElement('.buttonpanel');
+                
+
+                if (buttonPanel && $(payload.args[0].focusedelem).getParent().hasClass("buttonpanel")){
+                    BrowseView.expandTitleDetails();
+                    BrowseView.TitleViewControl.enableButtons();
+
+                }
+                
+            }
+        },
+        init: function(params, direction){
+            log.write('titleviewcontrol.init()');       
+            
+            //Persist Params
+            if(params) {
+                this.persist = params;               
+            }      
+            
+        },
+        cleanUI: function(){
+            if($('titledetailscontainer')) {
+                if($('titledetailscontainer').getChildren().length > 0){
+                    $('titledetailscontainer').getChildren().destroy();
+                }
+            }
+        },
+        /*
+         * Load data will:
+         * 1) Set the data source for the grid view
+         * 2) Render the local controls
+         * 3) set the data for the first item.  
+         */
+        loadData: function(title) {
+            var template;
+            this.persist.title = title;
+            this.showingRating = false;
+            this.tv = title.titleType.substring(3,0) == "TV_";
+            this.season =  title.titleType == "TV_Season";
+            this.episode = title.titleType == "TV_Episode";
+            this.tvshow = title.titleType == "TV_Show";
+            this.audioProfiles = $cn.utilities.getAudioProfileForTitle(title.titleID);
+            template = this.tvshow ? "titleview.tvtitle" : "titleview.title";
+            
+            this.tpl = new ui.template("titledetailscontainer", application.ui.loadTpl(template));
+            this.tpl.compile();
+            this.draw();        
+        },
+        drawMeta: function(key, format){
+            log.write('Getting meta for: ' + key);
+            if(!format)
+            {
+                var val = $cn.utilities.getMeta(key, this.persist.title.metaValues);
+                
+                /*
+                 * Deprecated as of v.0.6.0 spec v.0.96 comps no longer have "liked it" in the rating
+                 * if(key == 'Flixster Users' || key == 'CriticsReview')
+                 * {
+                 *      if(val.indexOf("%") != -1)
+                 *          val = "<span class='emphasis'>"+val.replace("%", "%</span>");
+                 * }
+                 * 
+                */
+                if(key == 'Flixster Users' || key == 'CriticsReview')
+                {
+                    val = val.replace(" liked it", "").replace(" liked it.", "");
+                }
+                
+                return val;
+            }
+            else
+                val = $cn.utilities.getMeta(key, this.persist.title.metaValues);
+                return $cn.utilities.formatDate(val, format);
+        },
+        show3rdPartyData: function(){
+            var val = '';
+            
+            if(this.showMetaField('CriticsReview') == "_hidden" && this.showMetaField('Flixster Users') == "_hidden"){
+                val = "_hidden";
+            }
+            
+            return val;
+            
+        },
+        thirdPartyReviewsEnabled: function(){
+            var val = '';
+            
+            if(!$cn.data.flixsterEnable){
+                val = "_hidden";
+            }
+            
+            return val;
+        },
+        getAudioCssClass: function(){
+            var val = this.audioProfiles['Dolby_Digital_Plus_51'];
+                
+            if(!val){
+                val = this.audioProfiles['Dolby_Digital_Plus_Stereo'];
+                
+                if(!val){
+                    val = this.audioProfiles['DTS_Express_51'];
+                    
+                    if(!val){
+                        val = this.audioProfiles['DTS_Express_Stereo'];
+                    }
+                }
+            }
+            
+            if(!val){
+                return "_hidden";
+            }
+            else {
+                return '';
+            }
+        },
+        getSurroundAudioCssClass: function(){
+            var val = this.audioProfiles['Dolby_Digital_Plus_51'];
+                
+            if(!val){
+                val = this.audioProfiles['DTS_Express_51'];
+            }
+            
+            if(!val || (this.displaySurroundSoundBadge() == "hideextra" )){
+                return "_hidden";
+            }
+            else {
+                return '';
+            }
+        },
+        //TODO Determines whether the audio icons in the bottom right of the title view are shown
+        getAudioIconCssClass: function(profileName) {
+            //Audio icons in deital page is not support yet.Return hidden only for CSS compatibility
+            return "hidden";
+        },
+        showAudioMetaField: function(profileName){
+            var val = this.audioProfiles[profileName];
+            if(!val){
+                return "_hidden";
+            }
+            else {
+                return '';
+            }
+        },
+        showAudioTechnicalField: function(type, audio){
+            var val = '_hidden';
+            
+            if(type == "Standard Definition" && this.getAudioCssClass() != "_hidden" && !this.audioProfiles['HDOnly'] && this.audioProfiles[audio]) {
+                val = '';
+            }
+            else if(type == "High Definition" && this.getAudioCssClass() != "_hidden" && this.audioProfiles[audio]){
+                val = '';
+            }
+            
+            return val;
+        },
+        showUVTechnicalDetails: function(name){
+            if(name == "UltraViolet"){
+                return (this.isLibrary ? application.resource.uv_messages.technical_details.uv_library_view :application.resource.uv_messages.technical_details.uv_store_view );
+            }
+        },
+        showMetaField: function(fieldName){
+            var val = $cn.utilities.getMeta(fieldName, this.persist.title.metaValues);
+            if(val.length == 0){
+                return "_hidden";
+            }
+            return '';      
+        },
+        showReviewMetaFields:function(){
+            var val1 = '', val2 = '', returnVal ='';
+
+            val1 = $cn.utilities.getMeta('Flixster Users', this.persist.title.metaValues);
+            val2 = $cn.utilities.getMeta('CriticsReview', this.persist.title.metaValues);
+
+            if(val1.length == 0 && val2.length == 0){
+                returnVal =  "hidden";
+            }
+
+            return returnVal;
+        },
+        drawTomatoFactor: function(review){
+            var txt = "splaticon";
+            review = $cn.utilities.getMeta(review, this.persist.title.metaValues);
+            
+            if(review && review.length > 0){
+                try {
+                    var arr = review.split('%');
+                    if(parseInt(arr[0].trim()) >= 60) {
+                        txt = "freshicon";
+                    }
+                }
+                catch(e){}
+            }
+            
+            return txt;
+        },
+        getDirectorCssClass: function(){
+            return (this.persist.title.directors.length == 0) ? "_hidden" : '';
+        },
+        getCastCssClass: function(){
+            return (this.persist.title.actors.length == 0) ? "_hidden" : '';
+        },
+        drawStarRating: function(rating){
+            
+            log.write('Drawing rating for: ' + rating);
+            for(var i = 1; i <= 5; i++) {
+                $('TitleStar' + i).erase('class');
+                if (rating >= i) {
+                    $('TitleStar' + i).addClass('fullstar');
+                } else if(rating < i && rating > (i - 1)) {
+                    $('TitleStar' + i).addClass('halfstar');
+                }
+            }
+        },
+        getTrailer: function() {
+            var assetid = '';
+            this.hasTrailer = false;
+            
+            this.persist.title.bonusAssets.each(function(item) {
+                if(item.bonusType == "Trailer") {
+                    assetid = item.bonusAssetID;
+                    this.hasTrailer = true;
+                }
+            }.bind(this));
+            return assetid;
+        },
+        getPurchaseButtonText: function() {
+            return $cn.utilities.purchaseText(this.persist.title);
+        }, 
+        getActors: function() {
+            return $cn.utilities.ellipsis(this.persist.title.actors, application.resource.titleview_strings.Starring_Concat_Length);
+        },
+        getUserRatingFloat: function(rating){
+            var val = 0;
+            
+             try {
+                 if(!rating) {
+                     val = parseFloat($cn.utilities.getMeta('YourRating', this.persist.title.metaValues)); 
+                 }
+                 else {
+                    val = parseFloat(rating); 
+                 }
+             }
+             catch (e) { val = 0; }
+             
+             return val;
+        },
+        setUserRating: function(rating) {
+            $cn.utilities.setMeta('YourRating',rating, this.persist.title.metaValues);
+        },
+        getUserRating: function(rating){
+            var yourRating = this.getUserRatingFloat(rating);
+            return (yourRating > 0) ? "block" : "none";
+        },
+        getRateButtonText: function() {
+            var rating = parseFloat($cn.utilities.getMeta('YourRating', this.persist.title.metaValues));
+            var retString = 'Rate it';
+            if(rating > 0) {
+                retString = 'Change Rating';
+            } 
+            return retString;
+        },
+        getEpisodeShowTitle: function() {
+            return (this.persist.title.show ? this.persist.title.show : "");
+
+            
+        },
+        getEpisodeShowSeason: function() {
+            return (this.persist.title.season ? this.persist.title.season : "");
+            
+        },
+        displayBonusAsset: function(key){
+            
+            var val = 'hideextra';
+            this.persist.title.bonusAssets.each(function(item){
+                if(item.bonusType == key)
+                {
+                    val = 'showextra';
+                }
+            });
+            
+            log.write('BonusAsset: ' + val);
+            return val;
+        },
+        displayAvailability: function(invert){
+            
+            var show = invert != null ? invert : false;
+            
+            if (this.persist && this.persist.title.watchStatus &&
+                this.persist.title.watchStatus != WatchStatus.WatchNow &&
+                this.persist.title.watchStatus != WatchStatus.ExpiredRental)
+                show = !show;
+        
+            return show ? 'showextra' : 'hideextra';
+        },
+        displayExtra: function(key, invert){
+            var b,
+                val;
+
+            // UV flag check short circuit
+            if (key === "HasUV" && !$cn.config.EnableUV) {
+                return 'hideextra';
+            }
+
+            // BrowseView.currentState is "search-view" if coming from search, even if showing owned movie
+            // so we will check if isPassUV exists
+            if(this.persist.title.isPassUV && key === "HasUV"){
+                b = this.persist.title.isPassUV;
+            } else {
+                b = $cn.utilities.getMeta(key, this.persist.title.metaValues);
+            }
+            val = 'hideextra';
+            
+            if(((b == "True" || (b != "False" && b != '')) && !invert) || (b == "False" && invert)){
+                    val = 'showextra';
+            }
+            
+            return val;
+        },
+        displaySurroundSoundBadge: function(){
+            /* This is repurposed to account for the dolby surround sound icon */
+            var surround = this.audioProfiles['Dolby_Digital_Plus_51'],
+                val = "hideextra";
+            
+            /*
+             * If it is a surround sound title AND It is not in the library then dispaly
+             * It is in the library AND surround sound enabled AND NOT limited to HD only then display
+             * It is in the library AND surround sound enabled AND limited to HD only AND HD is enabled then display
+             */
+            if(surround && !this.isLibrary) {
+                val = 'showextra';
+            }
+            else if(surround && this.isLibrary && !this.audioProfiles['HDOnly']) {
+                val = 'showextra';
+            }
+            else if (surround && this.isLibrary && this.audioProfiles['HDOnly'] && $cn.utilities.getMeta("HD", this.persist.title.metaValues) == "True") {
+                val = 'showextra';
+            }
+
+            return val;
+        },
+        displayMoreInfo: function(){
+            var cnt = 0,
+                x;
+            //UI should determine show or hide more info panel according to baselineEnable and flixsterEnable.
+            for (x = 0; x < this.persist.title.wheelItems.length; x++) {
+               if ((this.persist.title.wheelItems[x] == "m_credits" ||
+                    this.persist.title.wheelItems[x] == "m_cast_bios" ||
+                    this.persist.title.wheelItems[x] == "m_cast_crew") 
+                    && $cn.data.baselineEnable) {
+                    cnt ++;
+                   }
+               if ((this.persist.title.wheelItems[x] == "r_critics" ||
+                    this.persist.title.wheelItems[x] == "r_user_revs" || 
+                    this.persist.title.wheelItems[x] == "m_technical_details" && configuration.readValue('EnableTechnicalDetailsWheelOption')) 
+                    && $cn.data.flixsterEnable) {
+                    cnt ++;
+               }
+            }
+            
+            return (cnt > 0) ? "showextra" : "hideextra";
+        },
+        displayExtraIfPresent: function(key){
+            var b = $cn.utilities.getMeta(key, this.persist.title.metaValues);
+            var val = 'hideextra';
+            
+            if(b && b != "" && b.length > 0){
+                val = 'showextra';
+            }
+            
+            return val;
+        },
+        drawDurationString: function(){
+            var val = '',
+            airDate = this.drawMeta("AirDate", $cn.config.DateFormat ? $cn.config.DateFormat : "longDate"),
+            runTime = $cn.utilities.getMeta("RunTime", this.persist.title.metaValues);
+            if(/^-|^0+\s/.test(runTime)){
+                runTime = '';
+                log.write("runTime was either 0 or negative and has been removed.")
+            }
+
+            if(this.episode)
+            {
+                if(airDate && airDate.length > 0)
+                {
+                    if($cn.data.CountryID == 82)
+                    {
+                        val = this.formatReviewDate(airDate);
+                    }
+                    else
+                    {
+                        val = airDate;
+                    }
+                }
+            }
+            else
+            {
+                if(this.persist.title.releaseYear && this.persist.title.releaseYear.length > 0)
+                {
+                    val = this.persist.title.releaseYear;
+                }
+            }
+            
+            if(!this.season && !this.tvshow)
+            {
+                if(runTime && runTime.length > 0)
+                {   
+                    if(val && val.length > 0)
+                        val = val +  application.resource.titleview_strings.Duration_Concat;
+                    else {
+                        val = '';
+                    }
+                    
+                    val = val + runTime;
+                }
+            }
+            
+            
+            //if there is nothing to show, hide it
+            if(!val || val.length == 0)
+            {
+                if(document.getElementById('titlemeta_duration')) {
+                    $('titlemeta_duration').hide();
+                }
+            }
+            return val;
+        },
+        storeLogo: function(){
+            
+            if(this.persist.title && this.persist.title.storeLogoUrl)
+            {   log.write("STORE URL: <img src='"+this.persist.title.storeLogoUrl+"' id='storeLogo' alt='' />");
+                return "<img src='"+this.persist.title.storeLogoUrl+"' id='storeLogo' alt='' style='vertical-align:middle;margin-left:5px;'  />";
+                
+            }
+            else
+            {
+                log.write("STORE URL: NOTHING");
+                return "";
+            }
+
+        },
+        getRentalStatus: function(){
+            var status = '';
+            
+            if(this.persist.title.watchStatus == 'ExpiredRental')//Expired
+            {
+                status = this.persist.title.expirationMessage;
+
+            }
+            else if(this.persist.title.expirationMessage && this.persist.title.expirationMessage != '')
+            {
+                status = '('+this.persist.title.expirationMessage+') ';
+            }
+            
+            return status;
+        },
+        formatReviewDate: function(d){
+            var val = '',
+                dStr = null,
+                day = '',
+                month = '',
+                year = '',
+                m_names = new Array("January", "February", "March", 
+                        "April", "May", "June", "July", "August", "September", 
+                        "October", "November", "December");
+            
+            try {
+                dStr = Date.parse(d);
+
+                //Necessary because sometimes bad data comes through
+                if(!isNaN(dStr.getDate())) {
+                    day = dStr.getDate();
+                    month = dStr.getMonth();
+                    year = dStr.getFullYear();
+                    
+                    val = m_names[month] + " " + day + ", " + year;
+                }
+            }
+            catch(e){
+                alert(e);
+                val = ''
+            }
+            
+            return val;
+        },
+        reviewIcon: function(rating){
+            return (rating && rating !='') ? rating : '';
+        },
+        getVisibleElements: function(container) {
+            var result = [];
+            if(container){
+                var items = container.getChildren();
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].getStyle('display') == "block")
+                        result.push(items[i]);
+                }
+            }
+            return result;
+        },
+        /* Read config values and render grid */
+        draw: function(){
+            var tpl;
+            this.cleanUI();
+            
+            /*
+             *  1) Create elements for titles
+             *  2) Attach a focus
+             */     
+            log.write(this.persist.title);
+            $("ruler").setStyles({"font-weight":"bold","font-size":"17px"});
+            
+                this.persist.title.name = this.persist.title.name.ellipsToPixels(460);
+                this.tpl.append(this.persist.title);
+                this.tpl.apply();
+                
+                var isUnavailable = 
+                    this.persist.title.watchStatus != null && 
+                    this.persist.title.watchStatus != WatchStatus.WatchNow && 
+                    this.persist.title.watchStatus != WatchStatus.ExpiredRental;
+                
+                
+                //If no flixter hide ratings
+                log.write("$cn.data.flixsterEnable: " + $cn.data.flixsterEnable);
+                if ($cn.data.flixsterEnable) {
+                	if(this.displayExtraIfPresent('CriticsReview') == "showextra" && this.displayExtraIfPresent('Flixster Users') == "showextra" && $("reviewcontainer")){
+                		$("reviewcontainer").addClass("bothreviewssvisible");
+                	}
+                }
+                
+                if (!this.tvshow) {
+                    
+                    var template = "buttonpanel.title";
+                    
+                    if (this.persist.title.passID) {
+                        if (this.season)
+                            template = "buttonpanel.library.alternate";
+                        else if (isUnavailable)
+                            template = "buttonpanel.library.alternate";
+                        else
+                            template = "buttonpanel.library";
+                    }
+                    
+                    tpl = new ui.template("ButtonPanel", application.ui.loadTpl(template));
+                    
+                    tpl.compile();
+                    tpl.append(this.persist.title);
+                    tpl.apply();
+                    
+                    if (isUnavailable)
+                        $('ButtonPanel').addClass("unavailabletitle");                    	
+                }
+                
+                //SHOW HIDE BITS
+                if(this.tv)
+                {
+                    if (!this.persist.title.seasonal)
+                        application.putInnerHTML($("tdbuttonEpisodes"), application.resource.episodes);
+
+                    if (! this.noBundleError  && ! isUnavailable) {
+                        $("tdbuttonEpisodes").removeClass("hideextra");
+                    } else {
+                        //$("tdbuttonEpisodes").addClass("hideextra");
+                        this.noBundleError = false;
+                    }
+                    $("titlemeta_criticsreview").addClass("hideextra");
+                    $("titlemeta_flixsterusers").addClass("hideextra");
+                    
+                    if(!this.tvshow)
+                    {
+                        if ($("reviewcontainer")) {
+                    	    $("reviewcontainer").addClass("hideextra");
+                        }
+                        $("tdbuttonRating").hide();
+                        $("ratingstar").hide();
+                    }
+                    if(this.season)
+                    {
+                        if(document.getElementById('duration')){
+                            $("duration").hide();
+                        }
+                    }
+                    
+                    $$(".tv").show();
+                    $$(".movie").hide();    
+                    
+                    if(!this.episode)
+                    {
+                        if($("tdbuttonWatchTrailer"))
+                            $("tdbuttonWatchTrailer").addClass("hideextra");
+                        
+                        if($("tdbuttonCheckout"))
+                            $("tdbuttonCheckout").addClass("hideextra");
+                        //navigation.setFocus('tdbuttonEpisodes');
+        
+                        $$(".episode").hide();  
+                    }
+                    
+                    if(this.season || this.episode) {
+                        $('titlemeta_rating').hide();
+                    }   
+                    
+                }
+                
+                if(this.persist.title.passID) //LIBRARY
+                {
+                    BrowseView.setLibrary(true);
+                    this.isLibrary = true;
+                    
+                    $('purchaseinfostringdetails').hide();
+                    
+                    if (this.persist.title.passID > 0)
+                        $('titlepurchasedstring').removeClass('hidden');
+                    
+                    if(this.persist.title.watchStatus == 'ExpiredRental')//Expired
+                    {
+                        $('tdbuttonExpired').removeClass("hideextra");
+                        $('tdbuttonPlay').hide();
+                    }               
+                    if((this.persist.title.streamStartTimeSeconds >  $cn.config.EarliestResumeS - $cn.config.RewindUponResumeS) && this.persist.title.watchStatus == WatchStatus.WatchNow)
+                    {
+                        $('tdbuttonResumePlay').removeClass("hideextra");
+                    }
+                    
+                    if(this.episode && this.persist.title.nextEpisodeID) //check for other episodes
+                    {
+                        $('ButtonPanel').addClass("nextepisode");
+                    }
+                    
+                    /* If this title is not in the pass cache then add it. The pass cache is used to see if the HD stream is available */
+                    log.write("Current Pass: " + this.persist.title.passID);
+                    if(!$cn.data.PassCache[this.persist.title.passID]){
+                        log.write("Adding pass to pass cache");
+                        $cn.data.PassCache[this.persist.title.passID] = this.persist.title;
+                    }
+                }
+                
+                if(this.hasSimiliar() && ! isUnavailable)
+                {
+                    $('tdbuttonSimilar').show();
+                }
+                else
+                {
+                    $('tdbuttonSimilar').hide();
+                }
+                
+                
+                if(this.persist.title.availableProducts.length == 0 && $('tdbuttonCheckout')) {
+                    
+                    $('tdbuttonCheckout').hide();
+                }
+                
+                this.drawStarRating(parseFloat($cn.utilities.getMeta('YourRating', this.persist.title.metaValues)));
+                application.currentView.layoutIsDirty = true;
+                
+                log.write('Detail Image:');
+                $('titledetailsboxartwrap').show();
+                var titleImg = document.getElementById('TitleBoxArt');
+                if(titleImg && !titleImg.onerror) {
+                    titleImg.onerror = function(e) {
+                        $('titledetailsboxartwrap').hide();
+                    };
+                }
+                
+                var showSurroundSound = this.displaySurroundSoundBadge();
+                
+                log.write("showSurroundSound: " + showSurroundSound);
+                if(showSurroundSound == "hideextra"){
+                    $('fiveonebadge').hide();
+                }
+                
+                // Balance button panels
+                //
+                var buttonPanel = $('ButtonPanel'),
+                    columns = buttonPanel.getElements('.half'),
+                    left = this.getVisibleElements(columns[0]),
+                    right = this.getVisibleElements(columns[1]),
+                    count,
+                    i;
+                
+                if (right.length > left.length) {
+                    count = right.length - left.length;
+                    for (i = 0; i < count; ++i) {
+                        columns[1].removeChild(right[i]);
+                        columns[0].getParent().insertBefore(right[i], columns[0]);
+                    }
+                }
+                else if (left.length > right.length) {
+                    count = left.length - right.length;
+                    for (i = 0; i < count; ++i) {
+                        columns[0].removeChild(left[i]);
+                        columns[0].getParent().insertBefore(left[i], columns[0]);
+                    }
+                }
+
+        },
+        shouldShowRentalWarning: function(){
+            var hasRental = false,
+                shouldShowWarning = false,
+                x;
+            
+            for(x = 0; x < this.persist.title.availableProducts.length; x++){
+                if(this.persist.title.availableProducts[x].purchaseType == 'rent'){
+                    hasRental = true;
+                    break;
+                }
+            }
+            
+            if(hasRental){
+                if($cn.utilities.getMeta("LicensesDelivered", this.persist.title.metaValues) == "0"){
+                    shouldShowWarning = true;
+                }
+            }
+            
+            return shouldShowWarning;
+        },
+        getRentalPeriod: function(){
+            var period = "24",
+                x;
+            
+            for(x = 0; x < this.persist.title.availableProducts.length; x++){
+                if(this.persist.title.availableProducts[x].purchaseType == 'rent'){
+                    log.write('Found rental period: ' + this.persist.title.availableProducts[x].rentalPeriod);
+                    period = this.persist.title.availableProducts[x].rentalPeriod;
+                    break;
+                }
+            }
+            
+            return period;
+        },
+        update: function(payload){
+            // TODO: Clean method: This method will reset focus in various cases, which is the cause of much of the branching in it:
+            // This function will get called whenever someone clicks on previous and ends up on the title view. This is because the buttons possibly need to get updated.
+            var self = this;
+            this.showingRating = false;
+            log.write(".... payload.leaveFocusAlone ..... is: " + payload.leaveFocusAlone);
+            
+            //If there is any kind of popup while updating then hide it.
+            if(BrowseView.MessagePopup) {
+                BrowseView.MessagePopup.hide();
+            }
+            
+            if(payload && payload.passID)
+            {
+                if(this.persist.title){
+                    this.persist.title.passID = payload.passID;
+                }
+            }
+
+            log.write("TitleView.update(User Rating: " +this.getUserRatingFloat()+ ", payload.stopPositionMins: " +payload.stopPositionMins+", payload.stopPositionPercent: "+payload.stopPositionPercent+")");
+            if(document.getElementById('titledetails').style.display == "block" || payload.forceUpdate){
+                
+                    if(this.persist.title && this.persist.title.passID) //COMING BACK TO LIBRARY VIEW. UPDATE BUTTONS
+                    {
+                        $cn.methods.getPurchasedTitle(this.persist.title.passID, this.persist.title.titleID, function(cb){
+                            if(payload.setFocus){
+                                BrowseView.loadTitle(cb, 'nextEpisode');
+                                    if($('tdbuttonNextEpisode').getStyle('display') !== "block"){
+                                        log.write('Next Episode Button is Hidden, Dont set focus');
+                                        self.setFocus();
+                                    } else{
+                                        log.write('Calling next Episode focus: ' + payload.setFocus);
+                                        application.navigator.setFocus(payload.setFocus);
+                                        application.element.current = payload.setFocus;
+                                    }
+                            }else{
+
+                                if (!payload.leaveFocusAlone) {
+                                    BrowseView.loadTitle(cb);
+                                    log.write("..... resetting focus .....");
+                                    self.setFocus();
+                                } else {
+                                    BrowseView.loadTitle(cb, "skipFocus");
+                                    log.write("..... not resetting focus .....");
+                                }
+                            }
+                            //Check to see if we need to popup rating window
+                            if(self.getUserRatingFloat() == 0 && (payload.stopPositionMins >= 30 || payload.stopPositionPercent >= 96)) {
+                                log.write("Show rate modal");
+                                self.showingRating = true;
+                                if(self.tv) {
+                                    BrowseView.showRate(self.persist.title.titleID);
+                                }
+                                else {
+                                    BrowseView.showRate(self.persist.title.titleID);
+                                }                           
+                            }
+                        });
+                    } else if(payload.forceUpdate) {
+                        log.write(".... forcing update ....");
+                        $cn.methods.getTitleListing(this.persist.title.titleID, true, function(cb){
+                            BrowseView.loadTitle(cb);
+                            navigation.setFocus("tdbuttonCheckout");
+                        }); 
+                    } else {
+                        log.write(".... last branch ....");
+                        navigation.setFocus("tdbuttonCheckout");
+                    }
+                
+                    
+                    if(payload.bandwidthError){
+                        log.write("Bandwidth error!!!!!!");
+                    }
+            }
+        },
+        goLibrary: function(titleid, passid) {
+
+            BrowseView.TitleViewControl.setFocus();
+            
+            $cn.methods.getPurchasedTitle(passid, titleid, function(cb){
+                BrowseView.loadTitle(cb, '');
+            });
+
+        },
+        navigate: function(payload){
+            var buttons,
+                contender,
+                currentLeft,
+                currentTop,
+                bLength,
+                visButtons = [];
+
+            if(!payload.preventCustom) {
+                if((application.element.current && application.element.current != '') && document.getElementById(application.element.current) && $(application.element.current).getParent() != null 
+                        && ($(application.element.current).getParent().hasClass("buttonpanel") || $(application.element.current).getParent().getParent().hasClass("buttonpanel"))){
+
+                    if(payload.args[0].direction == 'right')
+                    {
+                        if(payload.args[0].current == $(application.element.current).get("id") && $(application.element.current).get('rightaction'))
+                        {
+                            eval('(' + $(application.element.current).get('rightaction')   + ')');
+                            payload.preventDefault();
+                        }                   
+                    }
+                    else if(BrowseView.currentState == "titleview" && payload.args[0].direction == 'left')
+                    {   
+                        //This code block is necessary to handle the case of 2 side by side buttons. Clicking left should only go to the dock if the button is on the left side.
+                        buttons = $('ButtonPanel').getElements('a');
+                        contender =  -1;
+                        currentLeft = document.getElementById(application.element.current).offsetLeft;
+                        currentTop = document.getElementById(application.element.current).offsetTop;
+                        
+                        for (var i = 0; i < buttons.length; i++) {
+                            if (buttons[i].offsetWidth) {
+                                
+                                if(parseInt(buttons[i].offsetLeft) < parseInt(currentLeft) && parseInt(buttons[i].offsetTop) == parseInt(currentTop)) {
+                                    contender = i;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if(contender == -1) {
+                            for (var i = 0; i < buttons.length; i++) {
+                                if (buttons[i].offsetWidth) {
+                                    //This loop SHOULD produce the button that is above the bottom button getting focus
+                                    if(parseInt(buttons[i].offsetLeft) < parseInt(currentLeft) && parseInt(buttons[i].offsetTop) < parseInt(currentTop)) {
+                                        contender = i;                                  
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if(contender == -1) {
+                            payload.preventDefault();
+                            navigation.setFocus("dock-back");       
+                        }   
+                        else {
+                            payload.preventDefault();
+                            navigation.setFocus(buttons[contender].id); 
+                        }
+                    }
+                    else if(BrowseView.currentState == "titleview" && payload.args[0].direction == 'down') {
+                        //This code block is necessary to handle the custom actions when clicking the down button.
+                        buttons = $('ButtonPanel').getElements('a');
+                        contender =  -1;
+                        currentLeft = document.getElementById(application.element.current).offsetLeft;
+                        currentTop = document.getElementById(application.element.current).offsetTop;
+                        
+                        //1st pass determines if there is something directly underneath you
+                        for (var i = 0; i < buttons.length; i++) {
+                            if (buttons[i].offsetWidth) {
+                                
+                                if(parseInt(buttons[i].offsetLeft) == parseInt(currentLeft) && parseInt(buttons[i].offsetTop) > parseInt(currentTop)) {
+                                    contender = i;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        //Second pass determines if there is something to the right and underneath you.
+                        if(contender == -1) {
+                            for (var i = 0; i < buttons.length; i++) {
+                                if (buttons[i].offsetWidth) {
+                                    if(parseInt(buttons[i].offsetLeft) > parseInt(currentLeft) && parseInt(buttons[i].offsetTop) > parseInt(currentTop)) {
+                                        contender = i;      
+                                        break; //Break on the 1st contender
+                                    }
+                                }
+                            }
+                        }
+                        
+                        //Third pass determines if you are alone on the last line per spec.
+                        if(contender == -1) { 
+                            payload.preventDefault();
+                            
+                            for (var i = 0; i < buttons.length; i++) {
+                                if (buttons[i].offsetWidth) {
+                                    if(buttons[i].id == application.element.current && parseInt(buttons[i].offsetTop) == parseInt(currentTop)) {
+                                        bLength = buttons.length;
+                                        while(bLength--){
+                                            if(buttons[bLength].getStyle('display') == "block"){
+                                                visButtons.unshift(buttons[bLength]);
+                                            }
+                                        }
+                                        navigation.setFocus(visButtons[0].id);
+                                        break;
+                                    }
+                                }
+                            }                   
+                            
+    //[Removed PER: https://jira.sonic.com/browse/CNSWE20-1060]                     
+//                          if(doSomething){
+//                              navigation.setFocus("dock-help");
+//                          }
+                        }   
+                        else {
+                            payload.preventDefault();
+                            navigation.setFocus(buttons[contender].id); 
+                        }
+                    } else if(BrowseView.currentState == "titleview" && payload.args[0].direction == 'up') {
+                        buttons = $('ButtonPanel').getElements('a');
+                        bLength = buttons.length;
+                        log.write(bLength);
+                        while(bLength--){
+                            if(buttons[bLength].getStyle('display') == "block"){
+                            visButtons.unshift(buttons[bLength]);
+                            }
+                        }
+                        bLength = visButtons.length;
+                        if(application.element.current == visButtons[0].id){
+                            payload.preventDefault();
+                            if(visButtons[0].offsetWidth == visButtons[(bLength-1)].offsetWidth){
+                                navigation.setFocus(visButtons[(bLength-1)].id);
+                            } else {
+                                if($('tdbuttonWishlist-1') && $('tdbuttonWishlist-1').getStyle('display')== "block"){
+                                    navigation.setFocus(visButtons[(bLength-1)].id);
+                                } else if($(visButtons[(bLength-2)].id).getParent().getPrevious('.half')) {
+                                    navigation.setFocus(visButtons[(bLength-3)].id);
+                                } else {
+                                    navigation.setFocus(visButtons[(bLength-2)].id);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        hasSimiliar: function() {
+            var has = false;
+            var self = this;
+            //Jinni and SimilarAvail has to be enabled for this.
+            if ($cn.data.jinniEnable && ($cn.utilities.getMeta("SimilarAvail", self.persist.title.metaValues) == "True")) {
+                //Wheel items have to exist
+                if(this.persist.title.wheelItems.length > 0) {
+                    this.persist.title.wheelItems.each(function(item){
+                        //To see if there exists the data
+                        if(item.indexOf("s_") == 0 ) {
+                            has = true;
+                        }
+                    });
+                }
+            }
+            //Baseline has to be enabled for this.
+            if (!has && $cn.data.baselineEnable) {
+                if(this.persist.title.wheelItems.length > 0) {
+                    this.persist.title.wheelItems.each(function(item){
+                        //To see if there exists the data
+                        if(item.indexOf("m_cast_crew") == 0) {
+                            has = true;
+                        }
+                    });
+                }
+            }
+            return has;
+        },
+        setFocus: function() {
+            log.write("Setting title view focus...");
+            
+            //Need to now also check for exit window open
+            if(!this.showingRating) {
+                log.write("Not showing the rating...");
+                
+                var buttons = $('ButtonPanel').getElements('a');
+                var contender =  -1;
+                
+                for (var i = 0; i < buttons.length; i++) {
+                    //If resume play is visible then always set focus to it.
+                    if(buttons[i].id == "tdbuttonResumePlay" && document.getElementById('tdbuttonResumePlay').className.indexOf('hideextra') == -1) {
+                        //If the current button is resume play and the hideextra class has been removed then focus it.
+                        contender = i;
+                        log.write("contender: " + buttons[i].id);
+                        break;
+                    }
+                    
+                    log.write(buttons[i].id + ":" + buttons[i].offsetWidth);
+                    
+                    //Make sure that the element is visible and top/left of the button list. Edit this with care.
+                    if (buttons[i].offsetWidth) {
+                        if(contender == -1) {
+                            contender = i;
+                            continue;
+                        }
+                        else if(parseInt(buttons[i].offsetLeft) < parseInt(buttons[contender].offsetLeft) && parseInt(buttons[i].offsetTop) <= parseInt(buttons[contender].offsetTop)) {
+                            contender = i;
+                        }   
+                    }
+                }
+                
+                log.write("contender" + contender);
+                if(document.getElementById('modalcontrol') && document.getElementById('modalcontrol').className == "message_exit" && document.getElementById('modalcontrol').style.display == "block") {
+                    if(contender != -1) {
+                        BrowseView.MessagePopup.lastFocus = buttons[contender].id;
+                    }
+                    else if(buttons.length > 0) {
+                        BrowseView.MessagePopup.lastFocus = buttons[0].id;
+                    }
+                }
+                else {
+                    if(contender != -1) {
+                        log.write("titleview.setfocus: " + buttons[contender].id);
+                        navigation.setFocus(buttons[contender].id);
+                    }
+                    else if(buttons.length > 0) {
+                        navigation.setFocus(buttons[0].id);
+                    }
+                }
+            }
+        },
+        disableButtons: function() {
+            if($('ButtonPanel'))
+            $('ButtonPanel').addClass('disabled');
+        },
+        enableButtons: function() {
+            if($('ButtonPanel'))
+                $('ButtonPanel').removeClass('disabled');
+        },
+        show: function() {
+            $('titledetails').show();
+            $('titledetailscontainer').show();
+            
+            if(document.getElementById('ButtonPanel')){
+                var buttons = $('ButtonPanel').getElements('a');
+                navigation.buildNavigation(buttons);
+            }
+        },
+        showAvailability: function() {
+            var unavailMsg = this.persist.title.watchStatus;
+            if($cn.utilities.isTrue(this.persist.title.isPassUV)){
+                unavailMsg = "UV_Unavailable";
+            }
+            var data = application.resource.unavailable_messages[unavailMsg];
+
+            switch (this.persist.title.watchStatus)
+            {
+                case WatchStatus.NotAvailable_HoldBack:
+                    data = {
+                        Message: data.Message.replace('{Date}', $cn.utilities.formatDate(this.persist.title.dateExpired, "short")),
+                        Content: data.Content
+                    };
+                    break;
+                // Pre-order will be supported in the future.
+                case WatchStatus.NotAvailable_Aired_Episode:
+                    data = {
+                        Message: data.Message.replace('{PurchaseDate}', $cn.utilities.formatDate(this.persist.title.datePurchased, "short")),
+                        Content: data.Content
+                    };
+                    break;
+                case WatchStatus.NotAvailable_Pre_Ordered:
+                    data = {
+                        Message: data.Message.replace('{PurchaseDate}', $cn.utilities.formatDate(this.persist.title.datePurchased, "short")),
+                        Content: data.Content
+                    };
+                    break;
+            }
+            
+            if (data)  {
+                // Make sure we add a close button for all situations, not just the two in the switch.
+                data.Close = "Close";
+                BrowseView.showMessage("message_content", data);
+            }
+        },
+        onEpisodes: function(titleId) {
+            BrowseView.showTvEpisodes(this.persist.title);
+        },
+        onWishlistError: function(payload) {
+            log.write("======== wishlist error 1 ========");
+            log.write("pa0 is: " + payload.args[0]);
+            log.write("pa0tid is: " + payload.args[0].titleId);
+            log.write("======== wishlist error 2 ========");
+            this.onWishlistInsert(payload);  
+        },
+        onWishlistInsert: function(payload) {
+            if (this.persist.title.titleID == payload.args[0]) {
+
+                var button = $("tdbuttonWishlist");
+
+                if (button) {
+                    if (button == $(application.element.current)) {
+                        
+    /*                  var buttonPanel = $("ButtonPanel");
+                        var focus = button.attributes["up"];
+                        
+                        for (var up = focus; up && buttonPanel.isParentOf($(up.value)); up = $(up.value).attributes["up"])
+                            focus = up;
+                            
+                        if (focus)
+                            navigation.setFocus(focus.value);
+                        else
+                            this.setFocus();
+    */
+                        this.setFocus();
+                            
+                    }
+                    
+                    button.hide();
+                }
+                if(button.getParent('.half') == null){
+                    $('tdbuttonWishlist-1').inject($('tdbuttonWishlist'), 'after');
+                    log.write("fullsize move")
+                }
+                
+                button = $("tdbuttonWishlist-1");
+
+                if (button) 
+                    button.show();
+
+                var buttons = $('ButtonPanel').getElements('a');
+                buttons.each(function(item){ 
+                    item.removeProperties('up', 'down', 'left', 'right'); 
+                });
+                
+                navigation.buildNavigation(buttons);
+            }
+        },
+        onSaveState: function(payload){
+            var state = payload.args[0];
+
+            state[this.id] = { 
+                persist: $extend({}, this.persist), 
+                tv: this.tv,
+                episode: this.episode,
+                season: this.season,
+                tvshow: this.tvshow
+            };
+        },
+        onRestoreState: function(payload){
+            var state = payload.args[0];
+            $extend(this, state[this.id]);
+        }
+        
+    }, 
+    TitleViewControl = new Class(TitleViewControlProperties);
+
+var WatchStatus = {
+    WatchNow : "WatchNow",  
+    ExpiredRental : "ExpiredRental",  
+    NotAvailable_HoldBack : "NotAvailable_HoldBack",  
+    NotAvailable_LicensorRestricted : "NotAvailable_LicensorRestricted",  
+    NotAvailable_NotArrived : "NotAvailable_NotArrived",  
+    NotAvailable_In_This_Store : "NotAvailable_In_This_Store",  
+    NotAvailable_In_This_Territory : "NotAvailable_In_This_Territory",
+    NotAvailable_Aired_Episode: "NotAvailable_Aired_Episode",
+    NotAvailable_Pre_Ordered: "NotAvailable_Pre_Ordered"
+};
+//-----------------------------------------------------------------------------
+// tvseasonwheel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+
+var TvSeasonsWheelControl = new Class({
+	Extends: WheelControl,
+	Implements: WheelControl,
+	id: 'TvSeasonsWheelControl',
+	container: 'searchwheel',
+	singleWheel: true,
+	MetaData: [],
+    masterSourceElement: 'singlemasterdatasource',
+    masterSelectedElement: 'singleselectedmaster',
+	cleanUI: function() {
+		if($('singleselectedmaster')) {
+			$('singleselectedmaster').label = '';
+		}
+
+		if($('singlemasterdatasource')) {
+			if($('singlemasterdatasource').getChildren().length > 0){
+				$('singlemasterdatasource').getChildren().destroy();
+			}
+		}
+	},
+	handleWheelItemChange: function(payload){		
+		log.write(payload);
+
+		if(payload.context === ActiveWheel) {
+			var p = payload.args[0];
+			var selectedItem = this._masterSource[p.selectedidx];
+			
+			application.events.publish('gridloading', {grid: 'titlegrid', message:"tvloading", className: "episodegrid", cssClass:"tv"});
+			
+			if (this.isLibrary) {
+				$cn.methods.getBundleListingPurchased(p.selectedvalue, function(callback){
+				
+					log.write(callback.bundleItems.length);
+					var items = callback.bundleItems;
+					
+					if (this.isSeasonal) {
+
+						// Add in 'All Episodes' item
+						items = items.slice();
+						items.unshift({
+							titleID: selectedItem.iD,
+							name: application.resource.all_episodes,
+							itemNumber: selectedItem.season
+						});
+					}
+					
+					if (selectedItem.watchFilter) {
+						
+						var filtered = [];
+						items.each(function(item){
+							if (!item.hasWatched)
+								filtered.push(item);
+						});	
+						
+						items = filtered;
+					}
+					
+					BrowseView.LastGridProcess = "tvseasons";
+					application.events.publish('loadgrid', {
+						grid: 'titlegrid',
+						data: items,
+						columns: 1,
+						template: 'listgrid',
+						gridProcess: 'tvseasons',
+						className: 'episodegrid',
+						returnFocus: 'singleselectedmaster'
+					});
+					
+				}.bind(this));
+			}
+			else {
+				
+				$cn.methods.getBundleListing(p.selectedvalue, function(callback){
+				
+					log.write(callback.bundleItems.length);
+					//	        	application.currentView.layoutIsDirty = true;
+					var items = callback.bundleItems;
+
+					if (this.isSeasonal) {
+
+						// Add in 'All Episodes' item
+						items = items.slice();
+						items.unshift({
+							titleID: selectedItem.iD,
+							name: application.resource.all_episodes,
+							itemNumber: selectedItem.name
+						});
+						$('titlelist').setStyle("height", "352px");
+					}
+					
+					BrowseView.LastGridProcess = "tvepisodes";
+					application.events.publish('loadgrid', {
+						grid: 'titlegrid',
+						data: items,
+						columns: 1,
+						template: 'listgrid',
+						gridProcess: 'tvepisodes',
+						className: 'episodegrid',
+						returnFocus: 'singleselectedmaster'
+					});
+					
+				}.bind(this));
+			}  
+		}
+	},
+	loadData: function(masterCollection, seasonTitleID) {
+		var index = 0;
+		var masterKey = '';
+		this.layoutIsDirty = true;
+		this.saveHistory();
+		this.cleanUI();
+		
+		
+		this._masterSource = [];
+
+		if (this.isLibrary) {
+
+			if (this.isSeasonal) {
+			
+				for (var x = 0; x < masterCollection.length; x++) {
+					if (seasonTitleID == masterCollection[x].titleID) 
+						index = this._masterSource.length;
+					
+					this._masterSource.push({
+						name: masterCollection[x].name ,
+						season: masterCollection[x].name,
+						iD: masterCollection[x].titleID
+					});
+					if (!masterCollection[x].hasWatched) {
+						this._masterSource.push({
+							name: masterCollection[x].name + "<br/>" + application.resource.unwatched_episodes,
+							season: masterCollection[x].name,
+							iD: masterCollection[x].titleID,
+							watchFilter: true
+						});
+					}
+				}
+			}
+			else {
+	        	this._masterSource = [{
+						name: application.resource.all_episodes,
+						iD: masterCollection[0].titleID
+					}, {
+						name: application.resource.unwatched_episodes,
+						iD: masterCollection[0].titleID,
+						watchFilter: true
+					}];
+			}
+		}
+		else {
+			
+			for(var x = 0; x < masterCollection.length; x++)
+			{
+				this._masterSource.push({
+					name: masterCollection[x].name,
+					iD: masterCollection[x].titleID
+				});
+				if (seasonTitleID == masterCollection[x].titleID)
+					index = x;
+			}
+		}
+
+		if (this._masterSource.length > 0) {
+		
+			$('titlegrid').show();
+			$('singlewheel').show();
+			this._renderWheel($('singlemasterdatasource'), this._masterSource, index);
+			navigation.setFocus('singleselectedmaster');
+		}	
+
+	},
+	navigate: function(payload){
+	
+		if (payload.context === ActiveWheel && payload.args[0].current == "singleselectedmaster")
+		{
+			if (payload.args[0].direction == "left") {
+				navigation.setFocus('tdbuttonEpisodes');
+				payload.preventDefault();
+			}
+			else
+				this.parent(payload);
+		}
+	},
+	onSaveState: function(payload){
+		this.parent(payload);
+		
+		var state = payload.args[0][this.id];
+		state.isLibrary = this.isLibrary;
+		state.isSeasonal = this.isSeasonal;
+	}
+
+});
+//-----------------------------------------------------------------------------
+// welcome.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author tmchattie
+ */
+var WelcomeControlProperties = {
+		id: 'welcomecontrol',
+		persist: {},
+	    controls:{},
+	    buttons:[],
+	    layoutIsDirty: true,
+		_data: [],
+	    lastFocus: null,
+		firstFocus: null,
+		contentControlId: '',
+	    contentId: 'welcomecontrol',
+	    initialize: function(id, newContentId){
+			this.id = id;
+	    },
+	    getStarted: function(){
+	    	$('welcomeintro').hide();
+	    	$('welcomemessage').show();
+            if($cn.config.EnableUV && $('uvwelcomebenefit')) {
+                $('uvwelcomebenefit').removeClass('hidden');
+            }
+	    	application.navigator.setFocus('leftbutton');
+	    },
+	    startActivation: function(){
+	    	//this.hide();
+	    	BrowseView.ActivationPcView.activeFromWelcome = true;
+	    	BrowseView.ActivationPcView.show();
+	    },
+	    explore: function(){
+	    	
+	    	this.hide();
+	    	
+	    	
+	    },
+	    init: function(params, direction){
+			log.write('merchcontrol.init()');		
+	        var self = this;
+	       
+	        //Persist Params
+	        if(params) {
+	            this.persist = params;               
+	        }      
+		},
+		cleanUI: function(){
+
+		},
+		/*
+		 * Load data will:
+		 * 1) Set the HTML source and buttons for the modal view
+		 * 2) Render the local controls
+		 */
+		loadData: function(content) {
+			this._data = [];
+			this._data = content;		
+		},
+		show: function() {
+			log.write("Showing Welcome Page.");
+			$('welcome').show();
+			//navigation.setFocus("f_button");
+		
+		},
+		onBack: function(payload){
+			log.write(payload);
+			//payload.preventDefault();
+			
+		},
+		hide: function(callback){
+            if($cn.data.d2dPath) {
+                log.write("D2D LOAD TITLE");
+                log.write("D2D LOAD TITLE");
+                log.write("D2D LOAD TITLE");
+                log.write("D2D LOAD TITLE");
+                log.write("D2D LOAD TITLE");
+                log.write("D2D LOAD TITLE");
+				$('store').set('class','browse-view');
+
+                application.events.publish('loadtitleview', {
+                    id : $cn.data.d2dTitleInfo.id,
+                    action: "checkout"
+                });
+                setTimeout(function(){
+                    if ($('welcome')) {
+                        $('welcome').destroy();
+                    }
+
+                    if (callback) {
+                        callback();
+                    }
+
+                }.bind(this),200);
+
+			} else if($cn.data.EnableMerchPage){
+                setTimeout(function(){
+                    $('welcome').destroy();
+
+                    if (callback) {
+                        callback();
+                    }
+
+                    BrowseView.showMerch();
+                    application.navigator.setFocus('f_button');
+                }.bind(this),200);
+            }   else {
+                $('store').set('class','browse-view');
+                BrowseView.showMessage("message_loading", {
+                    Message: application.resource.loading_enum.loadinggeneric
+                });
+
+                BrowseView.goHome(true);
+
+                setTimeout(function(){
+                    if ($('welcome')) {
+					    $('welcome').destroy();
+                    }
+
+                    if (BrowseView && BrowseView.MessagePopup) {
+					    BrowseView.MessagePopup.hide();
+                    }
+
+                    if (callback) {
+                        callback();
+                    }
+
+					application.navigator.setFocus('selectedmaster');
+					
+				}.bind(this),2000);
+			}
+		}
+	},
+	WelcomeControl = new Class(WelcomeControlProperties);
+//-----------------------------------------------------------------------------
+// wheel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author tjmchattie
+ */
+
+
+var ItemAnimationMap = [ 
+	'tertiary',
+	'secondary', 
+	'primary', 
+	'secondary', 
+	'tertiary'
+];
+
+var Wheel = new Class({
+    source: [],
+	container: null,
+	itemHeight: 0,
+	padding: 0,
+	selection: 0,
+	topPosition: 0,
+	wheelChangedTimeout: 1000,
+	initialize: function (id, element) {
+		this.id = id;
+		this.container = element;
+
+		application.events.subscribe(this, 'savestate', this.onSaveState.bind(this));
+		application.events.subscribe(this, 'restorestate', this.onRestoreState.bind(this));
+	},
+/*	cleanItem: function(item){
+		item.removeClass('wheelitemprimary');
+		item.removeClass('wheelitemsecondary');
+		item.removeClass('wheelitemondeck');
+		item.removeClass('wheelitemhidden');
+	},*/
+	clean: function(){
+		
+		var container = $(this.container);
+		
+		if(container) {
+			if(container.getChildren().length > 0){
+				container.getChildren().destroy();
+			}
+		}
+
+		this.selection = 0;
+	},
+	indexOf: function(position) {
+		var index = this.selection + (position - 2);
+		
+		if (index < 0)
+			index = (this.source.length < 5 ? -1 : index + this.source.length);
+		else if (index >= this.source.length)
+			index = (this.source.length < 5 ? -1 : index - this.source.length);
+			
+		return index;
+	},
+	// Measure the height of element's sub text element.
+	measureElement: function(elem) {
+        var nodes = elem.getElements('td'),
+            textElement = null,
+            height = 0;
+
+        if (nodes && nodes.length && nodes[0] && nodes[0].firstChild) {
+            textElement = nodes[0].firstChild;
+        }
+
+        if (textElement) {
+        	// Require CSSOM View Module support.
+            var range = document.createRange();
+            range.selectNodeContents(textElement);
+            if (range.getBoundingClientRect) {
+                var rect = range.getBoundingClientRect();
+                if (rect) {
+                    height = rect.bottom - rect.top;
+                }
+            }
+        }
+
+        //log.write('measureElement: height(' + height + ')');
+	    return {y: height};
+	},
+	move: function (direction) {
+		//log.write("Wheel: move -- enter");
+		var isMoving = false;
+		var index = this.indexOf(2 + direction);
+		
+		if (index != -1) {
+
+			if (direction < 0) {
+				var topIndex = this.indexOf(-1);
+				if (topIndex != -1)
+					this.renderItem(topIndex, -1);
+			}
+			else {
+				var botIndex = this.indexOf(5);
+				if (botIndex != -1)
+					this.renderItem(botIndex, 5);
+			}
+		
+			var self = this;
+			var items = $(this.container).getChildren();
+			this.selection = index;
+			//log.write("Wheel: Moving Top Position from " + this.topPosition + " to " + (this.topPosition - direction));
+			this.topPosition -= direction;
+
+			var o = {};
+			var animation = application.loadAnimation("wheel");
+					
+			for(x = 0; x < items.length; x++) {
+				
+				var item = items[x];
+				
+				//log.write("Wheel: moving " + item.innerHTML + " from: " + item.slot + " to: " + (this.topPosition + x));
+				item.slot = this.topPosition + x; //direction;
+				item.idx = this.indexOf(item.slot);
+
+				var propType = (item.slot < 0 || item.slot >= ItemAnimationMap.length) ? ItemAnimationMap[0] : ItemAnimationMap[item.slot];
+				o[x] = $extend({}, animation.properties[propType]);
+				o[x].top = item.slot * this.itemHeight + (this.padding / 2);
+				
+				if(item.slot == 2){
+                    item.addClass('hover');
+                    o[x].color = o[x].focus;
+                } else{
+                    item.removeClass('hover');
+				}
+			}
+
+			if (animation) {
+				var options = $extend({}, animation.options);
+				
+				if(device.getDeviceSoc() != "BCOM") {
+					if(((1000 / options.fps) * 2) >= options.duration) {
+						options.duration = 100;
+						options.fps = 1000 / options.duration;
+					}
+
+					options.onComplete = function(obj) {
+							for (var x = 0; x < items.length; ++x)
+								this.onComplete(items[x]);
+						}.bind(this);
+					
+					new Fx.Elements(items, options).start(o);
+					isMoving = true;	
+				}
+				else {
+					//
+					for (var x = 0; x < items.length; ++x) {
+						items[x].setStyles(o[x]);
+						this.onComplete(items[x]);
+					}
+					
+				}
+			}
+		}			
+
+		//log.write("Wheel: move -- exit");
+		return isMoving;
+	},
+	onComplete: function(obj) {
+		
+		//log.write("Wheel: onComplete(" + obj.slot + ")");
+		var self = this;
+		
+		if (obj.slot < 0 || obj.slot > 4) {
+			//log.write("Wheel: Destroying object " + obj.slot);
+			
+			if (obj.slot == this.topPosition) {
+				obj.destroy();
+				this.topPosition = $(this.container).getFirst().slot;
+				//log.write("Wheel: Updating first position to " + this.topPosition);
+			}
+			else	
+				obj.destroy();
+		}
+		else {
+			
+			if (obj.slot == 2 && obj.idx == this.selection) {
+			    
+				if (this.onWheelChanged){					
+					var key = this.source[this.selection].iD;
+					this.lastKey = this.source[this.selection].iD; // Last key is used to validate the callback in the settimeout					
+					
+					// 1 second delay after wheel item stopped animating to fire the changed event. This gives the user time to make a different selection
+					setTimeout(function(){
+						if(key == self.lastKey) {
+							log.write('onWheelchanged');
+							log.write("key: " + key + ", lastKey: " + self.lastKey);
+							self.onWheelChanged({
+								sourceid: self.container,
+								source: self.source,
+								selectedidx: self.selection,
+								selectedvalue:  self.source[self.selection].iD
+							});
+						}
+					}, self.wheelChangedTimeout);					
+				}
+			}
+		}
+	},
+	render: function (source, index) {
+		this.clean();
+		this.source = source;
+		this.selection = (index ? index : 0);
+		this.itemHeight = ($cn.utilities.measure($(this.container)).y - this.padding) / 5;
+		this.topPosition = 2;	
+
+		for (var pos = 0; pos < 5; ++pos) {
+			index = this.indexOf(pos);
+			
+			if (index != -1)
+				this.renderItem(index, pos);
+		}
+        // If slave is selected, focus will be lost when it is re-rendered, so have to manually refocus it
+        if (application.element.current === 'selectedslave') {
+            navigation.setFocusElement($('selectedslave'));
+        }
+	},
+	renderItem: function (index, position) {
+		var container = $(this.container),
+		    elem =  new Element('div', { 'class': 'wheelitem' }),
+		    y = Math.floor(this.itemHeight * position + (this.padding / 2)),
+		    source,
+		    html,
+		    lineHeight,
+		    subText,
+		    height,
+		    fullName,
+		    animation,
+            centerWheel,
+		    propType;
+		
+		elem.set('genreid', this.source[index].iD);
+		elem.setStyle('visibility','hidden');
+		elem.slot = position;
+        centerWheel = $cn.config.CenterWheel ? "align='center'": '';
+	
+		if (position < this.topPosition)
+			this.topPosition = position;
+				
+		if (position < 0) {
+			y = container.getFirst().style.top.toInt() - this.itemHeight;
+			elem.inject(container, 'top');
+		}
+		else {
+			if (container.getLast())
+				y = container.getLast().style.top.toInt() + this.itemHeight;
+				
+			elem.inject($(this.container));
+		}
+			
+		source = this.source[index];
+		if (source.name) {
+			fullName = source.name;
+			if (typeof ($cn.config.CustomTextCasing) == 'function') {
+			    fullName = $cn.config.CustomTextCasing(fullName);
+			}
+			html = "<table class='item-holder'><tr><td " + centerWheel + ">" + fullName + "</td></tr></table>";
+			application.putInnerHTML(elem, html);
+
+	    	height = this.measureElement(elem).y;
+        	//log.write("height: " + height + ", item height: " + this.itemHeight + ", text: " + fullName);
+		
+			if (height > this.itemHeight) {
+				fullName = this.truncateText(elem, fullName, this.itemHeight, 0, fullName.length, centerWheel).trim();
+				//log.write("$$$$$$$$$$$$$$$ " + fullName);
+
+				if(fullName.endsWith('-')) {
+					fullName = fullName.substring(0, fullName.length - 1);
+				}
+				//log.write("$$$$$$$$$$$$$$$ " + fullName);
+				
+				html = "<table class='item-holder'><tr><td " + centerWheel + ">" + fullName + "</td></tr></table>";
+				//log.write(html);
+				application.putInnerHTML(elem, html);
+			}
+		}						
+
+		animation = application.loadAnimation("wheel");
+		propType = (position < 0 || position >= ItemAnimationMap.length) ? ItemAnimationMap[0] : ItemAnimationMap[position];
+	
+		new Fx.Morph(elem, animation.options).set(animation.properties[propType]);	
+		
+		elem.setStyle('top', y + "px");
+		//elem.setStyle('padding-top', (this.itemHeight / 2) - (height / 2) + 5);	// Center the element
+		elem.setStyle('visibility', "visible");
+		//log.write("Wheel: Rendering " + elem.innerHTML + " at " + position);
+        if(position == 2){
+            elem.addClass('hover');
+        }
+        
+	},
+	truncateText: function(item, text, height, start, stop, centerWheel){
+		if (start < stop - 1) {
+			var pos = Math.round((start + stop) / 2);
+            var html = "<table class='item-holder'><tr><td " + centerWheel + ">" + $cn.utilities.ellipsis(text, pos) + "</td></tr></table>";
+            
+            //log.write("truncateText, pos: " + pos + ", text: " + $cn.utilities.ellipsis(text, pos));
+			application.putInnerHTML(item,  html);
+			
+			if (this.measureElement(item).y <= height) {
+                //log.write("too short, pos: " + pos + ", stop: " + stop);
+				return this.truncateText(item, text, height, pos, stop, centerWheel);
+            } else {
+                //log.write("too long, pos: " + pos + ", start: " + start);
+				return this.truncateText(item, text, height, start, pos, centerWheel);
+            }
+		} else {
+            //log.write("found start: " + start);
+			return $cn.utilities.ellipsis(text, start);
+		}
+	},
+	onSaveState: function(payload){
+		var state = payload.args[0];
+
+		state[this.id] = {
+			source: this.source,
+			selection: this.selection,
+			topPosition: this.topPosition
+		};
+	},
+	onRestoreState: function(payload){
+		var state = payload.args[0];
+		$extend(this, state[this.id]);
+	}
+	
+});
+
+var ActiveWheel = null;
+
+var WheelControl = new Class({
+	id: 'WheelControl',
+	type: 'wheel',
+//	activeControl: '',
+	persist: {},
+    controls:{},
+    history: [],
+    layoutIsDirty: true,
+	isNavigating: false,
+    singleWheel:false,
+	_masterWheel:null,
+	_slaveWheel:null,
+    _masterSource: [],
+    _slaveSource: [],
+    wheelChangedTimeout: 1000,
+    masterSourceElement: 'masterdatasource',
+    masterSelectedElement: 'selectedmaster',
+	itemHeight: 0,
+    initialize: function(params){
+		log.write('Initializing: ' + this.id);		
+        var self = this;
+        
+        /* Persist Params */
+        if(params) {
+            this.persist = params;               
+        }
+
+		application.events.subscribe(this, 'savestate', this.onSaveState.bind(this));
+		application.events.subscribe(this, 'restorestate', this.onRestoreState.bind(this));
+	},
+	activate: function(){
+		
+		if (ActiveWheel !== this) {
+			
+			if (ActiveWheel) {
+				application.events.unsubscribe(ActiveWheel, "wheelitemchanged");
+				application.events.unsubscribe(ActiveWheel, "wheelrendered");
+				application.events.unsubscribe(ActiveWheel, "navigate");
+			}
+
+	    	application.events.subscribe(this, 'wheelitemchanged',this.handleWheelItemChange.bind(this));
+	    	application.events.subscribe(this, 'wheelrendered',this.wheelRendered.bind(this));
+			application.events.subscribe(this, "navigate", this.navigate.bind(this));
+			ActiveWheel = this;
+		}
+	},
+	cleanUI: function(){
+		if($(this.masterSelectedElement)) {
+			$(this.masterSelectedElement).label = '';
+		}
+
+		
+		if($('selectedslave')) {
+			$('selectedslave').label = '';
+		}
+		
+		if($(this.masterSourceElement)) {
+			if($(this.masterSourceElement).getChildren().length > 0){
+				$(this.masterSourceElement).getChildren().destroy();
+			}
+		}
+		
+		if($('slavedatasource')) {
+			if($('slavedatasource').getChildren().length > 0){
+				$('slavedatasource').getChildren().destroy();
+			}
+		}
+	},
+	/*
+	 * Load data will:
+	 * 1) Set the internal variables with the collections of data. 
+	 * 2) Create the master list items <li>.
+	 * 3) Attach select events to each item that will load the slave collection.
+	 * 4) Select the first item.  
+	 */
+	loadData: function(masterCollection, slaveCollection, selection) {
+		
+		//this.saveHistory();
+		this.cleanUI();
+		this._masterSource = masterCollection;
+		this._slaveSource = slaveCollection;		
+		//log.write(masterCollection);
+		//log.write(slaveCollection);
+		if(masterCollection.length > 0) {
+			this._renderWheel($(this.masterSourceElement), this._masterSource, selection);
+			
+//			if (slaveCollection)		
+//				this._renderWheel($('slavedatasource'), this._slaveSource[masterCollection[0].iD]);
+		}
+		
+	},
+	wheelRendered: function(payload){
+		
+		if(payload.context === ActiveWheel) {
+			var p = payload.args[0];
+			
+			if(p.source.indexOf('master') > -1) {
+				$('slavedatasource').getElements('div').destroy();
+				payload.context._renderWheel($('slavedatasource'), payload.context._slaveSource[p.selectedvalue]);
+				
+				application.events.publish('wheelitemchanged', {
+					wheelinstance: p.wheelinstance,
+					sourceid: p.sourceid,
+					source: p.source,
+					selectedidx:  p.selectedidx,
+					selectedvalue:  (payload.context._slaveSource[p.selectedvalue]) ? payload.context._slaveSource[p.selectedvalue][0].iD : p.selectedvalue
+				});
+			}
+		}
+	},
+	handleWheelItemChange: function(payload){
+
+		log.write('context id: ' + payload.context.id);
+		log.write('active id: ' + ActiveWheel.id);
+		
+		if(payload.context === ActiveWheel) {
+			log.write("Generic Wheel Item changed. id: " + payload.args[0].wheelinstance);
+			var self = this,
+                p = payload.args[0],
+                x,
+                masterValue = p.source[p.selectedidx].parentID,
+                slaveValue = p.selectedvalue,
+                index = 0;
+			this.lastValue = slaveValue;
+            if(p.sourceid.indexOf('slave') > -1){
+                x = p.source.length;
+                while(x--){
+                    if(p.source[x].iD == slaveValue){
+                        this.lastSlaveValue =p.source[x].name;
+                    }
+                }
+            }
+			
+			/* If the source is the master column then load the slave wheel with the child elements from the new selection */
+			if(p.sourceid.indexOf('master') > -1) {
+				masterValue = p.selectedvalue;
+                if(this.lastSlaveValue){
+                    x = payload.context._slaveSource[masterValue].length;
+                    while(x--){
+                        if(payload.context._slaveSource[masterValue][x].name == this.lastSlaveValue){
+                            slaveValue =payload.context._slaveSource[masterValue][x].iD;
+                            index = x;
+                        }
+                    }
+                }
+                if(index === 0) {
+                    this.lastSlaveValue = false;
+                    slaveValue = payload.context._slaveSource[masterValue][0].iD;
+                }
+				$('slavedatasource').getElements('div').destroy();
+				payload.context._renderWheel($('slavedatasource'), payload.context._slaveSource[p.selectedvalue], index);
+			}
+			
+			BrowseView.CurrentWheelValue = masterValue + ":" + slaveValue;
+			if(self.lastValue && (self.lastValue == masterValue || self.lastValue == slaveValue)) {
+					/* Fire wheel value event */
+					application.events.publish('wheelvaluechanged', {
+							wheelinstance: self.id,
+							mastervalue: masterValue,
+							slavevalue: slaveValue				
+					});
+			}
+			
+		}
+	},
+	onWheelChanged: function (obj) {
+		
+		// Fire wheel change event 
+		this.isNavigating = false;
+		log.write("onWheelChanged::called()");
+		obj.wheelinstance = this.id;
+		application.events.publish('wheelitemchanged', obj);
+
+	},
+	_morph:function(item,duration,cssclass,callback) {
+		
+		if(!callback) 
+			callback = function() {};
+		
+		if (item.morphInstance) {
+			item.morphInstance.cancel();
+		}
+				
+		item.morphInstance = new Fx.Morph(item, {
+			duration: duration, 
+			transition: Fx.Transitions.Sine.easeOut,
+			onComplete: callback
+		}).start(cssclass);
+	},
+	saveHistory: function(){
+		var currentState = $(this.type);
+		var currentInstance = $extend(this, {});
+		this.history.push({ instance: currentInstance, dom: currentState });    
+	},
+	loadPrevious: function(){
+		log.write("function: " + this.id + ".previousView()");
+		var previousView = this.history.pop();
+	},
+	/*
+	 * The rendering process will do the following:
+	 * 1) If there are more than 5 elements in the collection then it will display the first 3 and last 2
+	 * 2) If there are less than 5 then use the following logic
+	 * 	  (1) - display in pole position
+	 * 	  (2) - display one in pole position and one above it. on any navigate up or down they will toggle positions
+	 * 	  (3) - display one in pole position, one above and below. The results should carousel as expected
+	 * 	  (4) - display one in pole position, one above and below with the extra item in the top position. The results should carousel as expected
+	 * 	  (5) - item in every position. The results should carousel as expected
+	 */
+	_renderWheel: function(parentElem, source, index){
+		
+		if(source && source.length > 0) {
+			
+			var self = this;
+			if (index == null)
+				index = 0;
+				
+			if (parentElem.id == this.masterSourceElement) {
+				
+				if (!this._masterWheel) {
+					this._masterWheel = new Wheel(this.id + "_master", this.masterSourceElement);
+					this._masterWheel.wheelChangedTimeout = this.wheelChangedTimeout;
+					this._masterWheel.onWheelChanged = function(obj) { self.onWheelChanged(obj); };
+				}
+				
+				log.write("rendering wheel");
+				this._masterWheel.render(source, index);
+
+				/* Fire wheel value event */
+				application.events.publish('wheelrendered', {
+					wheelinstance: self.id,
+					sourceid: self.id,
+					source: "masterdatasource",
+					selectedidx: index,
+					selectedvalue:  source[index].iD
+				});
+				
+				return;
+			}
+			else if(parentElem.id == "slavedatasource") {
+				
+				if (!this._slaveWheel) {
+					this._slaveWheel = new Wheel(this.id + "_slave", "slavedatasource");
+					this._slaveWheel.wheelChangedTimeout = this.wheelChangedTimeout;
+					this._slaveWheel.onWheelChanged = function(obj) { self.onWheelChanged(obj); };
+				}
+				
+				this._slaveWheel.render(source, index);
+
+				/* Fire wheel value event */
+				application.events.publish('wheelrendered', {
+					sourceid: self.id,
+					source: "slavedatasource",
+					selectedidx: index,
+					selectedvalue:  source[index].iD
+				});
+				
+				return;
+			}
+		}
+	},
+	navigate: function(payload){
+		log.write("navigate wheel");
+		var masterEl = (this.singleWheel) ? 'singleselectedmaster' : 'selectedmaster';
+				
+		if(payload.context === ActiveWheel) {
+			if(application.element.current == masterEl ||
+			   application.element.current == "selectedslave"){
+				
+				/* check to see if the direction is up or down, if so then navigate the list */			
+				if(payload.args[0].direction == "up" ||
+				   payload.args[0].direction == "down"){
+					/* Prevent the default navigation so the screen does not try to navigate for you. */
+					payload.preventDefault();
+					if(this.lastNavigate) {
+						log.write(this.lastNavigate + ", " + $cn.utilities.DateDiff(new Date(), this.lastNavigate));
+					}
+					
+					// Code to ignore key presses that are faster than 1/2 of a second. This helps control the speed of events and make the UI more responsive
+					if(!this.lastNavigate || (this.lastNavigate && $cn.utilities.DateDiff(new Date(), this.lastNavigate) > 500)){
+						if (this._masterWheel) {
+							this.lastNavigate = new Date();
+							var direction = payload.args[0].direction == "up" ? -1 : 1;
+							var wheel = application.element.current == masterEl ? this._masterWheel : this._slaveWheel;
+							
+							this.isNavigating = wheel.move(direction);
+								
+							return;
+						}
+					}
+					else {
+						log.write("Clicking too fast, ignore wheel change.");
+						return;
+					}
+				}
+				else if (payload.args[0].direction == "right" && $('titlegrid').style.display == "block") {
+					if (application.element.current == "selectedslave" || (this.singleWheel)){
+						if (this.isNavigating || !BrowseView.CurrentProcessLoaded) {
+							payload.preventDefault();
+						}
+						else {
+							var anchors = $('titlegrid').getElementsByTagName("a");
+							if (anchors.length > 0) {
+								payload.preventDefault();
+								application.navigator.setFocus(anchors[0].id);
+							}
+						}
+					}
+					else if(application.element.current == "selectedmaster" && (this.isNavigating)){
+						payload.preventDefault();
+					}
+				}		
+				else if (payload.args[0].direction == "left") {
+					if (application.element.current == "selectedmaster" || (this.singleWheel)){
+						
+						switch (BrowseView.currentState) {
+							case "browse-view":
+								payload.preventDefault();
+								navigation.setFocus("dock-home");
+								break;
+							case "search-view":
+								payload.preventDefault();
+								navigation.setFocus("dock-search");
+								break;
+							case "wishlist-view":
+								payload.preventDefault();
+								navigation.setFocus("dock-wishlist");
+								break;
+							case "library-view":
+								payload.preventDefault();
+								navigation.setFocus("dock-library");
+								break;
+							case "settings-view":
+								payload.preventDefault();
+								navigation.setFocus("dock-settings");
+								break;
+							case "help-view":
+								payload.preventDefault();
+								navigation.setFocus("dock-help");
+								break;
+						}
+					}					
+				}				
+			}
+		}
+	},
+	render: function(){
+		
+	},
+	split: function(text){
+
+		var name = '',
+			nameSplit = text.split(" "),
+			tmpSplit = '';
+		
+		nameSplit.each(function(item){
+			//Make sure that there is not an empty char. this causes unnecessary line breaks.
+			if(item.length > 0) {
+				if(item.length > 12)
+				{
+					if(item.indexOf('-') > -1) {
+						log.write(item);
+						tmpSplit = item.split('-');
+						tmpSplit.each(function(item2){
+							if(item2.stripHTML().length > 12) {
+								name = name + item2.stripHTML().substring(0, 11) + "<br />";
+								name = name + item2.stripHTML().substring(11, item.stripHTML().length)+ "<br />" ;
+							}
+							else {
+								name = name + item2 + "<br />";
+							}
+						});						
+					}
+					else {
+						if(item.stripHTML().length > 12) {
+							name = name + item.substring(0, 11) + "<br />";
+							name = name + item.substring(11, item.length)+ "<br />" ;
+						}
+						else {
+							name = name + item;
+						}
+					}
+				}
+				else
+				{
+					name = name + item + "<br />" ;
+				}
+			}
+		});
+		
+		if(name.endsWith('-<br />')) {
+			//Remove trailing dash if it exists
+			name = name.substring(0, name.lastIndexOf('-<br />')) + "<br />";
+		}
+		
+		return name;
+		
+	},
+	onSaveState: function(payload){
+		var state = payload.args[0];
+
+		state[this.id] = {
+//			activeControl: this.activeControl,
+			_masterSource: this._masterSource,
+			_slaveSource: this._slaveSource
+		};
+		
+		if (this === ActiveWheel)
+			state["ActiveWheel"] = this;
+	},
+	onRestoreState: function(payload){
+		var state = payload.args[0];
+		$extend(this, state[this.id]);
+		
+		if (state["ActiveWheel"] === this)
+			this.activate();
+	}
+});
+//-----------------------------------------------------------------------------
+// wishlist.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var WishListProperties = {
+		id: 'wishlistpanel',
+		isActive: false,
+		currentFilter: null,
+		currentPosition: 0,
+		tpl: null,
+		initialize: function(){
+			log.write(this.id + ".init()");
+			application.events.subscribe(this, 'wheelitemchanged', this.handleWheelItemChange.bind(this));
+			application.events.subscribe(this, 'gridloaded', this.handleGridLoaded.bind(this));
+			application.events.subscribe(this, 'wishlistitem', this.showOptions.bind(this));
+			application.events.subscribe(this, 'savestate', this.onSaveState.bind(this));
+			application.events.subscribe(this, 'restorestate', this.onRestoreState.bind(this));
+		},
+		//New to handle lost focus issue when coming back to the wish list
+		handleGridLoaded: function(payload){
+			if(BrowseView.currentState == "wishlist-view") {
+				//Last selected item means that if it is set that we have come back from a return action and the state has been restored.
+				if(this.lastSelectedItem && this.lastSelectedItem != ''){
+					var list = $('titlelist'); 				
+					var title = list.getElement("a[titleid='" + this.lastSelectedItem + "']");
+					
+					if(title) {
+						navigation.setFocus(title.id);
+					}	
+					else {
+						log.write("handling grid loaded by setting focuse to wheel");
+						navigation.setFocus("singleselectedmaster");
+					}
+					
+					this.lastSelectedItem = ''; //Clear this value out since it has been set or had the opportunity to be set.
+				}
+			}
+		},
+		handleWheelItemChange: function(payload){		
+			
+			if (this.WishlistWheelControl === ActiveWheel) {
+				var p = payload.args[0];
+
+				log.write('Selected value: ' + p.selectedvalue);
+				this.loadList(p.selectedvalue);
+			}
+		},
+		hide: function(){
+			this.isActive = false;
+		},
+		loadList: function(filter) {
+			if(BrowseView.currentState == "wishlist-view") {
+				var self = this;
+				this.filter = filter;
+				
+				if ($cn.data.AuthToken != '') {
+		
+					if (this.data && this.data[filter]) {
+						this.currentFilter = filter;
+						BrowseView.LastGridProcess = "wishlist";
+						application.events.publish('loadgrid', {
+							grid: 'titlegrid',
+							data: this.data[filter],
+							gridProcess: "wishlist",
+							position: this.currentPosition,
+							columns: 4,
+							template: 'wishlist',
+							className: 'wishlistgrid'
+						});
+						$("messagepanel").hide();
+						$('titlegrid').show();
+					}
+					else {
+						$('titlegrid').hide();
+						self.showMessage("wishlist_empty");
+					}
+				}
+				else {
+					$('singlewheel').hide();
+					$('titlegrid').hide();	
+					this.showMessage("wishlist_notactivated");
+				} 
+				
+				this.currentPosition = 0;
+			}
+		},
+		loadWheel: function () {
+			
+			var data = {},
+                timer;
+			
+			//If state as been restored then get the title that is currently selected. This is used to later set focus.
+			this.lastSelectedItem = '';
+			if(this.stateRestored == true) {
+				if(application.element.current != null && application.element.current != '' && document.getElementById(application.element.current)){
+					this.lastSelectedItem = $(application.element.current).get('titleid');				
+				}
+			}
+
+            // This is a continuation of a store spinner, so it should show right away
+			timer = $cn.utilities.showLoadingModal(0, application.resource.loading_enum.loadingwishlist);
+			$cn.methods.getWishlist("Movie", function(result){
+
+				log.write("getWishList callback is being executed");
+				//Always check the view in the callbacks so that the UI only updates if the current view is still valid
+				if(BrowseView.currentState == "wishlist-view") {
+				
+					if (result.items && result.items.length) 
+						data.Movie = result.items;
+		
+					$cn.methods.getWishlist("TV_Show", function(result){
+                        // Clear timer for loading modal
+                        $cn.utilities.clearLoadingSpinner(timer);
+
+						if(BrowseView.currentState == "wishlist-view") {
+							
+							if (result.items && result.items.length) 
+								data.TV_Show = result.items;
+						
+                            var wheelItems = [];
+			
+							if (data.Movie) 
+								wheelItems.push({ name: "Movies", iD: "Movie", parentID: 0 });
+			
+							if (data.TV_Show) 
+								wheelItems.push({ name: "TV Shows", iD: "TV_Show", parentID: 0 });
+			
+							if (wheelItems.length) {
+								log.write("Loading wishlist wheel!");
+								this.data = data;
+								
+								$('singlewheel').show();
+								this.WishlistWheelControl.activate();
+								this.WishlistWheelControl.loadData(wheelItems, this.currentFilter);								
+								if (application.element.current === "singleselectedmaster") {
+									navigation.setFocus("singleselectedmaster");
+								}
+							}
+							else {
+								$('singlewheel').hide();
+								this.showMessage("wishlist_empty");
+							}
+						
+						}
+					}.bind(this));
+				} else {
+                    // Clear timer for loading modal
+                    $cn.utilities.clearLoadingSpinner(timer);
+                }
+				
+			}.bind(this));
+		},
+		loadWheelExt: function () {
+		
+			var data = {},
+				timer = null;
+		
+			//If state as been restored then get the title that is currently selected. This is used to later set focus.
+			this.lastSelectedItem = '';
+			if(this.stateRestored == true) {
+				if(application.element.current != null && application.element.current != '' && document.getElementById(application.element.current)){
+					this.lastSelectedItem = $(application.element.current).get('titleid');				
+				}
+			}
+		
+			timer = $cn.utilities.showLoadingModal(0, application.resource.loading_enum.loadingwishlist);
+			$cn.methods.getWishlistExt("All", function(result){
+				$cn.utilities.clearLoadingSpinner(timer);
+				
+				//Always check the view in the callbacks so that the UI only updates if the current view is still valid
+				if(BrowseView.currentState == "wishlist-view") {	
+														
+					var wheelItems = [];										
+					if (result.items && result.items.length) {  															
+						data.Movie = []; 
+						data.TV_Show = [];						
+						
+						var i;						
+						for (i = 0; i < result.items.length; i++) {
+							if (result.items[i].titleClassification == "Movie") {
+								data.Movie.push(result.items[i]);
+							}
+							else {
+								data.TV_Show.push(result.items[i]);
+							}							
+						}
+						
+						if (data.Movie.length > 0) {
+							wheelItems.push({ name: "Movies", iD: "Movie", parentID: 0 });
+						}
+
+						if (data.TV_Show.length > 0) {
+							wheelItems.push({ name: "TV Shows", iD: "TV_Show", parentID: 0 });
+						}
+					}
+									
+					if (wheelItems.length) {
+						log.write("Loading wishlist wheel!");
+						this.data = data;
+					
+						$('singlewheel').show();
+						this.WishlistWheelControl.activate();
+						this.WishlistWheelControl.loadData(wheelItems, this.currentFilter);
+						if (application.element.current === "singleselectedmaster") {
+							navigation.setFocus("singleselectedmaster");
+						}
+					}
+					else {						
+						$('singlewheel').hide();
+						this.showMessage("wishlist_empty");
+					}
+				}				
+			}.bind(this));
+		},
+		setFocus: function() {
+			setTimeout(function(){
+				if ($('singlewheel').offsetWidth)
+					navigation.setFocus('singleselectedmaster');
+				else {
+					var focus = $("messagepanel").getElement("a.default");
+					if (focus) navigation.setFocus(focus);
+				}	
+			},100);
+		},
+		show: function(){
+
+			this.isActive = true;
+			this.currentFilter = null;
+			this.currentPosition = 0;
+			this.stateRestored = false;
+			
+			if(!this.WishlistWheelControl) 
+				this.WishlistWheelControl = new WishlistWheelControl();
+
+			if ($cn.data.AuthToken != '') {
+				navigation.setFocus('singleselectedmaster');
+				//this.loadWheel();
+				this.loadWheelExt();
+			}
+			else {
+				this.showMessage("wishlist_notactivated");
+			}
+		},
+		showMessage: function(template_id) {
+			
+			if (this.tpl != null)
+				this.tpl.empty();
+				
+			this.tpl = new ui.template("messagepanel", application.ui.loadTpl(template_id + ".tpl")); 
+			this.tpl.compile();
+			this.tpl.append();
+			this.tpl.apply();
+			
+			var message = $("messagepanel_container");
+			message.erase('class');
+			message.addClass(template_id);
+
+			log.write("showing message panel (" + template_id +")");	
+			$("messagepanel").show();
+			this.setFocus();	
+		},
+		showOptions: function(payload){		
+
+	   		$cn.methods.getTitleListing(payload.args[0].id, true, function(title){
+
+				var name = title.name,
+				    season = '',
+				    episode = '',
+					purchaseText = null,
+					template = (title.availableProducts.length) ? "wishlist_options_buy" : "wishlist_options",
+					promoString,
+					highlightColor = $cn.config.HighlightColor ? $cn.config.HighlightColor : "#FFFFFF";
+				
+				if (title.titleType == "Movie") 
+					purchaseText = $cn.utilities.purchaseText(title);
+				else {
+					purchaseText = application.resource.buy_text[title.titleType];
+					
+					if (title.titleType == "TV_Episode") {
+						name = $cn.utilities.getMeta("ShowName", title.metaValues);
+						season = $cn.utilities.getMeta("SeasonName", title.metaValues);
+						
+						if (season.length > 0)
+							season += ", ";
+							
+						season += $cn.utilities.getMeta("EpisodeNumber", title.metaValues);
+						episode = '"' + title.name + '"';
+					}
+					else if (title.titleType == "TV_Season") {
+						name = $cn.utilities.getMeta("ShowName", title.metaValues);
+						season = title.name;
+					}
+				}
+
+				promoString = $cn.utilities.getMeta("PromoString", title.metaValues);
+				
+				if (promoString.length)
+					purchaseText = purchaseText + " " + promoString;
+
+				name = $cn.utilities.ellipsis(name, 30);
+				BrowseView.showMessage(template, {
+					Title: '<span style="color:' + highlightColor + '">' + name + '</span>',
+					Season: season,
+					Episode: episode,
+					TitleID: title.titleID,
+					mPAARating: title.mPAARating,
+					PurchaseText: purchaseText,
+					Index: BrowseView.GridControl.itemidx
+				});
+				
+				
+			});
+		},
+		showPurchase: function(titleId){		
+			BrowseView.MessagePopup.hide();		
+			
+			//This is here to prevent buttons to be clicked for a short period of time. This is nessecary to give the device time to load and maintain it's state
+			application.TempKeyBlock = true;
+			application.TempKeyBlockDuration = 2500;
+			
+			application.events.publish('loadtitleview', {id: titleId, action: "checkout"});
+		},
+		showDetail: function(titleId){
+			BrowseView.MessagePopup.hide();		
+			
+			//This is here to prevent buttons to be clicked for a short period of time. This is nessecary to give the device time to load and maintain it's state
+			application.TempKeyBlock = true;
+			application.TempKeyBlockDuration = 2500;
+			
+			
+			application.events.publish('loadtitleview', {id: titleId});
+		},
+		remove: function(titleId, index){
+			
+			BrowseView.MessagePopup.hide();
+            
+            var responseFunc = function(result) {
+				if (result.responseCode == 0) {
+					BrowseView.GridControl.remove(index);
+
+					if (BrowseView.GridControl.itemCount() == 0) {
+						$('titlegrid').hide();
+						this.show();
+					}
+				}
+            };
+            
+            log.write("Wishlist.remove: titleId: " + titleId + "   index: " + index + "   count: " + BrowseView.GridControl.itemCount());
+            $cn.methods.removeItemFromWishList(titleId, responseFunc.bind(this));
+		},
+		onActivate : function() {
+//			this.loadWheel();
+			
+			BrowseView.showActivate({
+				callback: function(){
+					this.show();
+					this.setFocus();
+				}.bind(this)
+			});
+		}, 
+		onSaveState: function(payload){
+			
+			var state = payload.args[0];
+			var currentPosition = 0;
+			
+			if (this.isActive && this.currentFilter) {
+				currentPosition = BrowseView.GridControl.getPosition();			
+			}
+
+			state[this.id] = {
+				isActive: this.isActive,
+				currentFilter: this.currentFilter,
+				currentPosition: currentPosition
+			};
+		},
+		onRestoreState: function(payload){
+			var state = payload.args[0];
+			
+			if (state.store.currentState == "wishlist-view") {
+				
+				state = state[this.id];
+				$extend(this, state);
+
+				if (this.isActive) {
+				
+					$('messagepanel').hide();
+					$('scrollbar').hide();
+					$('titlegrid').hide();
+					$('singlewheel').hide();
+					
+					if ($cn.data.AuthToken != '') {
+						this.stateRestored = true;
+						//this.loadWheel();
+						this.loadWheelExt();
+						
+						if (application.element.current == null) {
+							navigation.setFocus('singleselectedmaster');
+						}					
+					}
+					else 
+						this.showMessage("wishlist_notactivated");
+				} 
+			}
+			else {
+				this.isActive = false;
+			}
+		}
+	},
+	WishList = new Class(WishListProperties);
+//-----------------------------------------------------------------------------
+// wishlistwheel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var WishlistWheelControlProperties = {
+		Extends: WheelControl,
+		Implements: WheelControl,
+		id: 'WishlistWheelControl',
+		container: 'singlewheel',
+		singleWheel: true,
+		MetaData: [],
+	    masterSourceElement: 'singlemasterdatasource',
+	    masterSelectedElement: 'singleselectedmaster',
+		cleanUI: function() {
+			if($('singleselectedmaster')) {
+				$('singleselectedmaster').label = '';
+			}
+
+			if($('singlemasterdatasource')) {
+				if($('singlemasterdatasource').getChildren().length > 0){
+
+					$('singlemasterdatasource').getChildren().destroy();
+				}
+			}
+		},
+		handleWheelItemChange: function(payload){		
+			log.write(payload);
+		},
+		loadData: function(masterCollection, selection) {
+			
+			var index = 0;
+			
+			if (selection) {
+				for (var i = 0; i < masterCollection.length; ++i) {
+					if (masterCollection[i].iD == selection) {
+						index = i;
+						break;
+					}
+				}
+			}			
+			this.cleanUI();			
+			this._masterSource = masterCollection;
+			this._renderWheel($(this.masterSourceElement), this._masterSource, index);						
+		}
+	/*	loadWishlistMenu: function() {
+
+			this.layoutIsDirty = true;
+			//this.saveHistory();
+			this.cleanUI();
+			
+			this.loadData([{
+					name: "Movies",
+					iD: "Movie",
+					parentID: 0
+				},{
+					name: "TV Shows",
+					iD: "TV_Show",
+					parentID: 0
+				}], [{}]
+			);	
+		}*/	
+	}, 
+	WishlistWheelControl = new Class(WishlistWheelControlProperties);
+<Settings>
+  <Value Key="XMLVersion">2.0</Value>
+  <Value Key="APIKey">aGef9P54bd+1/aH8/0Y+raG4MCtPc8OnrkQnvfXXDBsDSvC428LGuQ==</Value>
+  <Value Key="DestinationTypeID">1253</Value>
+  <Value Key="EnableJinni">auto</Value>
+  <Value Key="EnableBaseline">auto</Value>
+  <Value Key="EnableFlixster">auto</Value>
+  <Value Key="EnableTaxAPI">false</Value>
+  <Value Key="EnableMerch">true</Value>
+</Settings><Settings>
+  <Value Key="XMLVersion">2.0</Value>
+  <Value Key="APIKey">KQ7Ji+5iUocqjO5nrNTSTOgCgYeLycXMn1VF0+oFCrO1Xa5xh4I+qw==</Value>
+  <Value Key="DestinationTypeID">1254</Value>
+  <Value Key="EnableJinni">false</Value>
+  <Value Key="EnableBaseline">false</Value>
+  <Value Key="EnableFlixster">false</Value>
+  <Value Key="EnableTaxAPI">true</Value>
+  <Value Key="EnableMerch">true</Value>
+</Settings>

@@ -1,0 +1,3071 @@
+﻿//-----------------------------------------------------------------------------
+// store.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+
+var BrowseView = {
+    id : 'store', 
+    persist : {}, 
+    controls : {}, 
+    focusState : {}, 
+    layoutIsDirty : true, 
+    WheelControl : null, 
+    GiftCardPanel : null, 
+    SearchWheelControl : null, 
+    TitleMetaWheelControl : null, 
+    RecomendationWheelControl : null, 
+    TitleCheckOutWheelControl : null, 
+    SignInControl : null, 
+    GridController : null, 
+    GridControl : null, 
+    MerchControl : null, 
+    MessagePopup : null, 
+    SystemStatusPopup: null,
+    AudioPopup : null, 
+    DockControl : null, 
+    Legal : null, 
+    hasShownActivate : false, 
+    CurrentTitleID : '', 
+    orderHailMary : false, 
+    orderIsProcessing : false, 
+    bwPercentProgress : 0, 
+    bwTempCount : 0, 
+    bwTempTotalSpeed : 0, 
+    LastGridProcess : '', 
+    CurrentProcessLoaded : null, 
+    TitleViewControl : null, 
+    WishListLastLoaded : new Date(), 
+    titleViewLoading : false, 
+    uniquePurchaseId: false,
+    CurrentWheelValue : '', //Global key to keep track of the current selected wheel item. Used to make sure all of the grids stay in sync after their callbacks
+    init : function(params, direction) {
+        var self = this,
+            initCallback;
+
+        log.write('store.init()');
+
+        this.DockControl = new DockControl();
+
+        if($cn.data.SystemOffline) {
+            self.showSystemMessage();
+            return;
+        }
+        this.GridController = new GridController();
+
+        // Persist Params
+        if(params) {
+            this.persist = params;
+        }
+
+        /* Initialize the wheel control for the first time */
+        this.WheelControl = new WheelControl();
+
+        /* Initialize the grids and add to controller */
+        this.GridControl = new GridControl();
+        this.ImageGrid = new ContentGrid('imagegrid');
+        this.BioGrid = new ContentGrid('biogrid');
+        this.ReviewGrid = new ContentGrid('reviewgrid');
+        this.CreditsGrid = new ContentGrid('creditsgrid');
+        this.TechGrid = new ContentGrid('techgrid');
+        this.MerchControl = new MerchControl();
+        this.WelcomeControl = new WelcomeControl();
+        this.ActivationPcView = new ActivationPcView();
+        this.SystemStatusPopup = new SystemStatusPopup();
+        if($cn.config.EnableD2D && $cn.config.DeviceD2DEnabled){
+            this.DiscToDigitalGrid = new ContentGrid('disctodigitalgrid');
+            this.GridController.register(this.DiscToDigitalGrid);
+        }
+        
+        this.GridController.register(this.GridControl);
+        this.GridController.register(this.ImageGrid);
+        this.GridController.register(this.BioGrid);
+        this.GridController.register(this.ReviewGrid);
+        this.GridController.register(this.CreditsGrid);
+        this.GridController.register(this.TechGrid);
+
+        /* Initialize scrollbar */
+        this.ScrollBar = new ScrollBar('scrollbar');
+
+        this.SearchKeyboard = new SearchKeyboardControl();
+
+        this.SettingsPanel = new SettingsPanelControl();
+        this.CheckoutPanel = new CheckoutPanelControl();
+        this.GiftCardPanel = new GiftCardPanelControl();
+        this.HelpPanel = new HelpPanelControl();
+        this.WishList = new WishList();
+
+        this.TitleViewControl = new TitleViewControl();
+        this.GiftCardKeyboard = new GiftCardKeyboardControl();
+        this.GiftCardPanel.keyboard = this.GiftCardKeyboard;
+
+        /* PLAYER DEBUG
+         this.PlayerControl = new PlayerControl();
+         this.PlayerControl.show();
+         this.PlayerControl.hideLoading();
+         this.PlayerControl.showControls();
+         this.PlayerControl.setPlayStateDisplay('rr', '16X');
+         */
+
+        this.goHome();
+
+        application.events.subscribe(this.TitleViewControl, 'loadtitleview', function(payload) {
+
+            //Prevent Spamming of the TitleView button
+            var timer,
+                delay = ($cn.data.d2dPath ? 0 : 2000);
+
+            log.write('titleViewLoading: ' + self.titleViewLoading);
+            if(self.titleViewLoading) {
+                return;
+            }
+
+            timer = $cn.utilities.showLoadingModal(delay, "Loading Title...");
+            self.titleViewLoading = true;
+
+            //Set app timeout on back or select events so UI can load.
+            application.TempKeyBlock = true;
+            application.TempKeyBlockDuration = 1500;
+
+            application.state.save();
+
+            log.session.addActivity("Title_Details", ["Title_ID", String(payload.args[0].id)]);
+            application.state.current = "titleview";
+
+            BrowseView.CurrentTitleID = payload.args[0].id;
+            BrowseView.CurrentTitleLayout = payload.args[0].type;
+
+            if(payload.args[0].type && payload.args[0].type == 'library') {
+                log.write("type is library");
+                if(payload.args[0].passID) {
+					//verifyAuthToken before go to details of a library title, because user may decative the device in website
+                	$cn.methods.verifyAuthToken(function(result){
+                        if (result) {
+                            $cn.methods.getPurchasedTitle(payload.args[0].passID, payload.args[0].id, function(cb) {
+                                var messagepath,
+                                    data;
+                                // Do check to make sure that the user owns the title
+                                if(cb.titleID != 0) {
+                                    if($cn.utilities.isTrue(cb.isPassUV)){
+                                        self.UV = new $cn.utilities.UserUVManager("CheckoutPanel");
+                                        //Check UV account for UV title, because user may unlink the UV account in website
+                                        $cn.utilities.clearLoadingSpinner(timer);
+                                        self.UV.checkUVAccount(function(proceed){
+                                            if(proceed){
+                                            	timer = $cn.utilities.showLoadingModal(delay, "Loading Title...");
+                                            	BrowseView.loadTitle(cb, payload.args[0].action, timer);
+                                            }
+                                            else{
+                                            	self.titleViewLoading = false;
+                                            }
+                                        }, true);
+                                    }
+                                    else{
+                                    	BrowseView.loadTitle(cb, payload.args[0].action, timer);
+                                    }
+								} else {
+									$cn.utilities.clearLoadingSpinner(timer);
+									self.titleViewLoading = false;
+									messagepath = application.resource["store_messages"].Title_ID_Not_Found;
+
+									data = {
+										Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer.replace('{m}', self.resolveMethodCode("getPurchasedTitle")), Close : messagepath.Cancel, callback : function(result) {
+											log.write("Error (Unrecoverable)...");
+
+										}
+									};
+
+									BrowseView.showMessage(messagepath.MessageType, data);
+								}
+							});
+                        }
+                        else {
+                            $cn.utilities.clearLoadingSpinner(timer);
+                            self.titleViewLoading = false;
+                            BrowseView.showActivate();
+                        }
+                    });
+                } else {
+                    log.write("type is NOT library");
+                    $cn.methods.getTitleListing(payload.args[0].id, true, function(cb) {
+                        // Need to stay in library mode so use fake passID
+                        var title = $extend({
+                            passID : -1
+                        }, cb),
+                            messagepath,
+                            data;
+
+                        if(title.titleID != 0) {
+                            BrowseView.loadTitle(title, payload.args[0].action, timer);
+                        } else {
+                            $cn.utilities.clearLoadingSpinner(timer);
+                            self.titleViewLoading = false;
+                            messagepath = application.resource["store_messages"].Title_ID_Not_Found;
+
+                            data = {
+                                Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer.replace('{m}', self.resolveMethodCode("getFullSummary")), Close : messagepath.Cancel, callback : function(result) {
+                                    log.write("Error (Unrecoverable)...");
+
+                                }
+                            };
+
+                            BrowseView.showMessage(messagepath.MessageType, data);
+                        }
+                    });
+                }
+            } else if(payload.args[0].checklibrary && $cn.data.AuthToken.length != 0) {
+                log.write("we are in args checklibrary");
+                $cn.methods.lookupPurchaseDetailsForTitle(payload.args[0].id, function(result) {
+                    var messagepath,
+                        data;
+                    if(result.responseCode == 0 && result.isAvailable) {
+                        log.write("we are in is available");
+                        $cn.methods.getPurchasedTitle(result.passID, payload.args[0].id, function(cb) {
+                            if(payload.args[0].action == "checkout") {
+                                payload.args[0].action = "";
+                            }
+
+                            if(cb.titleID != 0) {
+                                BrowseView.loadTitle(cb, payload.args[0].action, timer);
+                            } else {
+                                $cn.utilities.clearLoadingSpinner(timer);
+                                self.titleViewLoading = false;
+                                messagepath = application.resource["store_messages"].Title_ID_Not_Found;
+
+                                data = {
+                                    Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer.replace('{m}', self.resolveMethodCode("getPurchasedTitle")), Close : messagepath.Cancel, callback : function(result) {
+                                        log.write("Error (Unrecoverable)...");
+
+                                    }
+                                };
+
+                                BrowseView.showMessage(messagepath.MessageType, data);
+                            }
+                        });
+                    } else {
+                        log.write("we are not in is available");
+                        $cn.methods.getTitleListing(payload.args[0].id, true, function(cb) {
+                            var messagepath,
+                                data;
+
+                            $('uicontainer').removeClass('redbuttons');
+
+                            if(cb.titleID != 0) {
+                                BrowseView.loadTitle(cb, payload.args[0].action, timer);
+                            } else {
+                                $cn.utilities.clearLoadingSpinner(timer);
+                                self.titleViewLoading = false;
+                                messagepath = application.resource["store_messages"].Title_ID_Not_Found;
+
+                                data = {
+                                    Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer.replace('{m}', self.resolveMethodCode("getFullSummary")), Close : messagepath.Cancel, callback : function(result) {
+                                        log.write("Error (Unrecoverable)...");
+
+                                    }
+                                };
+
+                                
+                                BrowseView.showMessage(messagepath.MessageType, data);
+                            }
+                        });
+						result.errorHandled = true;
+                    }
+                });
+
+            } else// STORE TITLE
+            {
+                //[CNSWE20-1065] -- Not sure why this was being set to store view but it causes the string to flash as focused which it shouldn't
+                //BrowseView.setView("browse-view");
+
+                $cn.methods.getTitleListing(payload.args[0].id, true, function(cb) {
+                    var messagepath,
+                        data;
+                    if ($cn.data.d2dPath) {
+                        cb.availableProducts.unshift($cn.data.d2dTitleOffers.availableOffers[0]);
+                    }
+                    $('uicontainer').removeClass('redbuttons');
+
+                    if(cb.titleID != 0) {
+                        BrowseView.loadTitle(cb, payload.args[0].action, timer);
+                    } else {
+                        $cn.utilities.clearLoadingSpinner(timer);
+                        self.titleViewLoading = false;
+                        messagepath = application.resource["store_messages"].Title_ID_Not_Found;
+
+                        data = {
+                            Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer.replace('{m}', self.resolveMethodCode("getFullSummary")), Close : messagepath.Cancel, callback : function(result) {
+                                log.write("Error (Unrecoverable)...");
+
+                            }
+                        };
+
+                        BrowseView.showMessage(messagepath.MessageType, data);
+                    }
+                });
+            }
+        });
+
+        application.events.subscribe(this, "exit", this.onExit.bind(this));
+        application.events.subscribe(this, "no_choice_exit", this.onNoChoiceExit.bind(this));
+        application.events.subscribe(this, "return", this.onReturn.bind(this));
+        application.events.subscribe(this, 'savestate', this.onSaveState.bind(this));
+        application.events.subscribe(this, 'restorestate', this.onRestoreState.bind(this));
+        application.events.subscribe(this, "gridloading", this.handleGridLoading.bind(this));
+        application.events.subscribe(this, "gridloaded", this.handleGridLoaded.bind(this));
+        //application.events.subscribe(this.GridController, "gridloading", this.handleGridLoading.bind(this));
+        //application.events.subscribe(this.GridController, "loadgrid", this.handleGridLoaded.bind(this));
+        application.events.subscribe(application, "badauthtoken", this.handleBadAuthToken.bind(this));
+        application.events.subscribe(application, "authparent", this.handleAuthParent.bind(this));
+        application.events.subscribe(this, "goback", this.handleGoBack.bind(this));
+        application.events.subscribe(this, "recommendeddataloaded", this.handleLoadRecommendation.bind(this));
+        application.events.subscribe(this, "error", this.onHandleError.bind(this));
+        application.events.subscribe(this, 'elementfocus', this.onFocus.bind(this));
+        application.events.subscribe(this, 'elementblur', this.onBlur.bind(this));
+        application.events.subscribe(application, "ready", function() {
+
+            /*
+             * No credential, popup application error
+             */
+            if (application.ApplicationError) {
+                $('wheel').hide();
+                $('SplashScreen').hide();
+
+                if(document.getElementById('welcome')) {
+                    $('welcome').hide();
+                }
+
+                self.showMessage(application.ApplicationError.type, application.ApplicationError);
+                return;
+            }
+            /*
+             * First things first validate region error
+             */
+            if(application.regionError) {
+                $('wheel').hide();
+                $('SplashScreen').hide();
+
+                if(document.getElementById('welcome')) {
+                    $('welcome').hide();
+                }
+
+                self.showMessage(application.regionError.type, application.regionError);
+                return;
+            }
+
+            //self.SignInControl = new SignInControl('validateuser','signincontainer');
+            //self.SignInControl.show();
+            application.isLoaded = true;
+
+            if($cn.data.isConnected) {
+                if($cn.data.SystemOffline) {
+                    self.showSystemMessage();
+                }
+                // application.events.publish("systemoffline");
+                else {
+                    
+                    log.write("ParentPinEnabled: " + $cn.data.ParentPinEnabled + ", $cn.data.IsParent: " + $cn.data.IsParent + ", $cn.data.ParentPinEnabledOnStartup: " + $cn.data.ParentPinEnabledOnStartup);
+
+                    initCallback = self.initCallback.bind(self);
+
+                    log.write("Check to see if Eula needs to be displayed. $cn.data.DisplayEula: " + $cn.data.DisplayEula);
+                    if($cn.data.DisplayEula) {
+                        application.blockWidgetAccess = true;
+                        setTimeout(function(){
+                        	self.showEula('eula', true);
+                        },100);
+                    } else {
+                        initCallback();
+                    }
+                }
+            } else {
+
+                // Throw not connected error
+                application.events.publish(application, "error", {
+                    type : "no_internet", recoverable : false
+                });
+            }
+        });
+
+        application.events.subscribe(application, "activated", function(payload) {
+            log.write("User has been activated.");
+            log.write("$cn.data.ParentPinEnabled: " + $cn.data.ParentPinEnabled);
+
+            if($cn.data.ParentPinEnabled) {
+                $('btnAccount').addClass("locked");
+                $cn.data.IsParent = false;
+                BrowseView.reset();
+            } else {
+                $cn.data.IsParent = true;
+
+                if($cn.data.ContentIsFiltered) {
+                    BrowseView.reset();
+                }
+            }
+
+            if(payload && payload.args[0]) {
+                var p = payload.args[0];
+
+                //[CNSWE20-1753] Don't autoplay an asset after activation.
+                if(p.method != 'getStreamingAssetLocation') {
+                    log.write("Making post activation call.");
+                    if(p.endPoint)
+                        webservices.makeAsyncRequest(p.endPoint, p.method, p.params, p.cb_context, p.callback, true);
+                    else if(p.callback)
+                        p.callback.call();
+                } else {
+                    log.write("Cannot make post activation call because the last call was playback. Wait for user input");
+                }
+            }
+
+            application.state._viewstate["library-view"] = null;
+            application.state._viewstate["wishlist-view"] = null;
+
+        }.bind(this));
+    },
+    
+    initCallback: function() {
+        var self = this;
+        application.blockWidgetAccess = false;
+        setTimeout(function() {
+            $('SplashScreen').hide();
+        }, 2500);
+        /*
+         * Auth token is set then hide welcome controls and either show store or merch screen
+         */
+        if($cn.data.d2dPath){
+            if($cn.data.d2dTitleInfo.id === null || $cn.data.d2dTitleInfo.error){
+                self.showD2DUnavailable();
+            }
+            else if($cn.data.AuthToken.length != 0 && $cn.data.AuthTokenActive == true){
+                    application.events.publish('loadtitleview', {
+                        id : $cn.data.d2dTitleInfo.id,
+                        action: "checkout"
+                    });
+            } else {
+                //below is just for testing.
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+                log.write("D2D TRUE GOING TO ACTIVATE SCREEN");
+
+                $('defaultWelcome').addClass('hidden');
+                $('diskToDigitalWelcome').removeClass('hidden');
+                self.WelcomeControl.getStarted();
+                self.WelcomeControl.show();
+            }
+        }
+        else if($cn.data.AuthToken.length != 0 && $cn.data.AuthTokenActive == true)
+        {
+
+            log.debug('$cn.data.EnableMerchPage: ' + $cn.data.EnableMerchPage);
+
+            self.WelcomeControl.hide();
+            if($cn.data.EnableMerchPage){
+                self.showMerch();
+            }
+            else {
+                application.navigator.setFocus('selectedmaster');
+            }
+        }
+        else {
+            self.WelcomeControl.show();
+            application.navigator.setFocus('welcomebutton');
+        }
+
+        if($cn.data.ParentPinEnabled)
+        {
+            $('btnAccount').addClass("locked");
+        }
+    },
+    showD2DUnavailable : function() {
+        $cn.data.d2dPath = false;
+        this.WelcomeControl.show();
+        $('d2dUnavailable').show();
+        log.write("D2D NO GO ");
+        log.write("D2D NO GO ");
+        log.write("D2D NO GO ");
+        log.write("D2D NO GO ");
+        log.write("D2D NO GO ");
+        log.write("D2D NO GO ");
+        log.write("D2D NO GO ");
+        application.navigator.setFocus('d2dbrowsebutton');
+    },
+    checkForUpdates : function() {
+            /*
+         * TODO (DEFERRED) - Function needs to be implemented. It should be a
+         * web service call that is made that will see if there is a new package
+         * available. If so it should download it.
+         */
+    },
+    /**
+     * Copy any data members that need to be copied by value.
+     */
+    clone : function() {
+        var result = $extend({
+        }, application.currentView);
+        result.ScrollBar = $extend({
+        }, application.currentView.ScrollBar);
+
+        return result;
+    },
+    /*
+     * url = url of the asset playing resume = time in seconds to start playing
+     * trailer = if this is a trailer asset
+     *
+     */
+    showPlayer : function(titleID, streamid, url, resume, hd, passid, ccData) {
+
+        // Perform speed test if it has not been done so already
+    	// THis was commented out, if we need to do this here use
+    	// device.playerBandwithCheck and not the plugin directly.
+        // var download = document.getElementById("downloadPlugin");
+        // download.OnComplete = OnComplete;
+        // download.CheckDownloadSpeed($cn.data.BandwithCheckURL, 3757608 , 5 ); 
+    	// URL, Filesize in bytes?, 10% callback intervals
+    	
+        this.setView("player-view");
+        if(this.PlayerControl == null) {
+            this.PlayerControl = new PlayerControl();
+        }
+
+        this.PlayerControl.load(titleID, streamid, url, resume, hd, passid, ccData);
+
+        // Library title should have red scheme, This is like this to not have
+        // the glitch in logo shift
+        if(passid && passid != '') {
+            $('PlayerLogo').addClass('redbuttons');
+        } else {
+            $('PlayerLogo').removeClass('redbuttons');
+        }
+
+        this.PlayerControl.show();
+
+    },
+    showTrailer : function(titleID, assetid) {
+        var self = this;
+        log.write("Showing trailer: " + titleID + " : " + assetid);
+        //If the bandwidth check is valid then execute normal playback else perform bandwidth check
+        $cn.methods.getBonusAssetLocation(assetid, function(res) {
+            self.showPlayer(titleID, res.streamID, $cn.utilities.buildPlaybackURL(res.streamingAssetLocation, res.streamID, res.dRMServerURL, res.dRMACKServerURL, res.heartbeatURL, res.heartbeatPollInSeconds, false, res.customData), 0, false, '', res.availableClosedCaptions);
+
+        });
+    },
+    // TS: move to appropriate view (usually titleview?)
+    showPlay : function(titleID, passid, resume, force, skipUV) {
+        var self = this,
+            isHD = false,
+            title = $cn.data.PassCache[passid],
+            messagepath,
+            data;
+
+        //Check verifyAuthToken, because user may decative the device in website
+        $cn.methods.verifyAuthToken(function(result){
+            if (result) {
+                if($cn.utilities.isTrue(title.isPassUV) && !skipUV ){
+                    this.UV = new $cn.utilities.UserUVManager("showPlay");
+                    this.UV.checkUVAccount(function(proceed){
+                        if(proceed){
+                            self.showPlay(titleID, passid, resume, force, true);
+                        } 
+                    }, true);
+                    return;
+                }
+
+                // Set isHD flag.
+                isHD = false;
+                if(title && title.availableProducts) {
+	                title.availableProducts.each(function(item) {
+	                    var x;
+	                    if(!isHD) {
+	                        for( x = 0; x < item.availableAssets.length; x++) {
+	                            isHD = (item.availableAssets[x].file_FileProfile == "HIGH_DEFINITION");
+	                            if(isHD) {
+	                                break;
+	                            }
+	                        }
+	                    }
+	                });
+                }
+
+                // Show rental warning if needed.
+                if(title && title.availableProducts) {
+                    // Before trying to play asset let's see if they have already confirmed playback. 
+                	// (only do this from within the library).
+                    log.write("If user is in library, check to see if they are trying to play a rental and have not received a license.");
+                    if(this.currentState == "titleview" && !force) {
+
+                        log.write("shouldShowRentalWarning: " + this.TitleViewControl.shouldShowRentalWarning());
+                        if(this.TitleViewControl.shouldShowRentalWarning() && resume == 0) {
+
+                            //Display Rental Warning Modal.
+                            messagepath = application.resource.checkout_messages.Rental_Warning;
+                            data = {
+                                Message : messagepath.Message.replace("##name##", title.name), Content : messagepath.Content.replace("##rentalperiod##", this.TitleViewControl.getRentalPeriod()).replace("##expirationmessage##", title.expirationMessage.replace("Expires", "")), Close : "No", OK : "Yes", callback : function(result) {
+                                    if(result) {
+                                        // Before we play we need to check to see if there are more than 1 audio streams
+                                        // available. If there are then we need to show the audio setup message.
+                                        var audioTypes = $cn.utilities.getAudioProfileTypesForPurchase(passid);
+	                                    if (!$cn.data.PreferredAudioTypeSet && audioTypes.length > 0 && !force) {
+	                                       // If we do not pass a callback as fourth param to showAudioOptions, the
+	                                       // default callback of BrowseView.showPlay(titleID, passid, resume, true)
+	                                       // will be used inside the showAudioOptions call tree.
+	                                       self.showAudioOptions(titleID, passid, resume);
+	                                    } 
+	                                    else {
+	                                       BrowseView.showPlay(titleID, passid, 0, true);
+	                                    }
+	                                }
+	                                else {
+	                                   //BrowseView.MessagePopup.hide();
+	                                }
+	                            }
+                            };
+                            
+                            BrowseView.showMessage("message_okcancel", data);
+                            return;
+                        }
+                    }
+
+                    // Prepare to play title.
+                    var audioTypes = $cn.utilities.getAudioProfileTypesForPurchase(passid);
+
+                    if (!$cn.data.PreferredAudioTypeSet && audioTypes.length > 0) {
+                        self.showAudioOptions(titleID, passid, resume, function() {
+                            // Audio format is already set in popup, just get asset location and play.
+                            $cn.methods.getStreamingAssetLocation(passid, isHD ? 'HIGH_DEFINITION ' : 'STANDARD', function(res) {
+                                self.showPlayer(titleID, res.streamID, $cn.utilities.buildPlaybackURL(res.streamingAssetLocation, res.streamID, res.dRMServerURL, res.dRMACKServerURL, res.heartbeatURL, res.heartbeatPollInSeconds, isHD, res.customData), resume, isHD, passid, res.availableClosedCaptions);
+                            });
+                        });
+                    } else {
+                        // Set audio format and try play.
+                        $cn.methods.setAudioDefaultProperty($cn.utilities.currentlyPlayingAudioProfile(passid), function() {
+                            $cn.methods.getStreamingAssetLocation(passid, isHD ? 'HIGH_DEFINITION ' : 'STANDARD', function(res) {
+                                self.showPlayer(titleID, res.streamID, $cn.utilities.buildPlaybackURL(res.streamingAssetLocation, res.streamID, res.dRMServerURL, res.dRMACKServerURL, res.heartbeatURL, res.heartbeatPollInSeconds, isHD, res.customData), resume, isHD, passid, res.availableClosedCaptions);
+                            });
+                        });
+                    }
+                }
+                else if(passid && passid != '' && passid != 0) {
+
+                    $cn.methods.lookupPurchaseDetailsForTitle(titleID, function(res) {
+                        if(!res.isAvailable) {
+                            /*
+                             * Throw unavailable error Not_Owned Bought_SD Bought_HD
+                             * Active_Rental_SD Active_Rental_HD Expired_Rental_SD
+                             * Expired_Rental_HD TV_Own_Some_Episodes TV_Own_Season_SD
+                             * TV_Own_Season_HD
+                            */
+
+                            application.events.publish("error", {
+                                type : "show_play_error", state : res.state, titleID : titleID
+                            });
+
+                            // Do not pass go, do not get $200
+                            return;
+                        }
+
+                        // Prepare to play title.
+                        var audioTypes = $cn.utilities.getAudioProfileTypesForPurchase(passid);
+
+                        if (!$cn.data.PreferredAudioTypeSet && audioTypes.length > 0) {
+                            self.showAudioOptions(titleID, passid, resume, function() {
+                                // Audio format is already set in popup, just get asset location and play.
+                                $cn.methods.getStreamingAssetLocation(passid, isHD ? 'HIGH_DEFINITION ' : 'STANDARD', function(res) {
+                                    self.showPlayer(titleID, res.streamID, $cn.utilities.buildPlaybackURL(res.streamingAssetLocation, res.streamID, res.dRMServerURL, res.dRMACKServerURL, res.heartbeatURL, res.heartbeatPollInSeconds, isHD, res.customData), resume, isHD, passid, res.availableClosedCaptions);
+                                });
+                            });
+                        } else {
+                            // Set audio format and try play.
+                            $cn.methods.setAudioDefaultProperty($cn.utilities.currentlyPlayingAudioProfile(passid), function() {
+                                $cn.methods.getStreamingAssetLocation(passid, isHD ? 'HIGH_DEFINITION ' : 'STANDARD', function(res) {
+                                    self.showPlayer(titleID, res.streamID, $cn.utilities.buildPlaybackURL(res.streamingAssetLocation, res.streamID, res.dRMServerURL, res.dRMACKServerURL, res.heartbeatURL, res.heartbeatPollInSeconds, isHD, res.customData), resume, isHD, passid, res.availableClosedCaptions);
+                                });
+                            });
+                        }
+                    });
+                }
+            }
+            else {
+                BrowseView.showActivate();
+            }
+        }.bind(this));
+    },
+    showLegalInfo : function(titleID) {
+
+        var self = this;
+        this.Legal = new LegalPopup('legal');
+
+        var timer = $cn.utilities.showLoadingModal(2000, "Loading...");
+        $cn.methods.getLegalInfo(function(text) {
+            $cn.utilities.clearLoadingSpinner(timer);
+
+            self.Legal.loadData([{
+                title : application.resource.legal_title, text : text
+            }]);
+            self.layoutIsDirty = true;
+            self.Legal.firstFocus = 'LegalOK';
+            self.Legal.show();
+        });
+    },
+    showTerms : function(titleID) {
+
+        var self = this;
+        this.Legal = new LegalPopup('legal');
+
+        var timer = $cn.utilities.showLoadingModal(2000, "Loading...");
+        $cn.methods.getTermsOfService(function(text) {
+            $cn.utilities.clearLoadingSpinner(timer);
+
+            self.Legal.loadData([{
+                title : application.resource.terms_title, text : text
+            }]);
+            self.layoutIsDirty = true;
+            self.Legal.firstFocus = 'LegalOK';
+            self.Legal.show();
+        });
+    },
+    showPrivacy : function(titleID) {
+
+        var self = this;
+        this.Legal = new LegalPopup('legal');
+
+        var timer = $cn.utilities.showLoadingModal(2000, "Loading...");
+        $cn.methods.getPrivacyPolicy(function(text) {
+            $cn.utilities.clearLoadingSpinner(timer);
+
+            self.Legal.loadData([{
+                title : application.resource.privacy_title, text : text
+            }]);
+            self.layoutIsDirty = true;
+            self.Legal.firstFocus = 'LegalOK';
+            self.Legal.show();
+        });
+    },
+    showEula : function(id, opaquebkgnd, theCallback) {
+
+        this.Legal = new LegalPopup(id);
+        var self = this;
+
+        var timer = $cn.utilities.showLoadingModal(2000, "Loading...");
+        $cn.methods.getEulaText(function(callback) {
+            $cn.utilities.clearLoadingSpinner(timer);
+
+            self.Legal.loadData([{
+                title : application.resource.eula_title, text : $cn.data.EulaText
+            }]);
+            self.layoutIsDirty = true;
+            self.Legal.firstFocus = 'LegalOK';
+            self.Legal.show(theCallback);
+            if('eula' === id){
+                self.Legal.cachedCss = $('modalcontainer').getStyles('background','width','height','z-index', 'position');
+                if(opaquebkgnd)
+                    $('modalcontainer').setStyles({ background : "black"});
+                // TODO: this doesn't solve the problem that BBY uses images for modal BG and Dixons uses opacity
+
+            }
+            if(opaquebkgnd)
+                $('Overlay').setStyle('background-color','black');
+            $('SplashScreen').hide();
+        });
+    },
+    acceptEula : function() {
+        var self = this;
+
+        $cn.methods.acceptEula(function(callback) {
+            self.Legal.hide();
+            if(self.Legal.cachedCss){
+                $('modalcontainer').setStyles(self.Legal.cachedCss);
+                delete self.Legal.cachedCss;
+            }
+
+            //This is no longer valid.
+            self.Legal.hide();
+
+            // TODO: not sure if this hiding should always / ever be fired.
+            $('Overlay').setStyle('background-color','transparent');
+            
+            self.initCallback();
+            /*
+             if($cn.data.AuthToken == '') {
+             self.showActivate();
+             }*/
+        });
+
+    },
+    showChangeEnv : function() {
+        if(this.EnvironmentPopup == null) {
+            this.EnvironmentPopup = new EnvironmentPopup();
+        }
+
+        this.EnvironmentPopup.loadData([{
+            endpoint : 'txt'
+        }]);
+        this.EnvironmentPopup.show();
+    },
+    showActivate : function(payload) {
+        var timer,
+            self = this;
+        if(this.ActivatePanel == null) {
+            this.ActivatePanel = new ActivatePanel();
+        }
+
+        if(document.getElementById('skinnykeyboard').style.display == "block") {
+            this.GiftCardKeyboard.hide();
+        }
+
+        log.write('showing activate panel');
+        this.layoutIsDirty = true;
+        this.hasShownActivate = true;
+        // Moved above this condition to force the buttons to be in this order. This is now okay because of the in app activation (full screen.)
+        var txt = this.hasShownActivate ? 'Cancel' : 'Continue Without Activating';
+
+        timer = $cn.utilities.showLoadingModal(2000, "Loading Activation String...");
+        $cn.methods.getActivationString(function(code) {
+            $cn.utilities.clearLoadingSpinner(timer);
+
+            self.ActivatePanel.show(payload);
+
+            self.ActivatePanel.loadData([{
+            buttonTxt : txt
+            }], code);
+
+         });
+    },
+    hideActivate : function() {
+        log.write('hiding activate panel');
+        this.layoutIsDirty = true;
+        this.ActivatePanel.hide();
+    },
+    showSpeed : function() {
+        this.showingOtherModal = true;
+        if(this.MessagePopup) {
+            this.MessagePopup.hide();
+        }
+
+        if(this.SpeedPopup == null)
+            this.SpeedPopup = new SpeedPopup();
+
+        this.SpeedPopup.firstFocus = 'SpeedCancel';
+        this.SpeedPopup.loadData([{
+            cancel : 'Cancel'
+        }]);
+        log.write('showing speed panel');
+        this.layoutIsDirty = true;
+        this.SpeedPopup.show();
+        this.SpeedPopup.startSpeedCheck();
+    },
+    showSystemStatus: function(){
+        log.write('System status is initiated');
+        if(this.MessagePopup) {
+            this.MessagePopup.hide();
+        }
+
+        if(this.SystemStatusPopup === null) {
+            this.SystemStatusPopup = new SystemStatusPopup();
+        }
+
+        this.SystemStatusPopup.firstFocus = 'SystemStatusCancel';
+        this.SystemStatusPopup.loadData([{ cancel:"", duration:"" }]);
+
+        this.layoutIsDirty = true;
+        this.SystemStatusPopup.show();
+        this.SystemStatusPopup.start();
+    },
+    showSystemDetails: function(){
+
+
+        log.write('System status Details Page');
+        messagepath = application.resource.testing_messages["show_details"];
+        data = {
+            Title : messagepath.Title,
+            InformativeText : $cn.data.SystemTests.informativeText,
+            Cancel : "Close", Path : messagepath.MessageType
+        };
+        this.showMessage(messagepath.MessageType, data);
+
+    },
+    bwMessage: function(){
+        var bwmsg = application.resource.testing_messages.bwMessage.SpeedResult1;
+        if ($cn.data.bwTest.speedBytes > 0 && $cn.data.bwTest.speedBytes < 125000) {
+            bwmsg = application.resource.testing_messages.bwMessage.SpeedResult1;
+        } else if ($cn.data.bwTest.speedBytes > 0 && $cn.data.bwTest.speedBytes < 1250000) {
+            bwmsg = application.resource.testing_messages.bwMessage.SpeedResult2;
+        } else if ($cn.data.bwTest.speedBytes > 0) {
+            bwmsg = application.resource.testing_messages.bwMessage.SpeedResult3;
+        }
+        
+        bwmsg = bwmsg.replace("##speed##", parseInt($cn.data.bwTest.speedBytes*8/10000, 10) / 100);
+        
+        $$("#SystemStatus .bwMessage .theResult").set("html", bwmsg);
+    },
+    showAudioOptions : function(titleID, passID, resume, callback) {
+        if(this.MessagePopup) {
+            this.MessagePopup.hide();
+        }
+
+        if(this.AudioPopup == null) {
+            this.AudioPopup = new AudioPopup();
+        }
+
+        this.layoutIsDirty = true;
+        this.AudioPopup.loadData([{
+            val : 'void'
+        }]);
+        this.AudioPopup.show(titleID, passID, resume, callback);
+    },
+    handleAuthParent : function(payload) {
+        var callback = (payload.args && payload.args[0] && payload.args[0].callback) ? payload.args[0].callback : null;
+        this.showPin(callback);
+    },
+    showPin : function(callback) {
+        // If show pin is called that means that the user is being validated so
+        // we should set the default text to the parent string
+        // if(document.getElementById('btnAccount')){
+        // $('SignInString').innerHTML = "ALL USERS";
+        // }
+
+        if(this.PinPopup == null) {
+            this.PinPopup = new PinPopup();
+        }
+        this.PinPopup.firstFocus = 'Pin0';
+        this.PinPopup.loadData([{
+            cancel : 'Cancel'
+        }]);
+
+        if(callback) {
+            this.PinPopup.callback = callback;
+        }
+
+        log.write('showing pin panel');
+        this.layoutIsDirty = true;
+        this.PinPopup.show();
+    },
+    showConfirm : function(title, header, message, button, hd, data, surround) {
+        if(!this.ConfirmPopup)
+            this.ConfirmPopup = new ConfirmPopup();
+
+        data.name = title.name;
+        data.titleID = title.titleID;
+        data.season = '';
+        data.episode = '';
+
+        if(title.titleType == "TV_Episode") {
+            data.name = $cn.utilities.getMeta("ShowName", title.metaValues);
+            data.season = $cn.utilities.getMeta("SeasonName", title.metaValues) + ", " + $cn.utilities.getMeta("EpisodeNumber", title.metaValues);
+            data.episode = '"' + title.name + '"';
+        } else if(title.titleType == "TV_Season") {
+            data.name = $cn.utilities.getMeta("ShowName", title.metaValues);
+            data.season = title.name;
+        }
+
+        this.CurrentProcessLoaded = true;
+        this.ConfirmPopup.loadData([data]);
+        this.ConfirmPopup.setStatus(header, message, button, hd, surround);
+
+    },
+    showRate : function(titleID) {
+        if(!this.RatePopup)
+            this.RatePopup = new RatePopup();
+        var rating;
+        //if($('userRating'))
+        //	rating = parseFloat($('userRating').get('html'));
+        rating = BrowseView.TitleViewControl.getUserRatingFloat();
+
+		$cn.methods.verifyAuthToken(function(result){
+            if (result) {
+				this.RatePopup.loadData([{
+					titleID : titleID, rate : 'Rate'
+				}]);
+
+				this.RatePopup.firstFocus = 'RateControl';
+				this.layoutIsDirty = true;
+				this.RatePopup.show();
+				this.RatePopup.setRate(rating || 3.0);
+            } else {
+            	this.showActivate();
+            }
+        }.bind(this));
+    },
+    showHelp : function() {
+        if(this.CurrentProcessLoaded) {
+            navigation.setFocusElement(null);
+            application.state.save();
+            log.session.addActivity("help");
+
+            $('uicontainer').removeClass('redbuttons');
+            $('wheel').hide();
+            $('singlewheel').show();
+            this.GridControl.cleanUI();
+            this.TitleViewControl.cleanUI();
+            this.hideExtras("HelpPanel");
+
+            if(!this.HelpWheelControl) {
+                this.HelpWheelControl = new HelpWheelControl();
+            }
+
+            this.HelpPanel.show();
+            this.HelpWheelControl.activate();
+            this.HelpWheelControl.loadHelpMenu();
+
+            navigation.setFocus('singleselectedmaster');
+            this.setView("help-view");
+
+            this.layoutIsDirty = true;
+        }
+    },
+    onExit : function(payload) {
+        payload.preventDefault();
+
+        if(!application.regionError) {
+            this.showExit();
+        }
+    },
+    onNoChoiceExit: function(payload) {
+        var self = this;
+        payload.preventDefault();
+
+        //If a gift card modal is visible then hide it.
+        if($$('div.giftcard').length > 0 && $$('div.giftcard')[0].style.display == "block") {
+            this.hideGiftCard();
+        }
+
+        self.Legal.hide();
+        BrowseView.showMessage('message_exit', {
+            callback : function(cb) {
+                log.write("Exit?: " + cb);
+                if(cb) {
+                    application.exit();
+                } else {
+                    self.showEula('eula');
+                }
+            }
+        });
+
+    },
+    onReturn : function(payload) {
+        payload.preventDefault();
+
+        this.showReturn();
+    },
+    onFocus : function(payload) {
+        var col,
+            animation;
+        log.write(payload);
+        if(payload.args[0].focusedelem == "selectedmaster" || payload.args[0].focusedelem == "selectedslave" || payload.args[0].focusedelem == "singleselectedmaster") {
+
+            col = "";
+
+            if(payload.args[0].focusedelem == "selectedmaster") {
+                col = 'masterdatasource';
+            } else if(payload.args[0].focusedelem == "selectedslave") {
+                col = 'slavedatasource';
+            } else if(payload.args[0].focusedelem == 'singleselectedmaster') {
+                col = 'singlemasterdatasource';
+            }
+
+            animation = application.loadAnimation("wheel");
+
+            $$('#' + col + ' div.wheelitem').each(function(item) {
+                if(item.getStyle('color') == animation.properties.primary.color) {
+                    item.setStyle('color', animation.properties.primary.focus);
+                }
+
+            });
+        }
+    },
+    onBlur : function(payload) {
+        var col,
+            animation;
+        if(payload.args[0].bluredelem == "selectedmaster" || payload.args[0].bluredelem == "selectedslave" || payload.args[0].bluredelem == "singleselectedmaster") {
+            col = "";
+
+            if(payload.args[0].blureditem == "selectedmaster") {
+                col = 'masterdatasource';
+            } else if(payload.args[0].blureditem == "selectedslave") {
+                col = 'slavedatasource';
+            } else if(payload.args[0].blureditem == 'singleselectedmaster') {
+                col = 'singlemasterdatasource';
+            }
+
+            animation = application.loadAnimation("wheel");
+
+            $$('#' + col + ' div.wheelitem').each(function(item) {
+                if(item.getStyle('color') == animation.properties.primary.focus) {
+                    item.setStyle('color', animation.properties.primary.color);
+                }
+            });
+
+        }
+
+    },
+    showExit : function() {
+
+        //If a gift card modal is visible then hide it.
+        if($$('div.giftcard').length > 0 && $$('div.giftcard')[0].style.display == "block") {
+            this.hideGiftCard();
+        }
+
+        BrowseView.showMessage('message_exit', {
+            callback : function(cb) {
+                log.write("Exit?: " + cb);
+
+                if(cb) {
+                    if(BrowseView.currentState == "player-view") {
+                        BrowseView.PlayerControl.stopPlayer();
+
+                        BrowseView.PlayerControl._saveStatus("stopped", function() {
+                            device.exit();
+                        });
+                    }
+                    application.exit();
+                }
+            }
+        });
+    },
+    showReturn : function() {
+
+        //If a gift card modal is visible then hide it.
+        if($$('div.giftcard').length > 0 && $$('div.giftcard')[0].style.display == "block") {
+            this.hideGiftCard();
+        }
+
+        BrowseView.showMessage('message_return', {
+            callback : function(cb) {
+                log.write("Return to Media Hub?: " + cb);
+
+                if(cb) {
+                    device.sendReturnEvent();
+                }
+            }
+        });
+    },
+    exitStore : function() {
+        if(BrowseView.currentState == "player-view") {
+            BrowseView.PlayerControl.stopPlayer();
+            Player.Shutdown();  // need to retain this for websocket
+
+            BrowseView.PlayerControl._saveStatus("stopped", function() {
+            	device.exit();
+            });    
+            
+            BrowseView.currentState = null;
+        }        
+        application.exit();
+    },
+    returnStore : function() {
+        if(BrowseView.currentState == "player-view") {
+            BrowseView.PlayerControl.stopPlayer();
+
+            BrowseView.PlayerControl._saveStatus("stopped", function() {
+            	device.sendReturnEvent();
+            });
+            
+            BrowseView.currentState = null;
+        } else {
+        	device.sendReturnEvent();
+        }
+        application.exit();
+    },
+    showMessage : function(type, data, fullscreen) {
+    	if(document.getElementById('skinnykeyboard') && document.getElementById('skinnykeyboard').style.display == "block") {
+            this.GiftCardKeyboard.hide();
+        }
+        
+        if(this.MessagePopup) {
+            this.MessagePopup.hide();
+        }
+
+        this.MessagePopup = new MessagePopup(type);
+        this.MessagePopup.loadData(data);
+        this.layoutIsDirty = true;
+        this.MessagePopup.show(fullscreen);
+    },
+    loadImagePopup : function(imageList) {
+        if(!this.ImagePopup)
+            this.ImagePopup = new ImagePopup();
+        this.ImagePopup.loadData(imageList);
+
+    },
+    showImages : function() {
+        if(this.ImagePopup) {
+            this.ImagePopup.show();
+        }
+    },
+    showSystemMessage : function() {
+        this.showMessage("message_service", {
+            Message : $cn.data.SystemUnavailableMessage, close : "close"
+        });
+    },
+    handleBadAuthToken : function(payload) {
+        /*
+         * 1) Delete existing auth data 2) Popup auth window 3) Pass payload to
+         * auth window 4) On success auth window should call app to finish call.
+         */
+        log.write("bad auth token detected. Clear info. Current view: " + this.currentState + ", Current element: " + application.element.current);
+        application.clearAuthToken();
+        this.CurrentProcessLoaded = true;
+        //Have to reset the flag. Certain options are disabled if processes are loading.
+        this.GiftCardPanel.isProcessing = false;
+
+        //If this error happened as a result of clicking checkout right after a user de-activates then clear the transaction
+        if(this.currentState == 'titleview_wheel' && application.element.current == 'checkout_order') {
+            application.isBusy = false;
+            this.orderIsProcessing = false;
+        }
+
+        if(this.currentState == 'library-view')// we are in the library. the
+        // library handles no activation
+        // on it's own.
+        {
+            this.goLibrary();
+        } else if(this.currentState == 'wishlist-view') {
+            //Wishlist also handles it's own activation
+            this.goWishlist();
+        } else {
+            this.showActivate(payload.args[0]);
+        }
+
+        //Clear dock icon and change flag so settings screen redraws itself
+        if(this.SettingsPanelControl)
+            this.SettingsPanelControl.isInitialized = false;
+        $('btnAccount').removeClass("locked");
+    },
+    handleGridLoading : function(payload) {
+        var self = this;
+        this.CurrentProcessLoaded = false;
+
+        if(application.isLoaded) {
+            document.getElementById('gridview').className = 'grid-loading';
+            document.getElementById('GridOverlay').className = '';
+            application.putInnerHTML(document.getElementById('gridloadingprocessstring'), '');
+            application.putInnerHTML(document.getElementById('genericloadingprocessstring'), '');
+
+            if(payload.args[0].cssClass && payload.args[0].cssClass != '') {
+                if(application.resource.processing_strings[payload.args[0].cssClass]) {
+                    $('GridOverlay').addClass('gridspinnertext');
+
+                    application.putInnerHTML(document.getElementById('gridloadingprocessstring'), application.resource.processing_strings[payload.args[0].cssClass]);
+                    application.putInnerHTML(document.getElementById('genericloadingprocessstring'), application.resource.processing_strings[payload.args[0].cssClass]);
+                }
+            }
+
+            $('gridspinnercontainer').setStyle('width', $(payload.args[0].grid).offsetWidth + "px");
+            $('gridloadercontainer').show();
+
+            //Start spinner timer
+            setTimeout(function() {
+                if(!self.CurrentProcessLoaded) {
+                    // Clear title is episode pane:
+                    if ($('store').hasClass('episode-panel')) {
+                        $('titlelist').innerHTML = "";
+                    }
+                    log.write('calling spinner init');
+                    //Show spinner
+                    BrowseView.GridController.initSpinner();
+                }
+            }, 2000);
+        }
+    },
+    handleGridLoaded : function(payload) {
+        var anchors;
+
+        $('gridloadercontainer').hide();
+        document.getElementById('gridview').className = '';
+        this.CurrentProcessLoaded = true;
+        this.GridController.deinitSpinner();
+
+        //If the currentelement is null and the grid just loaded - means that the last element has been destroyed. Set focus to the first element in the grid.
+        if((application.element.current != '' && !document.getElementById(application.element.current)) && document.getElementById('titlegrid')) {
+            anchors = $('titlegrid').getElementsByTagName("a");
+            if(anchors.length > 0) {
+                application.navigator.setFocus(anchors[0].id);
+            }
+        }
+
+    },
+    showChangeUser : function() {
+        var idx;
+
+        if(this.CurrentProcessLoaded) {
+            idx = 1;
+
+            //This is necessary because in certain conditions the "Audio" wheel item is hidden. If there are multiple audio profiles we need to increment the index to accomodate.
+            if($cn.data.AllowedAudioProfiles && $cn.data.AllowedAudioProfiles.length > 0) {
+                idx = 2;
+            }
+
+            this.goSettings(idx);
+        }
+    },
+    showTitleDetails : function(action, timer) {
+        var self = this;
+
+        this.SearchKeyboard.hide();
+        this.CheckoutPanel.hide();
+
+        this.HelpPanel.hide();
+        this.TitleLoading = true;
+
+        this.layoutIsDirty = true;
+        this.expandTitleDetails(function(e) {
+            if(!$cn.data.d2dPath){
+                $cn.utilities.clearLoadingSpinner(timer);
+            }
+            self.titleViewLoading = false;
+            self.TitleViewControl.show();
+            // $('titledetails').show();
+            log.write("... action is: " + action);
+            if(action === "checkout") {
+                self.showCheckOut(self.TitleViewControl.persist.title.titleID, timer);
+            } else if(action === "nextEpisode" || action === "skipFocus") {
+                //We are setting focus in Titleview to go to next episode.
+                //Leave this blank so we don't call setfocus multiple times.
+            } else {
+                self.TitleViewControl.setFocus();
+            }
+            self.TitleLoading = false;
+            $cn.data.LoadTitleID = '';
+            application.events.publish('displaytitledetails', {
+            });
+        });
+
+        // setTimeout(function(){
+        // self.MessagePopup.hide();
+        // },500);
+    },
+    
+    onPanelClose : function(callback) {
+
+        if(this.panel != null) {
+
+            $('store').removeClass(this.panel);
+
+            switch (this.panel) {
+                case "checkout-panel":
+                    this.CheckoutPanel.hide();
+                    break;
+                case "episode-panel":
+                    this.EpisodePanel.hide();
+                    break;
+                case "similar-panel":
+                    break;
+                case "moreinfo-panel":
+                    break;
+            }
+        }
+
+        this.panel = null;
+        this.setView("titleview");
+        this.TitleViewControl.enableButtons();
+    },
+    
+    expandTitleDetails : function(callback) {
+        $('titledetails').setStyle('overflow','visible');
+        $('WheelSeparator').hide();
+        log.write("Device SOC:" + device.getDeviceSoc());
+
+            BrowseView.onPanelClose();
+
+            BrowseView.ScrollBar.deactivate();
+            $('wheel').hide();
+            $('singlewheel').hide();
+            BrowseView.hideExtras("hideTitleDetails");
+            BrowseView.layoutIsDirty = true;
+            $('titledetails').setStyles({
+                'width' : 840, 'left' : 0
+            });
+
+            if(callback)
+                callback.call();
+    },
+    
+    showTvEpisodes : function(title) {
+        $('wheel').hide();
+
+        if(!this.EpisodePanel)
+            this.EpisodePanel = new EpisodePanelControl();
+
+        this.EpisodePanel.show(title);
+    },
+    
+    shrinkTitleDetails : function(panel, focusId) {
+        var self,
+            store,
+            animation;
+
+        log.write('Shrinking...');
+        $('titledetails').setStyle('overflow','hidden');
+        self = this;
+        store = $('store');
+
+        store.addClass('title-panel');
+        store.addClass(panel);
+        this.panel = panel;
+        $('WheelSeparator').show();
+
+        if(!device.getDeviceSoc() == "BCOM") {
+
+            animation = new Fx.Morph($('titledetails'), {
+                duration : 300, transition : Fx.Transitions.Sine.easeOut, onComplete : function(e) {
+                    // application.currentView.layoutIsDirty = true;
+                    self.currentState = "titleview_wheel";
+                    BrowseView.TitleViewControl.disableButtons();
+                    log.write("$$$$$$$$$$$$$ " + self.panel + "$$$$$$$$$$$$$$$$");
+
+                    if(panel == "checkout-panel") {
+                        self.CheckoutPanel.show();
+                    }
+                    if(focusId)
+                        navigation.setFocus(focusId);
+                }
+            });
+            animation.start({
+                'width' : 250, 'left' : 0
+            });
+        } else {
+
+            self.currentState = "titleview_wheel";
+            BrowseView.TitleViewControl.disableButtons();
+            log.write("$$$$$$$$$$$$$ " + self.panel + "$$$$$$$$$$$$$$$$");
+            $('titledetails').setStyles({
+                'width' : 250, 'left' : 0
+            });
+
+            if(panel == "checkout-panel") {
+                self.CheckoutPanel.show();
+            }
+            if(focusId)
+                navigation.setFocus(focusId);
+        }
+    },
+    
+    hideTitleDetails : function() {
+        var a;
+        this.CheckoutPanel.hide();
+
+        if(!device.getDeviceSoc() == "BCOM") {
+            a = new Fx.Morph($('titledetails'), {
+                duration : 300, transition : Fx.Transitions.Sine.easeOut, onComplete : function(e) {
+                    $('titledetails').hide();
+                    application.currentView.layoutIsDirty = true;
+                }
+            });
+
+            a.start({
+                'width' : 0, 'left' : 0
+            });
+        } else {
+            $('titledetails').setStyles({
+                'width' : 0, 'left' : 0
+            });
+        }
+        $('store').removeClass('title-panel');
+
+    },
+    handleLoadRecommendation : function(payload) {
+        log.write("$$$$$$$$$$$$$$$$$$$$$$$$ SHOW WHEEL $$$$$$$$$$$$$$$$$$$$$$$$");
+        $('wheel').show();
+    },
+    showSimilar : function(titleid) {
+        log.write('Similar-ing...');
+        
+        // Set a spinner in case the get takes a bit. 
+        // TODO: Check timeout, some places use 2000, is that the goal?
+        var timer = $cn.utilities.showLoadingModal(1000, "Loading Similar Titles...");
+
+        $('wheel').show();
+        $('singlewheel').hide();
+        $('titlegrid_container').removeClass("header");
+        this.GridControl.cleanUI();
+        this.CheckoutPanel.hide();
+        this.HelpPanel.hide();
+
+        this.currentTitle = $cn.data.TitleDetailCache[titleid];
+
+        if(!this.RecomendationWheelControl) {
+            this.RecomendationWheelControl = new RecomendationWheelControl();
+        }
+
+        // Need to not do much processing until the get inside loadData
+        // is complete to ensure we have actual wheel items and grid contents
+        // before we crank everything up on the similar panel.
+        var self = this;
+        this.RecomendationWheelControl.loadData(titleid, 
+        	function(responseCode, responseMessage) {
+        		$cn.utilities.clearLoadingSpinner(timer);
+        		
+        		if (responseCode == 0) { 
+        			self.shrinkTitleDetails("similar-panel", "selectedmaster");
+        		}
+        		else {
+                    messagepath = application.resource["store_messages"].Similar_Titles_Not_Found;
+                    data = {
+                   		Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, Close : messagepath.Cancel,
+                   			callback : function(result) {
+                   				log.write("Similar: Call to load Similar pane data load failed; responseCode is " + responseCode + "; responseMessage is " + responseMessage);
+                   			}
+                    	};
+					if(data.Footer) {
+						data.Footer = data.Footer.replace('{responseCode}', responseCode);
+						data.Footer = data.Footer.replace('{m}', this.resolveMethodCode('getGenesByWheelOptionPlural'));
+					}
+                    BrowseView.showMessage(messagepath.MessageType, data);
+        		}
+        	});
+    },
+    
+    showMoreInfo : function() {
+        log.write('More Info-ing...');
+        this.CheckoutPanel.hide();
+        this.HelpPanel.hide();
+        $('singlewheel').hide();
+        $('wheel').show();
+
+        if(!this.TitleMetaWheelControl) {
+            this.TitleMetaWheelControl = new TitleMetaWheelControl();
+        }
+        this.GridController.initSpinner();
+        this.TitleMetaWheelControl.activate();
+        this.TitleMetaWheelControl.loadData(this.moreInfoItems, this.currentTitle);
+        this.shrinkTitleDetails("moreinfo-panel", "selectedmaster");
+
+    },
+    showCheckOut : function(titleid, timer) {
+        log.write('Checkout...');
+        this.LastGridProcess = "";
+        if($cn.data.d2dPath){
+            application.state.purge();
+        }
+      
+
+        // this.hideExtras();
+        $('wheel').hide();
+        $('singlewheel').show();
+        this.SearchKeyboard.hide();
+        this.HelpPanel.hide();
+        $('titlegrid').hide();
+        this.GridController.hideAll();
+
+        this.ScrollBar.hide();
+
+        if(!this.TitleCheckOutWheelControl) {
+            this.TitleCheckOutWheelControl = new TitleCheckOutWheelControl();
+        }
+        $cn.utilities.clearLoadingSpinner(timer);
+        this.TitleCheckOutWheelControl.activate();
+        this.TitleCheckOutWheelControl.loadCheckOutData(titleid);
+        this.CheckoutPanel.show();
+
+        this.shrinkTitleDetails("checkout-panel");
+        application.currentView.layoutIsDirty = true;
+
+    },
+    goCheckOut : function(titleid, skuid, couponcode, pinValidated, bandwidthValidated) {
+        var self = this,
+            hd,
+            surround,
+            purchaseType,
+            download;
+
+        //block controls while order is processing.
+        application.TempKeyBlock = true;
+        log.write("Keys blocked during checkout");
+        application.TempKeyBlockDuration = 90000;
+        log.write("================= goCheckOut =======================");
+        log.write("uniquePurchaseId is: " + self.uniquePurchaseId);
+        // Only process order if it is not processing - bandwidth check resets processing to false
+        if(this.orderIsProcessing) {
+            return;
+        }
+
+        log.write("titleid is: " + titleid);
+        log.write("skuid is: " + skuid);
+
+        if (! self.uniquePurchaseId) {
+            // clear bw check for this purchase
+            $cn.data.LastBandwidthCheck = false;
+            // track purchase so we don't clear bw again for purchase
+            self.uniquePurchaseId = $cn.utilities.uniqueIdentifier();
+        }
+
+        if(application.authSupported) {
+            if($cn.data.AuthToken == '') {
+                this.showActivate();
+            } else {
+                // CHECK AUTH TOKEN TO VALIDATE
+
+                // SHOW "PIN pop-up" if PIN purchasing is enabled - skip this second time around
+                if($cn.data.PurchasePinEnabled && !pinValidated) {
+                    // SHOWING PIN
+                    application.TempKeyBlock = false;
+                    application.TempKeyBlockDuration = 1000;
+                    this.showPin(function() {
+                        self.goCheckOut(titleid, skuid, couponcode, true);
+                    });
+
+                    return;
+                }
+
+                this.currentTitle = $cn.data.TitleDetailCache[titleid];
+                hd = $cn.utilities.isHdTitle(this.currentTitle, skuid);
+                surround = $cn.utilities.isSurroundSoundTitle(this.currentTitle, skuid);
+
+                //If this is not an HD title or if a bandwidth check was recently performed then the bandwidth is valid
+                if(!bandwidthValidated) {
+                    bandwidthValidated = $cn.utilities.bandwidthCheckValid(hd);
+                }
+
+                //Start processing modal
+                this.CurrentProcessLoaded = false;
+                this.orderIsProcessing = true;
+                //Perform bandwidth check if it has not been validated
+                if(!bandwidthValidated) {
+                    log.write("doCheckout: performing bandwidth check");
+                    this.HelpPanel.hide();
+                    this.hideExtras(["CheckoutPanel", "hideTitleDetails"]);
+                    this.showMessage("message_loading", {
+                        Message : application.resource.loading_enum.orderprocessing
+                    });
+
+                    BandwidthCheck.purchaseBandwidthCheck(titleid, skuid, couponcode, hd, PlaybackBandwidthTest);
+
+                    return;
+                } else {
+                    this.HelpPanel.hide();
+                    this.hideExtras(["CheckoutPanel", "hideTitleDetails"]);
+                    this.showMessage("message_loading", {
+                        Message : application.resource.loading_enum.orderprocessing
+                    });
+
+                    $cn.methods.getTermsOfServiceAcceptance(function(termsAccepted) {
+
+
+                        log.write("++++++++++ tos acceptance is: " + termsAccepted);
+                        if (!termsAccepted) {
+                            log.write("++++ not accepted ++++++");
+
+                            BrowseView.showMessage("message_okcancel", {
+                                Message: application.resource.terms_title,
+                                Content: application.resource.terms_changed,
+                                OK: "Try Again",
+                                Close:  "Cancel",
+                                callback: function(accept) {
+                                    if (accept) {
+                                        self.errorCleanup();
+                                        self.goCheckOut(titleid, skuid, couponcode);
+
+                                    } else {
+                                        self.errorCleanup();
+                                    }
+                                }
+                            });
+                        } else
+                        {
+
+                            // SHOW "Processing Order..."
+                            $cn.methods.doPurchase(skuid, titleid, couponcode, function(callback) {
+                                var messagepath,
+                                    data,
+                                    messagetype,
+                                    button,
+                                    message,
+                                    purchaseType;
+
+                                // If callback is null then throw system error
+                                if(!callback) {
+                                    //unblock enter so you can click in modals
+                                    application.TempKeyBlock = false;
+                                    messagepath = application.resource.checkout_messages["system_error"];
+                                    //alert(messagepath)
+                                    data = {
+                                        Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer.replace('{m}', this.resolveMethodCode('doPurchase')), OK : messagepath.OK, Close : messagepath.Cancel, Path : messagepath.MessageType, callback : function(result) {
+                                            if(result)
+                                                BrowseView.goCheckOut(titleid, skuid, couponcode);
+                                        }.bind(this)
+                                    };
+
+                                    self.errorCleanup();
+                                    self.showMessage(messagepath.MessageType, data);
+                                } else if(callback.responseCode != 0) {
+                                    //unblock enter so you can click in modals
+                                    application.TempKeyBlock = false;
+                                    
+                                    if(callback.responseCode >= 120 && callback.responseCode <= 400){
+                                    	//It is the Ultraviolet ralated error when the 120<=responseCode<=400
+                                    	messagepath = application.resource.checkout_messages["uv_error"];
+                                        messagepath.Message = callback.responseMessage;
+                                    } else{
+                                    	messagepath = application.resource.checkout_messages[callback.responseMessage.replace(/ /g, "_")];
+                                    }
+                                    
+                                    if(!messagepath)
+                                        messagepath = application.resource.checkout_messages["system_error"];
+                                    
+                                    log.write("Error message Path: " + messagepath);
+
+                                    messagetype = (messagepath.MessageType) ? messagepath.MessageType : 'message_okcancel';
+
+                                    if(!messagepath.OK) {
+                                        messagetype = 'message_content';
+                                    }
+                                    
+                                    data = {
+                                        Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer.replace('{m}', this.resolveMethodCode('doPurchase')), OK : messagepath.OK, Close : messagepath.Cancel, Path : messagepath, callback : function(result) {
+                                            if(result)
+                                                BrowseView.goCheckOut(titleid, skuid, couponcode);
+                                        }.bind(this)
+                                    };
+
+                                    self.errorCleanup();
+                                    self.showMessage(messagetype, data);
+                                } else {
+                                    //unblock enter so you can click in modals
+                                    application.TempKeyBlock = false;
+                                    application.TempKeyBlockDuration = 1000;
+
+                                    if(BrowseView.MessagePopup) {
+                                        BrowseView.MessagePopup.hide();
+                                    }
+                                    //remove focus from checkout so you don't double checkout
+                                    navigation.setFocusElement(null);
+                                    application.events.publish('purchasecomplete', {
+                                        skuid : skuid
+                                    });
+                                    application.state._viewstate["library-view"] = null;
+
+                                    // SHOW completion screen with buttons "close/go to
+                                    // my library/play" buttons
+                                    button = "play";
+                                    message = '';
+                                    purchaseType = $cn.utilities.getPurchaseSkuProduct(this.currentTitle, skuid);
+
+                                    if(purchaseType.purchaseType == "rent") {
+                                        message = "rent" + purchaseType.rentalPeriod;
+                                    } else
+                                        message = purchaseType.purchaseType + this.currentTitle.titleType;
+
+                                    self.showConfirm(self.currentTitle, purchaseType.purchaseType, message, button, hd, callback, surround);
+                                }
+
+                                // A full errorCleanup here will block all future orders
+                                //unblock all keys on success for good measure.
+                                application.TempKeyBlock = false;
+                                application.TempKeyBlockDuration = 1000;
+                                self.orderIsProcessing = false;
+                                self.uniquePurchaseId = false;
+                            }.bind(self));
+                        }
+
+                    });
+
+                }
+
+
+            }
+        } else {
+            //unblock enter so you can use it in modals
+            application.TempKeyBlock = false;
+            application.TempKeyBlockDuration = 1000;
+            //remove focus from checkout so you don't double checkout
+            navigation.setFocusElement(null);
+            this.currentTitle = $cn.data.TitleDetailCache[titleid];
+            hd = $cn.utilities.isHdTitle(this.currentTitle, skuid);
+            surround = $cn.utilities.isSurroundSoundTitle(this.currentTitle, skuid);
+            purchaseType = $cn.utilities.getPurchaseSkuProduct(this.currentTitle, skuid);
+            this.showConfirm(this.currentTitle, purchaseType.purchaseType, purchaseType.purchaseType + this.currentTitle.titleType, 'play', hd, function() {
+            }, surround);
+        }
+    },
+    errorCleanup: function() {
+        //Error cleanup
+        //unblock keys and reset duration.
+        application.TempKeyBlock = false;
+        application.TempKeyBlockDuration = 1000;
+        this.CurrentProcessLoaded = true;
+        this.orderIsProcessing = false;
+        this.uniquePurchaseId = false;
+    },
+    showMerch : function() {
+        this.setView("merch-view");
+        this.MerchControl.show();
+    },
+    goGiftCard : function(isPurchasePath, sku) {
+    	var self = this;
+		//verifyAuthToken before doPurchase, because user may decative the device in website before click 'Redeem Gift Card or Coupon'
+		$cn.methods.verifyAuthToken(function(result){
+            if (result) {
+                if(self.MessagePopup) {
+                	self.MessagePopup = null;
+                }
+
+                self.GiftCardPanel.show(isPurchasePath, sku);
+                navigation.setFocus('SkinnyFirstKey');
+            } else {
+            	BrowseView.showActivate();
+            }
+        }.bind(this));
+    },
+    hideGiftCard : function() {
+        this.GiftCardKeyboard.hide();
+        this.GiftCardPanel.hide();
+    },
+    goHome : function(dontsave) {
+        if(this.CurrentProcessLoaded || !application.isLoaded) {
+            log.write("store.goHome: Navigating to home page");
+            log.session.addActivity("store");
+
+            //dontsave property is here so we can call goHome without saving into the history stack
+            if(this.currentState != null && !dontsave) {
+                navigation.setFocusElement(null);
+                application.state.save();
+            }
+
+            // Load new browse if there is not a saved page state or the app has
+            // been reset
+            if(!this.loadSavedState("browse-view")) {
+                $('uicontainer').removeClass('redbuttons');
+
+                this.hideExtras("BrowseView");
+                $('titlegrid').show();
+                $('wheel').show();
+                $('singlewheel').hide();
+                this.GridControl.currentId = 0;
+
+                // log.write("store.goHome Debug: About to call WheelControl.activate");
+                this.WheelControl.activate();
+                // log.write("store.goHome Debug: About to call WheelControl.loadData passing " + log.dumpObj($cn.data.masterWheel) + ";;;" + log.dumpObj($cn.data.slaveWheel));
+                this.WheelControl.loadData($cn.data.masterWheel, $cn.data.slaveWheel);
+            }
+
+            navigation.setFocus('selectedmaster');
+            this.setView("browse-view");
+            this.layoutIsDirty = true;
+
+        }
+    }, 
+    goSearch : function() {
+        if(this.CurrentProcessLoaded) {
+            navigation.setFocusElement(null);
+            application.state.save();
+            log.session.addActivity("search");
+
+            $('uicontainer').removeClass('redbuttons');
+            this.layoutIsDirty = true;
+            this.hideExtras();
+
+            $('wheel').hide();
+
+            this.SearchKeyboard.show();
+            this.CheckoutPanel.cleanUI();
+            this.TitleViewControl.cleanUI();
+            this.GridControl.cleanUI();
+
+            this.setView("search-view");
+            if(!this.SearchWheelControl) {
+                this.SearchWheelControl = new SearchWheelControl();
+            }
+            this.SearchWheelControl.activate();
+            this.SearchWheelControl.loadSearchMenu();
+
+            navigation.setFocus('FirstKey');
+        }
+
+    }, 
+    addToWishList : function(titleId) {
+        if($cn.data.AuthToken == '') {
+            this.showActivate({
+                callback : function() {
+                    this.addToWishList(titleId);
+                }.bind(this)
+            });
+        } else {
+
+            $cn.methods.addItemToWishList(titleId, function(result) {
+
+                // result.responseCode != 0 needed to handle #9648 edge case of clicking on add to WL before activation on item that is already in activated WL
+                // response from server in that case is {"id":"12_addItemToWishList","result":{"responseCode":550,"responseMessage":"System Error"}}
+                if(result && (result.responseCode == 0 || result.responseCode != 0)) {
+                    application.events.publish('wishlistinsert', titleId);
+                    // application.state._viewstate["wishlist-view"] = null;
+                }
+            });
+        }
+    }, 
+    goWishlist : function() {
+
+        if(this.CurrentProcessLoaded) {
+
+            this._goWishlist();
+            /*
+             * Remove per QA comments
+             if ($cn.data.AuthToken == '') {
+
+             this.showActivate({
+             callback: function(){
+             this.goWishlist();
+             }.bind(this),
+             onCancel: function(){
+             this._goWishlist();
+             }.bind(this)
+             });
+             }
+             else {
+             this._goWishlist()
+             }*/
+
+        }
+
+    }, 
+    _goWishlist : function() {
+
+        //Prevent Spamming of the WishList button
+        var time = $cn.utilities.DateDiff(new Date(), this.WishListLastLoaded),
+            self = this,
+            timer;
+        if(time < this.viewLoadingTimeout) {
+            return;
+        }
+
+        this.WishListLastLoaded = new Date();
+        navigation.setFocusElement(null);
+        application.state.save();
+
+        log.session.addActivity("wish_list");
+
+        // Show a loading modal in 2 seconds if verifyAuthToken has not returned
+        timer = $cn.utilities.showLoadingModal(2000, application.resource.loading_enum.loadingwishlist);
+        $cn.methods.verifyAuthToken( function(result) {
+            // Clear timer for loading modal
+            $cn.utilities.clearLoadingSpinner(timer);
+
+            if(!result) {
+                application.clearAuthToken();
+                application.state._viewstate['wishlist-view'] = null;
+            }
+            if(!this.loadSavedState("wishlist-view")) {
+
+                $('titledetails').hide();
+                $('uicontainer').removeClass('redbuttons');
+                this.hideExtras();
+
+                $('wheel').hide();
+                $('singlewheel').hide();
+
+                this.GridControl.cleanUI();
+
+                if(!this.WishList) {
+                    this.WishList = new WishList();
+                }
+
+                this.WishList.show();
+            }
+
+            this.setView("wishlist-view");
+            this.layoutIsDirty = true;
+            if(BrowseView.MessagePopup) {
+                BrowseView.MessagePopup.hide();
+            }
+
+        }.bind(this));
+        // In addition to checking for the saved state you should also check to
+        // see if the app was just reloaded
+
+    }, 
+    goLibrary : function(callback1, callback2) {
+        if(this.CurrentProcessLoaded) {
+            this._goLibrary(callback1, callback2);
+
+            /*
+             * This came back as a ticket. Not showing activation popup on initial load.
+
+             if ($cn.data.AuthToken == '') {
+
+             this.showActivate({
+             callback: function(){
+             this.goLibrary();
+             }.bind(this),
+             onCancel: function(){
+             this._goLibrary();
+             }.bind(this)
+             });
+             }
+             else {
+             this._goLibrary()
+             }
+             */
+        }
+    },
+    _goLibrary : function(callback1, callback2) {
+        var self = this;
+
+        navigation.setFocusElement(null);
+        application.state.save();
+        if (callback1) {
+            callback1();
+        }
+        log.session.addActivity("library");
+
+        // Show a loading modal in 2 seconds if verifyAuthToken has not returned
+        $cn.utilities.showSharedLoadingModal(2000, application.resource.loading_enum.library);
+
+        $cn.methods.verifyAuthToken(function(result) {
+            if(!result) {
+                $cn.utilities.clearSharedLoadingSpinner();
+                application.clearAuthToken();
+                application.state._viewstate['library-view'] = null;
+            }
+            // In addition to checking for the saved state you should also check to
+            // see if the app was just reloaded
+            if(!this.loadSavedState("library-view")) {
+
+                this.hideExtras();
+                $('wheel').hide();
+                $('singlewheel').hide();
+                $('titlegrid').hide();
+                $('scrollbar').hide();
+                $('titledetails').hide();
+                this.hideExtras();
+
+                if(!this.Library) {
+                    this.Library = new Library();
+                }
+                this.Library.show();
+            }
+
+            //	this.Library.setFocus();
+            this.setView("library-view");
+
+            if (callback2) {
+                callback2();
+            }
+        }.bind(this));
+    },
+    setLibrary : function(isTitleView) {
+
+        $('uicontainer').addClass('redbuttons');
+
+        if(!isTitleView) {
+            this.setView("library-view");
+        }
+    }, 
+    goSettings : function(initialSelection) {
+        if(this.CurrentProcessLoaded) {
+            navigation.setFocusElement(null);
+            application.state.save();
+            log.session.addActivity("settings");
+
+            log.write('showing settings');
+            $('uicontainer').removeClass('redbuttons');
+            this.layoutIsDirty = true;
+            this.TitleViewControl.cleanUI();
+            this.hideExtras("SettingsPanel");
+
+            $('wheel').show();
+            $('singlewheel').hide();
+            this.GridControl.cleanUI();
+
+            if(!this.SettingsWheelControl) {
+                this.SettingsWheelControl = new SettingsWheelControl();
+            }
+
+            this.SettingsWheelControl.activate();
+            this.SettingsWheelControl.loadSettingsMenu(initialSelection);
+            this.SettingsPanel.show();
+
+            if(initialSelection && initialSelection != 0) {
+                navigation.setFocus('btnsettingsparental');
+            } else {
+                navigation.setFocus('selectedmaster');
+            }
+
+            this.setView("settings-view");
+        }
+    }, 
+    render : function() {
+
+    }, 
+    handleGoBack : function(payload) {
+        var self = this,
+            buttonList;
+
+        if(this.CurrentProcessLoaded) {
+            //this.orderIsProcessing = false;
+
+            // Block the return function when the title is still loading. It
+            // messes with the layout.
+            if(this.TitleLoading) {
+                payload.preventDefault();
+                return;
+            }
+
+            //Back was click. Clear block
+            BrowseView.CurrentProcessLoaded = true;
+
+            switch(this.currentState) {
+                case "titleview_wheel":
+                    payload.preventDefault();
+
+                    if(document.getElementById('imagepopup').style.display == "block") {
+                        this.ImagePopup.hide();
+                    } else {
+                        this.expandTitleDetails(function(e) {
+                            $('titledetails').show();
+
+                            // self.currentState = "titleview";
+                            self.layoutIsDirty = true;
+
+                            if(ActiveWheel.id == "TitleMetaWheelControl") {
+                                application.navigator.setFocus("tdbuttonMoreInfo");
+                            } else if(ActiveWheel.id == "RecomendationWheelControl") {
+                                application.navigator.setFocus("tdbuttonSimilar");
+                            } else if(ActiveWheel.id == "TvSeasonsWheelControl") {
+                                application.navigator.setFocus("tdbuttonEpisodes");
+                            } else {
+                                log.write('Tracer to see if the goback method is moving focus from the error popup.');
+
+                                buttonList = document.getElementById('ButtonPanel').getElementsByTagName("a");
+
+                                if(buttonList.length > 0) {
+                                    application.navigator.setFocus(buttonList[0].id);
+                                } else {
+                                    application.navigator.setFocus("dock-home");
+                                }
+                            }
+                        });
+                    }
+                    break;
+                case "wishlist-view":
+                    //Make sure the title view has been loaded before trying to update the view.
+                    if(this.TitleViewControl.persist.title) {
+                        //Only do this is the previous view was in fact the title view.
+                        if(application.state._history.length > 1 && application.state._history[application.state._history.length - 1].currentState == "titleview") {
+                            this.TitleViewControl.update({
+                                forceUpdate : true
+                            });
+                        }
+                    }
+                    break;
+            }
+        } else {
+            payload.preventDefault();
+        }
+    },
+    hideExtras : function(leaveVisible) {
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("SearchKeyboard") == -1)) {
+            this.SearchKeyboard.hide();
+        }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("CheckoutPanel") == -1)) {
+            this.CheckoutPanel.hide();
+        }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("SettingsPanel") == -1)) {
+            this.SettingsPanel.hide();
+        }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("hideTitleDetails") == -1)) {
+            this.hideTitleDetails();
+        }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("GiftCardKeyboard") == -1)) {
+            this.GiftCardKeyboard.hide();
+        }
+        // if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("GiftCardPanel") ==
+        // -1)) { this.GiftCardPanel.hide(); }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("GridController") == -1)) {
+            this.GridController.hideAll();
+        }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("ScrollBar") == -1)) {
+            this.ScrollBar.hide();
+        }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("HelpPanel") == -1)) {
+            this.HelpPanel.hide();
+        }
+        if(this.Library) {
+            if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("Library") == -1)) {
+                this.Library.hide();
+            }
+        }
+        if(!leaveVisible || (leaveVisible && leaveVisible.indexOf("BrowseView") !== -1)) {
+            $('titledetails').hide();
+        }
+
+        $('messagepanel').hide();
+        $('titlegrid_container').removeClass("header");
+    },
+    showLogo : function() {
+        $('logo').show();
+    },
+    hideLogo : function() {
+        $('logo').hide();
+    },
+    loadTitle : function(title, action, timer) {
+        var i;
+
+        log.write(title.wheelItems);
+
+        this.similarItems = [];
+        this.moreInfoItems = [];
+
+        for(i = 0; i < title.wheelItems.length; i++) {
+
+            if(title.wheelItems[i].indexOf('s_') == 0 || title.wheelItems[i].indexOf("m_cast_crew") > -1)
+                this.similarItems.push(title.wheelItems[i]);
+            else
+                this.moreInfoItems.push(title.wheelItems[i]);
+        }
+
+        if(title.titleType == "TV_Episode") {
+            // Determine show and season info
+            $cn.methods.getBundleListing(title.showTitleID, function(callback) {
+
+                title.show = callback.name;
+                title.seasonal = title.seasonTitleID != 0;
+
+                if(title.seasonTitleID) {
+                    $cn.methods.getBundleListing(title.seasonTitleID, function(callback) {
+
+                        if(callback.bundleItems.length == 0){
+                            BrowseView.TitleViewControl.noBundleError = true;
+                            log.write("$$$$$ ERROR - Empty bundle listing $$$$$");
+                            //application.events.publish("error", {type: "system_error" }); // This is here if there are no bundle items returned.
+                        }
+
+                        for(var i = 0; i < callback.bundleItems.length; ++i) {
+                            if(callback.bundleItems[i].titleID == title.titleID) {
+                                title.season = callback.name + ", Episode " + callback.bundleItems[i].itemNumber;
+                                if(callback.bundleItems.length > i + 1) {
+                                    title.nextEpisodeID = callback.bundleItems[i + 1].titleID;
+                                }
+                                break;
+                            }
+                        }
+
+                        this.TitleViewControl.loadData(title);
+                        this.showTitleDetails(action, timer);
+
+                    }.bind(this));
+
+                    return;
+                } else {
+
+                    // Non-seasonal show
+                    for(i = 0; i < callback.bundleItems.length; ++i) {
+                        if(callback.bundleItems[i].titleID == title.titleID) {
+                            title.season = "Episode " + callback.bundleItems[i].itemNumber;
+                            break;
+                        }
+                    }
+
+                    this.TitleViewControl.loadData(title);
+                    this.showTitleDetails(action, timer);
+                }
+
+            }.bind(this));
+        } else if(title.titleType == "TV_Season") {
+
+            // Determine show name
+            $cn.methods.getBundleListing(title.showTitleID, function(callback) {
+
+                title.show = callback.name;
+                title.season = title.name;
+                title.seasonal = true;
+
+                this.TitleViewControl.loadData(title);
+                this.showTitleDetails(action, timer);
+
+            }.bind(this));
+        } else if(title.titleType == 'TV_Show') {
+
+            title.show = title.name;
+
+            // Determine if show is seasonal. Right now the
+            // only way to detect is to try and get a bundle
+            // listing for the show's first item.
+            $cn.methods.getBundleListing(title.showTitleID, function(callback) {
+
+                if(callback.bundleItems.length == 1) {
+
+                    $cn.methods.getBundleListing(callback.bundleItems[0].titleID, function(callback) {
+
+                        title.seasonal = callback.bundleItems.length > 0;
+                        this.TitleViewControl.loadData(title);
+                        this.showTitleDetails(action, timer);
+
+                    }.bind(this));
+                } else {
+                    title.seasonal = true;
+                    this.TitleViewControl.loadData(title);
+                    this.showTitleDetails(action, timer);
+                }
+
+            }.bind(this));
+        } else {
+            this.TitleViewControl.loadData(title);
+            this.showTitleDetails(action, timer);
+        }
+    },
+    loadSavedState : function(state) {
+        var currentState;
+        if(this.currentState != state) {
+
+            // Need to store the state because it
+            // will get overwritten when loading the
+            // new state while the old state is needed
+            // for the call to setView().
+            currentState = this.currentState;
+
+            if(application.state.loadState(state)) {
+                this.currentState = currentState;
+                return true;
+            }
+        }
+
+        return false;
+
+    },
+    reset : function(state) {
+        log.write("Resetting view state - current state: " + this.currentState);
+        application.reset();
+
+        if(state == null)
+            state = this.currentState;
+
+        switch (state) {
+            case "search-view":
+                this.currentState = null;
+                BrowseView.goSearch();
+                break;
+            case "wishlist-view":
+                this.currentState = null;
+                BrowseView.goWishlist();
+                break;
+            case "library-view":
+                this.currentState = null;
+                BrowseView.goLibrary();
+                break;
+            case "browse-view":
+            case "titleview":
+            case "titleview_wheel":
+                this.currentState = null;
+                BrowseView.goHome();
+                break;
+        }
+    },
+    setView : function(view) {
+        var element;
+        if(view != this.currentState) {
+            this.layoutIsDirty = true;
+            element = $('store');
+
+            element.removeClass(this.currentState);
+            element.addClass(view);
+            this.currentState = view;
+
+            application.events.publish('viewchanged', view);
+            log.write("Current view: " + view);
+        }
+    }, 
+    onSaveState : function(payload) {
+        var state = payload.args[0];
+        state[this.id] = {
+            currentState : this.currentState, panel : this.panel
+        };
+    }, 
+    onRestoreState : function(payload) {
+        var state = payload.args[0];
+        $extend(this, state[this.id]);
+        log.write("Current State: " + this.currentState);
+
+        if((!application.element.current || application.element.current != '') || (application.element.current && application.element.current != '' && !document.getElementById(application.element.current))) {
+
+		    //If ParentPinEnabled was false, remove the lock of 'PARENTAL CONTROL' when load the previous view.
+            switch (this.currentState) {
+                case "merch-view":
+                    if(!application.element.current || (application.element.current && application.element.current == '')) {
+                        navigation.setFocus('f_button');
+                    }
+                    break;
+                case "browse-view":
+                    //Only set focus to master wheel item if the current element is not found or empty. Might need to add condition if visible.
+                    if(!application.element.current || (application.element.current && application.element.current == '')) {
+                        navigation.setFocus('selectedmaster');
+                    }
+                    break;
+                case "search-view":
+                    if(!application.element.current || (application.element.current && application.element.current == '')) {
+                        navigation.setFocus('FirstKey');
+                    }
+                    break;
+                case "wishlist-view":
+                    //					this.WishList.setFocus();
+                    break;
+                case "library-view":
+                    if(!application.element.current || (application.element.current && application.element.current == '')) {
+                        this.Library.setFocus();
+                    }
+                    $cn.utilities.clearSharedLoadingSpinner();
+                    break;
+                case "settings-view":
+                    navigation.setFocus('selectedmaster');
+                    break;
+                case "titleview":
+                    this.TitleViewControl.setFocus();
+                    break;
+                case "help-view":
+                    navigation.setFocus('singleselectedmaster');
+                    break;
+            }
+
+        }
+    }, 
+    onBlockedKey : function(payload) {
+        payload.preventDefault();
+    }, 
+    resolveMethodCode : function(method) {
+        var val = " - 0.1";
+
+        switch(method) {
+            case "getNavigation":
+                val = " - 1.1";
+                break;
+            case "getMerchandize":
+                val = " - 1.2";
+                break;
+            case "getBrowseList":
+                val = " - 1.3";
+                break;
+            case "getBrowseListByCast":
+                val = " - 1.4";
+                break;
+            case "getBrowseListByCastRole":
+                val = " - 1.5";
+                break;
+            case "getBrowseListByGene":
+                val = " - 1.6";
+                break;
+            case "getBrowseListByGeneWithSimilarBy":
+                val = " - 1.7";
+                break;
+            case "getGenesByWheelOptionPlural":
+                val = " - 1.8";
+                break;
+            // Commenting out for clarity - unreachable code due to duplication above
+            // case "getBrowseListByCast":
+            //    val = " - 1.9";
+            //    break;
+            case "getBundleListing":
+                val = " - 1.10";
+                break;
+            case "getBundleListingPurchased":
+                val = " - 1.11";
+                break;
+            case "getShortSummary":
+                val = " - 1.12";
+                break;
+            case "getFullSummary":
+                val = " - 1.13";
+                break;
+            case "getGenesByWheelOption":
+                val = " - 1.14";
+                break;
+            case "getCastAndCrew":
+                val = " - 1.15";
+                break;
+            case "getCastBio":
+                val = " - 1.16";
+                break;
+            case "getCastBios":
+                val = " - 1.17";
+                break;
+            case "getCredits":
+                val = " - 1.18";
+                break;
+            case "getImages":
+                val = " - 1.19";
+                break;
+            case "getTechnicalDetails":
+                val = " - 1.20";
+                break;
+            case "getReviews":
+                val = " - 1.21";
+                break;
+            case "rateTitle":
+                val = " - 1.22";
+                break;
+            // Commenting out for clarity - unreachable code due to duplication above
+            //case "getReviews":
+            //    val = " - 1.23";
+            //    break;
+			case "getBrowseListBySimilar":
+                val = " - 1.92";
+                break;
+            case "getShortSummaryPlural":
+                val = " - 1.96";
+                break;
+            case "searchTitle":
+                val = " - 2.24";
+                break;
+            case "searchPerson":
+                val = " - 2.25";
+                break;
+            case "getWishlist":
+                val = " - 2.26";
+                break;
+            case "checkUserWishListForItems":
+                val = " - 2.27";
+                break;
+            case "addItemToWishList":
+                val = " - 2.28";
+                break;
+            case "removeAllItemsFromWishList":
+                val = " - 2.29";
+                break;
+            case "removeItemFromWishList":
+                val = " - 2.30";
+                break;
+            case "getWishlistExt":
+                val = " - 2.124";
+                break;
+            // Commenting out for clarity - unreachable code due to duplication above
+            //case "getBillingInfo":
+            //    val = " - 3.35";
+            //    break;
+            case "doPurchase":
+                val = " - 3.32";
+                break;
+            case "checkIfTitleInLibrary":
+                val = " - 3.33";
+                break;
+            case "lookupPurchaseDetailsForTitle":
+                val = " - 3.34";
+                break;
+            case "getBillingInfo":
+                val = " - 3.35";
+                break;
+            case "verifyCode":
+                val = " - 3.36";
+                break;
+            case "applyGiftCode":
+                val = " - 3.37";
+                break;
+            case "calcOrderTax":
+                val = " - 3.103";
+                break;
+            case "pollForToken":
+                val = " - 4.39";
+                break;
+            case "verifyAuthToken":
+                val = " - 4.40";
+                break;
+            case "loadToken":
+                val = " - 4.41";
+                break;
+            case "getActivationString":
+                val = " - 4.42";
+                break;
+            case "checkParentPin":
+                val = " - 4.43";
+                break;
+            case "toggleParentPin":
+                val = " - 4.44";
+                break;
+            case "togglePurchasePin":
+                val = " - 4.45";
+                break;
+            case "getLinkingAccount":
+                val = " - 4.132";
+                break;
+            case "getLegalInfo":
+                val = " - 5.46";
+                break;
+            case "getEulaText":
+                val = " - 5.47";
+                break;
+            case "acceptEula":
+                val = " - 5.48";
+                break;
+            case "setupDevice":
+                val = " - 5.49";
+                break;
+            case "recordSessionData":
+                val = " - 5.50";
+                break;
+            case "recordSessionConnectionSpeedTest":
+                val = " - 5.51";
+                break;
+            case "defineErrorCode":
+                val = " - 5.52";
+                break;
+            case "CheckHeaderValues":
+                val = " - 5.53";
+                break;
+            case "getAudioDefaultProperty":
+                val = " - 5.54";
+                break;
+            case "setAudioDefaultProperty":
+                val = " - 5.55";
+                break;
+            case "getTermsOfService":
+                val = " - 5.114";
+                break;
+            case "getPrivacyPolicy":
+                val = " - 5.115";
+                break;
+            case "getTermsOfServiceAcceptance":
+                val = " - 5.126";
+                break;
+            case "getPurchasedTitle":
+                val = " - 6.56";
+                break;
+            case "getUserLibrary":
+                val = " - 6.57";
+                break;
+            case "getGenres":
+                val = " - 6.58";
+                break;
+            case "getAvailGenresAndLibSlaveWheelOptions":
+                val = " - 6.59";
+                break;
+            case "getAvailLibSlaveWheelOptionByMasterWheel":
+                val = " - 6.60";
+                break;
+            case "getAvailMasterWheelOptions":
+                val = " - 6.61";
+                break;
+            case "getUserLibraryCounts":
+                val = " - 6.62";
+                break;
+            case "getUserLibraryExt":
+                val = " - 6.128";
+                break;
+            case "getBonusAssetLocation":
+                val = " - 7.63";
+                break;
+            case "getStreamingAssetLocation":
+                val = " - 7.64";
+                break;
+            case "sendStopMessageForStream":
+                val = " - 7.65";
+                break;
+            case "loadLastStreamingAssetLocationForPass":
+                val = " - 7.66";
+                break;
+            case "updateResumeTimeForPass":
+                val = " - 7.123";
+                break;
+            default:
+                break;
+        }
+
+        return val;
+    }, 
+    onHandleError : function(payload) {
+        var self = this,
+            messagepath = null,
+            messagetype = null,
+            data = {},
+            expmethod = '0.1',
+            that = this,
+            style,
+            styles,
+            cbParams,
+            titleid,
+            title,
+            newCallback,
+            state,
+            titleID;
+
+        //Log method
+        try {
+            log.write("Error Method: " + payload.args[0].method + ", Error type: " + payload.args[0].type + ", Error status: " + payload.args[0].status);
+            expmethod = payload.args[0].method;
+
+            // This still allows the region check to work appropriately
+            if (!application.ui.wasInitialized) {
+                payload.preventDefault();
+
+                log.write("============ pre ui init error caught =============");
+
+                application.ui.init(function() {
+
+                    application.loadView(BrowseView);
+
+                    $('wheel').hide();
+                    $('dock').hide();
+                    $('logo').hide();
+                    $('SplashScreen').hide();
+                    payload.restartApp = true;
+                    self.onHandleError(payload);
+                }, true);
+                return;
+
+            }
+        } catch(e) {
+        }
+
+        try {
+            if(expmethod == "recordSessionData") {
+                log.write("Error saving session data. Ignore and continue as usual.");
+                return;
+            }
+            // only cancel if it's not recordSessionData
+            if( typeof payload.preventDefault == "function") {
+                payload.preventDefault();
+            }
+            //If the method is doPurchase then we don't need a default instantiation. It will be manual.
+            if(expmethod != "doPurchase") {
+                //Sandbox this for unexpected situations. If the basic error is not avail. then hard code it.
+                log.write('payload.args[0].type === "system_error":' + (payload.args[0].type === "system_error"));
+                log.write('payload.args[0].status == 500:' + (payload.args[0].status == 500));
+
+                // This is here for timeout errors while activating
+                if ($('ActivatePanel') && $('ModalWindow')) {
+                    $('ActivatePanel').hide();
+                    $('ModalWindow').show();
+                }
+                // Spoof check is a 500 error on getActivationString
+                if(expmethod === "getActivationString" && payload.args[0].status == 500) {
+
+                    messagepath = application.resource["system_messages"]["spoof_check_error"];
+
+                    // w/o the following this modal is not visible from the settings page
+                    $('modalcontrol').addClass('show5');
+                    $('ModalWindow').setAttribute('style', '');
+                    //Custom style handler to ensure that styles always get overridden.
+                    styles = (application.resource.modalConfig['activate_show5']);
+
+                    for(style in styles) {
+                        $("ModalWindow").setStyle(style, styles[style]);
+                    }
+
+                    log.write('Modal Class for error: ' + $('modalcontrol').className);
+                    $('modalcontrol').removeClass('activate');
+                } else {
+                    messagepath = application.exception.resolveMessagePath(this.currentState)[payload.args[0].type];
+                }
+                messagetype = (messagepath && messagepath.MessageType) ? messagepath.MessageType : 'message_okcancel';
+                if(messagepath.Footer) {
+                    messagepath.Footer = messagepath.Footer.replace('{m}', this.resolveMethodCode(expmethod));
+                }
+            } 
+        } catch(e) {
+            //Something very bad happened. Unrecoverable.
+            log.write('Something very bad happened. Unrecoverable. Message path for current state ' + this.currentState + ' and type ' + payload.args[0].type + ' could not be found.');
+
+            data = {
+                Message : "Unable to contact the server.", Content : "Make sure your network connection is active and try again.", Footer : 'Still having trouble? Please go to <span class=\"url\">www.cinemanow.com/support</span> and type the following error code in the search box: <span class=\"errorCode\">550 {m}</span>', OK : "Close", callback : function(result) {
+
+                    // If the cancel button was pressed
+                    if (! result) {
+
+                        // If this is the player
+                        if (BrowseView.currentState == "player-view") {
+
+                            // Back out of playback to not show a black screen
+                            log.write("stopping player, and backing out to tile view");
+                            application.events.publish("back");
+                        }
+                    }
+                }
+            };
+
+            if(data.Footer) {
+                data.Footer = data.Footer.replace('{m}', this.resolveMethodCode(expmethod));
+            }
+
+            this.showMessage("message_error_default", data);
+            return;
+        }
+
+        // Place items that need to happen for every error in here.
+        // START COMMON CLEANUP
+        if ($('gridloadercontainer')) {
+            $('gridloadercontainer').hide();
+        }
+        this.errorCleanup();
+        if (this.GridController) {
+            this.GridController.deinitSpinner();
+        }
+        // STOP COMMON CLEANUP
+
+        // First handle special case of an error thrown before the UI was initialized
+        // This modal will have a "try again" and a "quit" button
+        if (payload.restartApp) {
+            newCallback = function() {
+                $('SplashScreen').show();
+                $('SplashProgress').hide();
+                window.location.reload(false);
+            };
+
+            messagetype = 'message_restart';
+            data = {
+                Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, OK : messagepath.OK, Close : messagepath.Cancel, callback :  newCallback  };
+
+            if(data.Footer) {
+                data.Footer = data.Footer.replace('{m}', this.resolveMethodCode(expmethod));
+            }
+
+            this.showMessage(messagetype, data);
+
+            // We're done
+            return;
+        }
+
+        switch(payload.args[0].type) {
+            case "while_purchase_bw_internet_out":
+                messagepath = application.resource.checkout_messages["purchase_error"];
+                messagetype = 'message_error_purchase';
+                cbParams = payload.args[0].params;
+                titleid = cbParams.titleid;
+                title = $cn.data.TitleDetailCache[titleid];
+                data = {
+                    Message : messagepath.Message.replace("##title##", title.name), Content : messagepath.Content, OK : messagepath.OK, Close : messagepath.Cancel, Path : messagepath, Footer : messagepath.Footer.replace('{m}', self.resolveMethodCode(expmethod)), callback : function(result) {
+                        if(result) {
+                            log.write("Going to Library.");
+                            $('WheelSeparator').hide();
+                            BrowseView.goLibrary();
+                        }
+                    }
+                };
+
+                self.errorCleanup();
+                self.showMessage(messagetype, data);
+                break;
+            case "no_internet":
+            case "timeout_error":
+            case "socket_error":
+				if (expmethod == "sendStopMessageForStream") {  
+                    // Handle sendStopMessageForStream's network error silently.                               
+					payload.args[0].callback.call(payload.args[0].cb_context, {data:{result:" "}});                   
+					return;
+				}
+				
+				log.write("ERROR: no_internet, timeout_error, or socket_error occurred: " + payload.args[0].type);
+                log.write("TEST INTERNET CONNECTION");
+
+                // If a timeout occurs check if there is an Internet connection
+                application.testConnection(function(cb) {
+                    log.write("INTERNET CONNECTION RESULT (" + cb.result + ")");
+                    log.write("TimeoutMethod: " + expmethod);
+                    log.write("the hail mary is set to: " + that.orderHailMary);
+
+                    //Check to see if this is a dopurchase call. If it is not then proceed normally.
+                    if(expmethod != "doPurchase") {
+                        log.write("store.handleError Debug: Not Purchase Method");
+                        // If result is true there is an internet connection. Show
+                        // the timeout error. Else show the internet connection not
+                        // available error
+                        if(!cb.result) {
+                            // Check if this was the last ditch effort at the end of a doPurchase
+                            if(that.orderHailMary) {
+                                // Cancel the async request and its timeout
+                            	webservices.killCurrentRequest();
+                                log.write("Mary hailed");
+                                messagepath = application.resource.checkout_messages["purchase_error"];
+                                that.orderHailMary = false;
+                                that.orderIsProcessing = false;
+                            } else if(that.orderIsProcessing) {
+                                messagepath = application.resource.checkout_messages["purchase_error"];
+                                that.orderHailMary = false;
+                                that.orderIsProcessing = false;
+                            }
+                            else {
+                                messagepath = application.exception.resolveMessagePath(self.currentState)[payload.args[0].type];
+                                log.write("store.handleError Debug: Default processing  of type " + payload.args[0].type + " for no hail mary and no order, setting basic error message to " + messagepath);
+                                $cn.utilities.clearLoadingSpinner();
+                            }
+
+                            if(that.orderHailMary) {
+                                messagetype = (messagepath.MessageType) ? messagepath.MessageType : 'message_error_purchase';
+                            } else {
+                                messagetype = (messagepath.MessageType) ? messagepath.MessageType : 'message_okcancel';
+                            }
+                            application.isConnected = false;
+                        }
+
+                        if (that.orderHailMary) {
+                            titleid = payload.args[0].params.TitleID;
+                            title = $cn.data.TitleDetailCache[titleid];
+                            data = {
+                                Message : messagepath.Message.replace("##title##",title.name), Content : messagepath.Content, Footer : messagepath.Footer, OK : messagepath.OK, Close : messagepath.Cancel, callback : function(result) {
+                                    if(result) {
+                                        log.write("Going to Library.");
+                                        $('WheelSeparator').hide();
+                                        BrowseView.goLibrary();
+                                    }
+                                }
+                            };
+                        } else {
+                            if(expmethod === "getActivationString"){
+                            data = {
+                                Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, OK : messagepath.OK, Close : messagepath.Cancel, callback : function(result) {
+                                    if(result) {
+                                            BrowseView.showActivate();
+                                        }
+                                    }
+                                };
+                            } else {
+                                data = {
+                                    Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, OK : messagepath.OK, Close : messagepath.Cancel, callback : function(result) {
+                                        if(result) {
+                                        self.showMessage("message_loading", {
+                                            Message : ''
+                                        });
+
+                                        // Here we call into makeAsyncRequest with the payload we already have. This leads to
+                                        // a call stack containing a series of callbacks which unwind on tray again->success
+                                        // or cancel.
+                                        log.write("store.onHandleError Debug: Trying to call previous method...");
+                                        webservices.makeAsyncRequest(payload.args[0].endPoint, payload.args[0].method, payload.args[0].params, payload.args[0].cb_context, function(result) {
+                                            // log.write("store.onHandleError Debug: Internal callback with value " + payload.args[0].callback);
+                                            if (self.MessagePopup) {
+                                            	self.MessagePopup.hide();
+                                            }
+                                            log.write("store.onHandleError Debug: Internal response callback - invoking payload callback");
+                                            payload.args[0].callback.call(payload.args[0].cb_context, result);
+                                        }, true, false);
+                                    }
+                                }
+                            };
+                        }
+                        }
+
+                        log.write("=== restart app is: " + payload.restartApp);
+                        log.write("=== data callaback is: " + data.callback);
+
+                        if(data.Footer) {
+                            data.Footer = data.Footer.replace('{m}', self.resolveMethodCode(expmethod));
+                        }
+                        self.showMessage(messagetype, data);
+                    } else {
+                        log.write("Purchase Method. Now wait for an additional 30 seconds to see if the transaction completes.");
+
+                        //This is a doPurchase call. You should wait another 30 seconds and try to see if we now have the access to the movie.
+                        setTimeout( function() {
+                            log.write("We now have waited an additional 30 seconds, try to see if we now have access to the movie.");
+                            log.write(log.dumpObj(payload.args[0].params));
+
+                            // Last ditch effort to check whether attempted purchase has gone through
+                            that.orderHailMary = true;
+                            $cn.methods.lookupPurchaseDetailsForTitle(payload.args[0].params.TitleID, function(cb) {
+                                var hd,
+                                    surround,
+                                    button,
+                                    message,
+                                    purchaseType;
+
+                                log.write(log.dumpObj(cb));
+
+                                //If there is a passID then go to the details page. Else throw purchase error.
+                                if(cb.passID > 0) {
+                                    log.write("PassID valid go to library.");
+									payload.args[0].params.passID = cb.passID;
+									payload.args[0].params.titleID = payload.args[0].params.TitleID;
+									
+                                    hd = $cn.utilities.isHdTitle(self.currentTitle, payload.args[0].params.SKUID);
+                                    surround = $cn.utilities.isSurroundSoundTitle(self.currentTitle, payload.args[0].params.SKUID);
+
+                                    if(BrowseView.MessagePopup) {
+                                        BrowseView.MessagePopup.hide();
+                                    }
+
+                                    application.events.publish('purchasecomplete', {
+                                        skuid : payload.args[0].params.SKUID
+                                    });
+                                    application.state._viewstate["library-view"] = null;
+
+                                    // SHOW completion screen with buttons "close/go to
+                                    // my library/play" buttons
+                                    button = "play";
+                                    message = '';
+                                    purchaseType = $cn.utilities.getPurchaseSkuProduct(self.currentTitle, payload.args[0].params.SKUID);
+
+                                    if(purchaseType.purchaseType == "rent") {
+                                        message = "rent" + purchaseType.rentalPeriod;
+                                    } else {
+                                        message = purchaseType.purchaseType + self.currentTitle.titleType;
+                                    }
+
+                                    self.showConfirm(self.currentTitle, purchaseType.purchaseType, message, button, hd, cb, surround);
+
+                                    self.orderIsProcessing = false;
+                                } else {
+                                    log.write("PassID not valid throw purchase error.");
+                                    messagepath = application.resource.checkout_messages["purchase_error"];
+                                    messagetype = 'message_error_purchase';
+                                    cbParams = payload.args[0].params;
+                                    titleid = cbParams.titleid;
+                                    title = $cn.data.TitleDetailCache[titleid];
+                                    data = {
+                                        Message : messagepath.Message.replace("##title##", title.name), Content : messagepath.Content, OK : messagepath.OK, Close : messagepath.Cancel, Path : messagepath, Footer : messagepath.Footer.replace('{m}', self.resolveMethodCode(expmethod)), callback : function(result) {
+                                            if(result) {
+                                                log.write("Going to Library.");
+                                                $('WheelSeparator').hide();
+                                                BrowseView.goLibrary();
+                                            }
+                                        }.bind(this)
+                                    };
+
+                                    self.errorCleanup();
+                                    self.showMessage(messagetype, data);
+                                }
+                            });
+
+                        }.bind(this), (application.appSetting("WSRequestTry2Timeout") * 1000));
+                    }
+
+                });
+
+                break;
+            case "system_error":
+				if(expmethod == "doPurchase") {
+					messagepath = application.resource.checkout_messages["purchase_error"];
+					messagetype = 'message_error_purchase';
+					title = $cn.data.TitleDetailCache[payload.args[0].params.TitleID];
+					messagepath.Message = messagepath.Message.replace("##title##", title.name);
+				}
+                data = {
+                    Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, OK : messagepath.OK, Close : messagepath.Cancel, callback : function(result) {
+                        if(result) {
+                            self.showMessage("message_loading", {
+                                Message : ''
+                            });
+
+                            log.write("Trying to call previous method...");
+                            webservices.makeAsyncRequest(payload.args[0].endPoint, payload.args[0].method, payload.args[0].params, this, function(result) {
+                                log.write("Response...");
+                                self.MessagePopup.hide();
+                                payload.args[0].callback.call(payload.args[0].cb_context, result);
+                            }, true, false);
+                        }
+                    }
+                };
+
+                if(data.Footer) {
+                    data.Footer = data.Footer.replace('{m}', this.resolveMethodCode(expmethod));
+                }
+
+                this.showMessage(messagetype, data);
+                break;
+            case "country_invalid":
+                break;
+            case "OnNetworkDisconnected":
+            // Recoverable player errors
+            case "OnConnectionFailed":
+            case "OnWideVineError_514":
+            case "OnWideVineError_2004":
+                data = {
+                    Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, OK : messagepath.OK, Close : messagepath.Cancel, callback : function(result) {
+                        log.write("Error (Recoverable)..." + result);
+                        if(result) {
+
+                            application.testConnection(function(cb) {
+                                log.write("INTERNET CONNECTION RESULT (" + cb.result + ")");
+                                // If result is true there is an internet
+                                // connection. Show the timeout error. Else
+                                // show the internet connection not
+                                // available error
+                                if(cb.result) {
+                                    application.navigator.setFocus(BrowseView.PlayerControl.lastFocus);
+                                    Bro

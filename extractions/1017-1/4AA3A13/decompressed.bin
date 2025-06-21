@@ -1,0 +1,2257 @@
+﻿//-----------------------------------------------------------------------------
+// PlayerInternal.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+//
+// WebSocket Player implementation
+//
+
+var Player = { 
+    initialized : false,
+    isPlay : false,
+    isStopping : false,
+	isHD : false,
+    isStutter : false,
+    isSkipping : false,
+    playbackTime: 0,
+    playbackSpeed : 1,
+    playbackState : 'Stopped',
+    duration : 0,
+    videoWidth : 960,
+    videoHeight : 540,
+    bitrate : 0,
+    playbackQualityLevels : 4,
+    playbackQualityLevel : 1,
+    playbackQualityType : 'SD',
+    playbackQualityRate : 0,
+    ccData: null,
+    scanWatchTimer: null,
+
+    // Initialization at beginning, called by device.initPlayer().
+	Initialize: function() {
+        log.write('Player.Initialize(websocket version)');        
+        var ret = false;
+        
+        // for now, assume if using websocket/SDK player module, that playback is supported.
+        if("WebSocketManager" in window) {
+            application.playbackSupported = true;
+            ret = true;
+        }
+        
+        return ret;
+	},
+
+    // Finalization at end, Called by BrowseView.exitStore().
+	Shutdown: function() {
+        log.write('Player.Shutdown(websocket version)');   
+
+        // Stop player if needed.
+        this.Stop();
+
+        // Release player if needed.
+        this._releasePlayer();  
+	},
+
+    // Create player and play from beginning, return 1 as success.
+	Play: function(url, ccData) {
+        log.write('Player.Play(websocket version): url(' + url + ')');
+        if (this.initialized) {
+            log.write('Player.Play(websocket version): already initialized!');
+            return;
+        }
+
+        this.ccData = ccData;
+
+        // Parse url and generate request string.
+        var request = this._generateCreatePlayerRequest(url),
+            self = this;
+
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'CreatePlayer_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value == 0) {
+                        log.write('Player.Play(websocket version): create player success!');
+                        self.initialized = true;
+
+                        // Register event handler, call Play after successful registration.
+                        self._registerEventHandler();
+                    }
+                    else {
+                        self._handleError(attributes[0].value);
+                    }
+                }
+            }
+        });
+
+        return 1;
+	},
+
+    // Create player and resume play from LPT, return 1 as success.
+    // Parameter:
+    //  resumePosition: resume time in second
+    ResumePlay: function(url, resumePosition, ccData) {
+        log.write('Player.ResumePlay(websocket version): url(' + url + '), resumePosition(' + resumePosition + ')');
+        if (this.initialized) {
+            log.write('Player.ResumePlay(websocket version): already initialized!');
+            return;
+        } 
+
+        this.ccData = ccData;
+
+        // Parse url and generate request string.
+        var request = this._generateCreatePlayerRequest(url),
+            self = this;
+
+        WebSocketManager.send(request, this, function(response) {
+            var responseNode = self._getResponseNode(response, 'CreatePlayer_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value == 0) {                          
+                        log.write('Player.ResumePlay(websocket version): create player success!');
+                        self.initialized = true;
+
+                        // Register event handler, call Play after successful registration.
+                        self.playbackTime = resumePosition;
+                        self._registerEventHandler();
+                    }
+                    else {
+                        self._handleError(attributes[0].value);
+                    }
+                }
+            }         
+        });
+		
+		return 1;
+    },
+
+    // Pause player, return 1 as success.
+	Pause: function() {
+        log.write('Player.Pause(websocket version)');        
+        if (!this.isPlay) {
+            log.write('Player.Pause(websocket version): not played!');
+			return;
+		}
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<Pause/></RNOPlayerCall>',
+            self = this;
+      
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'Pause_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.Pause(websocket version): pause player success!');
+                    }
+                }
+            }     
+        });
+
+        return 1;
+	},
+
+    // Resume player after paused, return 1 as success.
+	Resume: function() {
+		log.write('Player.Resume(websocket version)');
+        if (!this.isPlay) {
+            log.write('Player.Resume(websocket version): not played!');
+            return;
+        }
+
+        // Pass 0 as playback time to avoid wv's sync operation.
+        this._requestPlay();
+		return 1;
+	},
+
+    // Stop and release player.
+	Stop: function() {
+		log.write('Player.Stop(websocket version)');
+        if (!this.initialized) {
+            log.write('Player.Stop(websocket version): not initialized!');
+            return;
+        }
+
+        this.isStopping = true;
+        var request = '<RNOPlayerCall>$$REQUESTID$$<Stop/></RNOPlayerCall>', 
+            self = this;
+        
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'Stop_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value == 0) {                          
+                        log.write('Player.Stop(websocket version), stop player success!');
+                        self.isPlay = false;                            
+                    }
+                    else {                        
+                        log.write('Player.Stop(websocket version), stop player error(' + attributes[0].value + ')!');
+                    }
+
+                    // Release player always.
+                    self._releasePlayer();
+                }
+            }     
+        });
+	},
+
+    // Jump forward.
+	JumpForward: function(second) {
+		log.write('Player.JumpForward(websocket version)');
+        if (!this.isPlay) {
+            log.write('Player.JumpForward(websocket version): not played!');
+            return;
+        }
+
+        if (this.playbackTime + second < this.duration) {
+            this.isSkipping = true;
+            this._requestPlay(this.playbackTime + second);
+        }
+	},
+
+    // Jump backward.
+	JumpBackward: function(second) {
+		log.write('Player.JumpBackward(websocket version)');
+        if (!this.isPlay) {
+            log.write('Player.JumpBackward(websocket version): not played!');
+            return;
+        }
+
+        if (this.playbackTime - second > 0) {
+            this.isSkipping = true;
+            this._requestPlay(this.playbackTime - second);
+        }
+	},
+
+    // Locate to some position.
+    LocateToPosition: function(position) {
+        log.write('Player.LocateToPosition(websocket version): postion(' + position + ')');
+        if (!this.isPlay) {
+            log.write('Player.LocateToPosition(websocket version): not played!');
+            return;
+        }
+
+        if (0 < position && position < this.duration) {
+            this.isSkipping = true;
+            this._requestPlay(position);
+        }
+        return 1;
+    }, 
+
+    // Set playback speed for scanning, return 1 as success.
+    SetPlaybackSpeed: function(speed) {
+        log.write('Player.SetPlaybackSpeed(websocket version): speed(' + speed + ')');
+        if (!this.isPlay) {
+            log.write('Player.SetPlaybackSpeed(websocket version): not played!');
+            return;
+        }
+
+        this._requestPlay(this.playbackTime, speed);
+        return 1;
+    },
+
+    // Set Player's CSS visibility. 
+	SetVisibility: function(visible) {
+		log.write('Player.SetVisibility(websocket version)');
+	},
+
+	SetDisplayArea: function(x, y, width, height) {
+		log.write('Player.SetDisplayArea(websocket version)');
+	},
+
+	SetInitialTimeOut: function(second) {
+		log.write('Player.SetInitialTimeOut(websocket version)');
+	},
+
+    // Return duraion in millisec.
+	GetDuration: function() {
+        log.write('Player.GetDuration(websocket version), duration(' + this.duration + ')');        
+        return this.duration * 1000;
+	},
+
+	GetCurrentBitrates: function() {
+        log.write('Player.GetCurrentBitrates(websocket version), bitrate(' + this.playbackQualityRate + ')');     
+        return this.playbackQualityRate;
+	},
+	
+	GetQualityInfo: function() {
+		log.write('Player.GetQualityInfo(websocket version), qualityType(' + this.playbackQualityType + '), Level(' 
+				+ this.playbackQualityLevel + '), TotalLevel(' + this.playbackQualityLevels + '), qualityRate(' + this.playbackQualityRate + ')');
+		return { 
+            PlaybackQualityType : this.playbackQualityType,
+			PlaybackQualityLevel : this.playbackQualityLevel,
+			PlaybackQualityLevels : this.playbackQualityLevels,
+			PlaybackQualityRate : this.playbackQualityRate
+		};
+	},
+
+	GetVideoHeight: function() {
+        log.write('Player.GetVideoHeight(websocket version)');		
+        return this.videoHeight;
+	},
+
+	GetVideoWidth: function() {
+        log.write('Player.GetVideoWidth(websocket version)');
+        return this.videoWidth;
+	},
+
+    //--------------- Closed Caption --------------
+    // Set the desired closed caption language, return 1 as success.
+    SetCCLanguage: function(language) {
+        log.write('Player.SetCCLanguage(websocket version): language(' + language + ')');
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<SetCCLanguage>' + language +'</SetCCLanguage></RNOPlayerCall>',
+            self = this;
+
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'SetCCLanguage_Response');
+            if (responseNode) {
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.SetCCLanguage(websocket version): SetCCLanguage success!');
+                    }
+                }
+            }     
+        });
+
+        return 1;
+    },
+    
+    // SetCCEnabled is used to enable or disable closed caption display
+    SetCCEnabled: function(ccEnable) {
+        log.write('Player.SetCCEnabled(websocket version): ccEnable(' + ccEnable + ')');
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<SetCCEnabled>' + ccEnable +'</SetCCEnabled></RNOPlayerCall>',
+            self = this;     
+
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'SetCCEnabled_Response');
+            if (responseNode) {
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.SetCCEnabled(websocket version): SetCCEnabled success!');
+                    }
+                }
+            }     
+        });
+
+        return 1;
+    },
+
+    // GetCCEnabled is used to query the current "enabled" state for closed captions
+    GetCCEnabled: function(callback, context) {
+        log.write('Player.GetCCEnabled(websocket version)');
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<GetCCEnabled></GetCCEnabled></RNOPlayerCall>',
+            self = this;
+        
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'GetCCEnabled_Response'),
+                ccEnable = false;
+
+            if (responseNode) {
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error') {
+                    if (attributes[0].value == 0) {
+                        if (responseNode.firstChild.nodeValue && responseNode.firstChild.nodeValue == 'true')
+                            ccEnable = true;
+                        else 
+                            ccEnable = false;
+
+                        log.write('Player.GetCCEnabled(websocket version): get ccEnable(' + ccEnable + ')');
+                        if (typeof callback === 'function') {
+                            callback.call(context, ccEnable);
+                        }
+                    }
+                    else {
+                        self._handleError(attributes[0].value);
+                    }
+                }
+            }             
+        });
+    },
+
+    // <SetCCCache cacheType="closedcaptions"/>
+    // SetCCCache is used to set caching information for the closed caption manager
+    SetCCCache: function() {
+        log.write('Player.SetCCCache(websocket version)');
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<SetCCCache type="closedcaptions"/></RNOPlayerCall>',
+            self = this;     
+
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'SetCCCache_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.SetCCCache(websocket version): SetCCCache success!');
+                    }
+                }
+            }     
+        });
+
+        return 1;
+    },
+
+    // <SetCCData language="en" url="http://....xml"/>
+    // SetCCData is used to associate an out-of-band closed caption data file with a particular language
+    SetCCData: function(language, url) {
+        log.write('Player.SetCCData(websocket version): language(' + language  + ') url (' + url + ')');
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<SetCCData language="' + language + '" url="' + url +'"/>' + '</RNOPlayerCall>',
+            self = this; 
+
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'SetCCData_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.SetCCData(websocket version): SetCCData success!');
+                    }
+                }
+            }     
+        });
+
+        return 1;
+    }, 
+
+    // InitClosedCaption is used to init closed caption related parts.
+    InitClosedCaption: function() {
+        if (!this.ccData || !this.ccData.length) {
+            log.write('Player.InitClosedCaption(websocket version), CC data invalid, just return!');
+            return;
+        }
+
+        var enabled = ccrender.isCCEnabled(),
+            request = '<RNOPlayerCall>$$REQUESTID$$' +
+            '<SetCCLanguage>' + this.ccData[0].language +'</SetCCLanguage>' +
+            '<SetCCEnabled>' + enabled +'</SetCCEnabled>' +
+            '<SetCCCache type="closedcaptions"/>' +
+            '<SetCCData language="' + this.ccData[0].language + '" url="' + this.ccData[0].closedCaptionAssetLocation +'"/>' +
+            '</RNOPlayerCall>',
+            self = this;
+
+        log.write('Player.InitClosedCaption(websocket version): ' + request);
+
+        WebSocketManager.send(request, this, function(response) {
+            var responseNode = self._getResponseNode(response, 'SetCCData_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        // Wait for notification that CC stream is downloaded and parsed.
+                        log.write('Player.InitClosedCaption(websocket version): SetCCData success!');
+                    }
+                }
+            }
+
+            /*responseNode = self._getResponseNode(response, 'SetCCCache_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.InitClosedCaption(websocket version): SetCCCache success!');
+                    }
+                }
+            }
+
+            responseNode = self._getResponseNode(response, 'SetCCLanguage_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.InitClosedCaption(websocket version): SetCCLanguage success!');
+                    }
+                }
+            }    
+
+            responseNode = self._getResponseNode(response, 'SetCCEnabled_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        log.write('Player.InitClosedCaption(websocket version): SetCCEnabled success!');
+                    }
+                }
+            }*/
+        });
+
+        return 1;
+    }, 
+
+    // Get CC stream info.
+    //<RNOPlayerCall>
+    //   <GetStreams streamType="closedcaption"/>
+    //</RNOPlayerCall>
+    GetCCStreams: function() {
+        log.write('Player.GetCCStreams(websocket version)');
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<GetStreams streamType="closedcaption"/></RNOPlayerCall>',
+            self = this;   
+
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'GetStreams_Response');
+            if (responseNode) {
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value != 0) {
+                        self._handleError(attributes[0].value);
+                    }
+                    else {
+                        var streamState = responseNode.firstChild.firstChild.textContent,
+                            available = (streamState === "Playing" || streamState === "Ready");
+
+                        OnUpdateCCState(available);
+                    }
+                }
+            }     
+        });
+        
+        return 1;
+    },
+
+    // Parse and return specified response XML node.
+    _getResponseNode: function(response, responseTagName) {
+        try {
+			var str = response.replace(/\r|\n/g, '').replace(/\s*</g, '<'),
+                responseNode = XML.rootFromString(str).firstChild,
+                i;
+
+            if (responseNode.nodeName === 'RNOPlayerCall_Response' && responseNode.childNodes && responseNode.childNodes.length) {
+                for (i = 1; i < responseNode.childNodes.length; i++) {
+                    if (responseNode.childNodes[i].nodeName === responseTagName) {
+                        return responseNode.childNodes[i];
+                    }
+                }
+            }
+
+            return null;
+        }
+        catch (e) {                
+            log.write("Player._getResponseNode(websocket version): parsing response error: " + e);
+            throw(e);
+        }
+    },
+
+	// Generate CreatePlayer request string.
+    _generateCreatePlayerRequest: function(url) {
+        // To faciliate parsing.       
+        url = 'TITLE_URL=' + url;
+
+        var map = { titleURL: 'TITLE_URL=', deviceID: '|DEVICE_ID=', 
+            deviceTypeID: '|DEVICET_TYPE_ID=', streamID: '|STREAM_ID=', 
+            clientIP: '|IP_ADDR=', drmServerURL: '|DRM_URL=', 
+            drmAckServerURL: '|ACK_URL=', heartbeatURL: '|HEARTBEAT_URL=', 
+            heartbeatPeriod: '|HEARTBEAT_PERIOD=', titleProfile : '|TITLE_PROFILE=',
+            customData: '|CUSTOM_DATA=',
+            hdStreamID: '|HD_STREAM_ID='};
+     
+        var i = 0, j = 0, key;
+        for (key in map) {
+            i = url.indexOf(map[key]);
+            if (i > -1) {
+                j = url.indexOf('|', i + 1);
+                if (j > -1) {
+                    if (i + map[key].length < j) {
+                        map[key] = url.substring(i + map[key].length, j);   
+                    }
+                    else {
+                        map[key] = '';                       
+                    }
+                }
+            }
+            else {
+                map[key] = '';
+            }
+        }
+
+        // SWE deviceID's format is different from our implementation: no dash in device ID.  
+        map.deviceID = map.deviceID + '|' + map.deviceTypeID;
+
+        // Get title profile.
+        this.isHD = (map.titleProfile == 'HD');
+
+        // DPS specific settings.
+        var drmProvider = configuration.readValue("PreferredDRMProvider"),
+            provisionBlob = configuration.readValue("DPSProvisionBlob"),
+            contentId = configuration.readValue("DPSContentID");
+
+        var sdStreamID = '', 
+            hdStreamID = '';
+        if (this.isHD) {
+            hdStreamID = (drmProvider === 'DIVX') ? map.customData : map.streamID;
+        }
+        else {
+            sdStreamID = (drmProvider === 'DIVX') ? map.customData : map.streamID; 
+
+            // If we're in transition, pass hdStreamID to SDK to get correct quality info.
+            if (map.hdStreamID) {
+                hdStreamID = map.hdStreamID;
+            }
+        }
+
+        // Generate request string.
+        var request = '<RNOPlayerCall>$$REQUESTID$$<CreatePlayer><PlayerSettings>'+ 
+            '<SDTitle>' + (this.isHD ? '' : map.titleURL) + '</SDTitle>' +
+            '<HDTitle>' + (this.isHD ? map.titleURL : '') + '</HDTitle>' + 
+            '<DRMProvider>' + (drmProvider || '') + '</DRMProvider>' +    
+            '<Credentials>' + (provisionBlob || '') + '</Credentials>' +        
+            '<SD2HDThreshold>4200</SD2HDThreshold>' +
+            '<HD2SDThreshold>2800</HD2SDThreshold>' +
+            '<ContentID>' + (contentId || '') + '</ContentID>' +
+            '<StreamingCredentials>' +
+            '<DeviceID>' + map.deviceID + '</DeviceID>' +
+            '<SDStreamID>' + sdStreamID + '</SDStreamID>' +
+            '<HDStreamID>' + hdStreamID + '</HDStreamID>' +
+            '<ClientIP>' + map.clientIP + '</ClientIP>'+
+            '<DRMServerURL>' + map.drmServerURL + '</DRMServerURL>'+
+            '<DRMAckServerURL>' + map.drmAckServerURL + '</DRMAckServerURL>'+
+            '<HeartbeatURL>' + map.heartbeatURL + '</HeartbeatURL>'+
+            '<HeartbeatPeriod>' + map.heartbeatPeriod + '</HeartbeatPeriod>'+
+            '<TestURL/>' +
+            '<BandwidthInterval/>' +
+            '<ProxySettingsEnable>false</ProxySettingsEnable>' +
+            '<ProxySettingsIPAddr/>' +
+            '<ProxySettingsIPPort>0</ProxySettingsIPPort>' +
+            '<ProxySettingsUserID/>' +
+            '<ProxySettingsPassword/>' +
+            '</StreamingCredentials>'  +
+            '</PlayerSettings></CreatePlayer></RNOPlayerCall>';
+
+        log.write("Player._generateCreatePlayerRequest(websocket version), request string: " + request);
+        return request;
+    },
+	
+	// Request play.
+	_requestPlay: function(playbackTime, playbackSpeed) {
+        log.write('Player._requestPlay(websocket version), playbackTime(' + playbackTime + '), playbackSpeed(' + playbackSpeed + ')');
+        if (!this.initialized) {
+            log.write('Player._requestPlay(websocket version): not initialized!');
+            return;
+        } 
+
+        var time = playbackTime || 0;
+        var speed = playbackSpeed || 1;
+        this.playbackSpeed = playbackSpeed;
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<Play>' +
+            '<PlaybackTime type="seconds">' + time + '</PlaybackTime>' +
+            '<PlaybackSpeed>' + speed + '</PlaybackSpeed>' +
+            '</Play></RNOPlayerCall>';
+
+        var self = this;
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'Play_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value == 0) {                          
+                        log.write('Player._requestPlay(websocket version): player play success!');                        
+
+                        if (!self.isPlay && !self.isStopping) {
+                            // Initial play.
+                            self.isPlay = true;
+
+                            // Notify UI that we're loading.
+                            //OnBufferingStart();
+
+                            // Get duration.
+                            self._getDuration();
+
+                            // Comment this out as SDK doesn't support GetStreamAttributes call.
+                            //self._getStreamAttributes(); 
+                        }
+                    }
+                    else {
+                        self._handleError(attributes[0].value);
+                    }
+                }
+            }   
+        });		
+	},
+	
+	// Release player.
+	_releasePlayer: function() {
+        log.write('Player._releasePlayer(websocket version)');
+        if (!this.initialized) {
+            log.write('Player._releasePlayer(websocket version): not initialized!');
+            return;
+        } 
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<ReleasePlayer/></RNOPlayerCall>',
+            self = this;
+        
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'ReleasePlayer_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value == 0) {                          
+                        log.write('Player._releasePlayer(websocket version), release player success!');
+
+                        self.initialized = false;                         
+                        self.isPlay = false;
+                        self.isStopping = false;
+                        self.isHD = false;
+                        self.isStutter = false;
+                        self.isSkipping = false;
+                        self.playbackTime = 0;
+                        self.playbackSpeed = 1;
+                        self.playbackState = 'Stopped';
+                        self.duration = 0;
+                        self.bitrates = 0;
+                        self.playbackQualityLevels = 4;
+                        self.playbackQualityLevel = 1;        
+                        self.playbackQualityType = 'SD';
+                        self.playbackQualityRate = 0;
+                        self.ccData = null;
+
+                        // Notify UI as HD transition is interested in this event.
+                        OnPlaybackStopped();
+                    }
+                    else {
+                        log.write('Player._releasePlayer(websocket version), release player error('+ attributes[0].value + ')!');
+                    }
+                }
+            }
+        });	     
+	},
+
+    // Get duration.
+    _getDuration: function() {
+        log.write('Player._getDuration(websocket version)');
+        if (!this.isPlay) {
+            log.write('Player._getDuration(websocket version): not played!');
+            return;
+        }    
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<GetDuration/></RNOPlayerCall>',
+            self = this;
+        
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'GetDuration_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error') {
+                    if (attributes[0].value == 0) { 
+                        if (responseNode.firstChild.nodeName == 'PlaybackTime') {
+                            attributes = responseNode.firstChild.attributes;
+                            self.duration = Number(responseNode.firstChild.firstChild.nodeValue);
+
+                            if (attributes && attributes.length && attributes[0].name.toLowerCase() === 'type' && attributes[0].value.toLowerCase() === 'frames') {
+                                // Convert frames to seconds.
+                                self.duration = self.duration/25;
+                            }
+
+                            log.write('Player._getDuration(websocket version): get duration(' + self.duration + ')');
+							
+							// Notify UI that stream info is ready.
+                            OnStreamInfoReady();
+                        }
+                    }
+                    else {
+                        self._handleError(attributes[0].value);
+                    }
+                }
+            }             
+        });
+    },
+
+    // Get stream attributes. (SDK hasn't supported this call.)
+    _getStreamAttributes: function() {
+        log.write('Player._getStreamAttributes(websocket version)');
+        if (!this.isPlay) {
+            log.write('Player._getStreamAttributes(websocket version): not played!');
+            return;
+        } 
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<GetStreamAttributes stream="0"/></RNOPlayerCall>',
+            self = this, 
+            i = 0, 
+            j = 0;
+
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'GetStreamAttributes_Response');
+            if (responseNode) {                       
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value == 0) {                          
+                        // Get some video attributes.
+                        var streamNodes = responseNode.childNodes;
+                        for (i = 0; i < streamNodes.length; i++) {
+                            if (streamNodes[i].nodeName == 'VideoStreamAttributes') {
+                                var videoNodes = streamNodes[i].childNodes;
+                                for (j = 0; j < videoNodes.length; j++) {
+                                    if (videoNodes[j].nodeName == 'Width') {
+                                        self.videoWidth = videoNodes[j].firstChild.nodeValue;
+                                    } 
+                                    else if (videoNodes[j].nodeName == 'Height') {
+                                        self.videoHeight = videoNodes[j].firstChild.nodeValue;
+                                    }
+                                    else if (videoNodes[j].nodeName == 'BitRate') {
+                                        self.bitrates = videoNodes[j].firstChild.nodeValue;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+
+                        // Notify UI that stream info is ready.
+                        if (self.duration > 0 && self.videoWidth > 0 && self.videoHeight > 0) {
+                            OnStreamInfoReady();
+                        }
+                    }
+                    else {
+                         self._handleError(attributes[0].value);
+                    }
+                }
+            }
+        });
+    },
+
+    // Register event handler, and call Play after successful registration.
+    _registerEventHandler: function() {
+        log.write('Player._registerEventHandler(websocket version)');
+        if (!this.initialized) {
+            log.write('Player._registerEventHandler(websocket version): not initialized!');
+            return;
+        }
+
+        var request = '<RNOPlayerCall>$$REQUESTID$$<RegisterEventHandler/></RNOPlayerCall>',
+            self = this;
+        
+        WebSocketManager.send(request, this, function(response) { 
+            var responseNode = self._getResponseNode(response, 'RegisterEventHandler_Response');
+            if (responseNode) {                     
+                var attributes = responseNode.attributes;
+                if (attributes.length > 0 && attributes[0].name == 'error' ) {
+                    if (attributes[0].value == 0) {
+                        // Register notification handler with WebSocketManager.                       
+                        WebSocketManager.addHandler('RNOPlayerCall_Notify', self, self.EventNotification);
+
+                        if (self.ccData && self.ccData.length) {
+                            // Init CC if CC data is valid.
+                            self.InitClosedCaption();
+                        } else {
+                            // Play as required.
+                            self._requestPlay(self.playbackTime);                            
+                        }
+                    }
+                    else {
+                        self._handleError(attributes[0].value);
+                    }
+                }
+            }     
+        });
+
+        /* 
+        Event callbacks in player.js which need to be called by internal player:
+            OnStreamInfoReady() :      The event that notifies video width, height, bitrates are ready for retrieval.
+            OnCurrentPlayTime(ms) :    The event that notifies current playback time.
+            OnRenderingComplete() :    The event that notifies end of stream.
+            OnBufferingStart() :       The event that notifies buffering at beginning, UI should show loading spinnner.
+            OnBufferingComplete() :    The event that notifies buffering at end, UI should hide loading spinner.
+            OnNetworkDisconnected() :  Network disconnected.
+            OnAuthenticationFailed() : Authentication failed.
+            OnConnectionFailed() :     Connection failed.
+            OnRenderError() :          Genernal rendering error.
+            OnStreamNotFound() :       Stream not found.
+            OnCustomEvent(error) :     Widewine custom errors.
+            OnPlaybackStopped() :      Playback is stopped.
+            OnPlaybackSkipChapterEnd() : Skip chapter is completed.
+        */
+    },
+
+    // Event notification callback, it's registered with WebSocketManager.
+    EventNotification: function(xmldom) {
+        //log.write('Player.EventNotification(websocket version)');
+        var i = 0;
+        			
+        try {                           
+            if (xmldom.nodeName == 'RNOPlayerCall_Notify') {
+                // Player notification.
+                if (xmldom.firstChild.nodeName == 'PlaybackStateEvent') {
+                    // Playback state event.
+                    var statesNodes = xmldom.firstChild.childNodes;
+                    for (i = 0; i < statesNodes.length; i++) {
+                        if (statesNodes[i].nodeName == 'PlaybackState') {                            
+                            log.write('Player.EventNotification(websocket version), playbackSate(' + statesNodes[i].firstChild.nodeValue + ')');
+
+                            // Notify UI with state change.                                                      
+                            this._playbackStateChanged(statesNodes[i].firstChild.nodeValue);
+                        }
+                        else if (statesNodes[i].nodeName == 'PlaybackTime') {
+                            var playbackTime = Number(statesNodes[i].firstChild.nodeValue);
+
+                            this._checkForReverseScanEnd(playbackTime);
+
+                            this.playbackTime = playbackTime;
+                            log.write('Player.EventNotification(websocket version), playbackTime(' + this.playbackTime + ')');
+
+                            // Notify UI with current playback time in millisec.
+                            OnCurrentPlayTime(this.playbackTime * 1000);
+                        }
+                        else if (statesNodes[i].nodeName == 'PlaybackQualityLevels') {
+                            log.write('Player.EventNotification(websocket version), PlaybackQualityLevels(' + statesNodes[i].firstChild.nodeValue + ')');
+                            this.playbackQualityLevels = statesNodes[i].firstChild.nodeValue;
+                        }
+                        else if (statesNodes[i].nodeName == 'PlaybackQualityLevel') {
+                            log.write('Player.EventNotification(websocket version), PlaybackQualityLevel(' + statesNodes[i].firstChild.nodeValue + ')');
+
+                            this.playbackQualityLevel = statesNodes[i].firstChild.nodeValue;
+
+                            // Calculate current bitrate.
+                            this._getCurrentBitrate(Number(this.playbackQualityLevel));
+                        }
+                        else if (statesNodes[i].nodeName == 'PlaybackQualityType') {
+                            log.write('Player.EventNotification(websocket version), PlaybackQualityType(' + statesNodes[i].firstChild.nodeValue + ')');
+                            this.playbackQualityType = statesNodes[i].firstChild.nodeValue;
+                        }
+                        else if (statesNodes[i].nodeName == 'PlaybackQualityRate') {
+                            log.write('Player.EventNotification(websocket version), PlaybackQualityRate(' + statesNodes[i].firstChild.nodeValue + ')');
+                            this.playbackQualityRate = statesNodes[i].firstChild.nodeValue;
+                        }
+                        /*else if (statesNodes[i].nodeName == 'PlaybackSpeed') {
+                            this.playbackSpeed = Number(statesNodes[i].firstChild.nodeValue);
+                            log.write('Player.EventNotification(websocket version), PlaybackSpeed(' + this.playbackSpeed + ')');
+                        }*/
+                    }
+                }
+                else if (xmldom.firstChild.nodeName == 'ClosedCaptionEvent' ) {
+                    // Closed caption data.
+                    OnPlaybackCCData(xmldom.firstChild.childNodes);
+                }
+                else if (xmldom.firstChild.nodeName == 'PlaybackStreamChange' ) {
+                    //log.write('Player.EventNotification(websocket version), PlaybackStreamChange!');
+                    if(xmldom.firstChild.firstElementChild.nodeName == "ClosedCaptionStreamAttributes"){
+                        var streamAttributes = xmldom.firstChild.firstElementChild.childNodes,
+                            state;
+                        if (streamAttributes && streamAttributes.length) {
+                            for (i = 0; i < streamAttributes.length; i++) {
+                                if (streamAttributes[i].nodeName === 'StreamState') {
+                                    state = streamAttributes[i].firstChild.nodeValue;
+                                    log.write('Player.EventNotification(websocket version), ClosedCaptionStream state: ' + state);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (state === 'Downloaded' || state === 'Error') {
+                            // Start playback if CC is downloaded and parsed, or has error.
+                            if (!this.isPlay) {
+                                this._requestPlay(this.playbackTime);
+                            }
+
+                            // Notify UI if CC is unavailable.
+                            if (state === 'error') {
+                                OnUpdateCCState(false);
+                            }
+                        }
+                    }
+                }
+                else if (xmldom.firstChild.nodeName == 'PlaybackEndOfStreamEvent') {
+                    // End of stream event
+                    log.write('Player.EventNotification(websocket version), end of stream!');
+
+                    // Notify UI with EOS.
+                    OnRenderingComplete();
+                }
+				else if (xmldom.firstChild.nodeName == 'PlaybackStutterStartEvent') {
+					// Stutter start event
+					log.write('Player.EventNotification(websocket version), stutter start event!');
+                    this.isStutter = true;
+                    OnPlaybackStutterStart();			
+				}
+				else if (xmldom.firstChild.nodeName == 'PlaybackStutterStopEvent') {
+					// Stutter stop event
+					log.write('Player.EventNotification(websocket version), Stutter stop event!');                    
+                    this.isStutter = false;
+                    OnPlaybackStutterStop();
+				}
+                else if (xmldom.firstChild.nodeName == 'PlaybackUnderflowEvent') {
+                    // Underflow event.
+                    log.write('Player.EventNotification(websocket version), playback underflow!');
+                }
+                else if (xmldom.firstChild.nodeName == 'PlaybackSeekEvent') {
+                    // Seek event.
+                    log.write('Player.EventNotification(websocket version), seek finished!');
+                }
+                else if (xmldom.firstChild.nodeName == 'PlaybackErrorEvent') {
+                    // Error event.
+                    var error = xmldom.firstChild.firstChild.nodeValue;
+                    log.write('Player.EventNotification(websocket version), error(' + error + ') occured!');
+                    this._handleError(error);
+                }
+            }
+        } catch (e) {                
+            log.write("Player.EventNotification(websocket version): parsing notification error: " + e);
+            throw(e);
+        } 
+    },
+
+    // Calculate current bitrate. 
+    // Note: This calculation is inaccurate, only for legacy use.
+    _getCurrentBitrate: function(qualityLevel) {
+        var rate = 1.0;
+        switch (qualityLevel) {
+            case 1:
+                rate = this.isHD ? 1.0 : 0.7;
+                break;
+            case 2:
+                rate = this.isHD ? 2.0 : 1.0;
+                break;
+            case 3:
+                rate = this.isHD ? 4.0 : 1.5;
+                break;
+            case 4:
+                rate = this.isHD ? 8.0 : 2.0;
+                break;
+        }
+
+        this.bitrate = rate * 1000 * 1024;
+    },
+
+    // Playback state changed.
+    _playbackStateChanged: function(newState) {
+        if (this.playbackState != newState) {
+            log.write('Player._playbackStateChanged(websocket version), state(' + this.playbackState + ' => ' + newState + ')');
+            switch (this.playbackState) {
+                case 'Stopped':
+                    if (newState == 'Playing') {
+                        // Loading completed, show UI controls.
+                        OnBufferingComplete();
+                    }
+                    break;
+                case 'Paused':
+                    if (newState == 'Playing' && this.isStutter) {
+                        // Rebuffering completed, hide loading.
+                        this.isStutter = false;
+                        OnPlaybackStutterStop();
+                    }
+                    break;
+                case 'Scanning':
+                    if (newState == 'Playing' && this.playbackSpeed < 1) {
+                        this.playbackSpeed = 1;
+                        OnReverseScanToPlay();
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            this.playbackState = newState;
+        }
+
+        if (this.isSkipping && newState == 'Playing') {
+            // Skip chapter ends.
+            this.isSkipping = false;
+            OnPlaybackSkipChapterEnd();
+        }
+    },
+
+    // Check if reversecan has reached title's beginning, then set a watch timer to go back to normal play as player may be stuck in scanning sometimes.
+    _checkForReverseScanEnd: function(playbackTime) {
+        var self = this;
+
+        if (this.playbackState === 'Scanning'  && this.playbackSpeed < 1) {            
+            if (this.playbackTime <= 2 && this.playbackTime - playbackTime <= 0) {
+                log.write('PlayerInternal._checkForReverseScanEnd: the beginning is reached, will go to normal play after 5s, current time: ' + this.playbackTime);
+
+                if (!this.scanWatchTimer) {
+                    this.scanWatchTimer = setTimeout(function() {
+                        self.scanWatchTimer = null;
+                        
+                        if (self.playbackState === 'Scanning' && self.playbackSpeed < 1 && self.playbackTime <= 2 && !self.isStopping) {
+                            log.write('PlayerInternal._checkForReverseScanEnd: go to normal play as it is stuck in scanning!');
+                            self._requestPlay(self.playbackTime);
+                            OnReverseScanToPlay();
+                        }
+                    }, 5000);
+                }
+            }
+        }
+    },
+
+    // Handle errors of response and notification.
+    // Parameter:
+    //   error: a string of unsigned 32-bit hexadecimal integer or signed 32-bit negative decimal integer.
+    _handleError: function(error) {
+        log.write('Player._handleError(websocket version), error(' + error + ')');
+
+		var errorCode = 0;
+		if (error.charAt(0) === '-') {
+			// signed 32-bit negative decimal integer, such as -2146096868.
+			errorCode = Number(error);
+		}
+		else {
+			// unsigned 32-bit hexadecimal integer, such as 8015xxxx.
+            errorCode = parseInt(error, 16);
+		}
+        log.write('Player._handleError(websocket version), errorCode(0x' + errorCode.toString(16) + ')');
+
+        errorCode &= 0x7FFFFFFF;
+        var unknowError = false;
+        
+        if (0x140000 <= errorCode && errorCode < 0x150000)
+        {
+            // WebService errors
+            switch (errorCode) {
+                case 0x140001: // 512 error
+                case 0x140002:            
+                    application.events.publish("error", {
+                        type : "no_internet"
+                    });
+                    break;
+                default:
+                    unknowError = true;
+                    break;
+            }
+        }
+        else if (0x150000 <= errorCode && errorCode < 0x160000) 
+        {
+            // Player errors (WV related)
+            var sdkError = errorCode - 0x150000,
+                playerError = sdkError - 10000;
+            log.write('Player._handleError(websocket version), SDKError(' + sdkError + '), playerError(' + playerError + ')');    
+
+            switch (playerError) {           
+                case 463:  // WV_TERMINATE_REQUESTED            
+                case 2004: // WV_ERROR_DOWNLOAD_STALLED
+                    OnNetworkDisconnected();                
+                    break;
+                case 401: // WV_UNAUTHORIZED
+                    OnAuthenticationFailed();
+                    break;          
+                case 400: // WV_BAD_REQUEST
+                case 408: // WV_REQUEST_TIMEOUT
+                case 462: // WV_DESTINATION_UNREACHABLE            
+                case 500: // WV_INTERNAL_SERVER_ERROR            
+                case 503: // WV_SERVICE_UNAVAILABLE            
+                case 504: // WV_SERVICE_RESPONSE_ERROR
+                    OnConnectionFailed();
+                    break;
+                case 404: // WV_NOT_FOUND
+                case 454: // WV_SESSION_NOT_FOUND
+                    OnStreamNotFound();
+                    break;            
+                case 513: // WV_STREAMING_ON_OTHER_DEVICE
+                case 514: // WV_CC_NOT_ON_FILE
+                case 515: // WV_TT_NOT_FOUND_OR_NOT_IN_THIS_REGION
+                case 516: // WV_IP_RESTRICTED_DOWNLOAD_TO_THE_GEOGRAPHICAL
+                case 517: // WV_ASSET_NOT_FOUND
+                case 520: // WV_STREAMID_NOT_MATCH_DEVICEID
+                case 521: // WV_STREAMID_NOT_MATCH_IP
+                case 522: // WV_INVALID_PASSID
+                case 523: // WV_INVALID_USERID
+                case 524: // WV_NO_MORE_LICENSES_AVAILABLE
+                case 525: // WV_NOT_FOUND_STREAMING_INSTANCE         
+                case 550: // WV_SYSTEM_ERROR
+                case 570: // WV_USER_LOCKED_OUT
+                    OnCustomEvent(playerError);
+                    break;
+                    // Following errors should be suppressed:
+                case 2000: // WV_WARNING_DOWNLOAD_STALLED
+                case 2001: // WV_WARNING_NEED_KEY
+                case 2002: // WV_WARNING_NOT_AVAILABLE
+                case 2003: // WV_CHECKING_BANDWIDTH
+                    break;
+                default:
+                    unknowError = true;
+                    break;
+            }
+        }
+        else {
+            unknowError = true;
+        }
+
+        if (unknowError) {
+            log.write('Player._handleError(websocket version), unknown error(' + error + '), call OnRenderError()'); 
+            OnRenderError(); 
+        }
+    }
+};
+//-----------------------------------------------------------------------------
+// WebSocketManager.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+//
+// WebSocketManager.js
+//
+// Initialize, maintain and shutdown the websocket connection to native code.
+// Provide base send/recieve methods for use by js code (for instance wsrequest.js)
+//
+
+var WebSocketManager = {
+    socket: null,
+    requestsSent: null,
+    requestId: 0,
+    connecting: false,
+    reconnecting: false,
+    reconnectcount: 0,
+    retrytimeout: null,
+    connected: false,
+    shuttingDown: false,
+    handlers: {},
+    url: "",
+    openSuccess: null,
+    openError: null,
+    onOpen: function() {
+        log.write("WebSocketManager.onopen: connected!");
+        var self = this;
+        
+        this.connecting = false;
+        this.connected = true;
+        
+        var cacheLimitMetadata = application.appSetting("CacheLimitMetadata");
+        if (cacheLimitMetadata == -1) {
+            cacheLimitMetadata = 2097152;       // default to same as typical Flash value.
+        }
+        var cacheLimitClosedcaption = application.appSetting("CacheLimitClosedcaption");
+        if (cacheLimitClosedcaption == -1) {
+            cacheLimitClosedcaption = 2097152; 
+        }
+        var settings = {CNO_CACHE_LOCAL_PATH: "cache"};     // default
+        configuration.callReadAllSettings(null, function() {
+            this.send("<RNOWebServiceCall>$$REQUESTID$$<NetworkSettings>" +
+        		    "<ConnectTimeout>" + application.appSetting("NetworkConnectTimeout") + "</ConnectTimeout>" +
+        		    "<SendTimeout>" + application.appSetting("NetworkSendTimeout") + "</SendTimeout>" + 
+        		    "<ReceiveTimeout>" + application.appSetting("NetworkReceiveTimeout") + "</ReceiveTimeout>" + 
+        		    "</NetworkSettings></RNOWebServiceCall>",
+                self, function(response) {
+                    if(!self.reconnecting) {
+                        var cachePath = settings["CNO_CACHE_LOCAL_PATH"];
+                        // Make the cache call.
+                        this.send(  '<RNOCacheCall>' +
+                                        '$$REQUESTID$$' +
+                                        '<CacheSettings>' +
+			                                '<CachePath>' + cachePath + '</CachePath>' +
+                                                        '<CacheLimit type="closedcaptions">' + cacheLimitClosedcaption + '</CacheLimit>'+
+			                                '<CacheLimit type="Metadata">' + cacheLimitMetadata + '</CacheLimit>' +
+	                                    '</CacheSettings>' +
+                                    '</RNOCacheCall>',
+                            self, function(response) {
+                                    if (!self.reconnecting) {
+                                        log.write("WebSocketManager.onopen: NetworkSettings response: " + response);
+                                        this.openSuccess.call(this);
+                                        
+                                        //log.write("Test notification send");
+                                        //Notifications.sendNotification("<testusercallback/>");
+                                        //log.write("Test notification send done");
+                                    }
+                                    self.reconnecting = false;
+                                    self.reconnectcount = 0;
+                            }.bind(self)
+                        );
+                    }
+                }.bind(self)
+            );
+        }.bind(self), settings);
+    },
+    onError: function() {
+        if(this.connecting) {
+            log.write("WebSocketManager.onerror: error while connecting");
+            this.connecting = false;
+            
+            if(!this.reconnecting) {
+                this.connecting = false;
+                // no auto retry on first connection attempt for the moment
+                this.openError.call(this);
+            }
+            else {
+                var self = this;
+                this.reconnectcount++;
+                this.retrytimeout = setTimeout(function(){
+                    log.write("WebSocketManager.onError: Retry number " + this.reconnectcount);
+                    this.reconnecting = true;
+                    this.connect();
+                }.bind(self), 500);
+            }
+        }
+        else if(this.connected && !this.shuttingDown) {
+            log.write("WebSocketManager.onerror: error on send/response or out of the blue");
+            // onClose will be called and will handle retry
+        }
+        else if(this.connected && this.shuttingDown) {
+            log.write("WebSocketManager.onerror: error on close");
+            // no retry will be done for this.
+        }
+    },
+    onClose: function() {
+        log.write("WebSocketManager.onclose: shuttingdown: " + this.shuttingDown);
+        var reconnect = false;
+
+        if((this.connected || this.connecting) && !this.shuttingDown) {
+            // close from SDK side or send/recv/connect error, reconnect
+            reconnect = true;
+        }
+
+        // Send errors to all outstanding requests, the responses are not coming.
+        for(var index=this.requestsSent.getOldestIndex(); index<this.requestsSent.getTotalSize(); index++) {
+            var request = this.requestsSent.getElementAt(index);
+            if(!request.responded) {
+                request.responded = true;
+                this.respondSocketError(request);
+            }
+        }
+        this.requestsSent.clear();
+        
+        this.connected = false;
+        this.connecting = this.reconnecting;
+        this.shuttingDown = false;
+        
+        if(reconnect) {
+            this.reconnectcount++;
+            this.reconnecting = true;
+            log.write("WebSocketManager.onClose: reconnect attempt number " + this.reconnectcount);
+            this.connect();
+        }            
+    },
+    onMessage: function(event) {
+        var responseId = -1;
+        var reponseData = "";
+        var request = null;
+
+        //log.write("WebSocketManager: onmessage: event.data: " + event.data);
+        
+        responseId = this.getRequestId(event.data);
+        if(responseId > -1) {
+            //log.write("WebSocketManager.onmessage: responseId " + responseId);
+            
+            // Search out matching queued sent request
+            for(var index=this.requestsSent.getOldestIndex(); index<this.requestsSent.getTotalSize(); index++) {
+                request = this.requestsSent.getElementAt(index);
+                //log.write("WebSocketManager.onmessage: index " + index + " of " + this.requestsSent.getTotalSize() + ", id " + request.id);
+
+                if(request.id == responseId) {
+                    //log.write("WebSocketManager.onmessage: matched id: " + responseId);
+                    
+                    request.responded = true;
+                    
+                    if(index == this.requestsSent.getOldestIndex()){
+                        // cleanup, traverse into queue and dequeue as we find responded flags true
+                        //log.write("WebSocketManager.onmessage: cleanup: oldest is " + this.requestsSent.getOldestElement().id + ", responded " + this.requestsSent.getOldestElement().responded);
+                        
+                        while(this.requestsSent.getOldestElement() && this.requestsSent.getOldestElement().responded) {
+                            this.requestsSent.dequeue();
+                        }
+                    }
+                    
+                    //log.write("WebSocketManager.onmessage: calling request callback");
+                    request.callback.call(request.callback.context, event.data);
+                    
+                    break;
+                }
+            }
+        }
+        else {
+            //log.write("WebSocketManager.onmessage: RequestId not specified, checking for handler");
+
+            var dom;
+            try {
+                dom = XML.rootFromString(event.data);
+            }
+            catch(e) {
+                log.write("WebSocketManager.onmessage: Error parsing XML from event data");
+                dom = null;
+            }
+
+            if(dom !== null){
+                //XML.dumpDOM(dom);
+                var node = dom.firstChild;
+                if(node.nodeName in this.handlers) {
+                    //log.write("WebSocketManager.onmessage: handler [" + node.nodeName + "] found, calling callback handler function");
+                    this.handlers[node.nodeName].callback.call(this.handlers[node.nodeName].context, node);
+                }
+                else {
+                    log.write("WebSocketManager.onmessage: nodeName " + node.nodeName + " not in handlers :: " + XML.toString(dom));
+                }
+            }
+            else {
+                log.write("WebSocketManager.onmessage: null dom");
+            }
+        }
+    },
+    initialize: function(url, success, error) {
+        this.openSuccess = success;
+        this.openError = error;
+        this.url = (url && url.length > 0) ? url : "ws://localhost:31415/res";
+
+        if(!this.requestsSent) {
+            this.requestsSent = new Queue();
+        }
+        
+        this.connect();
+    },
+    connect: function() {
+        log.write("WebSocketManager.connect: Connecting!");
+        var self = this;
+        this.connecting = true;
+        
+        this.socket = new WebSocket(this.url);
+        this.socket.onopen = this.onOpen.bind(self);
+        this.socket.onerror = this.onError.bind(self);
+        this.socket.onclose = this.onClose.bind(self);
+        this.socket.onmessage = this.onMessage.bind(self);
+    },
+    shutdown: function() {
+        if(this.connected && !this.shuttingDown) {
+            this.socket.close();
+			this.shuttingDown = true;			
+        }
+    },
+    send: function(requestData, context, callback) {
+        //log.write("WebSocketsManager.send: connected " + this.connected + ", shuttingDown " + this.shuttingDown + ", requestsSent " + this.requestsSent + ", requestId " + this.requestId);
+        var request = {id: this.requestId++, responded: false, requestData: requestData, context: context, callback: callback};
+        
+        if(this.connected && !this.shuttingDown && this.requestsSent !== null) {
+            var requestParts = requestData.split("$$REQUESTID$$");
+            if(requestParts.length == 2) {
+                //log.write("WebSocketManager.send: $$REQUESTID$$ found and replaced");
+                requestData = requestParts[0];
+                requestData += '<UserData ID="' + request.id + '"></UserData>';
+                requestData += requestParts[1];
+                //log.write("WebSocketManager.send: new requestData: " + requestData);
+            }
+            else {
+                log.write("WebSocketManager.send: $$REQUESTID$$ not found");
+            }
+            
+            this.requestsSent.enqueue(request);
+            this.socket.send(requestData);
+        }
+        else {
+            this.respondSocketError(request);
+        }
+    },
+    getRequestId: function(response) {
+        var responseDOM = XML.rootFromString(response);
+        var nodes = responseDOM.getElementsByTagName("UserData");
+        if(nodes && nodes.length && nodes[0].attributes && nodes[0].attributes.length) {
+            var attrs = nodes[0].attributes;
+            for(var index=0; index < attrs.length; index++) {
+                if(attrs[index].nodeName == "ID") {
+                    return new Number(attrs[index].nodeValue);
+                }
+            }
+        }
+        return -1;
+    },
+    addHandler: function(parseKey, context, callback) {
+        this.handlers[parseKey] = {callback: callback, context: context};
+    },
+    respondSocketError: function(request) {
+        // Generate response to be interpreted as an special error in WSRequest and webservices.js layers
+        var response = '<Response>';
+        if(request.requestData.split("$$REQUESTID$$").length == 2) {
+            response += '<UserData ID="' + request.id + '"></UserData>';
+        }
+        response += '<SocketError>There was a socket connection error.</SocketError></Response>';
+        
+        request.callback.call(request.context, response);
+    },
+    clearContentCache: function(callback) {
+        // Make the request down to the Cache handler in the SDK.
+        var self = this;
+        this.send(  '<RNOCacheCall>' +
+                        '$$REQUESTID$$' +
+                    	'<PurgeData tableType="metadata" cacheType="Metadata"/>' +
+                    '</RNOCacheCall>',
+                    self, function(response) {
+                            callback.call();
+                          }.bind(self)
+        );
+    }
+};
+//-----------------------------------------------------------------------------
+// configuration.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * Websocket based configuration API implementation
+ * @author spowers
+ */
+var configuration = {
+	DEBUG: false,
+	inited: false,
+	settings: {},
+	configrwfile: null,
+	//configrofile: null,
+	callback: null,
+	initialize: function(callback) {
+		if(!this.inited) {
+			this.inited = true;
+			
+			// To process init values from the SDK, we want to do this:
+			//   ReadSettings(CNWS_CREDENTIALS_FILE, CNWS_PREFERENCE_FILE) 
+			//   SetStores passing those CNWS_ values
+			//   ReadAllSettings.
+			// At this time we are not doing the ReadSettings in step one
+			// but doing a ReadAllSettings(:environment:). 
+			
+            var init_loadcredentials = function() {
+                this.loadCredentialsFile();
+                
+                if(this.DEBUG) {
+                    log.write("Configuration: websocket: Properties of configuration object: ");
+                    for(prop in this) {
+                        if($type(this[prop]) != "function"){
+                            log.write("        [" + prop + "](" + $type(this[prop]) + "): " + this[prop]);
+                        }
+                    }
+                    log.write("Configuration: wesbsocket: Properties of credentials object: ");
+                    for(prop in this.credentials_values) {
+                        if($type(this.credentials_values[prop]) != "function"){
+                            log.write("        [" + prop + "](" + $type(this.credentials_values[prop]) + "): " + this.credentials_values[prop]);
+                        }
+                    }
+                    log.write("Configuration: websocket: Properties of settings object: ");
+                    for(prop in this.settings) {
+                        if($type(this.settings[prop]) != "function"){
+                            log.write("        [" + prop + "](" + $type(this.settings[prop]) + "): " + this.settings[prop]);
+                        }
+                    }
+                }
+                
+                var destinationUniqueID = this.readValue('DestinationUniqueID');
+                if (destinationUniqueID) {
+                    // If we have a saved deviceId, copy it into application settings.
+                    if (this.DEBUG) log.write("Configuration websocket: Skipping callGetDestinationUniqueID");
+                    webservices.uniqueId = destinationUniqueID;
+                    $cn.data.DeviceID = destinationUniqueID;
+                    callback.call();
+                } 
+                else {  
+                    var devID = this.readValue("DeviceID");
+                    if(devID == null || devID == "" || devID == "auto") {
+                        if (this.DEBUG) log.write("Configuration websocket: Invoking callGetDestinationUniqueID");
+                        this.callGetDestinationUniqueID(callback);
+                    }
+                    else {
+                        if (this.DEBUG) log.write("Configuration websocket: Using DeviceID = uniqueId = " + devID);
+                        webservices.uniqueId = $cn.data.DeviceID = devID;
+                        callback.call();
+                    }
+                } 
+            };
+            
+			if (this.DEBUG) log.write("Configuration websocket: About to call ws.ReadAllSettings using :environment: store key.");
+			this.callReadAllSettings(
+			   	":environment:",
+				function () {
+					// Parse out the received_msg and set each value into this.settings.xxxx.
+					if (this.DEBUG) log.write("Configuration websocket: Callback from :environment ReadAllSettings received");								
+					
+					// Set the config file(s) base on settings just retrieved. Note
+					// if these two settings did not exist our configrxfile(s) should
+					// be set to undefined.
+			   		this.configrwfile = this.settings.CNWS_PREFERENCE_FILE;
+			   		//this.configrofile = this.settings.CNWS_CREDENTIALS_FILE;
+
+			   		if (this.DEBUG) log.write("Configuration websocket: Set configrwfile based on CNWS_PREFERENCE_FILE to " + this.configrwfile);
+                    //if (this.DEBUG) log.write("Configuration websocket: Set configrofile based on CNWS_PREFERENCE_FILE to " + this.configrofile);
+			   		
+					// We are done with the Read the environment vars, now we want to SetStores based on
+			   		// the rwfile and the rpfile, and then do a ReadAllSettings.
+					if (this.configrwfile != undefined && this.configrwfile != null && this.configrwfile != "") {
+                        if (this.DEBUG) log.write("Configuration websocket: Setting store");
+						this.callSetStores(this.configrwfile, null, 
+							function () {
+								if (this.DEBUG) log.write("Configuration websocket: Invoking callReadAllSettings w/o store value");
+								this.callReadAllSettings(null, init_loadcredentials.bind(this));
+							}.bind(this)
+                        );
+					}
+					else {
+						// IF we do not have a rwfile or rofile set, just call ReadAllSettings
+						// to pick up default store.
+						this.callReadAllSettings(null, init_loadcredentials.bind(this));
+					}
+				}.bind(this)
+            );
+		}
+	},
+	
+	readValue: function(key) {
+		var result = null;
+		if(this.settings[key] != undefined && this.settings[key] != "") { 
+            if (this.DEBUG) log.write("Configuration: websocket: readValue: r/w: key=" + key + ", value=" + this.settings[key]);
+			try {
+				result = JSON.parse(this.settings[key]);
+			} catch (e) {
+				result = this.settings[key];				
+			}
+		}
+        else if(this.credentials_values[key] != undefined && this.credentials_values[key] != "") {
+            if (this.DEBUG) log.write("Configuration: websocket: readValue: creds: key=" + key + ", value=" + this.credentials_values[key]);
+            result = this.credentials_values[key];
+        }
+		else if(this[key] != undefined && this[key] != "") {
+            if (this.DEBUG) log.write("Configuration: websocket: readValue: r/o: key=" + key + ", value=" + this[key]);
+            result = this[key];
+        }
+        else if($cn.config[key] != undefined && $cn.config[key] != "") {
+            if (this.DEBUG) log.write("Configuration: websocket: readValue: $cn.config: key=" + key + ", value=" + $cn.config[key]);
+            result = $cn.config[key];
+        }
+        else {
+			if (this.DEBUG) log.write("Configuration: websocket: readValue: key " + key + " not found");
+		}
+		return result;
+	},
+	
+	writeValue: function(key, value) {
+		if (this.DEBUG) log.write("Configuration: websocket: writeValue: key=" + key + ", value=" + value);
+		this.settings[key] = value;
+		if (value == undefined || value == null) {
+			WebSocketManager.send('<RNOConfigurationCall>$$REQUESTID$$<DeleteSetting key="' + key + '"/></RNOConfigurationCall>', 
+				this,
+				function (message) {
+					if (this.DEBUG) log.write("Configuration websocket: writeValue.DeleteSetting: Message is received: \n" + message);
+				});
+		}
+		else {
+			WebSocketManager.send('<RNOConfigurationCall>$$REQUESTID$$<WriteSetting key="' + key + '">' + value + '</WriteSetting></RNOConfigurationCall>', 
+				this,
+				function (message) {
+					if (this.DEBUG) log.write("Configuration websocket: writeValue.WriteSetting: Message is received: \n" + message);
+				});
+		}
+	},
+	
+	clearValue: function(key) {
+		if (this.DEBUG) log.write("Configuration: websocket: clearValue: " + key);
+		this.writeValue(key, null);
+	},
+	
+	callSetStores: function(rwfile, rofile, callback) {
+		var self = this;
+		var roStore = "";
+		var rwStore = "";
+		if (rwfile != undefined && rwfile != null && rwfile != "") {
+			rwStore = '<Store>' + rwfile + '</Store>';
+		}
+		if (rofile != undefined && rofile != null && rofile != "") {
+			roStore = '<Store readonly="true">' + rofile + '</Store>';
+		}
+		
+		if (roStore != "" || rwStore != "") {
+			var stores = rwStore + roStore;
+			log.write("Configuration.callSetStores: About to call WS.SetStores with " + stores);
+			WebSocketManager.send(
+				'<RNOConfigurationCall>$$REQUESTID$$<SetStores>' + stores + '</SetStores></RNOConfigurationCall>',
+				this,
+				function (message) {
+					if (self.DEBUG) log.write("Configuration.callSetStores: Message is received: \n" + message);								
+					callback.call(); // TODO Should we pass errorCode here.
+				});
+		}
+		else {
+			callback.call(); // TODO Should we pass errorCode here.
+		}
+	},
+
+	/**
+	 * Calls WS ReadAllSettings method, loading results into this.settings.xxx. 
+	 */
+	callReadAllSettings: function(store, callback, settings) {
+		if (this.DEBUG) log.write("Configuration websocket: About to call ws.ReadAllSettings.");
+		var self = this;
+		var storeKey = "";
+		if (store != undefined && store != null && store != "") {
+			storeKey = ' store="' + store + '"';
+		}
+		if (settings == undefined || settings == null) {
+		    settings = this.settings;
+		}
+		WebSocketManager.send(
+			'<RNOConfigurationCall' + storeKey + '>$$REQUESTID$$<ReadAllSettings></ReadAllSettings></RNOConfigurationCall>',
+			this,
+			function (message) {
+				if (self.DEBUG) log.write("Configuration websocket: Message is received: \n" + message);								
+				var errorCode = self.processConfigurationCallSettingsResponse(message, settings);
+				
+				if (errorCode != 0) {
+					log.write("Configuration websocket: Warning: processConfigurationCallSettingsResponse for ReadAllSettings returned non-zero " + errorCode); 									
+				}
+				callback.call(); // TODO: Should we pass errorCode?
+			});
+	},
+	
+	/**
+	 * Loads passed SettingsResponse contents into settings.xxxx fields.
+	 * @param message Settings Response XML, e.g.
+	 * <RNOConfigurationCall_Response>
+	 *	<ReadAllSettings_Response error="0">
+	 *  	  <Setting key="UserName">John Doe</Setting>
+	 *		<Setting key="Password" encrypted="true">fizzbinn</Setting>
+	 *	</ReadAllSettings_Response>
+	 * </RNOConfigurationCall_Response>
+	 * @returns errorCode from response or -1 if parse fails. 0 is good. 
+	 */
+	processConfigurationCallSettingsResponse: function(message, settings) {
+		var rc = 0;
+		if (this.DEBUG) log.write("Configuration.processConfigurationCallSettingsResponse: Message is received: \n" + message);
+		
+		// Parse out the received_msg and set each value into this.xxxx.
+		try {
+			var xml = XML.rootFromString(message);				
+			//if (this.DEBUG) log.write("Configuration.processConfigurationCallSettingsResponse: After rootFromString firstChild.nodeName is " + xml.firstChild.nodeName);
+			
+			if (xml.firstChild.nodeName == 'RNOConfigurationCall_Response') {							
+				var responseNodes = xml.firstChild.childNodes;
+				for (var i = 0; i < responseNodes.length; i++) {
+			   		if (responseNodes[i].nodeName == 'ReadAllSettings_Response') {
+			   			//if (this.DEBUG) log.write("Configuration.processConfigurationCallSettingsResponse: Processing ReadAllSettings_Response");
+						var attributes = responseNodes[i].attributes;
+						if (attributes[0].name == 'error' ) {
+							var errorCode = attributes[0].value;		
+							if (errorCode == 0) {							
+								//if (this.DEBUG) log.write('Configuration.processConfigurationCallSettingsResponse: ReadAllSettings succeeded.');
+								// Set values into settings[key].
+								var nodes = responseNodes[i].childNodes;
+								for (var j = 0; j < nodes.length; j++) {
+									//if (this.DEBUG) log.write("Configuration.processConfigurationCallSettingsResponse: In Settings result loop, nodes[" + j + "].nodeName is " + nodes[j].nodeName);
+									if (nodes[j].nodeName == "Setting") {
+										//if (this.DEBUG) log.write("Configuration.processConfigurationCallSettingsResponse: In store based settings result loop, nodes[" + j + "].nodeValue is " + nodes[j].nodeValue);
+										if (nodes[j].attributes && nodes[j].attributes.length > 0) {
+											for (var k = 0; k < nodes[j].attributes.length; k += 1) {
+												if (nodes[j].attributes[k] && nodes[j].attributes[k].name == "key") {
+													var key = nodes[j].attributes[k].value;
+													settings[key] = $cn.utilities.getNodeText(nodes[j]);
+													if (this.DEBUG) log.write("Configuration.processConfigurationCallSettingsResponse: Key:(" + key + "), Value(" + settings[key] + ")");
+												}
+											}
+										}
+									}
+								}
+							}
+							else {
+								// Deal with error.
+								log.write("Configuration.processConfigurationCallSettingsResponse: Warning: ReadAllSettings returned errorCpde " + errorCode);
+								rc = errorCode;
+							}
+						}
+						break;
+			   		}
+				}
+			}
+			else {
+				log.write("Configuration.processConfigurationCallSettingsResponse: Warning: received unexpected message.");
+				rc = -1;
+			}
+		} 
+		catch (e) {				
+			log.write("Configuration.processConfigurationCallSettingsResponse: Warning: exception parsing and processing response: " + e);
+			rc = -1;
+		}
+		return rc;
+	},
+	
+	/** 
+	 * Calls WS GetDestinationUniqueID method. 
+	 */
+	callGetDestinationUniqueID: function(callback) {
+		if (this.DEBUG) log.write("Configuration.callGetDestinationUniqueID: About to call ws.GetDestinationUniqueID.");
+		var self = this;
+		WebSocketManager.send(
+			"<RNOWebServiceCall>$$REQUESTID$$<GetDestinationUniqueID></GetDestinationUniqueID></RNOWebServiceCall>",
+			this,
+			function (response) {
+				if (self.DEBUG) log.write("Configuration.callGetDestinationUniqueID: Response is received: \n" + response);								
+				var errorCode = self.processGetDestinationUniqueIDResponse(response);
+				
+				if (errorCode != 0) {
+					log.write("Configuration.callGetDestinationUniqueID: Warning: processGetDestinationUniqueIDResponse for GetDestinationUniqueID returned non-zero " + errorCode); 									
+				}
+				callback.call(); // TODO: Should we pass errorCode?
+			});
+	},
+	
+	/**
+	 * Read GetDestinationUniqueIDResponse contents into config settings.
+	 * @param message Settings Response XML, e.g.
+	 * <RNOWebServiceCall_Response>
+	 * <UserData ID="0"/>
+	 * <GetDestinationUniqueID_Response error="0">00-FF-10-70-2C-06</GetDestinationUniqueID_Response>
+	 * </RNOWebServiceCall_Response>
+	 * @returns errorCode from response or -1 if parse fails. 0 is good. 
+	 */
+	processGetDestinationUniqueIDResponse: function(response) {
+		var rc = 0;
+		if (this.DEBUG) log.write("Configuration.processGetDestinationUniqueIDResponse: response passed is: \n" + response);
+		
+		// Parse out the UniqueID/MACAddress from the response
+		try {
+			var xml = XML.rootFromString(response);				
+			//if (this.DEBUG) log.write("Configuration.processGetDestinationUniqueIDResponse: After rootFromString firstChild.nodeName is " + xml.firstChild.nodeName);
+			
+			if (xml.firstChild.nodeName == 'RNOWebServiceCall_Response') {							
+				var responseNodes = xml.firstChild.childNodes;
+				for (var i = 0; i < responseNodes.length; i++) {
+			   		if (responseNodes[i].nodeName == 'GetDestinationUniqueID_Response') {
+			   			//if (this.DEBUG) log.write("Configuration.processGetDestinationUniqueIDResponse: Processing GetDestinationUniqueID_Response");
+						var attributes = responseNodes[i].attributes;
+						if (attributes[0].name == 'error' ) {
+							var errorCode = attributes[0].value;		
+							if (errorCode == 0) {							
+								// MACAddress is in $cn.utilities.getNodeText(responseNodes[i])
+								var uniqueId = $cn.utilities.getNodeText(responseNodes[i]);
+								//if (this.DEBUG) log.write("Configuration.processGetDestinationUniqueIDResponse: GetDestinationUniqueID succeeded, uniqueId in response is " + uniqueId);
+								if(uniqueId && uniqueId != '')
+								{
+									// Should we call a device method instead?
+									if (this.DEBUG) log.write("Configuration.processGetDestinationUniqueIDResponse: Setting webservices.uniqueId and $cn.data.DeviceID "); 
+									webservices.uniqueId = uniqueId;
+									$cn.data.DeviceID = uniqueId;
+									this.writeValue("DestinationUniqueID", uniqueId);
+								}
+							}
+							else {
+								// Deal with error. We do not reset existing uniqueId/DeviceID values.
+								log.write("Configuration.processGetDestinationUniqueIDResponse: Warning: GetDestinationUniqueID returned errorCpde " + errorCode);
+								rc = errorCode;
+							}
+						}
+						break;
+			   		}
+				}
+			}
+			else {
+				log.write("Configuration.processGetDestinationUniqueIDResponse: Warning: received unexpected response.");
+				rc = -1;
+			}
+		} 
+		catch (e) {				
+			log.write("Configuration.processGetDestinationUniqueIDResponse: Warning: exception parsing and processing response: " + e);
+			rc = -1;
+		}
+		return rc;
+	}	
+};
+//-----------------------------------------------------------------------------
+// wsrequest.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+//
+// wsrequest.js
+//
+// WebSockets version of wsrequest handler.
+//
+
+function WSRequest() {
+	this.headers = {};
+	this.action = "GET";
+	this.url = "";
+	this.timeoutTimer = null;
+	this.startTime = -1;
+	this.endTime = -1;
+	this.requestRunTime = -1;
+	this.cacheKey = "";         // can be empty during call if none needed
+}
+
+WSRequest.prototype.setTarget = function(a_action, a_url) {
+	this.action = a_action;
+	this.url = a_url;
+};
+
+WSRequest.prototype.addHeader = function(header, value) {
+	this.headers[header] = value;
+};
+
+WSRequest.prototype.setTimeout = function(callback, period) {
+	this.timeoutTimer = setTimeout(callback, period);
+};
+
+WSRequest.prototype.setOnComplete = function(callback) {
+	this.onCompleteCallback = callback;
+};
+
+WSRequest.prototype.setCacheKey = function(cacheKey) {
+    if (cacheKey) {
+        this.cacheKey = cacheKey;
+    }
+}
+
+WSRequest.prototype.abort = function() {
+    log.write("WSRequest (WebSocket): abort");
+    
+	clearTimeout(this.timeoutTimer);
+	this.timeoutTimer = null;
+	this.onCompleteCallback = undefined;
+};
+
+WSRequest.prototype.send = function(requestText) {
+	var self = this;
+	
+    var request = '<RNOWebServiceCall>$$REQUESTID$$<HTTPCall url="' + this.url + '" method="' + this.action + '" cacheKey="' + this.cacheKey + '">';
+	for(header in this.headers) {
+        request += '<Header field="' + header + '">' + this.headers[header] + '</Header>';
+	}	
+    request += '<Body>' + requestText + '</Body></HTTPCall></RNOWebServiceCall>';
+    
+    //log.write("WSRequest (WebSocket): " + request);
+    
+	this.startTime = new Date();
+    
+    WebSocketManager.send(request, this, function(response) {
+        self.endTime = new Date();
+        self.requestRunTime = $cn.utilities.DateDiff(self.endTime, self.startTime);
+
+        log.write("WSRequest (WebSocket) response [" + self.startTime + " - " + self.endTime + "] [" + self.requestRunTime + "ms]");
+
+        clearTimeout(self.timeoutTimer);
+        self.timeoutTimer = null;
+
+        var responseDOM;
+        try {
+            //log.write("WSRequest (WebSocket) response: " + response);
+            responseDOM = XML.rootFromString(response).firstChild;
+        }
+        catch(e) {
+            log.write("WSRequest (WebSocket): parsing error: " + e);
+            throw(e);
+        }
+        
+        //log.write("WSRequest (WebSocket) About to parse for HTTPCall_Response");
+        var nodes = responseDOM.getElementsByTagName("HTTPCall_Response");
+        if(nodes && nodes.length) {
+            var attrs = nodes[0].attributes;
+            for(var index=0; index<attrs.length; index++) {
+                var attr = attrs[index];
+                if(attr.nodeName == "error") {
+                    self.error = new Number(attr.nodeValue);
+                    if (self.error != 0) {
+                        log.write("WSRequest (WebSocket) HTTPCall_Response self.error set to non-zero: " + self.error);
+                    }
+                    else {
+                        //log.write("WSRequest (WebSocket) HTTPCall_Response self.error set to zero: 0");
+                    }
+                }
+                else if(attr.nodeName == "statusCode") {
+                    self.status = new Number(attr.nodeValue);
+                    //log.write("WSRequest (WebSocket) self.status set from statusCode: " + self.status);
+                }
+                else if(attr.nodeName == "reasonPhrase") {
+                    self.statusText = attr.nodeValue; 
+                }
+            }
+            
+            self.responseText = response.substring(response.indexOf("<Body>")+6, response.indexOf("</Body>"));
+            self.responseText = self.responseText.split('&quot;').join('"').split('&apos;').join("'").split('&gt;').join('>').split('&lt;').join('<').split('&amp;').join('&');
+
+            if(configuration.readValue("PreferredDRMProvider") != "DIVX" && (!self.responseText || !self.responseText.length || (self.responseText.indexOf('"responseCode":') < 0 && self.responseText.indexOf('"result":') < 0))) {
+                log.write("WSRequest (WebSocket): no result or responseCode member in responseText, forcing to system error status");
+                log.write("WSRequest (WebSocket) response: " + response);
+                if (self.error && self.error == 80140001) {
+                	self.status = 502;
+                }
+                else {
+                	self.status = 500; // Should be 550 or 2012?
+                }
+            }
+            
+            // To force a bad return, uncomment and set the ws api name here
+            //if(response.indexOf('setupDevice') > -1) {
+            //    self.status = 500;
+            //}
+        }
+        else {
+            log.write("WSRequest (WebSocket): no HTTPCall_Response node?");
+            XML.dumpDOM(responseDOM);
+            var nodes = responseDOM.getElementsByTagName("SocketError")
+            if(nodes && nodes.length) {
+                log.write("WSRequest (WebSocket): SOCKET ERROR");
+                self.status = 2013;
+            }
+            else {
+                self.status = 500; // Should be 550 or 2012?
+            }
+        }
+        
+        if (self.onCompleteCallback) {
+        	self.onCompleteCallback.call(self);
+        }
+	});
+    
+	//log.write("  Send at: " + this.startTime);
+};
+
+WSRequest.prototype.clearContentCache = function(callback) {
+    // Make the request down to the web socket manager.
+    WebSocketManager.clearContentCache(callback);
+};
+//-----------------------------------------------------------------------------
+// xmllibs.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/* XML Methods for MooTools */
+/* Requires MooTools v1.2 */
+
+var XML = {
+	
+	rootFromFile: function(file,callback){
+		if(!$cn.config.PrecompiledApplication){
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open('GET', file, true);
+			xmlhttp.send(null);
+			xmlhttp.onreadystatechange = function(){
+				
+				if(xmlhttp.readyState == 4) {	
+					
+					if ((xmlhttp.status && xmlhttp.status == 200) || document.URL.substr(0,4) == "file") {
+						
+						var xmlParser = new DOMParser();
+						var xmlDoc = xmlParser.parseFromString(xmlhttp.responseText, "text/xml");
+	
+						callback.call(this, xmlDoc);
+					}
+				}
+			}
+		}
+		else {
+			callback.call(this, null);
+		}
+	},
+	
+	rootFromFileSync: function(file) {
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open('GET', file, false);
+		xmlhttp.send(null);
+		
+		if(xmlhttp.readyState == 4) {	
+			if (xmlhttp.status && xmlhttp.status == 200 || document.URL.substr(0,4) == "file") {
+				return xmlhttp.responseXML;
+			}
+		}
+		
+		return null;
+	},
+	
+	rootFromString: function(string){
+		var root;
+
+		if (Browser.Engine.trident){
+			root = new ActiveXObject('Microsoft.XMLDOM');
+			root.async = false;
+			root.loadXML(string);
+		} else {
+			root = (new DOMParser()).parseFromString(string, 'text/xml');
+		}
+
+		return root;
+	},
+	
+	rootToHashes: function(root){
+		var hashes = [], children = root.childNodes, hash = null, i = 0, l;
+
+		for (i = 0, l = children.length; i < l; i++){
+			hash = XML.nodeToHash(children[i]);
+			if (hash) hashes.push(hash);
+		}
+
+		return hashes;
+	},
+	
+	nodeToHash: function(node){
+		switch ($type(node)){
+
+			case 'element':
+				var attributes = node.attributes, attributesLength = attributes.length, attributesHash = {}, j = 0, attribute;
+
+				for (j = 0; j < attributesLength; j++){
+					attribute = attributes[j];
+					if (attribute.nodeValue && attribute.nodeValue != 'inherit') attributesHash[attribute.nodeName] = attribute.nodeValue;
+				}
+
+				return {tag: node.nodeName.toLowerCase(), attributes: attributesHash, children: XML.rootToHashes(node)};
+
+			case 'textnode': return {text: node.nodeValue};
+
+			default: return null;
+		}
+	},
+	
+	rootToJSONString: function(root){
+		var jsons = [], children = root.childNodes, json = '', i = 0, l;
+
+		for (i = 0, l = children.length; i < l; i++){
+			json = XML.nodeToJSONString(children[i]);
+			if (json) jsons.push(json);
+		}
+
+		return jsons;
+	},
+
+	nodeToJSONString: function(node){
+		var i = 0;
+		if ($type(node) == 'element'){
+			var attributes = node.attributes, attributesLength = attributes.length, attributesJSON = '', j = 0, attribute;
+			
+			if (attributesLength > 0){
+				for (j = 0; j < attributesLength; j++){
+					attribute = attributes[j];
+					if (attribute.nodeValue && attribute.nodeValue != 'inherit'){
+						if(!isNaN(Number(attribute.nodeValue)) || attribute.nodeValue === "true" || attribute.nodeValue === "false")
+							attributesJSON += "\"" + attribute.nodeName + "\"" + ":" + attribute.nodeValue + ",";
+						else
+							attributesJSON += "\"" + attribute.nodeName + "\"" + ":" + "\"" + attribute.nodeValue + "\",";
+					}
+				}
+				//remove the last character ','
+				attributesJSON = attributesJSON.substring(0,attributesJSON.length-1);
+				if (node.childNodes.length > 1)
+					return "{\"" + node.nodeName.substring(0,1).toLowerCase() + node.nodeName.substring(1) + "\"" + ":" + "[" + XML.rootToJSONString(node) + "]" + attributesJSON + "}";
+				else if (node.childNodes.length <= 1 && $type(node.firstChild) == 'textnode'){
+					if (!isNaN(Number(node.nodeValue)) || node.nodeValue === "true" || node.nodeValue === "false")
+						return "{\"" + node.nodeName.substring(0,1).toLowerCase() + node.nodeName.substring(1) + "\"" + ":" + node.nodeValue + attributesJSON + "}";
+					else
+						return "{\"" + node.nodeName.substring(0,1).toLowerCase() + node.nodeName.substring(1) + "\"" + ":" + "\"" + node.nodeValue + "\"" + attributesJSON + "}";
+				}
+			}
+			else{
+				if (node.childNodes.length > 1)
+					return "{\"" + node.nodeName.substring(0,1).toLowerCase() + node.nodeName.substring(1) + "\"" + ":" + "[" + XML.rootToJSONString(node) + "]}";
+				else if (node.childNodes.length <= 1 && $type(node.firstChild) == 'textnode')
+					if (!isNaN(Number(node.childNodes[0].nodeValue)) || node.childNodes[0].nodeValue === "true" || node.childNodes[0].nodeValue === "false")
+						return "{\"" + node.nodeName.substring(0,1).toLowerCase() + node.nodeName.substring(1) + "\"" + ":" + node.childNodes[0].nodeValue + "}";
+					else	
+						return "{\"" + node.nodeName.substring(0,1).toLowerCase() + node.nodeName.substring(1) + "\"" + ":" + "\"" + node.childNodes[0].nodeValue + "\"}";
+			}
+		}
+	},
+	nodesToJSONString: function(nodes){
+		var i = 0;
+		
+		var result = "{";
+		for (i = 0; i < nodes.length; i++){
+			if ($type(nodes[i]) == 'element'){
+				var JSONString = XML.nodeToJSONString(nodes[i]);
+				if (nodes[i].childNodes.length <= 1 && $type(nodes[i].firstChild) == 'textnode'){
+					JSONString = JSONString.substring(1,JSONString.length-1);
+				}
+				result += JSONString + ",";
+			}
+		}
+		//remove the last character ','
+		result = result.substring(0,result.length-1);
+		result += "}";
+		return result;
+	},
+	
+	hashesToTree: function(hash){
+		var tree = [], i, l;
+		for (i = 0, l = hash.length; i < l; i++) tree.push(XML.hashToElement(hash[i]));
+		return tree;
+	},
+	
+	hashToElement: function(hash, tag){
+		var element;
+		if (hash.text) element = document.newTextNode(hash.text);
+		else element = document.newElement(tag || hash.tag, hash.attributes).adopt(XML.hashesToTree(hash.children));
+		return element;
+	},
+	
+	hashToHTML: function(hash, level){
+		var tabs = new Array(level || 0).join('\t'),attributes = [''],p, open='',close='',children=null;
+		if (hash.text) return tabs + hash.text;
+
+		for (p in hash.attributes) attributes.push(p + '="' + hash.attributes[p] + '"');
+		attributes = attributes.join(' ');
+		open = tabs + '<' + hash.tag + attributes + '>\n';
+		close = '\n' + tabs + '</' + hash.tag + '>';
+		children = XML.hashesToHTML(hash.children, level + 1);
+		return open + children + close;
+	},
+
+	hashesToHTML: function(hashes, level){
+		var html = [], i, l;
+		for (i = 0, l = hashes.length; i < l; i++) html.push(XML.hashToHTML(hashes[i], level));
+		return html.join('\n');
+	},
+	
+	transform: function(xml, xsl){
+		xml = (typeof xml == 'string') ? XML.rootFromFile(xml) : xml;
+		xsl = (typeof xsl == 'string') ? XML.rootFromFile(xsl) : xsl;
+		var xslt, root, i, children = [], element, temp = document.newElement('div'), l;
+		
+		xslt = new XSLTProcessor();
+		xslt.importStylesheet(xsl);
+		root = xslt.transformToFragment(xml, document);
+		temp.appendChild(root);
+		
+		for (i = 0, l = temp.childNodes.length; i < l; i++){
+			element = temp.childNodes[i], type = $type(element);
+			if (type == 'element' || type == 'textnode') children.push(element);
+		}
+		return children;
+	},
+    
+    toString: function(xmldom){
+        return (new XMLSerializer).serializeToString(xmldom);
+    },
+    
+    dumpDOM: function(rootnode, level) {
+        var str = "DOM: ";
+        if(level)
+            str += level;
+        else level = "";
+
+        str += "[" + rootnode.nodeName + "]: " + rootnode.nodeValue;
+        if(rootnode.attributes && rootnode.attributes.length) {
+            str += " - ";
+            for(var index=0; index < rootnode.attributes.length; index++) {
+                var attr = rootnode.attributes[index];
+                str += "(" + attr.nodeName + ":" + attr.nodeValue + ") ";
+            }
+        }
+        log.write(str);
+        
+        if(rootnode.childNodes && rootnode.childNodes.length) {
+            for(var index=0; index< rootnode.childNodes.length; index++) {
+                var node = rootnode.childNodes[index];
+                this.dumpDOM(node, level + "  ");
+            }
+        }
+    }
+	
+};
+	
