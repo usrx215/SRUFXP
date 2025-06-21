@@ -1,0 +1,850 @@
+dle,
+                                                      mng_bool         bEmpty,
+                                                      mng_uint8        iMode,
+                                                      mng_uint32       iNamesize,
+                                                      mng_pchar        zName,
+                                                      mng_uint8        iChangedelay,
+                                                      mng_uint8        iChangetimeout,
+                                                      mng_uint8        iChangeclipping,
+                                                      mng_uint8        iChangesyncid,
+                                                      mng_uint32       iDelay,
+                                                      mng_uint32       iTimeout,
+                                                      mng_uint8        iBoundarytype,
+                                                      mng_int32        iBoundaryl,
+                                                      mng_int32        iBoundaryr,
+                                                      mng_int32        iBoundaryt,
+                                                      mng_int32        iBoundaryb,
+                                                      mng_uint32       iCount,
+                                                      mng_uint32p      pSyncids);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_move       (mng_handle       hHandle,
+                                                      mng_uint16       iFirstid,
+                                                      mng_uint16       iLastid,
+                                                      mng_uint8        iMovetype,
+                                                      mng_int32        iMovex,
+                                                      mng_int32        iMovey);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_clip       (mng_handle       hHandle,
+                                                      mng_uint16       iFirstid,
+                                                      mng_uint16       iLastid,
+                                                      mng_uint8        iCliptype,
+                                                      mng_int32        iClipl,
+                                                      mng_int32        iClipr,
+                                                      mng_int32        iClipt,
+                                                      mng_int32        iClipb);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_show       (mng_handle       hHandle,
+                                                      mng_bool         bEmpty,
+                                                      mng_uint16       iFirstid,
+                                                      mng_uint16       iLastid,
+                                                      mng_uint8        iMode);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_term       (mng_handle       hHandle,
+                                                      mng_uint8        iTermaction,
+                                                      mng_uint8        iIteraction,
+                                                      mng_uint32       iDelay,
+                                                      mng_uint32       iItermax);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_save       (mng_handle       hHandle,
+                                                      mng_bool         bEmpty,
+                                                      mng_uint8        iOffsettype,
+                                                      mng_uint32       iCount);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_save_entry (mng_handle       hHandle,
+                                                      mng_uint32       iEntry,
+                                                      mng_uint8        iEntrytype,
+                                                      mng_uint32arr2   iOffset,
+                                                      mng_uint32arr2   iStarttime,
+                                                      mng_uint32       iLayernr,
+                                                      mng_uint32       iFramenr,
+                                                      mng_uint32       iNamesize,
+                                                      mng_pchar        zName);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_seek       (mng_handle       hHandle,
+                                                      mng_uint32       iNamesize,
+                                                      mng_pchar        zName);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_expi       (mng_handle       hHandle,
+                                                      mng_uint16       iSnapshotid,
+                                                      mng_uint32       iNamesize,
+                                                      mng_pchar        zName);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_fpri       (mng_handle       hHandle,
+                                                      mng_uint8        iDeltatype,
+                                                      mng_uint8        iPriority);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_need       (mng_handle       hHandle,
+                                                      mng_uint32       iKeywordssize,
+                                                      mng_pchar        zKeywords);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_phyg       (mng_handle       hHandle,
+                                                      mng_bool         bEmpty,
+                                                      mng_uint32       iSizex,
+                                                      mng_uint32       iSizey,
+                                                      mng_uint8        iUnit);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_jhdr       (mng_handle       hHandle,
+                                                      mng_uint32       iWidth,
+                                                      mng_uint32       iHeight,
+                                                      mng_uint8        iColortype,
+                                                      mng_uint8        iImagesampledepth,
+                                                      mng_uint8        iImagecompression,
+                                                      mng_uint8        iImageinterlace,
+                                                      mng_uint8        iAlphasampledepth,
+                                                      mng_uint8        iAlphacompression,
+                                                      mng_uint8        iAlphafilter,
+                                                      mng_uint8        iAlphainterlace);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_jdat       (mng_handle       hHandle,
+                                                      mng_uint32       iRawlen,
+                                                      mng_ptr          pRawdata);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_jdaa       (mng_handle       hHandle,
+                                                      mng_uint32       iRawlen,
+                                                      mng_ptr          pRawdata);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_jsep       (mng_handle       hHandle);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_dhdr       (mng_handle       hHandle,
+                                                      mng_uint16       iObjectid,
+                                                      mng_uint8        iImagetype,
+                                                      mng_uint8        iDeltatype,
+                                                      mng_uint32       iBlockwidth,
+                                                      mng_uint32       iBlockheight,
+                                                      mng_uint32       iBlockx,
+                                                      mng_uint32       iBlocky);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_prom       (mng_handle       hHandle,
+                                                      mng_uint8        iColortype,
+                                                      mng_uint8        iSampledepth,
+                                                      mng_uint8        iFilltype);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_ipng       (mng_handle       hHandle);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_pplt       (mng_handle       hHandle,
+                                                      mng_uint8        iDeltatype,
+                                                      mng_uint32       iCount);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_pplt_entry (mng_handle       hHandle,
+                                                      mng_uint32       iEntry,
+                                                      mng_uint16       iRed,
+                                                      mng_uint16       iGreen,
+                                                      mng_uint16       iBlue,
+                                                      mng_uint16       iAlpha);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_jpng       (mng_handle       hHandle);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_drop       (mng_handle       hHandle,
+                                                      mng_uint32       iCount,
+                                                      mng_chunkidp     pChunknames);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_dbyk       (mng_handle       hHandle,
+                                                      mng_chunkid      iChunkname,
+                                                      mng_uint8        iPolarity,
+                                                      mng_uint32       iKeywordssize,
+                                                      mng_pchar        zKeywords);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_ordr       (mng_handle       hHandle,
+                                                      mng_uint32       iCount);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_ordr_entry (mng_handle       hHandle,
+                                                      mng_uint32       iEntry,
+                                                      mng_chunkid      iChunkname,
+                                                      mng_uint8        iOrdertype);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_magn       (mng_handle       hHandle,
+                                                      mng_uint16       iFirstid,
+                                                      mng_uint16       iLastid,
+                                                      mng_uint16       iMethodX,
+                                                      mng_uint16       iMX,
+                                                      mng_uint16       iMY,
+                                                      mng_uint16       iML,
+                                                      mng_uint16       iMR,
+                                                      mng_uint16       iMT,
+                                                      mng_uint16       iMB,
+                                                      mng_uint16       iMethodY);
+
+#ifdef MNG_INCLUDE_MPNG_PROPOSAL
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_mpng       (mng_handle       hHandle,
+                                                      mng_uint32       iFramewidth,
+                                                      mng_uint32       iFrameheight,
+                                                      mng_uint16       iNumplays,
+                                                      mng_uint16       iTickspersec,
+                                                      mng_uint8        iCompressionmethod,
+                                                      mng_uint32       iCount);
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_mpng_frame (mng_handle       hHandle,
+                                                      mng_uint32       iEntry,
+                                                      mng_uint32       iX,
+                                                      mng_uint32       iY,
+                                                      mng_uint32       iWidth,
+                                                      mng_uint32       iHeight,
+                                                      mng_int32        iXoffset,
+                                                      mng_int32        iYoffset,
+                                                      mng_uint16       iTicks);
+#endif
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_evnt       (mng_handle       hHandle,
+                                                      mng_uint32       iCount);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_evnt_entry (mng_handle       hHandle,
+                                                      mng_uint32       iEntry,
+                                                      mng_uint8        iEventtype,
+                                                      mng_uint8        iMasktype,
+                                                      mng_int32        iLeft,
+                                                      mng_int32        iRight,
+                                                      mng_int32        iTop,
+                                                      mng_int32        iBottom,
+                                                      mng_uint16       iObjectid,
+                                                      mng_uint8        iIndex,
+                                                      mng_uint32       iSegmentnamesize,
+                                                      mng_pchar        zSegmentname);
+
+MNG_EXT mng_retcode MNG_DECL mng_putchunk_unknown    (mng_handle       hHandle,
+                                                      mng_chunkid      iChunkname,
+                                                      mng_uint32       iRawlen,
+                                                      mng_ptr          pRawdata);
+
+#endif /* MNG_INCLUDE_WRITE_PROCS */
+
+/* ************************************************************************** */
+
+/* use these functions to access the actual image-data in stored chunks,
+   as opposed to the IDAT/JDAT data */
+/* to get accurate pixel-data the canvasstyle should seriously reflect the
+   bitdepth/colortype combination of the preceding IHDR/JHDR/BASI/DHDR;
+   all input can be converted to rgb(a)8 (rgb(a)16 for 16-bit images), but
+   there are only limited conversions back (see below for putimgdata)  */
+
+/* call this function if you want to extract the nth image from the list;
+   the first image is designated seqnr 0! */
+/* this function finds the IHDR/JHDR/BASI/DHDR with the appropriate seqnr,
+   starting from the beginning of the chunk-list; this may tend to get a little
+   slow for animations with a large number of chunks for images near the end */
+/* supplying a seqnr past the last image in the animation will return with
+   an errorcode */   
+MNG_EXT mng_retcode MNG_DECL mng_getimgdata_seq      (mng_handle        hHandle,
+                                                      mng_uint32        iSeqnr,
+                                                      mng_uint32        iCanvasstyle,
+                                                      mng_getcanvasline fGetcanvasline);
+
+/* both the following functions will search forward to find the first IDAT/JDAT,
+   and then traverse back to find the start of the image (IHDR,JHDR,DHDR,BASI);
+   note that this is very fast compared to decoding the IDAT/JDAT, so there's
+   not really a need for optimization; either can be called from the
+   iterate_chunks callback when a IHDR/JHDR is encountered; for BASI/DHDR there
+   may not be real image-data so it's wisest to keep iterating till the IEND,
+   and then call either of these functions if necessary (remember the correct seqnr!) */
+
+/* call this function if you want to extract the image starting at or after the nth
+   position in the chunk-list; this number is returned in the iterate_chunks callback */
+MNG_EXT mng_retcode MNG_DECL mng_getimgdata_chunkseq (mng_handle        hHandle,
+                                                      mng_uint32        iSeqnr,
+                                                      mng_uint32        iCanvasstyle,
+                                                      mng_getcanvasline fGetcanvasline);
+
+/* call this function if you want to extract the image starting at or after the
+   indicated chunk; the handle of a chunk is returned in the iterate_chunks callback */
+MNG_EXT mng_retcode MNG_DECL mng_getimgdata_chunk    (mng_handle        hHandle,
+                                                      mng_handle        hChunk,
+                                                      mng_uint32        iCanvasstyle,
+                                                      mng_getcanvasline fGetcanvasline);
+
+/* ************************************************************************** */
+
+#ifdef MNG_INCLUDE_WRITE_PROCS
+
+/* use the following functions to add image-data to the list of stored chunks */
+/* note that this only adds the IDAT or JDAT chunks and no others; you must call
+   one of these functions after you 'put' the initial chunks of the image and
+   before you 'put' the closing chunks */
+/* the canvasstyle should seriously reflect the bitdepth/colortype combination;
+   eg. bitdepth=16 would expect a 16-bit canvasstyle,
+   colortype=g or ga would expect a gray or gray+alpha style respectively
+   and so on, and so forth ...
+   (nb. the number of conversions will be extremely limited for the moment!) */
+
+MNG_EXT mng_retcode MNG_DECL mng_putimgdata_ihdr     (mng_handle        hHandle,
+                                                      mng_uint32        iWidth,
+                                                      mng_uint32        iHeight,
+                                                      mng_uint8         iColortype,
+                                                      mng_uint8         iBitdepth,
+                                                      mng_uint8         iCompression,
+                                                      mng_uint8         iFilter,
+                                                      mng_uint8         iInterlace,
+                                                      mng_uint32        iCanvasstyle,
+                                                      mng_getcanvasline fGetcanvasline);
+
+MNG_EXT mng_retcode MNG_DECL mng_putimgdata_jhdr     (mng_handle        hHandle,
+                                                      mng_uint32        iWidth,
+                                                      mng_uint32        iHeight,
+                                                      mng_uint8         iColortype,
+                                                      mng_uint8         iBitdepth,
+                                                      mng_uint8         iCompression,
+                                                      mng_uint8         iInterlace,
+                                                      mng_uint8         iAlphaBitdepth,
+                                                      mng_uint8         iAlphaCompression,
+                                                      mng_uint8         iAlphaFilter,
+                                                      mng_uint8         iAlphaInterlace,
+                                                      mng_uint32        iCanvasstyle,
+                                                      mng_getcanvasline fGetcanvasline);
+
+/* ************************************************************************** */
+
+/* use the following functions to set the framecount/layercount/playtime or
+   simplicity of an animation you are creating; this may be useful if these
+   variables are calculated during the creation-process */
+
+MNG_EXT mng_retcode MNG_DECL mng_updatemngheader     (mng_handle        hHandle,
+                                                      mng_uint32        iFramecount,
+                                                      mng_uint32        iLayercount,
+                                                      mng_uint32        iPlaytime);
+
+MNG_EXT mng_retcode MNG_DECL mng_updatemngsimplicity (mng_handle        hHandle,
+                                                      mng_uint32        iSimplicity);
+
+/* ************************************************************************** */
+
+#endif /* MNG_INCLUDE_WRITE_PROCS */
+
+#endif /* MNG_ACCESS_CHUNKS */
+
+/* ************************************************************************** */
+/* *                                                                        * */
+/* * Error-code structure                                                   * */
+/* *                                                                        * */
+/* * 0b0000 00xx xxxx xxxx - basic errors; severity 9 (environment)         * */
+/* * 0b0000 01xx xxxx xxxx - chunk errors; severity 9 (image induced)       * */
+/* * 0b0000 10xx xxxx xxxx - severity 5 errors (application induced)        * */
+/* * 0b0001 00xx xxxx xxxx - severity 2 warnings (recoverable)              * */
+/* * 0b0010 00xx xxxx xxxx - severity 1 warnings (recoverable)              * */
+/* *                                                                        * */
+/* ************************************************************************** */
+
+#define MNG_NOERROR          (mng_retcode)0    /* er.. indicates all's well   */
+
+#define MNG_OUTOFMEMORY      (mng_retcode)1    /* oops, buy some megabytes!   */
+#define MNG_INVALIDHANDLE    (mng_retcode)2    /* call mng_initialize first   */
+#define MNG_NOCALLBACK       (mng_retcode)3    /* set the callbacks please    */
+#define MNG_UNEXPECTEDEOF    (mng_retcode)4    /* what'd ya do with the data? */
+#define MNG_ZLIBERROR        (mng_retcode)5    /* zlib burped                 */
+#define MNG_JPEGERROR        (mng_retcode)6    /* jpglib complained           */
+#define MNG_LCMSERROR        (mng_retcode)7    /* little cms stressed out     */
+#define MNG_NOOUTPUTPROFILE  (mng_retcode)8    /* no output-profile defined   */
+#define MNG_NOSRGBPROFILE    (mng_retcode)9    /* no sRGB-profile defined     */
+#define MNG_BUFOVERFLOW      (mng_retcode)10   /* zlib output-buffer overflow */
+#define MNG_FUNCTIONINVALID  (mng_retcode)11   /* ay, totally inappropriate   */
+#define MNG_OUTPUTERROR      (mng_retcode)12   /* disk full ?                 */
+#define MNG_JPEGBUFTOOSMALL  (mng_retcode)13   /* can't handle buffer overflow*/
+#define MNG_NEEDMOREDATA     (mng_retcode)14   /* I'm hungry, give me more    */
+#define MNG_NEEDTIMERWAIT    (mng_retcode)15   /* Sleep a while then wake me  */
+#define MNG_NEEDSECTIONWAIT  (mng_retcode)16   /* just processed a SEEK       */
+#define MNG_LOOPWITHCACHEOFF (mng_retcode)17   /* LOOP when playback info off */
+
+#define MNG_DLLNOTLOADED     (mng_retcode)99   /* late binding failed         */
+
+#define MNG_APPIOERROR       (mng_retcode)901  /* application I/O error       */
+#define MNG_APPTIMERERROR    (mng_retcode)902  /* application timing error    */
+#define MNG_APPCMSERROR      (mng_retcode)903  /* application CMS error       */
+#define MNG_APPMISCERROR     (mng_retcode)904  /* application other error     */
+#define MNG_APPTRACEABORT    (mng_retcode)905  /* application aborts on trace */
+
+#define MNG_INTERNALERROR    (mng_retcode)999  /* internal inconsistancy      */
+
+#define MNG_INVALIDSIG       (mng_retcode)1025 /* invalid graphics file       */
+#define MNG_INVALIDCRC       (mng_retcode)1027 /* crc check failed            */
+#define MNG_INVALIDLENGTH    (mng_retcode)1028 /* chunklength mystifies me    */
+#define MNG_SEQUENCEERROR    (mng_retcode)1029 /* invalid chunk sequence      */
+#define MNG_CHUNKNOTALLOWED  (mng_retcode)1030 /* completely out-of-place     */
+#define MNG_MULTIPLEERROR    (mng_retcode)1031 /* only one occurence allowed  */
+#define MNG_PLTEMISSING      (mng_retcode)1032 /* indexed-color requires PLTE */
+#define MNG_IDATMISSING      (mng_retcode)1033 /* IHDR-block requires IDAT    */
+#define MNG_CANNOTBEEMPTY    (mng_retcode)1034 /* must contain some data      */
+#define MNG_GLOBALLENGTHERR  (mng_retcode)1035 /* global data incorrect       */
+#define MNG_INVALIDBITDEPTH  (mng_retcode)1036 /* bitdepth out-of-range       */
+#define MNG_INVALIDCOLORTYPE (mng_retcode)1037 /* colortype out-of-range      */
+#define MNG_INVALIDCOMPRESS  (mng_retcode)1038 /* compression method invalid  */
+#define MNG_INVALIDFILTER    (mng_retcode)1039 /* filter method invalid       */
+#define MNG_INVALIDINTERLACE (mng_retcode)1040 /* interlace method invalid    */
+#define MNG_NOTENOUGHIDAT    (mng_retcode)1041 /* ran out of compressed data  */
+#define MNG_PLTEINDEXERROR   (mng_retcode)1042 /* palette-index out-of-range  */
+#define MNG_NULLNOTFOUND     (mng_retcode)1043 /* couldn't find null-separator*/
+#define MNG_KEYWORDNULL      (mng_retcode)1044 /* keyword cannot be empty     */
+#define MNG_OBJECTUNKNOWN    (mng_retcode)1045 /* the object can't be found   */
+#define MNG_OBJECTEXISTS     (mng_retcode)1046 /* the object already exists   */
+#define MNG_TOOMUCHIDAT      (mng_retcode)1047 /* got too much compressed data*/
+#define MNG_INVSAMPLEDEPTH   (mng_retcode)1048 /* sampledepth out-of-range    */
+#define MNG_INVOFFSETSIZE    (mng_retcode)1049 /* invalid offset-size         */
+#define MNG_INVENTRYTYPE     (mng_retcode)1050 /* invalid entry-type          */
+#define MNG_ENDWITHNULL      (mng_retcode)1051 /* may not end with NULL       */
+#define MNG_INVIMAGETYPE     (mng_retcode)1052 /* invalid image_type          */
+#define MNG_INVDELTATYPE     (mng_retcode)1053 /* invalid delta_type          */
+#define MNG_INVALIDINDEX     (mng_retcode)1054 /* index-value invalid         */
+#define MNG_TOOMUCHJDAT      (mng_retcode)1055 /* got too much compressed data*/
+#define MNG_JPEGPARMSERR     (mng_retcode)1056 /* JHDR/JPEG parms do not match*/
+#define MNG_INVFILLMETHOD    (mng_retcode)1057 /* invalid fill_method         */
+#define MNG_OBJNOTCONCRETE   (mng_retcode)1058 /* object must be concrete     */
+#define MNG_TARGETNOALPHA    (mng_retcode)1059 /* object has no alpha-channel */
+#define MNG_MNGTOOCOMPLEX    (mng_retcode)1060 /* can't handle complexity     */
+#define MNG_UNKNOWNCRITICAL  (mng_retcode)1061 /* unknown critical chunk found*/
+#define MNG_UNSUPPORTEDNEED  (mng_retcode)1062 /* nEED requirement unsupported*/
+#define MNG_INVALIDDELTA     (mng_retcode)1063 /* Delta operation illegal     */
+#define MNG_INVALIDMETHOD    (mng_retcode)1064 /* invalid MAGN method         */
+#define MNG_IMPROBABLELENGTH (mng_retcode)1065 /* impropable chunk length     */
+#define MNG_INVALIDBLOCK     (mng_retcode)1066 /* invalid delta block         */
+#define MNG_INVALIDEVENT     (mng_retcode)1067 /* invalid event_type          */
+#define MNG_INVALIDMASK      (mng_retcode)1068 /* invalid mask_type           */
+#define MNG_NOMATCHINGLOOP   (mng_retcode)1069 /* ENDL without matching LOOP  */
+#define MNG_SEEKNOTFOUND     (mng_retcode)1070 /* EvNT points to unknown SEEK */
+#define MNG_OBJNOTABSTRACT   (mng_retcode)1071 /* object must be abstract     */
+#define MNG_TERMSEQERROR     (mng_retcode)1072 /* TERM in wrong place         */
+#define MNG_INVALIDFIELDVAL  (mng_retcode)1073 /* invalid fieldvalue (generic)*/
+#define MNG_INVALIDWIDTH     (mng_retcode)1074 /* invalid frame/image width   */
+#define MNG_INVALIDHEIGHT    (mng_retcode)1075 /* invalid frame/image height  */
+
+#define MNG_INVALIDCNVSTYLE  (mng_retcode)2049 /* can't make anything of this */
+#define MNG_WRONGCHUNK       (mng_retcode)2050 /* accessing the wrong chunk   */
+#define MNG_INVALIDENTRYIX   (mng_retcode)2051 /* accessing the wrong entry   */
+#define MNG_NOHEADER         (mng_retcode)2052 /* must have had header first  */
+#define MNG_NOCORRCHUNK      (mng_retcode)2053 /* can't find parent chunk     */
+#define MNG_NOMHDR           (mng_retcode)2054 /* no MNG header available     */
+
+#define MNG_IMAGETOOLARGE    (mng_retcode)4097 /* input-image way too big     */
+#define MNG_NOTANANIMATION   (mng_retcode)4098 /* file not a MNG              */
+#define MNG_FRAMENRTOOHIGH   (mng_retcode)4099 /* frame-nr out-of-range       */
+#define MNG_LAYERNRTOOHIGH   (mng_retcode)4100 /* layer-nr out-of-range       */
+#define MNG_PLAYTIMETOOHIGH  (mng_retcode)4101 /* playtime out-of-range       */
+#define MNG_FNNOTIMPLEMENTED (mng_retcode)4102 /* function not yet available  */
+
+#define MNG_IMAGEFROZEN      (mng_retcode)8193 /* stopped displaying          */
+
+#define MNG_LCMS_NOHANDLE    1                 /* LCMS returned NULL handle   */
+#define MNG_LCMS_NOMEM       2                 /* LCMS returned NULL gammatab */
+#define MNG_LCMS_NOTRANS     3                 /* LCMS returned NULL transform*/
+
+/* ************************************************************************** */
+/* *                                                                        * */
+/* *  Canvas styles                                                         * */
+/* *                                                                        * */
+/* *  Note that the intentions are pretty darn good, but that the focus     * */
+/* *  is currently on 8-bit color support                                   * */
+/* *                                                                        * */
+/* *  The RGB8_A8 style is defined for apps that require a separate         * */
+/* *  canvas for the color-planes and the alpha-plane (eg. mozilla)         * */
+/* *  This requires for the app to supply the "getalphaline" callback!!!    * */
+/* *                                                                        * */
+/* ************************************************************************** */
+
+#define MNG_CANVAS_RGB8      0x00000000L
+#define MNG_CANVAS_RGBA8     0x00001000L
+#define MNG_CANVAS_RGBA8_PM  0x00009000L
+#define MNG_CANVAS_ARGB8     0x00003000L
+#define MNG_CANVAS_ARGB8_PM  0x0000B000L
+#define MNG_CANVAS_RGB8_A8   0x00005000L
+#define MNG_CANVAS_BGR8      0x00000001L
+#define MNG_CANVAS_BGRX8     0x00010001L
+#define MNG_CANVAS_BGRA8     0x00001001L
+#define MNG_CANVAS_BGRA8PM   0x00009001L         /* backward compatibility */
+#define MNG_CANVAS_BGRA8_PM  0x00009001L
+#define MNG_CANVAS_ABGR8     0x00003001L
+#define MNG_CANVAS_ABGR8_PM  0x0000B001L
+#define MNG_CANVAS_RGB16     0x00000100L         /* not supported yet */
+#define MNG_CANVAS_RGBA16    0x00001100L         /* not supported yet */
+#define MNG_CANVAS_ARGB16    0x00003100L         /* not supported yet */
+#define MNG_CANVAS_BGR16     0x00000101L         /* not supported yet */
+#define MNG_CANVAS_BGRA16    0x00001101L         /* not supported yet */
+#define MNG_CANVAS_ABGR16    0x00003101L         /* not supported yet */
+#define MNG_CANVAS_GRAY8     0x00000002L         /* not supported yet */
+#define MNG_CANVAS_GRAY16    0x00000102L         /* not supported yet */
+#define MNG_CANVAS_GRAYA8    0x00001002L         /* not supported yet */
+#define MNG_CANVAS_GRAYA16   0x00001102L         /* not supported yet */
+#define MNG_CANVAS_AGRAY8    0x00003002L         /* not supported yet */
+#define MNG_CANVAS_AGRAY16   0x00003102L         /* not supported yet */
+#define MNG_CANVAS_DX15      0x00000003L         /* not supported yet */
+#define MNG_CANVAS_DX16      0x00000004L         /* not supported yet */
+
+#define MNG_CANVAS_RGB565    0x00000005L
+#define MNG_CANVAS_RGBA565   0x00001005L
+#define MNG_CANVAS_BGR565    0x00000006L
+#define MNG_CANVAS_BGRA565   0x00001006L
+#define MNG_CANVAS_BGR565_A8 0x00004006L
+
+#define MNG_CANVAS_RGB555    0x00000007L
+#define MNG_CANVAS_BGR555    0x00000008L
+
+#define MNG_CANVAS_PIXELTYPE(C)  (C & 0x000000FFL)
+#define MNG_CANVAS_BITDEPTH(C)   (C & 0x00000100L)
+#define MNG_CANVAS_HASALPHA(C)   (C & 0x00001000L)
+#define MNG_CANVAS_ALPHAFIRST(C) (C & 0x00002000L)
+#define MNG_CANVAS_ALPHASEPD(C)  (C & 0x00004000L)
+#define MNG_CANVAS_ALPHAPM(C)    (C & 0x00008000L)
+#define MNG_CANVAS_HASFILLER(C)  (C & 0x00010000L)
+
+#define MNG_CANVAS_RGB(C)        (MNG_CANVAS_PIXELTYPE (C) == 0)
+#define MNG_CANVAS_BGR(C)        (MNG_CANVAS_PIXELTYPE (C) == 1)
+#define MNG_CANVAS_GRAY(C)       (MNG_CANVAS_PIXELTYPE (C) == 2)
+#define MNG_CANVAS_DIRECTX15(C)  (MNG_CANVAS_PIXELTYPE (C) == 3)
+#define MNG_CANVAS_DIRECTX16(C)  (MNG_CANVAS_PIXELTYPE (C) == 4)
+#define MNG_CANVAS_RGB_565(C)    (MNG_CANVAS_PIXELTYPE (C) == 5)
+#define MNG_CANVAS_BGR_565(C)    (MNG_CANVAS_PIXELTYPE (C) == 6)
+#define MNG_CANVAS_8BIT(C)       (!MNG_CANVAS_BITDEPTH (C))
+#define MNG_CANVAS_16BIT(C)      (MNG_CANVAS_BITDEPTH (C))
+#define MNG_CANVAS_PIXELFIRST(C) (!MNG_CANVAS_ALPHAFIRST (C))
+
+/* ************************************************************************** */
+/* *                                                                        * */
+/* *  Chunk names (idea adapted from libpng 1.1.0 - png.h)                  * */
+/* *                                                                        * */
+/* ************************************************************************** */
+
+#define MNG_UINT_HUH  0x40404040L
+
+#define MNG_UINT_BACK 0x4241434bL
+#define MNG_UINT_BASI 0x42415349L
+#define MNG_UINT_CLIP 0x434c4950L
+#define MNG_UINT_CLON 0x434c4f4eL
+#define MNG_UINT_DBYK 0x4442594bL
+#define MNG_UINT_DEFI 0x44454649L
+#define MNG_UINT_DHDR 0x44484452L
+#define MNG_UINT_DISC 0x44495343L
+#define MNG_UINT_DROP 0x44524f50L
+#define MNG_UINT_ENDL 0x454e444cL
+#define MNG_UINT_FRAM 0x4652414dL
+#define MNG_UINT_IDAT 0x49444154L
+#define MNG_UINT_IEND 0x49454e44L
+#define MNG_UINT_IHDR 0x49484452L
+#define MNG_UINT_IJNG 0x494a4e47L
+#define MNG_UINT_IPNG 0x49504e47L
+#define MNG_UINT_JDAA 0x4a444141L
+#define MNG_UINT_JDAT 0x4a444154L
+#define MNG_UINT_JHDR 0x4a484452L
+#define MNG_UINT_JSEP 0x4a534550L
+#define MNG_UINT_JdAA 0x4a644141L
+#define MNG_UINT_LOOP 0x4c4f4f50L
+#define MNG_UINT_MAGN 0x4d41474eL
+#define MNG_UINT_MEND 0x4d454e44L
+#define MNG_UINT_MHDR 0x4d484452L
+#define MNG_UINT_MOVE 0x4d4f5645L
+#define MNG_UINT_ORDR 0x4f524452L
+#define MNG_UINT_PAST 0x50415354L
+#define MNG_UINT_PLTE 0x504c5445L
+#define MNG_UINT_PPLT 0x50504c54L
+#define MNG_UINT_PROM 0x50524f4dL
+#define MNG_UINT_SAVE 0x53415645L
+#define MNG_UINT_SEEK 0x5345454bL
+#define MNG_UINT_SHOW 0x53484f57L
+#define MNG_UINT_TERM 0x5445524dL
+#define MNG_UINT_adAT 0x61644154L
+#define MNG_UINT_ahDR 0x61684452L
+#define MNG_UINT_bKGD 0x624b4744L
+#define MNG_UINT_cHRM 0x6348524dL
+#define MNG_UINT_eXPI 0x65585049L
+#define MNG_UINT_evNT 0x65764e54L
+#define MNG_UINT_fPRI 0x66505249L
+#define MNG_UINT_gAMA 0x67414d41L
+#define MNG_UINT_hIST 0x68495354L
+#define MNG_UINT_iCCP 0x69434350L
+#define MNG_UINT_iTXt 0x69545874L
+#define MNG_UINT_mpNG 0x6d704e47L
+#define MNG_UINT_nEED 0x6e454544L
+#define MNG_UINT_oFFs 0x6f464673L
+#define MNG_UINT_pCAL 0x7043414cL
+#define MNG_UINT_pHYg 0x70444167L
+#define MNG_UINT_pHYs 0x70485973L
+#define MNG_UINT_sBIT 0x73424954L
+#define MNG_UINT_sCAL 0x7343414cL
+#define MNG_UINT_sPLT 0x73504c54L
+#define MNG_UINT_sRGB 0x73524742L
+#define MNG_UINT_tEXt 0x74455874L
+#define MNG_UINT_tIME 0x74494d45L
+#define MNG_UINT_tRNS 0x74524e53L
+#define MNG_UINT_zTXt 0x7a545874L
+
+/* ************************************************************************** */
+/* *                                                                        * */
+/* *  Chunk property values                                                 * */
+/* *                                                                        * */
+/* ************************************************************************** */
+
+#define MNG_BITDEPTH_1                   1       /* IHDR, BASI, JHDR, PROM */
+#define MNG_BITDEPTH_2                   2
+#define MNG_BITDEPTH_4                   4
+#define MNG_BITDEPTH_8                   8       /* sPLT */
+#define MNG_BITDEPTH_16                 16
+
+#define MNG_COLORTYPE_GRAY               0       /* IHDR, BASI, PROM */
+#define MNG_COLORTYPE_RGB                2
+#define MNG_COLORTYPE_INDEXED            3
+#define MNG_COLORTYPE_GRAYA              4
+#define MNG_COLORTYPE_RGBA               6
+
+#define MNG_COMPRESSION_DEFLATE          0       /* IHDR, zTXt, iTXt, iCCP,
+                                                    BASI, JHDR */
+
+#define MNG_FILTER_ADAPTIVE              0       /* IHDR, BASI, JHDR */
+/* #define MNG_FILTER_NO_ADAPTIVE           1
+#define MNG_FILTER_NO_DIFFERING          0
+#define MNG_FILTER_DIFFERING             0x40
+#define MNG_FILTER_MASK                  (MNG_FILTER_NO_ADAPTIVE | MNG_FILTER_DIFFERING) */
+#ifdef FILTER192
+#define MNG_FILTER_DIFFERING             0xC0
+#endif
+#ifdef FILTER193
+#define MNG_FILTER_NOFILTER              0xC1
+#endif
+
+#define MNG_INTERLACE_NONE               0       /* IHDR, BASI, JHDR */
+#define MNG_INTERLACE_ADAM7              1
+
+#define MNG_FILTER_NONE                  0       /* IDAT */
+#define MNG_FILTER_SUB                   1
+#define MNG_FILTER_UP                    2
+#define MNG_FILTER_AVERAGE               3
+#define MNG_FILTER_PAETH                 4
+
+#define MNG_INTENT_PERCEPTUAL            0       /* sRGB */
+#define MNG_INTENT_RELATIVECOLORIMETRIC  1
+#define MNG_INTENT_SATURATION            2
+#define MNG_INTENT_ABSOLUTECOLORIMETRIC  3
+                                                 /* tEXt, zTXt, iTXt */
+#define MNG_TEXT_TITLE                   "Title"
+#define MNG_TEXT_AUTHOR                  "Author"
+#define MNG_TEXT_DESCRIPTION             "Description"
+#define MNG_TEXT_COPYRIGHT               "Copyright"
+#define MNG_TEXT_CREATIONTIME            "Creation Time"
+#define MNG_TEXT_SOFTWARE                "Software"
+#define MNG_TEXT_DISCLAIMER              "Disclaimer"
+#define MNG_TEXT_WARNING                 "Warning"
+#define MNG_TEXT_SOURCE                  "Source"
+#define MNG_TEXT_COMMENT                 "Comment"
+
+#define MNG_FLAG_UNCOMPRESSED            0       /* iTXt */
+#define MNG_FLAG_COMPRESSED              1
+
+#define MNG_UNIT_UNKNOWN                 0       /* pHYs, pHYg */
+#define MNG_UNIT_METER                   1
+                                                 /* MHDR */
+#define MNG_SIMPLICITY_VALID             0x00000001
+#define MNG_SIMPLICITY_SIMPLEFEATURES    0x00000002
+#define MNG_SIMPLICITY_COMPLEXFEATURES   0x00000004
+#define MNG_SIMPLICITY_TRANSPARENCY      0x00000008
+#define MNG_SIMPLICITY_JNG               0x00000010
+#define MNG_SIMPLICITY_DELTAPNG          0x00000020
+
+#define MNG_TERMINATION_DECODER_NC       0       /* LOOP */
+#define MNG_TERMINATION_USER_NC          1
+#define MNG_TERMINATION_EXTERNAL_NC      2
+#define MNG_TERMINATION_DETERMINISTIC_NC 3
+#define MNG_TERMINATION_DECODER_C        4
+#define MNG_TERMINATION_USER_C           5
+#define MNG_TERMINATION_EXTERNAL_C       6
+#define MNG_TERMINATION_DETERMINISTIC_C  7
+
+#define MNG_DONOTSHOW_VISIBLE            0       /* DEFI */
+#define MNG_DONOTSHOW_NOTVISIBLE         1
+
+#define MNG_ABSTRACT                     0       /* DEFI */
+#define MNG_CONCRETE                     1
+
+#define MNG_NOTVIEWABLE                  0       /* BASI */
+#define MNG_VIEWABLE                     1
+
+#define MNG_FULL_CLONE                   0       /* CLON */
+#define MNG_PARTIAL_CLONE                1
+#define MNG_RENUMBER                     2
+
+#define MNG_CONCRETE_ASPARENT            0       /* CLON */
+#define MNG_CONCRETE_MAKEABSTRACT        1
+
+#define MNG_LOCATION_ABSOLUTE            0       /* CLON, MOVE */
+#define MNG_LOCATION_RELATIVE            1
+
+#ifndef MNG_SKIPCHUNK_PAST
+#define MNG_TARGET_ABSOLUTE              0       /* PAST */
+#define MNG_TARGET_RELATIVE_SAMEPAST     1
+#define MNG_TARGET_RELATIVE_PREVPAST     2
+
+#define MNG_COMPOSITE_OVER               0       /* PAST */
+#define MNG_COMPOSITE_REPLACE            1
+#define MNG_COMPOSITE_UNDER              2
+
+#define MNG_ORIENTATION_SAME             0       /* PAST */
+#define MNG_ORIENTATION_180DEG           2
+#define MNG_ORIENTATION_FLIPHORZ         4
+#define MNG_ORIENTATION_FLIPVERT         6
+#define MNG_ORIENTATION_TILED            8
+
+#define MNG_OFFSET_ABSOLUTE              0       /* PAST */
+#define MNG_OFFSET_RELATIVE              1
+#endif
+
+#define MNG_BOUNDARY_ABSOLUTE            0       /* PAST, FRAM */
+#define MNG_BOUNDARY_RELATIVE            1
+
+#define MNG_BACKGROUNDCOLOR_MANDATORY    0x01    /* BACK */
+#define MNG_BACKGROUNDIMAGE_MANDATORY    0x02    /* BACK */
+
+#define MNG_BACKGROUNDIMAGE_NOTILE       0       /* BACK */
+#define MNG_BACKGROUNDIMAGE_TILE         1
+
+#define MNG_FRAMINGMODE_NOCHANGE         0       /* FRAM */
+#define MNG_FRAMINGMODE_1                1
+#define MNG_FRAMINGMODE_2                2
+#define MNG_FRAMINGMODE_3                3
+#define MNG_FRAMINGMODE_4                4
+
+#define MNG_CHANGEDELAY_NO               0       /* FRAM */
+#define MNG_CHANGEDELAY_NEXTSUBFRAME     1
+#define MNG_CHANGEDELAY_DEFAULT          2
+
+#define MNG_CHANGETIMOUT_NO              0       /* FRAM */
+#define MNG_CHANGETIMOUT_DETERMINISTIC_1 1
+#define MNG_CHANGETIMOUT_DETERMINISTIC_2 2
+#define MNG_CHANGETIMOUT_DECODER_1       3
+#define MNG_CHANGETIMOUT_DECODER_2       4
+#define MNG_CHANGETIMOUT_USER_1          5
+#define MNG_CHANGETIMOUT_USER_2          6
+#define MNG_CHANGETIMOUT_EXTERNAL_1      7
+#define MNG_CHANGETIMOUT_EXTERNAL_2      8
+
+#define MNG_CHANGECLIPPING_NO            0       /* FRAM */
+#define MNG_CHANGECLIPPING_NEXTSUBFRAME  1
+#define MNG_CHANGECLIPPING_DEFAULT       2
+
+#define MNG_CHANGESYNCID_NO              0       /* FRAM */
+#define MNG_CHANGESYNCID_NEXTSUBFRAME    1
+#define MNG_CHANGESYNCID_DEFAULT         2
+
+#define MNG_CLIPPING_ABSOLUTE            0       /* CLIP */
+#define MNG_CLIPPING_RELATIVE            1
+
+#define MNG_SHOWMODE_0                   0       /* SHOW */
+#define MNG_SHOWMODE_1                   1
+#define MNG_SHOWMODE_2                   2
+#define MNG_SHOWMODE_3                   3
+#define MNG_SHOWMODE_4                   4
+#define MNG_SHOWMODE_5                   5
+#define MNG_SHOWMODE_6                   6
+#define MNG_SHOWMODE_7                   7
+
+#define MNG_TERMACTION_LASTFRAME         0       /* TERM */
+#define MNG_TERMACTION_CLEAR             1
+#define MNG_TERMACTION_FIRSTFRAME        2
+#define MNG_TERMACTION_REPEAT            3
+
+#define MNG_ITERACTION_LASTFRAME         0       /* TERM */
+#define MNG_ITERACTION_CLEAR             1
+#define MNG_ITERACTION_FIRSTFRAME        2
+
+#define MNG_SAVEOFFSET_4BYTE             4       /* SAVE */
+#define MNG_SAVEOFFSET_8BYTE             8
+
+#define MNG_SAVEENTRY_SEGMENTFULL        0       /* SAVE */
+#define MNG_SAVEENTRY_SEGMENT            1
+#define MNG_SAVEENTRY_SUBFRAME           2
+#define MNG_SAVEENTRY_EXPORTEDIMAGE      3
+
+#define MNG_PRIORITY_ABSOLUTE            0       /* fPRI */
+#define MNG_PRIORITY_RELATIVE            1
+
+#ifdef MNG_INCLUDE_JNG
+#define MNG_COLORTYPE_JPEGGRAY           8       /* JHDR */
+#define MNG_COLORTYPE_JPEGCOLOR         10
+#define MNG_COLORTYPE_JPEGGRAYA         12
+#define MNG_COLORTYPE_JPEGCOLORA        14
+
+#define MNG_BITDEPTH_JPEG8               8       /* JHDR */
+#define MNG_BITDEPTH_JPEG12             12
+#define MNG_BITDEPTH_JPEG8AND12         20
+
+#define MNG_COMPRESSION_BASELINEJPEG     8       /* JHDR */
+
+#define MNG_INTERLACE_SEQUENTIAL         0       /* JHDR */
+#define MNG_INTERLACE_PROGRESSIVE        8
+#endif /* MNG_INCLUDE_JNG */
+
+#define MNG_IMAGETYPE_UNKNOWN            0       /* DHDR */
+#define MNG_IMAGETYPE_PNG                1
+#define MNG_IMAGETYPE_JNG                2
+
+#define MNG_DELTATYPE_REPLACE            0       /* DHDR */
+#define MNG_DELTATYPE_BLOCKPIXELADD      1
+#define MNG_DELTATYPE_BLOCKALPHAADD      2
+#define MNG_DELTATYPE_BLOCKCOLORADD      3
+#define MNG_DELTATYPE_BLOCKPIXELREPLACE  4
+#define MNG_DELTATYPE_BLOCKALPHAREPLACE  5
+#define MNG_DELTATYPE_BLOCKCOLORREPLACE  6
+#define MNG_DELTATYPE_NOCHANGE           7
+
+#define MNG_FILLMETHOD_LEFTBITREPLICATE  0       /* PROM */
+#define MNG_FILLMETHOD_ZEROFILL          1
+
+#define MNG_DELTATYPE_REPLACERGB         0       /* PPLT */
+#define MNG_DELTATYPE_DELTARGB           1
+#define MNG_DELTATYPE_REPLACEALPHA       2
+#define MNG_DELTATYPE_DELTAALPHA         3
+#define MNG_DELTATYPE_REPLACERGBA        4
+#define MNG_DELTATYPE_DELTARGBA          5
+
+#define MNG_POLARITY_ONLY                0       /* DBYK */
+#define MNG_POLARITY_ALLBUT              1
+
+#define MNG_EVENT_NONE                   0       /* evNT */
+#define MNG_EVENT_MOUSEENTER             1
+#define MNG_EVENT_MOUSEMOVE              2
+#define MNG_EVENT_MOUSEEXIT              3
+#define MNG_EVENT_MOUSEDOWN              4
+#define MNG_EVENT_MOUSEUP                5
+
+#define MNG_MASK_NONE                    0       /* evNT */
+#define MNG_MASK_BOX                     1
+#define MNG_MASK_OBJECT                  2
+#define MNG_MASK_OBJECTIX                3
+#define MNG_MASK_BOXOBJECT               4
+#define MNG_MASK_BOXOBJECTIX             5
+
+/* ************************************************************************** */
+/* *                                                                        * */
+/* *  Processtext callback types                                            * */
+/* *                                                                        * */
+/* ************************************************************************** */
+
+#define MNG_TYPE_TEXT 0
+#define MNG_TYPE_ZTXT 1
+#define MNG_TYPE_ITXT 2
+
+/* ************************************************************************** */
+/* *                                                                        * */
+/* *  CRC processing masks                                                  * */
+/* *                                                                        * */
+/* ************************************************************************** */
+
+#define MNG_CRC_INPUT              0x0000000f
+#define MNG_CRC_INPUT_NONE         0x00000000
+#define MNG_CRC_INPUT_PRESENT      0x00000001
+#define MNG_CRC_OUTPUT             0x000000f0
+#define MNG_CRC_OUTPUT_NONE        0x00000000
+#define MNG_CRC_OUTPUT_GENERATE    0x00000020
+#define MNG_CRC_OUTPUT_DUMMY       0x00000040
+#define MNG_CRC_ANCILLARY          0x00000f00
+#define MNG_CRC_ANCILLARY_IGNORE   0x00000000
+#define MNG_CRC_ANCILLARY_DISCARD  0x00000100
+#define MNG_CRC_ANCILLARY_WARNING  0x00000200
+#define MNG_CRC_ANCILLARY_ERROR    0x00000300
+#define MNG_CRC_CRITICAL           0x0000f000
+#define MNG_CRC_CRITICAL_IGNORE    0x00000000
+#define MNG_CRC_CRITICAL_WARNING   0x00002000
+#define MNG_CRC_CRITICAL_ERROR     0x00003000
+#define MNG_CRC_DEFAULT            0x00002121
+
+/* ************************************************************************** */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _libmng_h_ */
+
+/* ************************************************************************** */
+/* * end of file                                                            * */
+/* ************************************************************************** */
+

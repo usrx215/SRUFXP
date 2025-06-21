@@ -1,0 +1,711 @@
+istry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="id" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="il" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="in" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="is-by" />
+  <registry name="isa" />
+  <registry name="kids" />
+  <registry name="ks" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="ky" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="la" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="land-4-sale" />
+  <registry name="ma" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="chtr" />
+      <registry name="paroch" />
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="md" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="me" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="mi" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="mn" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="mo" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="ms" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="mt" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="nc" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="nd" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="ne" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="nh" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="nj" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="nm" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="nsn" />
+  <registry name="nv" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="ny" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="oh" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="ok" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="or" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="pa" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="pr" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="ri" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="sc" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="sd" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="stuff-4-sale" />
+  <registry name="tn" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="tx" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="ut" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="va" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="vi" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="vt" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="wa" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="wi" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="wv" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+  <registry name="wy" >
+    <registry all="true" >
+      <domain name="ci" />
+      <domain name="co" />
+      <domain name="town" />
+    </registry>
+    <registry name="cc" />
+    <registry name="gen" />
+    <registry name="k12" >
+      <registry name="pvt" />
+    </registry>
+    <registry name="lib" />
+    <registry name="state" />
+    <registry name="tec" />
+  </registry>
+</tld>
+<tld name="uy" levels="1" />
+<tld name="uz" >
+  <registry name="co" />
+  <registry name="com" />
+</tld>
+<tld name="va" />
+<tld name="vc" >
+  <registry name="com" />
+  <registry name="edu" />
+  <registry name="gov" />
+  <registry name="mil" />
+  <registry name="net" />
+  <registry name="org" />
+</tld>
+<tld name="ve" levels="1" />
+<tld name="vg" />
+<tld name="vi" >
+  <registry name="co" />
+  <registry name="com" />
+  <registry name="k12" />
+  <registry name="net" />
+  <registry name="org" />
+</tld>
+<tld name="vn" >
+  <registry name="ac" />
+  <registry name="biz" />
+  <registry name="com" />
+  <registry name="edu" />
+  <registry name="gov" />
+  <registry name="health" />
+  <registry name="info" />
+  <registry name="int" />
+  <registry name="name" />
+  <registry name="net" />
+  <registry name="org" />
+  <registry name="pro" />
+</tld>
+<tld name="vu" />
+<tld name="wf" />
+<tld name="ws" >
+  <registry name="com" />
+  <registry name="dyndns" />
+  <registry name="edu" />
+  <registry name="gov" />
+  <registry name="mypets" />
+  <registry name="net" />
+  <registry name="org" />
+</tld>
+<tld name="xn--3e0b707e" />
+<tld name="xn--45brj9c" />
+<tld name="xn--54b7fta0cc" />
+<tld name="xn--90a3ac" />
+<tld name="xn--clchc0ea0b2g2a9gcd" />
+<tld name="xn--fiqs8s" />
+<tld name="xn--fiqz9s" />
+<tld name="xn--fpcrj9c3d" />
+<tld name="xn--fzc2c9e2c" />
+<tld name="xn--gecrj9c" />
+<tld name="xn--h2brj9c" />
+<tld name="xn--j1amh" />
+<tld name="xn--j6w193g" />
+<tld name="xn--kprw13d" />
+<tld name="xn--kpry57d" />
+<tld name="xn--lgbbat1ad8j" />
+<tld name="xn--mgb2ddes" />
+<tld name="xn--mgb9awbf" />
+<tld name="xn--mgba3a4f16a" />
+<tld name="xn--mgba3a4fra" />
+<tld name="xn--mgbaam7a8h" />
+<tld name="xn--mgbayh7gpa" />
+<tld name="xn--mgbbh1a71e" />
+<tld name="xn--mgbc0a9azcg" />
+<tld name="xn--mgberp4a5d4a87g" />
+<tld name="xn--mgberp4a5d4ar" />
+<tld name="xn--mgbqly7c0a67fbc" />
+<tld name="xn--mgbqly7cvafr" />
+<tld name="xn--mgbtf8fl" />
+<tld name="xn--nnx388a" />
+<tld name="xn--node" />
+<tld name="xn--o3cw4h" />
+<tld name="xn--ogbpf8fl" />
+<tld name="xn--p1ai" />
+<tld name="xn--pgbs0dh" />
+<tld name="xn--s9brj9c" />
+<tld name="xn--wgbh1c" />
+<tld name="xn--wgbl6a" />
+<tld name="xn--xkc2al3hye2a" />
+<tld name="xn--xkc2dl3a5ee0h" />
+<tld name="xn--yfro4i67o" />
+<tld name="xn--ygbi2ammx" />
+<tld name="xxx" />
+<tld name="ye" levels="1" />
+<tld name="yt" />
+<tld name="za" levels="1" />
+<tld name="zm" levels="1" />
+<tld name="zw" levels="1" />
+</tlds>

@@ -1,0 +1,2919 @@
+//-----------------------------------------------------------------------------
+// searchkeyboard.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var SearchKeyboardControl = new Class({
+	Extends: KeyboardControl,
+//	Implements: KeyboardControl,
+	id: 'searchkeyboardcontrol',
+	isActive: false,
+	_currentCategory: '',
+	_refined: false,
+	_hault: 0,
+	_state: null,
+	initialize: function() {
+		this.parent();
+
+		application.events.subscribe(this, "navigate", this.navigate.bind(this));
+//		application.events.subscribe(this, "back", this.handleBack.bind(this));
+		application.events.subscribe(this, "keydown", this.handleKeyPress.bind(this));	
+		application.events.subscribe(this, 'elementblur', this.gridBlur.bind(this));
+		application.events.subscribe(this, 'elementfocus', this.keyboardFocus.bind(this));
+		application.events.subscribe(this, 'refineselection', this.refineSelection.bind(this));
+		application.events.subscribe(this, 'searchwheelchanged', this.setcategory.bind(this));
+	},
+	keyboardFocus: function(payload) {
+
+		if(document.getElementById(payload.args[0].focusedelem)){
+			//[Performance] Make sure we don't do a isParentOf keyboard if we know that the element being blured is not a keyboard key
+			if(document.getElementById(payload.args[0].focusedelem).className.indexOf("key") > -1) {
+			
+				if($('keyboard').isParentOf($(payload.args[0].focusedelem))){
+					log.write('keyboardfocus');
+					this.isActive = true;
+					this._hault = 0;
+					if(this._refined)
+					{
+						this._refined = false;
+						application.state.previous();
+						navigation.setFocus(payload.args[0].focusedelem);
+//						this.handlechange();
+					}
+				}
+				
+			}
+		}
+	},
+	unsubEvents: function(){
+//		application.events.unsubscribe(this, "back");
+		application.events.unsubscribe(this, "keydown");
+		application.events.unsubscribe(this, "navigate");
+		application.events.unsubscribe(this, "elementblur");
+		application.events.unsubscribe(this, "elementfocus");
+		application.events.unsubscribe(this, 'refineselection');
+	},
+	keyselect: function(payload) {
+		log.write('keyboard select:' + payload.args[0].value);
+		log.write(payload);
+		this._currentValue +=  payload.args[0].value;
+		this.valuechange(payload);
+	},
+	valuechange: function(payload) {
+		if(payload && payload.args[0].caller == this.id) {
+			
+			if(this._currentValue == "")
+				this.shiftReset();
+			
+			$('SearchText').set('html', this._currentValue + '_');
+			
+			this.shiftLeft();
+			
+			this.handlechange();
+		}
+	},
+	shiftLeft: function()
+	{
+	    var textWidth = parseInt($('SearchText').clientWidth),
+            wrapWidth = parseInt($('SearchTextWrap').getComputedSize().width),
+            left = parseInt($('SearchText').getStyle("margin-left")),
+            l,
+            effect;
+	        
+	    if(textWidth > wrapWidth)
+		{
+		    if (left == "")
+		        left = 0;
+		    
+		    l = this.lastTextwidth - textWidth;
+            l = parseInt(l) + left;
+            if(textWidth + left > (wrapWidth)+12){
+                log.write("Out of search window - fixing");
+                l = wrapWidth - textWidth -5;
+            }
+		    effect = new Fx.Morph($('SearchText'), {
+				duration: 300, 
+				transition: Fx.Transitions.Sine.easeOut
+			});
+		    effect.start({'margin-left': l+"px"});
+	    } else {
+	    	this.shiftReset();
+	    }
+        this.lastTextwidth = parseInt($('SearchText').clientWidth);
+	},
+	shiftReset: function()
+	{
+		$('SearchText').setStyle('margin-left', '0');
+	},
+	handleKeyPress: function(payload){
+		if(this.isActive) {
+			switch(payload.args[0].event.keyCode){
+				case application.keys.KEY_1:
+					if(document.getElementById('KeyboardKey1').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey1');
+					}				
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '1'});
+					break;
+				case application.keys.KEY_2:
+					if(document.getElementById('KeyboardKey2').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey2');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '2'});
+					break;
+				case application.keys.KEY_3:
+					if(document.getElementById('KeyboardKey3').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey3');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '3'});
+					break;
+				case application.keys.KEY_4:
+					if(document.getElementById('KeyboardKey4').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey4');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '4'});
+					break;
+				case application.keys.KEY_5:
+					if(document.getElementById('KeyboardKey5').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey5');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '5'});
+					break;
+				case application.keys.KEY_6:
+					if(document.getElementById('KeyboardKey6').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey6');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '6'});
+					break;
+				case application.keys.KEY_7:
+					if(document.getElementById('KeyboardKey7').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey7');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '7'});
+					break;
+				case application.keys.KEY_8:
+					if(document.getElementById('KeyboardKey8').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey8');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '8'});
+					break;
+				case application.keys.KEY_9:
+					if(document.getElementById('KeyboardKey9').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey9');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '9'});
+					break;
+				case application.keys.KEY_0:
+					if(document.getElementById('KeyboardKey0').style.display == "block") {
+						application.navigator.setFocus('KeyboardKey0');
+					}
+					application.events.publish('keyboardselect', {caller: 'searchkeyboardcontrol', value: '0'});
+					break;
+				default:
+					break;				 
+			}
+		}
+	},
+	gridBlur: function(payload) {
+
+		this.isActive = false;
+	},
+	handlechange: function() {
+		this._refined = false;
+		$('ScreenSeparator').addClass("minimized");
+    	$('ScreenSeparator').removeClass('searchkeyboardcontrol-arrow');
+    	$('ScreenSeparatorThumb').removeClass('wheel-thumb-left').show();
+    	
+    	var thisSearch = this._currentValue;
+		
+		
+		if(this._currentValue.length > 0) 
+		{	//this._hault += 1;
+			if(this._currentCategory == "Director" || this._currentCategory == "Actor" || this._currentCategory == "Writer")
+			{
+				application.events.publish('gridloading', {grid: 'titlegrid', message: "searching", columns: 1, className: "refinementgrid", cssClass: "searchList"});
+				$cn.methods.getSearchPerson(this._currentValue,this._currentCategory,function(callback){
+		        	log.write(callback.castMembers.length);
+		        	
+		        	if(this._currentValue == thisSearch || this._currentValue.length > 0)
+		        	{
+		        		BrowseView.LastGridProcess = "search";
+			        	if(callback.castMembers.length > 0)
+			        	{
+			        		var showFade = false;
+			        		
+			        		//Show fade if results are more than 16
+			        		if(callback.castMembers.length > 16) {
+			        			document.getElementById('HorizontalFade').className = "personSearch";
+			        			document.getElementById('HorizontalFadeTop').className = "personSearch";
+			        			$('HorizontalFade').show(); //Do not show top fade that is handled by the grid paging method.
+			        			showFade = true;
+			        		}
+			        		else {
+			        			$('HorizontalFade').hide();
+			        			$('HorizontalFadeTop').hide();
+			        	    	document.getElementById('HorizontalFade').className = "";
+			        	    	document.getElementById('HorizontalFadeTop').className = "";
+			        		}
+			        		
+			        		application.events.publish('loadgrid', {grid: 'titlegrid', data: callback.castMembers, columns: 1, gridProcess: 'search', template: "refinementgrid", className: "refinementgrid", showFade: showFade,returnFocus: "KeyboardKeyBACKTop"});
+			        	}
+			        	else
+			        	{
+			        		application.events.publish('loadgrid', {grid: 'titlegrid', columns: 1, template: "refinementgrid", gridProcess: 'search', className: "refinementgrid",returnFocus: "KeyboardKeyBACKTop"});
+			        	}
+		        	}	        	
+	
+		        	//this._hault = this._hault - 1;
+		        }.bind(this));
+				
+				
+			}
+			else
+			{
+				$('HorizontalFade').hide();
+				$('HorizontalFadeTop').hide();
+				document.getElementById('HorizontalFade').className = "";		    	
+		    	document.getElementById('HorizontalFadeTop').className = "";
+		    	
+					application.events.publish('gridloading', {grid: 'titlegrid', message: "searching", columns: 2, cssClass: "search", className: "searchgrid"});
+					$cn.methods.getSearchTitle(this._currentValue,this._currentCategory,function(callback){
+						
+						if(this._currentValue == thisSearch)
+			        	{
+							BrowseView.LastGridProcess = "search";
+				        	if(callback && callback.items.length > 0)
+				        	{
+				        		application.events.publish('loadgrid', {grid: 'titlegrid', data: callback.items, columns: 2, gridProcess: 'search', template: "searchtitlelist", className: "searchgrid", returnFocus: "KeyboardKeyBACKTop"});
+				        	}
+				        	else
+				        	{
+				        		application.events.publish('loadgrid', {grid: 'titlegrid', columns: 2, gridProcess: 'search', template: "searchtitlelist", className: "searchgrid", returnFocus: "KeyboardKeyBACKTop"});
+				        	}
+				 
+						}
+						else if(this._currentValue.length < 1){
+							application.events.publish('loadgrid', {grid: 'titlegrid', columns: 2, gridProcess: 'search', template: "searchtitlelist", className: "searchgrid", returnFocus: "KeyboardKeyBACKTop"});
+						}
+						
+			        	//this._hault = this._hault - 1;
+			        }.bind(this));
+				
+			}
+
+		}
+		else if(this._currentValue.length == 0 && (this._currentCategory == "Director" || this._currentCategory == "Actor" || this._currentCategory == "Writer"))
+		{
+			BrowseView.LastGridProcess = "search";
+       		application.events.publish('loadgrid', {grid: 'titlegrid', columns: 1, gridProcess: 'search', template: "refinementgrid", className: "refinementgrid"});
+		}
+		else  if(this._currentValue.length == 0){
+			BrowseView.LastGridProcess = "search";
+       		application.events.publish('loadgrid', {grid: 'titlegrid', columns: 2, gridProcess: 'search', template: "searchtitlelist", className: "searchgrid"});
+		}
+	},
+	setcategory: function(payload)
+	{
+		this._currentCategory = payload.args[0].selectedvalue;
+		this.keyclear();
+		this.shiftReset();
+		
+		//Swap Keyboard without changing focus
+		if(document.getElementById('KeyboardStandardSwap') && document.getElementById('KeyboardStandardSwap').style.display != "none") {
+			log.write($$("a.alt").each(function(item){item.hide()}));
+			log.write($$("a.standard").each(function(item){item.show()}));
+			this.swappedState = "standard";
+			
+		}
+		
+		application.currentView.layoutIsDirty = true;		
+		navigation.buildNavigation($('keyboard').getElements('a'));
+		
+		this.handlechange();
+	},
+	getkeyword: function() {
+		return this._currentCategory == "Keyword" ? this._currentValue : null;
+	},
+	show: function(){
+		this.keyclear();
+		this.shiftReset();
+		this.parent();
+		
+		//Swap Keyboard without changing focus
+		if(document.getElementById('KeyboardStandardSwap') && document.getElementById('KeyboardStandardSwap').style.display != "none") {
+			log.write($$("a.alt").each(function(item){item.hide()}));
+			log.write($$("a.standard").each(function(item){item.show()}));
+			this.swappedState = "standard";
+			
+		}
+		
+		//Show  divider here
+		document.getElementById('ScreenSeparator').className = this.id + " minimized";
+		document.getElementById('ScreenSeparatorThumb').className = 'minimized';
+		
+		if($cn.config.EnableSearchScreenSeparator) $('ScreenSeparator').show();
+		$('keyboard').show();
+	},
+	hide: function(){
+		this.parent();
+		//hide divider here
+		document.getElementById('ScreenSeparator').className = '';
+		document.getElementById('ScreenSeparatorThumb').className = '';
+		document.getElementById('HorizontalFade').className = "";
+		document.getElementById('HorizontalFadeTop').className = "";
+		
+//		this.unsubEvents();
+		$('HorizontalFade').hide();
+		$('HorizontalFadeTop').hide();
+		$('ScreenSeparator').hide();
+		$('keyboard').hide();
+	},
+	handleBack: function(payload){
+		payload.preventDefault();
+		this.unsubEvents();
+		this.hide();
+	},	
+	navigate: function(payload){
+
+		if(this.isActive && payload.args[0].direction == "right") {
+			var action = $(application.element.current).get('rightaction');
+			
+			if(action && action == "focusgrid"){
+				var list = document.getElementById('titlelist').getElementsByTagName("a");
+				
+				if(list.length > 0){
+					payload.preventDefault();
+					application.navigator.setFocus(list[0].id);
+				}
+			}
+		}
+	},
+	refineSelection: function(payload){
+		
+        var event = {
+        	preventDefault: function(){
+                // TODO: what is this referring to ?
+        		_defaultPrevented = true;
+        	},
+        	args: [{}]
+        };
+        $('HorizontalFade').hide();
+		$('HorizontalFadeTop').hide();
+		
+		BrowseView.GridControl.onSaveState(event);
+		BrowseView.ScrollBar.onSaveState(event);
+		this._state = event.args[0];
+		
+       	application.state.save();
+		application.events.publish('gridloading', {grid: 'titlegrid', message: "loadinggeneric", className: "searchgrid"});
+		BrowseView.LastGridProcess = "search-refineSelection";
+		
+		$cn.methods.getBrowseListByCastRole(payload.args[0].id,this._currentCategory,1,function(callback){
+            var data = callback.data.result;
+			
+       		application.events.publish('loadgrid', {grid: 'titlegrid', data: data.items, gridProcess: "search-refineSelection", columns: 2, template: 'searchtitlelist', className: "searchgrid", returnFocus: "KeyboardKeyBACKTop"});
+
+       		if(data.items && data.items.length > 0){
+       			
+       		}
+       		else {
+       			navigation.setFocus('KeyboardKeyBACKTop');
+       		}
+//        	application.currentView.layoutIsDirty = true; 
+        	if($("titlelist").getElement(".title"))
+        	{
+        		navigation.setFocus($("titlelist").getElement(".title").getElement("a").id);
+        	}
+//        	else //The grid failed to load, set a default focus
+//        	{
+//        		navigation.setFocus('dock-home');
+//        	}
+        	
+        	$('ScreenSeparator').removeClass("minimized");
+        	$('ScreenSeparator').addClass('searchkeyboardcontrol-arrow');
+        	$('ScreenSeparatorThumb').addClass('wheel-thumb-left').show();
+        	
+        	
+			this._refined = true;
+			
+        }.bind(this)); 
+	},
+	onSaveState: function(payload){
+		this.parent(payload);
+		
+		var state = payload.args[0];
+		state[this.id]._currentCategory = this._currentCategory;
+		state[this.id]._refined = this._refined;
+	},
+});
+//-----------------------------------------------------------------------------
+// searchwheel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+
+var SearchWheelControl = new Class({
+	Extends: WheelControl,
+	id: 'SearchWheelControl',
+	container: 'singlewheel',
+	singleWheel: true,
+	MetaData: [],
+    masterSourceElement: 'singlemasterdatasource',
+    masterSelectedElement: 'singleselectedmaster',
+	cleanUI: function() {
+		$('singlewheel').show();
+		if($('singleselectedmaster')) {
+			$('singleselectedmaster').label = '';
+		}
+
+		if($('singlemasterdatasource')) {
+			if($('singlemasterdatasource').getChildren().length > 0){
+
+				$('singlemasterdatasource').getChildren().destroy();
+			}
+		}
+	},
+	handleWheelItemChange: function(payload){		
+		log.write(payload);
+		
+		if(payload.context === ActiveWheel) {
+			var p = payload.args[0];
+			log.write("Search Wheel Item changed. Now fire custom method. " + payload.args[0].wheelinstance);
+			/* If the source is the master column then load the slave wheel with the child elements from the new selection */
+			application.events.publish('searchwheelchanged', {
+				selectedvalue: p.selectedvalue
+			});
+		}
+	},
+	loadSearchMenu: function() {
+
+		this.layoutIsDirty = true;
+		//this.saveHistory();
+		this.cleanUI();
+		
+		var menu = [];
+		menu.push({
+				name: "Title",
+				iD: "Title",
+				parentID: 0,
+				list: 0
+		});
+		
+		//Only include cast searching if baseline is enabled.
+		if($cn.data.baselineEnable) {
+			
+			menu.push({
+				name: "Actor",
+				iD: "Actor",
+				parentID: 0,
+				list: 1
+			});
+			
+			menu.push({
+				name: "Director",
+				iD: "Director",
+				parentID: 0,
+				list: 1
+			});
+			
+			menu.push({
+				name: "Writer",
+				iD: "Writer",
+				parentID: 0,
+				list: 1
+			});
+			
+		}
+		
+		menu.push({
+			name: "Keyword",
+			iD: "Keyword",
+			parentID: 0,
+			list: 0
+		});
+		
+		this.loadData(menu, [{}]);	
+	},
+	navigate: function(payload){
+		if(payload.context === ActiveWheel) {
+			if(document.getElementById(application.element.current)  && application.element.current == "singleselectedmaster"){
+				if(payload.args[0].direction == "left"){
+					payload.preventDefault();
+					application.navigator.setFocus("dock-search");
+				}
+				else if(payload.args[0].direction == "right"){
+					payload.preventDefault();
+					if ($('FirstKey').style.display != 'none')
+						application.navigator.setFocus("FirstKey");
+					else
+						application.navigator.setFocus("KeyboardKey1");
+				}
+				else {
+					this.parent(payload);
+				}
+			}
+		}
+	}
+});
+//-----------------------------------------------------------------------------
+// settingspanel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var SettingsPanelControlProperties = {
+		id: 'settingspanel',
+		persist: {},
+	    controls:{},
+	    layoutIsDirty: true,
+	    contentId: "SettingsPanel",
+	    tpl: null,
+	    secretKey: '',
+        secretSequence : '',
+	    secretDebugKey: '492836',
+	    secretDirectionSequence : 'udruudruuudr', //Means key sequence: up,down,right,up,up,down,right,up,up,up,down,right
+	    currentWheelItem: '',
+	    isInitialized: false,
+	    initialize: function(){
+	    	$('settingspanel').hide();
+	    	this.loadView('Activate');
+			log.write('settingspanel.init()');		
+		    //application.events.subscribe(this, 'wheelitemchanged', this.handleSettingWheelChange.bind(this));
+		    application.events.subscribe(this, 'wheelvaluechanged', this.handleSettingWheelChange.bind(this));
+		    application.events.subscribe(this, 'navigate', this.onNavigate.bind(this));
+		    
+		    this.tpl = new ui.template(this.contentId, application.ui.loadTpl(this.id + ".tpl"));
+			this.tpl.compile();
+	    },
+	    loadView: function(tplid) {
+	    	
+
+	    },
+	    loadActivatePanel: function(payload){
+	    	var self = this;
+	    	
+	    if(application.authSupported) {
+	    		//Validate auth token. If it is invalid then reset it
+	    		this.isProcessing = true;
+	    		this.verificationInProcess = true;
+	    		
+		    	$cn.methods.verifyAuthToken(function(result){
+		    		
+		    		if(this.currentWheelItem == "Activate") {
+			    		if(!result) {
+			    			application.clearAuthToken();
+			    			self.updateAuthStatus();
+			    		}
+			    
+			    		self.handleSettingWheelChange(payload, true);
+		    			this.isProcessing = false;
+		    			
+		    		}
+		    	}.bind(this));
+	    	}
+	    	else {
+	    		self.handleSettingWheelChange(payload, true);
+	    	}
+	    },
+	    loadAboutPanel: function(payload){
+	    	var self = this;
+	    	
+	        if(application.authSupported) {
+	    		//Validate auth token. If it is invalid then reset it
+	    		this.isProcessing = true;
+	    		
+	    		log.write("Current Panel ID: " + this.activePanelId);
+		    		
+		    		
+		    	$cn.methods.verifyAuthToken(function(result){
+		    		//The code hasn't fired the wheelsettings changed event. So if the activepanelid is set that means that the wheel items is not longer activate
+		    		if(this.currentWheelItem == "About") {
+			    		if(result) {
+			    			$cn.methods.loadToken(function(callback){
+			    				
+			    				if(this.currentWheelItem == "About") {
+				    				$('settingsdeviceid').innerHTML = ($cn.data.DeviceName != '') ? $cn.utilities.forceWrap($cn.data.DeviceName, 30, 50) : 'Not Activated';	    					
+				    				self.handleSettingWheelChange(payload, true);
+						    		this.isProcessing = false;
+								    if(!("WebSocketManager" in window))
+								    	$$('#settingspanel .settingssdkversion').hide();
+						    	}
+						    	
+			    			}.bind(this));		    		
+			    		}
+			    		else {
+			    			application.clearAuthToken();
+			    			self.updateAuthStatus();
+			    			self.handleSettingWheelChange(payload, true);
+				    		this.isProcessing = false;
+			    		}
+		    		}
+		    	}.bind(this));
+	    	}
+	    	else {
+	    		self.handleSettingWheelChange(payload, true);
+	    	}
+	    },
+        loadUVPanel:function (payload) {
+            var self = this;
+
+            self.UV = new $cn.utilities.UserUVManager("settingsPanel");
+
+            log.write("GETTING UV INFO");
+            self.UV.checkUVAccount(function () {
+                if ('UV' === self.currentWheelItem) {
+                    self.UVInfoLoaded = true;
+                    self.handleSettingWheelChange(payload);
+                }
+            });
+        },
+	    handleSettingWheelChange: function(payload, isAuthed) {
+	    	var data = payload.args[0],
+                self= this;
+
+            log.write("changing wheel...");
+	    	
+	    	if(data.wheelinstance == 'SettingsWheelControl') {
+	    		this.currentWheelItem = data.slavevalue;
+	    		log.write("Current Wheel Value: " + this.currentWheelItem);
+
+                // If the UV page is navigated away from, hide its timer
+                if ('UV' !== data.slavevalue) {
+                    if (this.UV && this.UV.timer) {
+                        $cn.utilities.clearLoadingSpinner(this.UV.timer);
+                    }
+                }
+
+	    		//this.loadView(data.selectedvalue);
+	    		$$("#settingspanel .panel").each(function(item) { item.hide(); });
+	    		this.activePanelId = null;
+
+	    		// If the current view is on the activate panel and there is an auth token then validate the authtoken. Else proceed as usual.
+	    		if((data.slavevalue == "General" || data.slavevalue == "Activate") && $cn.data.AuthToken != '' && !isAuthed) {
+	    			this.loadActivatePanel(payload);
+	    		}
+	    		else if(data.slavevalue == "About" && $cn.data.AuthToken != '' && !isAuthed) {
+	    			this.loadAboutPanel(payload);
+	    		}
+                else if(data.slavevalue == "UV" && !this.UVInfoLoaded){
+                        this.loadUVPanel(payload);
+                }
+	    		else {
+                    log.write("handling wheel change, last branch");
+	    			this.isProcessing = true;
+		    		if(!this.isInitialized) {
+		    			this.tpl.empty();
+		    			// The following variables are passed to <div id="About" class="panel">...<div> in template.xml
+		    			this.tpl.append({
+		    				version: configuration.readValue("version"),
+		    				build: configuration.readValue("build"),
+			    			Major: configuration.readValue("SDKVersion_Major"),
+			    			Minor: configuration.readValue("SDKVersion_Minor"),
+			    			Revision: configuration.readValue("SDKVersion_Revision"),
+			    			Branch: configuration.readValue("SDKVersion_Branch"),
+			    			Build: configuration.readValue("SDKVersion_Build"),
+		    				deviceid: webservices.uniqueId, 		    				
+		    				devicename: ($cn.data.DeviceName != '') ? $cn.utilities.forceWrap($cn.data.DeviceName, 30, 50) : 'Not Activated', 
+		    				accountlinkurl: $cn.data.AccountLinkUrl,
+		    				firmwareversion: $cn.data.FirmwareVersion,
+		    				affid: $cn.data.AffId,
+		    				devicetype: webservices.destType,
+		    				debugmode: ($cn.config.SyncLogsExternally) ? "Yes" : "No",
+		    				onscreendebug: ($cn.config.OnScreenDebugLog) ? "Yes" : "No",
+							env: application.CurrentEnvironment,
+							modelnumber: device.realmodelid,
+							countryid: $cn.data.CountryID,
+							useragent: webservices.userAgent,
+							logging: ($cn.config.Debug) ? "Yes" : "No",
+							baseline: ($cn.data.baselineEnable) ? "Yes" : "No",
+							jinni: ($cn.data.jinniEnable) ? "Yes" : "No",
+							flixster: ($cn.data.flixsterEnable) ? "Yes" : "No",
+							email: ($cn.data.UserEmailAddress != '') ? $cn.data.UserEmailAddress : 'Not Activated'
+                        });
+                        if (this.UVInfoLoaded) {
+                            this.tpl.empty();
+                            this.tpl.append({
+                                uvName:(self.UV.linkingAccount.user) ? self.UV.linkingAccount.user.userName : '',
+                                uvEmail:(self.UV.linkingAccount.user) ? self.UV.linkingAccount.user.email : '',
+                                uvStatus:self.getUVStatusMessage(),
+                                uvMessage:self.getUVMessage()
+                            });
+                            if (self.UV.linkingAccount.user) {
+                                $("uvInfoUsername").removeClass('hidden');
+                                $("uvInfoEmail").removeClass('hidden');
+                            }
+                            if (self.UV.currentStatus) {
+                                $("uvInfoStatus").removeClass('hidden');
+                            }
+                            this.UVInfoLoaded = false; // set it to empy so it will call everything again if we go back to the page
+                        }
+		        	}
+                    this.tpl.apply();
+		    		
+		    		if(!$(data.slavevalue)) {
+			    		if(BrowseView.SettingsWheelControl._slaveSource[data.slavevalue][0]){
+			    			$(BrowseView.SettingsWheelControl._slaveSource[data.slavevalue][0].iD).show();
+			    		}
+		    		}
+		    		else {
+		    			log.write('Settings Panel (wheel changed): ' + data.slavevalue);
+		    			this.activePanelId = data.slavevalue;
+		    			$(data.slavevalue).show();
+		    			if(data.slavevalue == 'Format')
+			    			this.selectAudioText($cn.data.PreferredAudioType);
+		    			log.write("$(data.slavevalue).show();");
+		    		}
+					
+					if(!("WebSocketManager" in window))
+						$$('#settingspanel .settingssdkversion').hide();
+				    
+		    		application.currentView.layoutIsDirty = true;
+		    		
+		    		setTimeout(function(){
+		    			this.isProcessing = false;
+		    		}.bind(this),400);
+		    		
+	    		}
+	    	}
+	    },
+        getUVStatusMessage : function(){
+            var msg ='',
+                expiration ='';
+
+            // No status messaging if deactivated
+            if ('UVDeviceInactive' === this.UV.currentState) {
+                return "";
+            }
+
+            if(this.UV.linkingAccount.linkingExpires){
+                expiration = $cn.utilities.formatDate(this.UV.linkingAccount.linkingExpires, $cn.config.DateFormat);
+            }
+            if(this.UV.currentStatus){
+                //if the link state is Pending or Active we show the status
+                log.write("--- current status: status message: " + this.UV.currentStatus + " : ----");
+                msg = application.resource.uv_messages.settingsPanel.Status[this.UV.currentStatus].replace("##expiration##", expiration);
+            } else if(this.UV.currentState){
+                // else if the link state is unlinking or AcctnotAvailable then we didn't get the status so we show state.
+                msg = application.resource.uv_messages.settingsPanel.Status[this.UV.currentState].replace("##expiration##", expiration);
+            }
+            return msg;
+        },
+        getUVMessage:function () {
+            var msg = '',
+                messagePath = application.resource.uv_messages.settingsPanel,
+                status = (this.UV.currentStatus) ? this.UV.currentStatus : this.UV.currentState;
+
+            log.write("--- current status: uv message: " + status +  " : ----");
+            if (status == "AcctNotAvailable") {
+                msg = messagePath.UVNotSupported.replace("##UvLink##", $cn.config.UVAccountLinkUrl);
+            } else if ('UVDeviceInactive' === status) {
+                msg = application.resource.uv_messages.settingsPanel.UVDeviceInactive.replace("##Activate##", $cn.data.ActivationURL);
+            } else if (status) {
+                msg = messagePath[status];
+            }
+            return msg;
+        },
+	    requiresPurchasePin: function(){
+	    	return ($cn.data.PurchasePinEnabled);
+	    },
+	    requiresParentalControls: function(){
+	    	return ($cn.data.ParentPinEnabled);
+	    },
+	    requiresParentalControlsOnStartUp: function(){
+	    	return ($cn.data.ParentPinEnabledOnStartup);
+	    },
+	    selectedAudioFormat: function(type){
+	    	var bChecked = false;
+	    	
+	    	switch(type){
+		    	case 'Stereo':
+		    		if($cn.data.PreferredAudioType == 'Stereo_Standard')
+		    			bChecked = true;
+	                break;
+		    	case 'DTS':
+		    		if($cn.data.PreferredAudioType == 'DTS_Express_51' ||$cn.data.PreferredAudioType == 'DTS_Express_Stereo')
+		    			bChecked = true;
+	                break;
+		    	case 'Dolby':
+		    		if($cn.data.PreferredAudioType == 'Dolby_Digital_Plus_51' ||$cn.data.PreferredAudioType == 'Dolby_Digital_Plus_Stereo')
+		    			bChecked = true;
+	                break;
+	    		default:
+	                break;
+	    	}
+	    	
+	    	return bChecked;
+	    },
+	    showAudioType: function(format){
+	    	var val = 'hidden';
+	    	
+	    	switch(format){
+		    	case 'DTS_Express_Stereo':
+		    		if($cn.data.DTSStereoEnable )
+	                	val = '';
+	                break;
+		    	case 'DTS_Express_51':
+		    		if($cn.data.DTS51Enable)
+	                	val = ''; 		
+	                break;
+		    	case 'Dolby_Digital_Plus_51':
+	                if($cn.data.Dolby51Enable)
+	                	val = '';          	
+	                break;
+	        	case 'Dolby_Digital_Plus_Stereo':
+	            	if($cn.data.DolbyStereoEnable)
+	                	val = '';
+	                break;
+	    		default:
+	                break;
+	    	}
+	    	
+	    	return val;
+	    },
+
+	   	showAudioFormat: function(format){
+	    	var val = 'hidden';
+	    	
+	    	switch(format){
+		    	case 'Stereo':
+	                if($cn.data.Dolby51Enable ||$cn.data.DolbyStereoEnable ||$cn.data.DTS51Enable ||$cn.data.DTSStereoEnable)
+	                	val = '';          	
+	                break;
+	            case 'DTS':
+		    		if($cn.data.DTS51Enable ||$cn.data.DTSStereoEnable)
+	                	val = '';
+	                break;
+	            case 'Dolby':
+		    		if($cn.data.Dolby51Enable ||$cn.data.DolbyStereoEnable)
+	                	val = '';
+	                break;
+	    		default:
+	                break;
+	    	}
+	    	
+	    	return val;
+	    },
+	    toggleBaseline: function(){
+	    	$cn.data.baselineEnable = !$cn.data.baselineEnable;
+			
+			$('cbaseline').innerHTML = ($cn.data.baselineEnable) ? "Yes" : "No"; 
+	    },
+	    toggleJinni: function(){
+	    	$cn.data.jinniEnable = !$cn.data.jinniEnable;
+			
+			$('cjinni').innerHTML = ($cn.data.jinniEnable) ? "Yes" : "No";
+	    },
+	    toggleFlixster: function(){
+	    	$cn.data.flixsterEnable = !$cn.data.flixsterEnable;
+			
+			$('cflixster').innerHTML = ($cn.data.flixsterEnable) ? "Yes" : "No";
+	    },
+	    toggleOnScreenDebug: function(){
+	    	$cn.config.OnScreenDebugLog = !$cn.config.OnScreenDebugLog;
+			
+			$('osdebug').innerHTML = ($cn.config.OnScreenDebugLog) ? "Yes" : "No";
+			
+			if($cn.config.OnScreenDebugLog){
+				$('debugger').show();
+			}
+			else {
+				$('debugger').hide();
+			}
+	    },
+	    toggleParentalControlsOnStartUp: function(){
+	    	if ($cn.data.AuthToken == '') {
+	    		BrowseView.showActivate();
+			}
+			else {
+				log.write("Current ParentPinEnabledOnStartup status: " + $cn.data.ParentPinEnabledOnStartup);
+			    var self = this,
+			    	newSetting = !$cn.data.ParentPinEnabledOnStartup;
+			    $cn.methods.loadToken(function(callback){
+			    	if($cn.data.ParentalControlsConfigured) {		    	
+				    	application.events.publish("authparent", {
+							callback: function(){
+								self._toggleParentalControlsOnStartup(newSetting);
+							}
+				    	});
+			    	}
+				    else {
+				    	/* Show instructional message */
+						BrowseView.showMessage("message_parentalcontrols", {
+							Message: application.resource.switch_user_notsetup
+						});
+				    }
+			    });
+			}
+	    },
+	    toggleParentalControls: function(){
+	    	if ($cn.data.AuthToken == '') {
+	    		BrowseView.showActivate();
+			}
+			else {
+				
+	    		log.write("Current parental control status: " + $cn.data.ParentPinEnabled);
+	    		var self = this,
+			        newSetting = !$cn.data.ParentPinEnabled;
+    			$cn.methods.loadToken(function(callback){
+			    	if($cn.data.ParentalControlsConfigured) {
+				    	application.events.publish("authparent", {
+							callback: function(){
+								self._toggleParentalControls(newSetting);
+							}
+				    	});
+			    	}
+				    else {
+				    	/* Show instructional message */
+						BrowseView.showMessage("message_parentalcontrols", {
+							Message: application.resource.switch_user_notsetup
+						});
+				    }
+    			});	
+		}
+	    },
+	    _toggleParentalControlsOnStartup: function(newSetting){
+	    	$cn.data.ParentPinEnabledOnStartup = newSetting;
+	    	log.write("New ParentPinEnabledOnStartup status: " + $cn.data.ParentPinEnabledOnStartup);
+	    	
+	    	document.getElementById("parentcheckonstartup").className = "checkbox_" + $cn.data.ParentPinEnabledOnStartup;
+	    		
+	    	application.saveAuthToken();
+	    },
+	    _toggleParentalControls: function(newSetting){
+            $cn.data.ParentPinEnabled = newSetting;
+            $cn.data.IsParent = !$cn.data.ParentPinEnabled;
+            
+            log.write("New parental control status: " + $cn.data.ParentPinEnabled);
+            log.write("Parental status: " + $cn.data.IsParent);
+            
+			webservices.clearContentCache(function() {
+				document.getElementById("parentcheck").className = "checkbox_" + $cn.data.ParentPinEnabled;
+				BrowseView.reset();
+				$('btnAccount').removeClass("locked");
+				
+				application.saveAuthToken();
+				
+				if($cn.data.ParentPinEnabled) {
+					$('btnAccount').addClass("locked");
+				}
+            });
+	    },
+	    togglePurchasePin: function(){
+	    	if ($cn.data.AuthToken == '') {
+				BrowseView.showActivate();
+			}
+			else {
+				log.write("Current PurchasePinEnabled status: " + $cn.data.PurchasePinEnabled);
+						
+				var self = this,
+				    newSetting = !$cn.data.PurchasePinEnabled;
+			    $cn.methods.loadToken(function(callback){
+					if($cn.data.ParentalControlsConfigured) {
+						
+						application.events.publish("authparent", {
+							callback: function(){
+								self._togglePurchasePin(newSetting);
+							}
+						});    
+					}
+					else {
+						/* Show instructional message */
+						BrowseView.showMessage("message_parentalcontrols", {
+							Message: application.resource.switch_user_notsetup
+						});
+					}
+				});	
+			}
+	    },
+	    _togglePurchasePin: function(newSetting){
+            $cn.data.PurchasePinEnabled = newSetting;
+            log.write("New PurchasePinEnabled control status: " + $cn.data.PurchasePinEnabled);
+            document.getElementById("purchasepincheck").className = "checkbox_" + $cn.data.PurchasePinEnabled;
+            application.saveAuthToken();
+	    },
+	    show: function() {
+	    	$('settingspanel').show();
+	    	this.secretKey = '';
+            this.secretSequence = '';
+	    	this.isProcessing = false;
+	    	
+	    	if(!this.isInitialized) {
+	    		this.tpl.append({
+	    			version: configuration.readValue("version"),
+	    			build: configuration.readValue("build"),
+	    			Major: configuration.readValue("SDKVersion_Major"),
+	    			Minor: configuration.readValue("SDKVersion_Minor"),
+	    			Revision: configuration.readValue("SDKVersion_Revision"),
+	    			Branch: configuration.readValue("SDKVersion_Branch"),
+	    			Build: configuration.readValue("SDKVersion_Build"),
+	    			deviceid: webservices.uniqueId, 
+	    			devicename: ($cn.data.DeviceName != '') ? $cn.data.DeviceName : 'Not Activated', 
+	    			accountlinkurl: $cn.data.AccountLinkUrl,
+	    			firmwareversion: $cn.data.FirmwareVersion,
+					affid: $cn.data.AffId,
+					devicetype: webservices.destType,
+					debugmode: ($cn.config.SyncLogsExternally) ? "Yes" : "No",
+					env: application.CurrentEnvironment,
+					modelnumber: device.realmodelid,
+					countryid: $cn.data.CountryID,
+					logging: ($cn.config.Debug) ? "Yes" : "No",
+					baseline: ($cn.data.baselineEnable) ? "Yes" : "No",
+					jinni: ($cn.data.jinniEnable) ? "Yes" : "No",
+					flixster: ($cn.data.flixsterEnable) ? "Yes" : "No",
+					email: ($cn.data.UserEmailAddress != '') ? $cn.data.UserEmailAddress : 'Not Activated'
+	    		});
+	    	}
+	    	
+			var tplStatus = this.tpl.apply();
+			application.events.subscribe(this, "activated", this.updateActivationStatus.bind(this));
+			application.events.subscribe(this, "badauthtoken", this.updateAuthStatus.bind(this));
+			application.events.subscribe(this, "keydown", this.handleKeyDown.bind(this));
+			application.events.subscribe(this, "activatecancelled", this.onActivateCancelled.bind(this));
+	    },
+	    hide: function(){
+	    	application.events.unsubscribe(this, "activated");
+	    	application.events.unsubscribe(this, "keydown");
+	    	application.events.unsubscribe(this, "badauthtoken");
+	    	application.events.unsubscribe(this, "activatecancelled");
+	    	$('settingspanel').hide();
+	    },
+	    showAudioText: function(id){
+	    	$('settingsaacselected').addClass('hidden');
+	    	$('settingsdtsselected').addClass('hidden');
+	    	$('settingsdolbyselected').addClass('hidden');
+	    	
+	    	switch(id){
+				case "btnsettingsaudiostereo":
+				case "audio_stereo":				
+					$('settingsaacselected').removeClass('hidden');
+					break;
+				case "btnsettingsaudiodts":
+				case "audio_dts":
+					$('settingsdtsselected').removeClass('hidden');
+					break;
+				case "btnsettingsaudiodolby":
+				case "audio_digital":
+					$('settingsdolbyselected').removeClass('hidden');
+					break;
+				default:
+					break;
+			}
+	    },
+	    onBlur: function(payload){	
+	    	log.write("onBlur called.");    		
+	    	if(document.getElementById('Activate')) {
+	    		
+	    	}
+	    },
+	    onNavigate: function(payload){
+	    	log.write("Navigate getting called.");
+	    	
+	    	//If the format panel is selected then we want to handle the focus for a dynamic number of elements
+			if(document.getElementById('Activate') && document.getElementById('Format').style.display == "block") {
+				var elem = payload.args[0].current;
+			
+				//If the item being navigated is an audioanchor then do something custom. Else ignore it.
+				if($(elem).rel == "audioanchor") {
+					
+					//Only handle custom navigation if clicking up/down on an element in the format panel
+					if(payload.args[0].direction == "up" || payload.args[0].direction == "down"){
+						payload.preventDefault();
+						
+						var controls = $$('a[rel=audioanchor]'),
+							cleanControls = [],
+							tmpIdx = 0,
+							currentIdx = 0,
+                            x;
+					
+						//Build a clean list of visible controls
+						for(x = 0; x < controls.length; x++){
+							if(elem == controls[x].id){
+								currentIdx = tmpIdx;
+							}
+
+							if(document.getElementById(controls[x].id).offsetWidth > 0){
+								cleanControls[cleanControls.length] = controls[x];
+								tmpIdx++;
+							}
+						}
+					
+						//Correctly set focus if the user clicks up/down
+						if(payload.args[0].direction == "up") {
+							if(currentIdx > 0) {
+								navigation.setFocus(cleanControls[currentIdx - 1].id);
+							}
+							else {
+								navigation.setFocus(cleanControls[cleanControls.length - 1].id);
+							}
+						}
+						else if(payload.args[0].direction == "down") {
+							if(currentIdx < cleanControls.length - 1) {
+								navigation.setFocus(cleanControls[currentIdx + 1].id);
+							}
+							else {
+								navigation.setFocus(cleanControls[0].id);
+							}
+						}	
+					}
+				}
+			}
+	    },
+	    onActivateCancelled: function(payload){
+	    	if(document.getElementById('Activate')) {
+	    		if(document.getElementById('GiftCards').style.display == "block"){
+	    			navigation.setFocus('btnsettingsgc');
+	    		}
+	    	}
+	    },
+	    updateActivationStatus: function(payload){
+	    	log.write("SettingsPanel::updateActivationStatus called");
+			$cn.methods.loadToken(function(callback){
+				if(document.getElementById('Activate')) {
+					document.getElementById('activate_devicenotactive').className = "notactive_false";
+					document.getElementById('activate_deviceactive').className = "active_true";
+					document.getElementById('settingsdeviceid').innerHTML = $cn.data.DeviceName;
+					
+					$('activate_devicenotactive').hide();
+					$('activate_deviceactive').show();
+
+					if($cn.data.ParentPinEnabled) {
+						document.getElementById('parentcheck').className = 'checkbox_true';
+						
+						if($cn.data.PurchasePinEnabled) {
+							document.getElementById('purchasepincheck').className = 'checkbox_true';
+						}
+						else {
+							document.getElementById('purchasepincheck').className = 'checkbox_false';
+						}
+					}
+					else {
+						document.getElementById('parentcheck').className = 'checkbox_false';
+					}
+
+					application.currentView.layoutIsDirty = true;
+					application.navigator.setFocus('selectedslave');
+		    	}
+			});
+	    },
+	    updateAuthStatus: function(payload){
+	    	//This gets called when a bad auth token comes back on this page. The view should update
+	    	log.write('updateAuthStatus callded: badauthtoken');
+	    	if(document.getElementById('Activate')) {
+	    		document.getElementById('activate_devicenotactive').className = "notactive_true";
+	    		document.getElementById('activate_deviceactive').className = "active_false";
+	    		document.getElementById('settingsdeviceid').innerHTML = "Not Activated";
+	    		document.getElementById('purchasepincheck').className = 'checkbox_false';	    		
+			    document.getElementById('parentcheck').className = 'checkbox_false';	    		
+			    document.getElementById("parentcheckonstartup").className = "checkbox_false";
+		    	
+			    $('btnAccount').removeClass("locked");
+	    		$('activate_devicenotactive').show();
+		    	$('activate_deviceactive').hide();
+	    	}
+	    },
+	    selectAudioFormat: function(id, format, callback){
+	    	switch(format){
+		    	case 'Stereo':
+		    		$cn.data.PreferredAudioType = 'Stereo_Standard';
+	                break;
+		    	case 'DTS':
+		    		if($cn.data.DTS51Enable)
+		    			$cn.data.PreferredAudioType = 'DTS_Express_51';
+		    		else
+		    			$cn.data.PreferredAudioType = 'DTS_Express_Stereo';
+	                break;
+		    	case 'Dolby':
+		    		if($cn.data.Dolby51Enable)
+		    			$cn.data.PreferredAudioType = 'Dolby_Digital_Plus_51';
+		    		else
+		    			$cn.data.PreferredAudioType = 'Dolby_Digital_Plus_Stereo';
+	                break;
+	    		default:
+	                break;
+	    	}
+	    		
+	    	configuration.writeValue(configuration.getPrefixedSettingKey('PreferredAudioType'), $cn.data.PreferredAudioType);
+	    	
+	    	this.selectAudioText($cn.data.PreferredAudioType);
+    		$$('div.chk').removeClass('checkbox_true');
+    		$$('div.chk').addClass('checkbox_false');
+    		$(id).addClass("checkbox_true");
+	    },
+	    selectAudioText: function(format){
+	    	switch(format){
+		    	case 'Stereo_Standard':
+                    this.showAudioText('btnsettingsaudiostereo');
+                    break;
+		    	case 'DTS_Express_51':
+		    	case 'DTS_Express_Stereo':
+                    this.showAudioText('btnsettingsaudiodts');
+                    break;
+		    	case 'Dolby_Digital_Plus_51':
+		    	case 'Dolby_Digital_Plus_Stereo':
+                    this.showAudioText('btnsettingsaudiodolby');
+                    break;
+	    		default:
+                    break;
+	    	}
+	    },
+	    toggleDebug: function(){
+	    	
+	    	$cn.config.Debug = !$cn.config.Debug;
+	    	
+	    	$("cdebug").innerHTML = ($cn.config.Debug) ? "Yes" : "No";
+	    },
+	    toggleRemoteLogging: function(){
+	    	$cn.config.SyncLogsExternally = !$cn.config.SyncLogsExternally;
+	    	
+	    	$("cremote").innerHTML = ($cn.config.SyncLogsExternally) ? "Yes" : "No";
+	    },
+	    handleKeyDown: function(payload) {
+	    	switch(payload.args[0].event.keyCode){
+		    	case application.keys.KEY_UP:
+                    this.secretSequence += 'u';
+		    		break;
+		    	case application.keys.KEY_DOWN:
+                    this.secretSequence += 'd';
+		    		break;
+		    	case application.keys.KEY_RIGHT:
+                    this.secretSequence += 'r';
+		    		break;
+		    	case application.keys.KEY_RED:
+                    this.secretKey += 'a';
+		    		break;
+	    		case application.keys.KEY_1:
+                    this.secretKey += '1';
+					break;
+				case application.keys.KEY_2:
+                    this.secretKey += '2';
+					break;
+				case application.keys.KEY_3:
+                    this.secretKey += '3';
+					break;
+				case application.keys.KEY_4:
+                    this.secretKey += '4';
+					break;
+				case application.keys.KEY_5:
+                    this.secretKey += '5'
+					break;
+				case application.keys.KEY_6:
+                    this.secretKey += '6';
+					break;
+				case application.keys.KEY_7:
+                    this.secretKey += '7';
+					break;
+				case application.keys.KEY_8:
+                    this.secretKey += '8';
+					break;
+				case application.keys.KEY_9:
+                    this.secretKey += '9';
+					break;
+				case application.keys.KEY_0:
+                    this.secretKey += '0';
+					break;
+				default:
+					break;
+			}
+
+	    	log.write("Secret Key: " + this.secretKey + ", Secret Sequence: " + this.secretSequence);
+	    	if(this.secretKey == "a0852"){
+	    		BrowseView.showChangeEnv();
+	    	}
+	    	else if(this.secretKey == this.secretDebugKey || this.secretSequence == this.secretDirectionSequence){
+	    		application.debugMode = true;
+	    		BrowseView.goSettings(0);
+	    	}
+            else {
+                if (this.secretKey.length >= this.secretDebugKey.length) {
+                    this.secretKey = '';
+                }	
+                if (this.secretSequence.length >= this.secretDirectionSequence.length) {
+                    this.secretSequence = '';
+                }
+            }
+        },
+	    isActivated: function(){
+	    	return ($cn.data.AuthToken != '') ? "true" : "false";
+	    }
+	},
+	SettingsPanelControl = new Class(SettingsPanelControlProperties);
+//-----------------------------------------------------------------------------
+// settingswheel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author tjmchattie
+ */
+var SettingsWheelControl = new Class({
+	Extends: WheelControl,
+	Implements: WheelControl,
+	id: 'SettingsWheelControl',
+	initialize: function(params){
+		this.parent();		
+	},
+	loadSettingsMenu: function(initialSelection) {
+		var master = []; 
+		master.push({
+			name: application.resource.SettingsWheelOptionStrings.General,
+			iD: "General",
+			parentID: 0
+		});
+		
+		// Only show wheel item if there are 2 or more audio types. Since stereo is always supported 
+		// if the $cn.data.AllowedAudioProfiles is greater than 0 then we show the wheel item. 
+		if($cn.data.AllowedAudioProfiles && $cn.data.AllowedAudioProfiles.length > 0) {
+			master.push({
+				name: application.resource.SettingsWheelOptionStrings.Audio,
+				iD: "Audio",
+				parentID: 0
+			});
+		}
+		
+		master.push({
+			name: application.resource.SettingsWheelOptionStrings.Family,
+			iD: "Family",
+			parentID: 0
+		});
+		
+		if(application.debugMode){
+			master.push({
+				name: application.resource.SettingsWheelOptionStrings.Debug,
+				iD: "Debug",
+				parentID: 0
+			});	
+		}
+//[Removing since cannot get WS changed]		
+//		if($cn.data.EnableAccountLink) {
+//			master.push({
+//				name: application.resource.SettingsWheelOptionStrings.Library,
+//				iD: "Library",
+//				parentID: 0
+//			});
+//		}
+
+
+		var generalOptions = [];
+		
+		generalOptions.push({
+			name: application.resource.SettingsWheelOptionStrings.Activate,
+			iD: "Activate",
+			parentID: "General"
+		});	
+		
+		if($cn.config.EnableGiftCertificates) {
+			generalOptions.push({
+				name: application.resource.SettingsWheelOptionStrings.GiftCards,
+				iD: "GiftCards",
+				parentID: "General"
+			});
+		}
+
+        if($cn.config.EnableUV) {
+            generalOptions.push({
+                name: application.resource.SettingsWheelOptionStrings.UV,
+                iD: "UV",
+                parentID: "General"
+            });
+        }
+		
+		generalOptions.push({
+			name: application.resource.SettingsWheelOptionStrings.About,
+			iD: "About",
+			parentID: "General"
+		});
+		
+		if($cn.config.EnableSystemStatus) {
+			generalOptions.push({
+				name: application.resource.SettingsWheelOptionStrings.SystemStatus,
+				iD: "SystemStatus",
+				parentID: "General"
+			});
+		}
+		
+		var slaveData = {General: generalOptions, Audio: [{
+				name: application.resource.SettingsWheelOptionStrings.Format,
+				iD: "Format",
+				parentID: "Audio"
+			}],Family: [{
+				name: application.resource.SettingsWheelOptionStrings.Parental,
+				iD: "Parental",
+				parentID: "Family"
+			},{
+				name: application.resource.SettingsWheelOptionStrings.RequirePIN,
+				iD: "RequirePIN",
+				parentID: "Family"
+			}],Library: [{
+				name: application.resource.SettingsWheelOptionStrings.RoxioNow,
+				iD: "RoxioNow",
+				parentID: "Library"
+			}]};
+			
+			if(application.debugMode){
+				slaveData.Debug = [];
+				
+				slaveData.Debug.push({
+					name: application.resource.SettingsWheelOptionStrings.DeviceInfo,
+					iD: "DeviceInfo",
+					parentID: "Debug"
+				});	
+				slaveData.Debug.push({
+					name: application.resource.SettingsWheelOptionStrings.ChangeEnvironment,
+					iD: "ChangeEnvironment",
+					parentID: "Debug"
+				});	
+				slaveData.Debug.push({
+					name: application.resource.SettingsWheelOptionStrings.ConfigurationValues,
+					iD: "ConfigurationValues",
+					parentID: "Debug"
+				});	
+				slaveData.Debug.push({
+					name: application.resource.SettingsWheelOptionStrings.AudioSupport,
+					iD: "AudioSupport",
+					parentID: "Debug"
+				});	
+			}
+			
+		this.loadData(master, slaveData, initialSelection);
+	},
+	loadData: function(masterCollection, slaveCollection, startingPos) {
+		
+		this.cleanUI();
+		this._masterSource = masterCollection;
+		this._slaveSource = slaveCollection;		
+		this.wheelChangedTimeout = 200; //We can set a custom timeout for each wheel. Some require more time than others.
+		
+		if(masterCollection.length > 0) {
+			this._renderWheel($(this.masterSourceElement), this._masterSource, (startingPos) ? startingPos : 0);
+		}		
+	},
+	navigate: function(payload){
+		this.parent(payload);
+		
+		if(BrowseView.DockControl.selection == "dock-settings") {
+			if((application.element.current && application.element.current != '') && document.getElementById(application.element.current)  && application.element.current == "selectedmaster"){
+				if(payload.args[0].direction == "left"){
+					payload.preventDefault();
+					application.navigator.setFocus("dock-settings");
+				}
+				else if(payload.args[0].direction == "right"){
+					payload.preventDefault();
+					application.navigator.setFocus("selectedslave");					
+				}
+			}
+			else if((application.element.current && application.element.current != '') && document.getElementById(application.element.current)  && application.element.current == "selectedslave") {
+				if(payload.args[0].direction == "right"){
+					//Set up the focus to always select the first button on the pane
+					if(BrowseView.SettingsPanel.activePanelId) {
+						payload.preventDefault();					
+					
+						if (!this.isNavigating && !BrowseView.SettingsPanel.isProcessing) {
+							var anchors = document.getElementById(BrowseView.SettingsPanel.activePanelId).getElementsByTagName('a');
+							
+							if(anchors.length > 0) {
+								var isSet = false;
+								var idx = 0;
+								
+								while(!isSet) {
+									if(anchors[idx]) {
+										if(document.getElementById(anchors[idx].id).offsetWidth != 0 && document.getElementById(anchors[idx].id).offsetHeight != 0) {
+											application.navigator.setFocus(anchors[idx].id);
+											//alert(anchors[idx].id);
+											isSet = true;
+										}
+										idx++;
+									}
+									else { isSet = true; } 
+								}
+							}	
+						}
+					}
+				}
+				else if(payload.args[0].direction == "down"){
+					if(BrowseView.SettingsPanel.activePanelId) {
+						if(BrowseView.SettingsPanel.isProcessing){
+							payload.preventDefault();
+						}
+					}
+				}
+			}
+		}
+		
+	}
+});
+//-----------------------------------------------------------------------------
+// signin.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author tmchattie
+ */
+var SignInControl = new Class({
+	id: 'signincontrol',
+	persist: {},
+    controls:{},
+    buttons:[],
+    layoutIsDirty: true,
+	_data: [],
+    tpl: null,
+    lastFocus: null,
+	firstFocus: null,
+	contentControlId: '',
+    contentId: 'merchcontrol',
+    /*
+     * Modes: activate, accountfeature, validateuser, checkout		
+     */
+    initialize: function(id, newContentId){
+    	
+    	
+		this.id = id;
+		var mode = id;
+		
+		if(id == "accountfeature" || id == "checkout"){
+			mode = "activate";
+		}
+	
+		this.tpl = new ui.template(newContentId, application.ui.loadTpl("signin_" + mode + ".tpl"));
+		this.tpl.compile();
+		
+    },
+    init: function(params, direction){
+		log.write('signincontrol.init()');		
+        var self = this;
+       
+        //Persist Params
+        if(params) {
+            this.persist = params;               
+        }      
+	},
+	cleanUI: function(){
+
+	},
+	/*
+	 * Load data will:
+	 * 1) Set the HTML source and buttons for the modal view
+	 * 2) Render the local controls
+	 */
+	loadData: function(content) {
+		this._data = [];
+		this._data = content;		
+	},
+	show: function() {
+		$('dock').hide();
+		$('wheel').hide();
+		$('gridview').hide();
+		
+		$("signin").show();
+		
+		application.events.subscribe(this, "loadforgotpassword", this.forgotpassword.bind(this));
+		
+		if(application.element.current != null && application.element.current != '' && document.getElementById(application.element.current)) {
+			this.lastFocus = application.element.current;			
+		}
+	
+		var msg = '',
+			c = '';
+		
+		if(this.id == "accountfeature") {
+			msg = 'You need to activate this device to use this feature.';
+		}
+		else if(this.id == "checkout"){
+			msg = 'You need to activate this device to make purchases.';
+		}
+		else {
+			c = 'hide';
+		}
+		this.tpl.empty();
+		
+		
+		this.tpl.append({message: msg, className: c});
+		this.tpl.apply();
+		
+		navigation.setFocus('SignInUserName');
+		
+	},
+	signin: function(){
+		alert('signin');
+	},
+	forgotpassword: function(payload){
+		alert('forgotpassword');
+	},
+	createaccount: function(payload){
+		alert('create account');
+	},
+	activate: function(payload){
+		alert('activate');
+	},
+	hide: function(){
+		//application.events.unsubscribe(this, "loadforgotpassword");
+	},
+	onBack: function(payload) {
+		if (payload)
+			payload.preventDefault();
+		
+	}
+});
+//-----------------------------------------------------------------------------
+// speedpopup.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var SpeedInterval;
+
+var SpeedPopup = new Class({
+	Extends:ModalControl,
+	Implements:ModalControl,
+	id: 'speedpopup',
+    _pinValues: [0,0,0,0,0],
+    _currentIndex: 0,
+    initialize: function(){
+    	this.parent('speedpopup');
+	},
+	startSpeedCheck: function() {
+		$('SpeedTest').show();
+		$('SpeedResult').hide();
+		$('SpeedUpgrade').hide();
+		
+		SpeedInterval = BandwidthCheck.popupBandwidthCheck(this, this.onComplete, true);
+	},
+	showUpgrade: function() {
+		$('SpeedTest').hide();
+		$('SpeedResult').hide();
+		$('SpeedUpgrade').show();
+		navigation.setFocus('SpeedClose2');
+	},
+    hide: function() {
+        this.parent();
+
+        if (this.lastFocus === 'transportStop') {
+            BrowseView.TitleViewControl.setFocus();
+        }
+    },
+    onComplete: function(p) {
+        // TODO - looks like this displays the last of 20 results instead of averaging them
+        if(document.getElementById('SpeedStatusMessage')) {
+            $('SpeedStatusMessage').set('html','Testing latency...');
+          
+            if (p) {
+                var params = p.split('?');
+                log.write(p);
+                
+                //Value is in bytes per second
+                switch (params[0]) {
+                    case "Complete" : // test is complete
+                        log.write("Speedtest: " + $cn.data.bwTest.speedBytes + " bytes per sec.");
+                        
+                        //I had to add the > 0 check because some times callback gets called with a byte size of 0
+                        //Currently  testing for 700 kbps
+                        $cn.data.speedchecked = true;
+                        var showResult = true;
+                        var resultID = 'SpeedResult1';
+						
+						if ($cn.data.bwTest.speedBytes > 0) {
+							if ($cn.data.bwTest.speedBytes < $cn.config.SDMinimumBandwidth) {
+								resultID = 'SpeedResult1';
+							}
+							else if ($cn.data.bwTest.speedBytes < $cn.config.HDMinimumBandwidth) {
+								resultID = 'SpeedResult2';
+							}
+							else {
+								resultID = 'SpeedResult3';
+							}
+						}
+						else {
+							showResult = false;
+						}
+                        
+                        log.write('showing: ' + resultID);
+                        if(showResult) {
+                            var speedText = (parseInt($cn.data.bwTest.speedBytes*8/10000) / 100) + ' Mbps';
+                            $('SpeedDownload').set('html',speedText);
+                            $('SpeedDownload2').set('html',speedText);
+                            $('SpeedTest').hide();
+                            $('SpeedUpgrade').hide();
+                            $('SpeedResult').show();
+                            $(resultID).show();
+                            navigation.setFocus('SpeedUpgradeButton');
+                        }
+                        
+                        break;
+                    case "ProgressUpdate" : // test is still processing - returns percentage complete
+        
+                        application.currentView.layoutIsDirty = true;	
+                        $('SpeedStatusBar').setStyle("width",params[1] + '%');
+                        break;
+                    case "SpeedUpdate" :  // test is still processing - returns current bytes/sec
+                        $cn.data.bwTest.speedBytes = parseInt(params[1]);
+                        break;
+                    
+                }
+            } else {
+                if ($cn.data.bwTest.calls >= 10) {
+                    clearInterval(SpeedInterval);
+                    $('SpeedTest').hide();
+                    $('SpeedResult').show();
+                    $('SpeedResult1').show();
+                }
+                
+                $('SpeedDownload').set('html','22 Mbps');
+        
+                $('SpeedDownload2').set('html','22 Mbps');
+                navigation.setFocus('SpeedUpgradeButton');
+                
+                application.currentView.layoutIsDirty = true;	
+                $('SpeedStatusBar').setStyle("width",($cn.data.bwTest.calls * 10) + '%');
+                
+                $cn.data.bwTest.calls++;
+            }
+        }
+    }
+});
+//-----------------------------------------------------------------------------
+// systemstatuspopup.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var SystemStatusPopup = new Class({
+	Extends:ModalControl,
+	Implements:ModalControl,
+    startTime: null,
+	id: 'systemstatuspopup',
+    slownessTimeout: null,
+    slownessCheckupInterval: null,
+    // TODO: cannot use resources here, since they are not yet defined by init. Fix that. Make regular variable that is included by compiler based on language option, or
+    //   just include it, since there are no other languages currently.
+    testsToPerformIndep: [  {   "funName": "testBandwidth",
+                                "defaultString": "0",
+                                "htmlLocation": "#SystemStatus .bwResults .theResult",
+                                "htmlLocation2": "#SystemStatus .bwSummary .theResult",
+                                "completed": false,
+                                "result": null
+                            },
+                            {   "funName": "testConnectionType",
+                                "defaultString": "Not Connected",
+                                "htmlLocation": "#SystemStatus .connectionResults .theResult",
+                                "completed": false,
+                                "result": null
+                            },
+                            {   "funName": "testActivationStatus",
+                                "defaultString": "Not Connected",
+                                "htmlLocation": "#SystemStatus .activationResults .theResult",
+                                "completed": false,
+                                "result": null
+                            }],
+    testsToPerformDep: [    {   "funName": "testIpAddress",
+                                "defaultString": "Not Connected",
+                                "htmlLocation": "#SystemStatus .ipResults .theResult",
+                                "completed": false,
+                                "result": null
+                            },
+                            {   "funName": "testEmailAddress",
+                                "defaultString": "Not Activated",
+                                "htmlLocation": "#SystemStatus .emailResults .theResult",
+                                "completed": false,
+                                "result": null
+                            },
+                            {   "funName": "testResConnection",
+                                "defaultString": "Not Connected",
+                                "htmlLocation": "#SystemStatus .resResults .theResult",
+                                "completed": false,
+                                "result": null
+                            }],
+    _currentIndex: 0,
+    initialize: function() {
+        // This is the ID of the template to be used.
+    	this.parent('systemstatuspopup');
+        this.storeTestsAsData(this.testsToPerformDep, this.testsToPerformIndep);
+	},
+    storeTestsAsData: function() {
+        var i,
+            j;
+
+        $cn.data.SystemTests = [];
+
+        for (i = 0; i < arguments.length; ++i) {
+            for (j = 0; j < arguments[i].length; ++j) {
+                $cn.data.SystemTests.push(arguments[i][j]);
+            }
+        }
+    },
+	start: function() {
+        this.testingFinished = false;
+        this.clearPreviousResults();
+        this.clearCompletedTests(this.testsToPerformIndep, this.testsToPerformDep);
+        this.runTests(this.testsToPerformIndep);
+        this.showResultsPanel();
+        if ($cn.config.SystemStatusTimeoutS) {
+            this.setSlownessTimeout($cn.config.SystemStatusTimeoutS);
+        } else {
+            log.write("XXXXXXXXXXX Warning XXXXXXXXXXXXXX");
+            log.write("You are showing the System Status Popup without setting a timeout!!!");
+            log.write("XXXXXXXXXXX Warning XXXXXXXXXXXXXX");
+        }
+        this.setSlownessCheckupInterval();
+	},
+    setSlownessTimeout: function(timeOutS) {
+        var self = this;
+        this.slownessTimeout = setTimeout(function() {
+            self.testingDone();
+        }, timeOutS * 1000);
+    },
+    setSlownessCheckupInterval: function() {
+        // var self = this;
+        var timeRemaining = $('SystemTestTimeRemaining');
+
+        $cn.data.bwTest.intervalUpdated = true;
+
+        this.slownessCheckupInterval = setInterval(function() {
+            var timeLeft = parseInt(timeRemaining.innerHTML, 10) + 1;
+
+            // Check to see if the BW test has updated things, if not increase time left
+            if (! $cn.data.bwTest.intervalUpdated) {
+                timeRemaining.innerHTML = timeLeft > $cn.config.SystemStatusTimeoutS ? $cn.config.SystemStatusTimeoutS : timeLeft;
+            }
+
+            // Reset
+            $cn.data.bwTest.intervalUpdated = false;
+        }, 1000);
+    },
+    showResultsPanel: function() {
+        $$('#settingspanel .systemstatuscotainer').hide();
+        $$('#settingspanel .systemstatusresults').show();
+    },
+    clearPreviousResults: function() {
+        $$("#SystemStatus .systemstatusresults .theResult").each(function(ellie) {
+            ellie.innerHTML = "";
+        });
+    },
+    // Clears previous results, and puts in default strings in the DOM
+    clearCompletedTests: function() {
+        var i,
+            j;
+
+        for (i = 0; i < arguments.length; ++i) {
+            for (j = 0; j < arguments[i].length; ++j) {
+                arguments[i][j].completed = false;
+                arguments[i][j].result = null;
+                this.setDefaultForTest(arguments[i][j]);
+            }
+        }
+    },
+    // Pass in array of string, will do tests on those functions
+    runTests: function(tests) {
+        var i;
+
+        for (i = 0; i < tests.length; ++i) {
+            this[tests[i].funName](tests[i].funName);
+        }
+    },
+    // Since some tests are asynchronous, this is here to track which ones are done or not
+    testDone: function(testName) {
+        var i,
+            j,
+            numDone = 0,
+            tests = [this.testsToPerformIndep, this.testsToPerformDep],
+            numTests = 0;
+
+        log.write("completed test " + testName);
+        this.getTest(testName).completed = true;
+
+        for (i = 0; i < tests.length; ++i) {
+            numTests = numTests + tests[i].length;
+        }
+
+        // Count how many tests are done
+        for (i = 0; i < tests.length; ++i) {
+            for (j = 0; j < tests[i].length; ++j) {
+                if (tests[i][j].completed) {
+                    numDone = numDone + 1;
+                }
+            }
+        }
+
+        log.write(numDone + " tests done out of " + numTests);
+        if (numDone === numTests) {
+            this.testingDone();
+        }
+    },
+    getTest: function(testName) {
+        var i;
+
+        // Look in independent tests first
+        for (i = 0; i < this.testsToPerformIndep.length; ++i) {
+            if (testName === this.testsToPerformIndep[i].funName) {
+                return this.testsToPerformIndep[i];
+            }
+        }
+
+        // Then look in dependent tests
+        for (i = 0; i < this.testsToPerformDep.length; ++i) {
+            if (testName === this.testsToPerformDep[i].funName) {
+                return this.testsToPerformDep[i];
+            }
+        }
+
+        return null;
+    },
+    setString: function(selector, string) {
+        log.write("###########");
+        log.write("Setting: " + selector + " to: " + string);
+        log.write("###########");
+        $$(selector).set("html", string);
+    },
+    setDefaultForTest: function(test) {
+        this.setString(test.htmlLocation, test.defaultString);
+    },
+    setStringForTest: function(test, string) {
+        this.setString(test.htmlLocation, string);
+    },
+    testBandwidth: function(testName) {
+        var download,
+            test = this.getTest(testName);
+
+        log.write("test BW " + testName + " begin");
+
+        // This one is unusual in that it has 2 output location. Reset the second one too.
+        this.setString(test.htmlLocation2, "");
+        
+        BandwidthCheck.popupBandwidthCheck(this, this.onBwTestUpdate, false);
+
+    },
+    testConnectionType: function(testName) {
+        // 1 if active interface is wired,
+        // 0 if active interface is wireless
+        // -1 if no active connection
+        var connectionType = -1;
+        var test = this.getTest(testName);
+
+        log.write("test Connection " + testName + " begin");
+
+        if ($cn.utilities.Network.GetActiveType) {
+            connectionType = $cn.utilities.Network.GetActiveType();
+        } 
+        else if (device.backupIPConnectionSupported) {
+            connectionType = 1;
+        }
+
+        this.testIpAddress("testIpAddress", connectionType);
+        switch(connectionType) {
+            case -1:
+                connectionType = application.resource.testing_messages.connectionType.none;
+                break;
+            case 0:
+                connectionType = application.resource.testing_messages.connectionType.wireless;
+                break;
+            case 1:
+                connectionType = application.resource.testing_messages.connectionType.wired;
+                break;
+            default:
+                connectionType = application.resource.testing_messages.connectionType.unknown;
+                break;
+        }
+
+        log.write("your connection is: " + connectionType);
+        test.result = connectionType;
+        this.testDone(testName);
+    },
+    testActivationStatus: function(testName) {
+        var self = this,
+            test = this.getTest(testName);
+
+        log.write("test Activation " + testName + " begin");
+
+        $cn.methods.verifyAuthToken(function(activated) {
+
+            test.result = activated ? application.resource.testing_messages.activated : application.resource.testing_messages.notActivated;
+
+            // We received an api response, so we're connected
+            self.testResConnection("testResConnection");
+            self.testEmailAddress("testEmailAddress", activated);
+
+            self.testDone(testName);
+        }, true); // <== Do not trigger timeouts
+    },
+    testIpAddress: function(testName, connectionType) {
+        var ipAddress = "Unknown",
+            test = this.getTest(testName);
+
+        log.write("test IP " + testName + " begin");
+        switch(connectionType) {
+            case 0:
+            case 1:
+                log.write("about to get IP");
+                if ($cn.utilities.Network.GetIP) {
+                    log.write("getting ip for connection type: " + connectionType);
+                    ipAddress = $cn.utilities.Network.GetIP(connectionType);
+                } 
+                else if (device.backupIPConnectionSupported) {
+                    ipAddress = "127.0.0.1";
+                }
+                break;
+        }
+
+        test.result = ipAddress;
+        log.write("your ip address is: " + ipAddress);
+        this.testDone(testName);
+    },
+    testEmailAddress: function(testName, activated) {
+        var self = this,
+            test = this.getTest(testName);
+
+        log.write("test Email " + testName + " begin");
+
+        if (activated) {
+            $cn.methods.loadToken(function() {
+                if ($cn.data.UserEmailAddress) {
+                    test.result = $cn.data.UserEmailAddress;
+                }
+                self.testDone(testName);
+            }, true); // <== Do not trigger timeouts
+        } else {
+            test.result = test.defaultString;
+            self.testDone(testName);
+        }
+    },
+    testResConnection: function(testName) {
+        var test = this.getTest(testName);
+
+        log.write("test RES " + testName + " begin");
+
+        // Don't know how to do this. Let's assume that activation status proves we can connect to store.
+        test.result = application.resource.testing_messages.connected;
+
+        this.testDone(testName);
+    },
+    testingDone: function() {
+        this.testingFinished = true;
+        log.write("$$$$ done with all tests");
+        if (this.slownessTimeout) {
+            clearTimeout(this.slownessTimeout);
+        }
+        if (this.slownessCheckupInterval) {
+            clearInterval(this.slownessCheckupInterval);
+        }
+        if(!this.getTest('testBandwidth').completed){
+            BrowseView.bwMessage();
+        }
+        this.hide();
+    },
+    onBwTestUpdate: function(p) {
+        var systemBar = $('SystemStatusBar'),
+            timeRemaining = $('SystemTestTimeRemaining'),
+            timeElapsed,
+            percentLeft,
+            secondsPerPercent,
+            test;
+        if (systemBar) {
+            $("SystemStatusMessage").set("html", application.resource.testing_messages.testingBandwidth);
+
+            if (p) {
+                var params = p.split('?');
+                log.write(p);
+
+                //Value is in bytes per second
+                switch (params[0]) {
+                    case "Complete" : // test is complete
+                        log.write("Speedtest: " + $cn.data.bwTest.speedBytes + " bytes per sec.");
+                        log.debug("Speedtest: " + $cn.data.bwTest.speedBytes + " bytes per sec.");
+                        test = $cn.data.bwTest.self.getTest("testBandwidth");
+                        test.result = parseInt($cn.data.bwTest.speedBytes*8/10000, 10) / 100;
+                        $cn.data.bwTest.self.testDone("testBandwidth");
+                        if(!this.testingFinished){
+                            BrowseView.bwMessage();
+                        }
+                        break;
+                    case "ProgressUpdate" : // test is still processing - returns percentage complete
+
+                        // Signal an update
+                        $cn.data.bwTest.intervalUpdated = true;
+
+                        application.currentView.layoutIsDirty = true;
+                        systemBar.setStyle("width",params[1] + '%');
+                        timeElapsed = (new Date() - $cn.data.bwTest.self.startTime) / 1000;
+                        if (params[1] != 0) {
+                            percentLeft = 100 - params[1];
+                            secondsPerPercent = timeElapsed / params[1];
+                            timeRemaining.innerHTML = Math.ceil(percentLeft * secondsPerPercent);
+                        }
+                        break;
+                    case "SpeedUpdate" :  // test is still processing - returns current bytes/sec
+                        // Signal an update
+                        $cn.data.bwTest.intervalUpdated = true;
+                        $cn.data.bwTest.speedBytes = parseInt(params[1]);
+                        break;
+
+                }
+            } else {
+                // Signal an update
+                $cn.data.bwTest.intervalUpdated = true;
+
+                if ($cn.data.bwTest.calls >= 10) {
+                    // clearInterval(SpeedInterval);
+                    // We are done - add code to close.
+                    test = $cn.data.bwTest.self.getTest("testBandwidth");
+                    test.result = parseInt($cn.data.bwTest.speedBytes*8/10000, 10) / 100;
+                    $cn.data.bwTest.self.testDone("testBandwidth");
+                }
+                BrowseView.bwMessage();
+                application.currentView.layoutIsDirty = true;
+                $('SystemStatusBar').setStyle("width",($cn.data.bwTest.calls * 10) + '%');
+
+                $cn.data.bwTest.calls++;
+
+            }
+        }
+    },
+    hide: function() {
+        this.parent();
+        this.updateHtmlWithResults();
+        this.showWarningMarks();
+        this.setCorrectFocus();
+    },
+    updateHtmlWithResults: function() {
+        var i,
+            test;
+        for (i = 0; i < $cn.data.SystemTests.length; ++i) {
+            test = $cn.data.SystemTests[i];
+            if (test.completed) {
+                this.setStringForTest(test, test.result);
+            }
+        }
+    },
+    showWarningMarks: function() {
+        var test,
+            showDetails = false,
+            messagePath = application.resource.testing_messages;
+
+        $cn.data.SystemTests.moreDetails = {};
+        $cn.data.SystemTests.moreDetails.data = {};
+        $cn.data.SystemTests.informativeText = "";
+
+        test = this.getTest("testConnectionType");
+        if (test.result === messagePath.connectionType.wireless ||
+            test.result === messagePath.connectionType.none) {
+            showDetails = true;
+            this.makeWarningVisible(test);
+
+            $cn.data.SystemTests.informativeText += messagePath.connectionHeading.replace('##type##',test.result) + messagePath.connectionInfo[test.result] + "<br/><br/>";
+        }
+
+        test = this.getTest("testActivationStatus");
+        if (test.result === application.resource.testing_messages.notActivated) {
+            showDetails = true;
+            this.makeWarningVisible(test);
+
+            $cn.data.SystemTests.informativeText += messagePath.activationHeading.replace('##status##', test.result) + messagePath.activationInfo + "<br/><br/>";
+        }
+
+        test = this.getTest("testResConnection");
+        if (test.result === test.defaultString) {
+            showDetails = true;
+            this.makeWarningVisible(test);
+
+            $cn.data.SystemTests.informativeText += messagePath.storeHeading.replace('##status##', test.result) + messagePath.storeInfo + "<br/><br/>";
+        }
+
+        if (showDetails) {
+            $$(".systemstatusresults #results-more-details").setStyle('display', 'inline-block');
+        }
+    },
+    makeWarningVisible: function(test) {
+        $$(test.htmlLocation).getNext('span').setStyle('display', 'inline-block');
+    },
+    setCorrectFocus: function() {
+        if($('results-more-details').getStyle('display') !== "none") {
+            application.navigator.setFocus("results-more-details");
+        } else {
+            application.navigator.setFocus("results-test-again");
+        }
+    }
+});
+//-----------------------------------------------------------------------------
+// titlecheckoutwheel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author atumminaro
+ */
+var TitleCheckOutWheelControl = new Class(
+		{
+			Extends : WheelControl,
+			Implements : WheelControl,
+			id : 'TitleCheckOutWheelControl',
+			container : 'singlewheel',
+			singleWheel : true,
+			MetaData : [],
+			persist : {},
+			masterSourceElement : 'singlemasterdatasource',
+			masterSelectedElement : 'singleselectedmaster',
+
+			cleanUI : function() {
+				if ($('singleselectedmaster')) {
+					$('singleselectedmaster').label = '';
+				}
+
+				if ($('singlemasterdatasource')) {
+					if ($('singlemasterdatasource').getChildren().length > 0) {
+
+						$('singlemasterdatasource').getChildren().destroy();
+					}
+				}
+			},
+			handleWheelItemChange : function(payload) {
+
+				if (payload.context === ActiveWheel) {
+
+					var p = payload.args[0];
+					log.write("Title Wheel Item changed. Now fire custom method. "
+									+ payload.args[0].wheelinstance);
+
+					application.events.publish('titlecheckoutwheelchanged', {
+						selectedvalue : p.selectedvalue,
+						titleID : this.persist.title.titleID
+					});
+
+                    BrowseView.CurrentWheelValue = p.selectedvalue + ':';
+
+				}
+
+			},
+			loadCheckOutData : function(titleid) {
+
+				this.layoutIsDirty = true;
+				this.cleanUI();
+				var title = $cn.data.TitleDetailCache[titleid];
+				this.persist.title = title;
+				this.wheelChangedTimeout = 200; //We can set a custom timeout for each wheel. Some require more time than others.
+				
+				if (title) {
+					var purchaseTypes = title.availableProducts,
+					    wheelOptions = [],
+                        x;
+                        //checkOutOptions = [];
+					for (x = 0; x < purchaseTypes.length; x++) {
+						var typeText = "";
+
+						//Make sure that a title has an available asset before adding to the list. This is 
+						//here because some data has an available product but no available assets.
+						if(purchaseTypes[x].availableAssets.length > 0) {
+							switch (purchaseTypes[x].purchaseType) {
+								case "any":
+									typeText = "Buy";
+									break;
+								case "buy":
+                                    typeText = $cn.utilities.getBuyTextForTitle(title);
+                                    if(purchaseTypes[x].skuType.indexOf("Upgrade") != -1){
+                                        this.disctodigital = true;
+                                        typeText += " Disc to Digital"
+                                    }
+                                    typeText += "<br/>" + application.resource.currency_symbol + purchaseTypes[x].price;
+									break;
+								case "rent":
+									typeText = "Rent " + purchaseTypes[x].rentalPeriod
+											+ " Hr<br />" + application.resource.currency_symbol + purchaseTypes[x].price;
+									break;
+								case "subscription":
+									typeText = "Subscription";
+									break;
+							}
+	
+							var isHD = false;
+//                                x1;
+//							for (x1 = 0; x1 < purchaseTypes[x].availableAssets.length; x1++) {
+//								if (purchaseTypes[x].availableAssets[x1].file_FileProfile
+//										&& purchaseTypes[x].availableAssets[x1].file_FileProfile == "HIGH_DEFINITION") {
+//									isHD = true;
+//								}
+//							}
+                            if (purchaseTypes[x].skuType.indexOf('HD') > -1) {
+                                isHD = true;
+                            }
+	
+							if (isHD) {
+								typeText = typeText + "<div id=\"hdbadge\" ></div>"
+	
+							}
+                            if(purchaseTypes[x].skuType.indexOf("Upgrade") == -1 || // NO d2d sku
+                                (purchaseTypes[x].skuType.indexOf("Upgrade") != -1 && title.titleID == $cn.data.d2dTitleInfo.id)){
+                                //If there is a D2d SKU it must match the disc in the tray
+                                wheelOptions.push( {
+                                    name : typeText,
+                                    iD : purchaseTypes[x].skuID,
+                                    parentID : 0,
+                                    purchaseType : purchaseTypes[x],
+                                    titleID : title.titleID
+                                });
+                            }
+						}
+					}
+					this.loadData(wheelOptions, [ {} ]);
+					if (wheelOptions.length > 1 || this.disctodigital) {
+						$('singlewheel').show();
+						$('checkout_container').removeClass('nowheel');
+						navigation.setFocus('singleselectedmaster');
+					} else {
+						$('singlewheel').hide();
+						$('checkout_container').addClass('nowheel');
+						BrowseView.CheckoutPanel.activate();
+					}
+
+				}
+				/*
+				 * else {
+				 * 
+				 * this.loadData([{ name: "Rent 48 Hr<br />$3.99", iD:
+				 * "Rent48", parentID: 0, list: 0 },{ name: "Rent 24 Hr<br />$2.99",
+				 * iD: "Rent24", parentID: 0, list: 0 },{ name: "Free Preview",
+				 * iD: "FreePreview", parentID: 0, list: 1 },{ name: "Rent 24 Hr<br />$3.49
+				 * HD", iD: "Rent24HD", parentID: 0, list: 1 },{ name: "Rent 48
+				 * Hr<br />$4.49 HD", iD: "Rent48HD", parentID: 0, list: 1 }],
+				 * [{}] );
+				 * application.events.publish('titlecheckoutwheelchanged', {
+				 * selectedvalue: 0, name: rent, title: title }); }
+				 */
+			},
+			navigate: function(payload){
+				
+				if (payload.context === ActiveWheel) {
+				
+					var p = payload.args[0];
+					
+					if (p.current == "singleselectedmaster") {
+						if (p.direction == "left") {
+							payload.preventDefault();
+							navigation.setFocus('tdbuttonCheckout');
+						}
+						else if (p.direction == "right") {
+							payload.preventDefault();
+	                         //The titlecheckout wheel item should remove hover.
+                            if ($('singlemasterdatasource')) {
+                                var items = $('singlemasterdatasource').getChildren();
+                                if (items.length > 0) {
+                                   var item = items[this._masterWheel.selection];
+                                   if (item) {
+                                    item.removeClass('hover');
+                                    item.addClass('hdHighlight');
+                                   }
+                                }
+                            }
+							if(!this.isNavigating) {
+								BrowseView.CheckoutPanel.activate();
+							}								
+						}												
+						else { 
+							this.parent(payload);
+						}
+					} else {
+					    if (p.current == 'checkout_order' || p.current == 'checkout_redeem'
+					        || p.current == 'checkout_payment' || p.current == 'checkout_cancel') {
+                            if (p.direction == "left") {
+                                //Should add hover to proper item when titlecheckoutwheel getfocus.
+                                if ($('singlemasterdatasource')) {
+                                    var items = $('singlemasterdatasource').getChildren();
+                                    if (items.length > 0) {
+                                        var item = items[this._masterWheel.selection];
+                                        if (item) item.addClass('hover');
+                                        if (p.current != 'checkout_cancel') {
+                                          item.removeClass('hdHighlight');
+                                        }
+                                    }
+                                }					    
+                            }
+					    }
+					}
+				}
+			}
+		});
+//-----------------------------------------------------------------------------
+// titlemetawheel.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author tjmchattie
+ */
+var TitleMetaWheelControl = new Class({
+	Extends: WheelControl,
+	Implements: WheelControl,
+	id: 'TitleMetaWheelControl',
+	MetaData: [],
+	handleWheelItemChange: function(payload){		
+		log.write(payload);
+		
+		if(payload.context === ActiveWheel) {
+			var p = payload.args[0];
+			log.write("Title Wheel Item changed. Now fire custom method. " + payload.args[0].wheelinstance);
+			/*
+			 * If the source is the master column then load the slave wheel with
+			 * the child elements from the new selection
+			 */
+			if(p.sourceid.indexOf('master') > -1) {
+				$('slavedatasource').getElements('div').destroy();
+				payload.context.loadSlaveDataSource(p.selectedvalue);
+			}
+			else if(p.sourceid.indexOf('slave') > -1){
+				log.write('The slave wheel item has changed. Update results.');
+				var methodArgs = payload.args[0].selectedvalue.split('|');
+				this.loadSlaveGrid(methodArgs[0], methodArgs[1]);
+				
+			}
+		}
+	},
+	loadSlaveGrid: function(method, filter){
+		var data = this.MetaData[method];
+		
+		switch(method){
+		
+			case "m_cast_bios":
+				data.each(function(item){
+					if(item.castID == filter){
+						BrowseView.LastGridProcess = "bios";
+						item.bio = item.bio.firstWithEllips(4500); 
+						application.events.publish('loadgrid', {grid: 'biogrid', gridProcess: 'bios', data: [item], columns: 1});
+					}
+				});						
+				break;
+			case "r_user_revs":
+			case "r_critics":
+				log.write(method + ":" + filter);
+				data.each(function(item){
+					if(item.reviewer == filter){
+						var template = "reviewgrid";
+						if(method == "r_user_revs")
+						{
+							template = "userreviewgrid";
+						}
+						BrowseView.LastGridProcess = "reviews";
+						application.events.publish('loadgrid', {grid: 'reviewgrid', gridProcess: 'reviews', data: [item], columns: 1, template: template});
+					}
+				});						
+				break;
+			case "m_cast_crew":
+				break;
+			case "m_credits":
+				var actor = [],
+				    production = [],
+                    keyString,
+                    found;
+				if(data)
+				{
+									
+					if(filter == "0")
+					{
+						keyString = "";
+						data.castMetaValues.each(function(item){
+							if(item && item.keyName != '' && item.keyValue != '')
+								keyString = keyString + "<p>"+item.keyName + " (" + item.keyValue + ")</p>";
+							else if(item && item.keyName != '') 
+								keyString = keyString + "<p>"+item.keyName + "</p>";
+						});
+						
+						actor.push({keyName: "Actors", keyValue: keyString});
+						actor.push({keyName:'', keyValue: "FBI Anti-piracy Warning: Unauthorized copying is punishable under Federal Law.<br />"});
+						BrowseView.LastGridProcess = "credits";
+						application.events.publish('loadgrid', {grid: 'creditsgrid', gridProcess: 'credits', data: actor, columns: 1, template: 'creditsgrid'});
+					}
+					else
+					{
+						keyString = "";
+						data.productionMetaValues.each(function(item){
+							found = false;
+							production.each(function(prod)
+							{
+								if(prod.keyName == item.keyName)
+								{
+									prod.keyValue = prod.keyValue + item.keyValue + "<br />";
+									found = true;
+									
+								}
+							});
+							if(!found)
+							{
+								production.push({keyName: item.keyName, keyValue: item.keyValue + "<br />"});
+							}
+						});
+						
+						production.push({keyName:'', keyValue: "FBI Anti-piracy Warning: Unauthorized copying is punishable under Federal Law.<br />"});
+						BrowseView.LastGridProcess = "production";
+						application.events.publish('loadgrid', {grid: 'creditsgrid', gridProcess: "production", data: production, columns: 1, template: 'creditsgrid'});
+					}
+				}
+				break;
+			case "m_technical_details":
+				if(data)
+				{
+					var techDetails = [];
+					data.technicalDetailItems.each(function(item){
+						if(item.videoRecordingFormat == filter || item.name == filter)
+						{
+							techDetails.push(item);
+						}
+					});
+					
+					if(techDetails)
+					{
+						BrowseView.LastGridProcess = "tech";
+						application.events.publish('loadgrid', {grid: 'techgrid', gridProcess: 'tech', data: techDetails, columns: 1, template: 'techgrid'});
+
+						if(!techDetails[0] && !techDetails[0].audioFormat)
+						{
+							$('audioTech').hide();
+						}
+                        if(techDetails[0].name == "UltraViolet"){
+                            $('uv-technical-details').removeClass('hidden');
+                            if(techDetails[0].streaming){
+                                $('tech-streaming').show();
+                            }
+                            if(techDetails[0].downloads){
+                                $('tech-downloads').show();
+                            }
+                        }
+                        else {
+                            $('videoTech').removeClass('hidden');
+                            $('audioTech').removeClass('hidden');
+                        }
+					}
+				}
+				break;
+			default:
+				break;
+		}
+	},
+	isSpecialAudio: function(Encoding){
+		
+		var val = "hidden";
+		log.write(Encoding);
+		$cn.config.HackedDtsTitles.each(function(titleID){
+			if(BrowseView.CurrentTitleID == titleID && Encoding == "1080p") {
+				val = 'visible';
+			}
+		});
+		
+		return val;
+	},
+	loadSlaveDataSource: function(masterKey){
+		log.write("masterKey: " + masterKey);
+		var self = this;
+		var isLoaded = false;
+		
+		if(this._slaveSource[this._masterSource[masterKey]]){
+			this._renderWheel($('slavedatasource'), this._slaveSource[masterKey]);
+		}
+		else {
+			var isSimilar = (masterKey.indexOf("s_") == 0),
+                isReview = (masterKey.indexOf("r_") == 0),
+			    isMethod = (masterKey.indexOf("m_") == 0),
+			    gridFilter = null,
+                idx;
+			
+			if(isSimilar){
+				/*
+				 * Similar types can be dynamically passed in as they all use
+				 * the same method.
+				 */
+				log.write("Load Similar sub-sections. Right now only option is \"ALL\"");
+				if(masterKey.indexOf('s_') == 0) {
+					application.events.publish('gridloading', {grid: 'titlegrid', message: "loadinggeneric", cssClass: "meta"});
+					
+					$cn.methods.getBrowseListBySimilar(masterKey, BrowseView.CurrentTitleID, 1, 0, function(callback){
+						self._slaveSource[masterKey] = [];
+						self._slaveSource[masterKey].push({
+								name: "All",
+								iD: "All",
+								parentID: 0
+						});	
+						isLoaded = true;
+
+						self.loadSlave(masterKey, gridFilter);
+						BrowseView.LastGridProcess = "similarAll";
+						application.events.publish('loadgrid', {grid: 'titlegrid', gridProcess: 'similarAll', data: callback, columns: 2});
+					});
+				}
+				
+				isLoaded = true;
+			}
+			else if(isReview){
+				/*
+				 * Reviews have 2 different input params but their method is
+				 * always the same.
+				 */
+				var filter = 'Undefined';
+				if(masterKey.indexOf("critics") > 0) {
+					filter = 'CritictsReview';
+				}
+				else if(masterKey.indexOf("user") > 0) {
+					filter = 'UserReview';
+				}
+				
+				application.events.publish('gridloading', {grid: 'reviewgrid'});
+				$cn.methods.getReviews(BrowseView.CurrentTitleID, filter, function(callback){
+					self.MetaData[masterKey] = callback.reviews;					
+					self._slaveSource[masterKey] = [];
+					
+					callback.reviews.each(function(item){
+						self._slaveSource[masterKey].push({
+							name: self.split(item.reviewer),
+							iD: masterKey + "|" + item.reviewer,
+							parentID: 0
+						});	
+						isLoaded = true;
+
+					});
+					
+					//Sort slave wheel items according to Reviewer's ascending alphabetical surname.
+					var i, j;
+					for(i = 0; i < self._slaveSource[masterKey].length; i++) {
+						for(j = 0; j < self._slaveSource[masterKey].length; j++) {
+							if(self._slaveSource[masterKey][i].name.toLowerCase() < self._slaveSource[masterKey][j].name.toLowerCase()) {
+								var slaveSource = self._slaveSource[masterKey][i];
+								self._slaveSource[masterKey][i] = self._slaveSource[masterKey][j];
+								self._slaveSource[masterKey][j] = slaveSource;
+							} 
+						}
+					}
+					
+					if(callback.reviews.length > 0) {
+						gridFilter = callback.reviews[0].reviewer;
+					}
+					else {
+						isLoaded = true;
+					}
+					self.loadSlave(masterKey, gridFilter);
+				});
+			}
+			else if(isMethod){
+				switch(masterKey){
+					case "m_cast_bios":
+						application.events.publish('gridloading', {grid: 'biogrid'});
+						$cn.methods.getCastBios(BrowseView.CurrentTitleID, function(callback){
+							self.MetaData[masterKey] = callback.castMembers;
+							self._slaveSource[masterKey] = [];
+							
+							callback.castMembers.each(function(item){
+								
+								self._slaveSource[masterKey].push({
+									name: self.split(item.name),
+									subtext: item.role,
+									iD: masterKey + "|" + item.castID,
+									parentID: 0
+								});	
+								isLoaded = true;
+
+							});
+							
+							if(callback.castMembers.length > 0) {
+								gridFilter = callback.castMembers[0].castID;
+							}
+
+							self.loadSlave(masterKey, gridFilter);
+						});
+						break;
+					case "m_images":
+						application.events.publish('gridloading', {grid: 'titlegrid', message: "loadinggeneric"});
+						
+						$cn.methods.getImages(BrowseView.CurrentTitleID, function(callback){
+							self.MetaData[masterKey] = [];
+							idx = 0;
+							callback.images.each(function(image){
+								self.MetaData[masterKey].push({
+									imageURL: image.imageURL,
+									idx: idx
+								});
+								idx++;
+							});
+							self._slaveSource[masterKey] = [];
+							self._slaveSource[masterKey].push({
+									name: "All",
+									iD: "All",
+									parentID: 0
+							});	
+							isLoaded = true;
+
+							self.loadSlave(masterKey, gridFilter);
+							BrowseView.loadImagePopup(callback.images);
+							BrowseView.LastGridProcess = "images";
+							application.events.publish('loadgrid', {grid: 'imagegrid', gridProcess: 'images', data: self.MetaData[masterKey], columns: 1});
+						});
+						break;
+					case "m_cast_crew":
+						$cn.methods.getCastAndCrew(BrowseView.CurrentTitleID, function(callback){
+							self.MetaData[masterKey] = callback.castMembers;
+							self._slaveSource[masterKey] = [];
+							
+							callback.castMembers.each(function(item){
+								
+								self._slaveSource[masterKey].push({
+									name: item.name,
+									subtext: item.role,
+									iD: masterKey + "|" + item.castID,
+									parentID: 0
+								});	
+							});
+
+							self.loadSlave(masterKey, gridFilter);
+						});
+						break;
+					case "m_credits":
+						application.events.publish('gridloading', {grid: 'creditsgrid'});
+						$cn.methods.getCredits(BrowseView.CurrentTitleID, function(callback){
+							
+							var startingVal = -1;
+							self.MetaData[masterKey] = callback;
+							self._slaveSource[masterKey] = [];
+							
+							//If there are any cast values add it to the wheel
+							if(callback.castMetaValues.length > 0){
+								self._slaveSource[masterKey].push({
+									name: "Cast",
+									iD: masterKey + "|0",
+									parentID: 0
+								});
+								startingVal = 0;
+							}
+							
+							//If there are any production values add it to the wheel
+							if(callback.productionMetaValues.length > 0){
+								self._slaveSource[masterKey].push({
+									name: "Production",
+									iD: masterKey + "|1",
+									parentID: 0
+								});		
+								
+								startingVal = (startingVal == -1) ? 1 : 0;
+							}
+								
+							self.loadSlave(masterKey, gridFilter);
+								
+							self.loadSlaveGrid("m_credits", startingVal);
+								// application.events.publish('loadgrid', {grid:
+								// 'creditsgrid', data: data, columns: 1,
+								// template: 'creditsgrid'});
+						
+						});
+						break;
+					case "m_technical_details":
+						application.events.publish('gridloading', {grid: 'techgrid'});
+						$cn.methods.getTechnicalDetails(BrowseView.CurrentTitleID, function(callback){
+							self._slaveSource[masterKey] = [];
+							self.MetaData[masterKey] = callback;
+							callback.technicalDetailItems.each(function(item){
+                                if(item.name == "UltraViolet"){
+                                    if($cn.config.EnableUV === true){
+                                        self._slaveSource[masterKey].push({
+                                            name: item.name.replace(' ', '<br />'),
+                                            iD: masterKey + "|" + item.name,
+                                            parentID: 0
+                                        });
+                                    } else {
+                                        // Do not add UV wheel item if uv not enabled
+                                    }
+                                } else {
+                                    self._slaveSource[masterKey].push({
+                                        name: item.name.replace(' ', '<br />'),
+                                        iD: masterKey + "|" + item.videoRecordingFormat,
+                                        parentID: 0
+                                    });
+                                }
+							});
+
+							self.loadSlave(masterKey, gridFilter);
+							self.loadSlaveGrid("m_technical_details", callback.technicalDetailItems[0].videoRecordingFormat);
+						});
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		
+	},
+	loadSlave: function(masterKey,gridFilter) {
+		this._renderWheel($('slavedatasource'), this._slaveSource[masterKey]);
+		
+		if(gridFilter) {
+			this.loadSlaveGrid(masterKey, gridFilter);
+		}
+		else {
+			log.write('error: there are no slave wheel items for this content');
+			BrowseView.LastGridProcess = "emptylist";
+			application.events.publish('loadgrid', {grid: 'reviewgrid', gridProcess: "emptylist", data: [], columns: 1, template: 'reviewgrid'});
+		}
+	},
+	loadData: function(masterCollection, title) {
+		var self = this;
+		var masterKey = '';
+		this.layoutIsDirty = true;
+		this.saveHistory();
+		this.cleanUI();
+		
+		this._masterSource = [];
+		this._slaveSource = [];
+
+		log.write('Current Title:');
+		log.write(title);
+		
+		log.write('Current Collection');
+		log.write(masterCollection);
+		
+		//If baselineEnable or flixsterEnable is not enable remove the data if server returns.
+		if (!$cn.data.baselineEnable) {
+		    masterCollection.erase('m_credits');
+		    masterCollection.erase('m_cast_bios');
+		    masterCollection.erase('m_cast_crew');
+		}
+		if (!$cn.data.flixsterEnable) {
+	        masterCollection.erase('r_critics');
+	        masterCollection.erase('r_user_revs');
+	        masterCollection.erase('m_technical_details');
+		}
+        //Disable EnableTechnicalDetails Wheel Option by the config value.
+        if (!configuration.readValue('EnableTechnicalDetailsWheelOption')) {
+            masterCollection.erase('m_technical_details');
+        }
+		    
+		masterCollection.each(function(item){
+			if(masterKey == '') {
+				masterKey = item;
+			}
+			
+			// similar item
+			if(item.indexOf("s_") == 0) {
+				self._masterSource[self._masterSource.length] = {
+						name: application.resource.td_similar[item],
+						iD: item,
+						parentID: 0
+				};	
+				
+				self._slaveSource[item] = [];
+				self._slaveSource[item].push({
+						name: "All",
+						iD: "all",
+						parentID: item
+				});	
+			}
+			
+			// more info item
+			if(item.indexOf("m_") == 0) {
+				self._masterSource[self._masterSource.length] = {
+						name: application.resource.td_moreinfo[item],
+						iD: item,
+						parentID: 0
+				};
+			}
+			
+			// review item
+			if(item.indexOf("r_") == 0) {
+				self._masterSource[self._masterSource.length] = {
+						name: application.resource.td_reviews[item],
+						iD: item,
+						parentID: 0
+				};
+			}
+			
+		});
+		
+		if(this._masterSource.length > 0) {			
+			this._renderWheel($('masterdatasource'), this._masterSource);			
+			this.loadSlaveDataSource(masterKey);			
+		}
+		
+	},
+	navigate: function(payload){
+		
+		var p = payload.args[0];
+		
+		if(payload.context === ActiveWheel) {
+			if ((p.current == "selectedmaster")){
+				if(p.direction == "left"){
+					payload.preventDefault();
+					BrowseView.expandTitleDetails();
+					BrowseView.TitleViewControl.enableButtons();
+					navigation.setFocus("tdbuttonMoreInfo");
+				}
+				else {
+					//Block right action if wheel is animating
+					if (p.direction == "right" && (this.isNavigating || !BrowseView.CurrentProcessLoaded)) {
+						payload.preventDefault();
+					}
+					else {
+						this.parent(payload);
+					}
+				}
+			}
+			else if (p.current == "selectedslave")
+			{
+				if(p.direction == "right" && $('imagegrid').getStyle('display') == "block"){
+					navigation.setFocus($("imagegrid").getElement('a').id);
+				}
+				else
+				{
+					this.parent(payload);
+				}
+			}
+			else {
+				this.parent(payload);
+			}
+		}
+	}
+});

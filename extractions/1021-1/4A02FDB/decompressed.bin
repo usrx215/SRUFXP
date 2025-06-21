@@ -1,0 +1,1096 @@
+//-----------------------------------------------------------------------------
+// merch.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author tmchattie
+ */
+var MerchControlProperties = {
+	id: 'merchcontrol',
+	persist: {},
+    controls:{},
+    buttons:[],
+    layoutIsDirty: true,
+	_data: [],
+    tpl: null,
+    tplTvShows: null,
+    tplNewMovies: null,
+    tplFeature: null,
+    tplCollection: null,
+    tplActions: null,
+    scroll:false,
+	lastFocus: null,
+	firstFocus: null,
+	contentControlId: '',
+    contentId: 'merchcontrol',
+    "initialize": function(id, newContentId) {
+        application.events.subscribe(this, 'restorestate', this.onRestoreState.bind(this));
+
+		this.id = id;
+
+        // Setup template for new TV shows - bottom right
+        this.tplTvShows = new ui.template("newtvshows", application.ui.loadTpl("merch_newtvshows.tpl"));
+        this.tplTvShows.compile();
+
+        // Setup template for new movies - top right
+        this.tplNewMovies = new ui.template("newmovies", application.ui.loadTpl("merch_newmovies.tpl"));
+        this.tplNewMovies.compile();
+
+        // Setup template for featured promo - top left
+        this.tplFeature = new ui.template("featuredpromotion", application.ui.loadTpl("merch_feature.tpl"));
+        this.tplFeature.compile();
+
+        // Setup template for new collections - bottom left
+        this.tplCollection = new ui.template("newcollections", application.ui.loadTpl("merch_collection.tpl"));
+        this.tplCollection.compile();
+
+        // Setup button - below grid on the right
+        this.tplActions = new ui.template("actionbuttoncontainer", application.ui.loadTpl("merchactionbuttons.tpl"));
+        this.tplActions.compile();
+    },
+    init: function(params, direction){
+        log.write('merchcontrol.init()');
+
+        //Persist Params
+        if(params) {
+            this.persist = params;               
+        }      
+	},
+	cleanUI: function(){
+
+	},
+	/*
+	 * Load data will:
+	 * 1) Set the HTML source and buttons for the modal view
+	 * 2) Render the local controls
+	 */
+	loadData: function(content) {
+		this._data = [];
+		this._data = content;		
+	},
+	show: function() {
+        var self = this,
+            x,
+            maxThumbs = $cn.config.MaxMerchThumbs || 5;
+        log.write("Showing Merch Page.");
+        application.events.subscribe(this, "navigate", this.navigate.bind(this));
+        application.events.subscribe(this, "displaytitledetails", this.loadtitleview.bind(this));
+        application.events.subscribe(this, "loadgenreview", this.loadgenreview.bind(this));
+
+        if(application.element.current != null && application.element.current != '' && document.getElementById(application.element.current)) {
+            this.lastFocus = application.element.current;
+        }
+
+        // No longer in specs - $('featureditleheader').set('text', $cn.data.Merch.featuredPromotion.name);
+        $('newcollectionheader').set('text', $cn.data.Merch.newCollectionHeader);
+        $('newmovieheader').set('text', $cn.data.Merch.newMovieHeader);
+        $('newtvshowheader').set('text', $cn.data.Merch.newTVShowHeader);
+        $("merchpage").show();
+
+        this.tplNewMovies.empty();
+        this.tplTvShows.empty();
+        this.tplFeature.empty();
+        this.tplCollection.empty();
+        this.tplActions.empty();
+
+        this.tplFeature.append($cn.data.Merch.featuredPromotion);
+
+        if ($('featuredtitleheader'))
+            $('featuredtitleheader').set('text', $cn.data.Merch.featuredPromotion.name);
+
+        // Go through and append movies to each section of the grid:
+        x = 0;
+        $cn.data.Merch.newMovies.each(function(item){
+            if (x < maxThumbs) {
+                item.titleidx = x++;
+                if (typeof $cn.config.CustomDefaultGridImage == 'function') {
+                    item.defaultImageClass = $cn.config.CustomDefaultGridImage();
+                }
+                self.tplNewMovies.append(item);
+            }
+        });
+
+        x = 0;
+        $cn.data.Merch.newTVShows.each(function(item){
+            if (x < maxThumbs) {
+                item.titleidx = x++;
+                if (typeof $cn.config.CustomDefaultGridImage == 'function') {
+                    item.defaultImageClass = $cn.config.CustomDefaultGridImage();
+                }
+                self.tplTvShows.append(item);
+            }
+        });
+
+        // The following is to smoothly handle whether newC is array or single object
+        // TODO: integrate with dixons which only has 1 new collection in the layout
+        //       this will have to update the navigation too
+        x = 0;
+        if ($cn.data.Merch.newCollections.length) {
+            log.write("we have new collections length");
+            for (x = 0; x < $cn.data.Merch.newCollections.length; x += 1) {
+                if ($cn.config.MaxMerchCollections && $cn.data.Merch.newCollections.length > $cn.config.MaxMerchCollections)
+                    $cn.data.Merch.newCollections.length = $cn.config.MaxMerchCollections;
+                $cn.data.Merch.newCollections[x].titleidx = x;
+                self.tplCollection.append($cn.data.Merch.newCollections[x]);
+            }
+        } else {
+            log.write("we do NOT have new collections length");
+            self.tplCollection.append($cn.data.Merch.newCollections);
+        }
+
+        x = 0;
+        $cn.data.Merch.actionButtons.each(function(item){
+            item.titleidx = x++;
+            self.tplActions.append(item);
+        });
+
+        this.tplNewMovies.apply();
+        this.tplTvShows.apply();
+        this.tplFeature.apply();
+        this.tplCollection.apply();
+        this.tplActions.apply();
+
+        navigation.setFocus("f_button");
+	
+	},
+	keydown: function(method){
+		
+		switch(method){
+			case "Store":
+				this.hide();
+				BrowseView.goHome();
+				break;
+			case "MyLibrary":
+				this.hide();
+				navigation.setFocus('dock-library');
+				BrowseView.goLibrary(function () { $('mainstage').hide(); }, function () { $('mainstage').show(); });
+				break;
+			default:
+				break;
+		}
+		
+	},
+    // In which how focus is moved on the merch page is defined.
+	navigate: function(payload){
+        var idx,
+		    elem = $(application.element.current).get('class').replace('hover', '').replace('default', '').trim(),
+            numNewMovies = $cn.config.MaxMerchThumbs < $cn.data.Merch.newMovies.length ? $cn.config.MaxMerchThumbs : $cn.data.Merch.newMovies.length,
+            numNewTVShows = $cn.config.MaxMerchThumbs < $cn.data.Merch.newTVShows.length ? $cn.config.MaxMerchThumbs : $cn.data.Merch.newTVShows.length,
+            numNewCollections = $cn.data.Merch.newCollections.length;
+            direction = payload.args[0].direction;
+		
+		
+		if(elem.indexOf('activate') == -1 && document.getElementById('modalcontrol').style.display != 'block') {
+			
+			if(BrowseView.currentState == "merch-view"){
+				log.write("Merch page listening.");
+				
+				payload.preventDefault();
+			
+				switch(elem){
+					case "featuredpromotion":
+						if(direction === 'up'){
+							navigation.setFocusElement($('newcollections').getElement("a[titleidx='" + (numNewCollections - 1) + "']"));
+						}
+						if(direction === 'down'){
+							navigation.setFocusElement($('newcollections').getElement("a[titleidx='0']"));
+						}
+						else if(direction === 'right') {
+							navigation.setFocusElement($('newmovies').getElement("a[titleidx='0']"));
+						}
+						else if(direction === 'left') {
+							navigation.setFocusElement($('newmovies').getElement("a[titleidx='" + (numNewMovies - 1) + "']"));
+						}
+						break;
+					case "newmovie":
+						idx = parseInt($(application.element.current).get('titleidx'));
+						
+						if(direction === 'down'){
+							navigation.setFocusElement($('newtvshows').getElement("a[titleidx='" + idx + "']"));
+						}
+						if(direction === 'up'){
+							if(idx < 2){
+								navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='0']"));
+							}
+							else {
+								navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='1']"));
+							}
+						}
+						else if(direction === 'right') {
+							if(numNewMovies > idx + 1) {
+								navigation.setFocusElement($('newmovies').getElement("a[titleidx='" + (idx + 1) + "']"));
+							}
+							else {
+								navigation.setFocusElement($('featuredpromotion').getElement("a"));
+							}
+						}
+						else if(direction === 'left') {
+							if(idx > 0){
+								navigation.setFocusElement($('newmovies').getElement("a[titleidx='" + (idx - 1) + "']"));
+							}
+							else{
+								navigation.setFocusElement($('featuredpromotion').getElement("a"));
+							}
+						}
+						break;
+					case "newtvshows":
+						idx = parseInt($(application.element.current).get('titleidx'));
+						
+						if(direction === 'up'){
+							navigation.setFocusElement($('newmovies').getElement("a[titleidx='" + idx + "']"));
+						}
+						else if(direction === 'down'){
+							if(idx < 2) {
+								navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='0']"));
+							}
+							else {
+								navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='1']"));
+							}
+						}
+						else if(direction === 'right') {
+							if(numNewTVShows > idx + 1){
+								navigation.setFocusElement($('newtvshows').getElement("a[titleidx='" + (idx + 1) + "']"));
+							}
+							else {
+								navigation.setFocusElement($('newcollections').getElement("a"));
+							}
+						}
+						else if(direction === 'left') {
+							if(idx > 0){
+								navigation.setFocusElement($('newtvshows').getElement("a[titleidx='" + (idx - 1) + "']"));
+							}
+							else{
+								navigation.setFocusElement($('newcollections').getElement("a"));
+							}
+						}
+						break;
+					case "button":
+						idx = parseInt($(application.element.current).get('titleidx'));
+						
+						if(direction === 'up'){
+							navigation.setFocusElement($('newtvshows').getElement("a[titleidx='" + (idx === 0 ? 0 : 2) + "']"));
+						}
+						if(direction === 'down'){
+							navigation.setFocusElement($('newmovies').getElement("a[titleidx='" + (idx === 0 ? 0 : 2) + "']"));
+						}
+						else if(direction === 'right') {
+							if($cn.data.Merch.actionButtons.length > (idx + 1)){
+								navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='" + (idx + 1) + "']"));
+							}
+							else {
+								navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='0']"));
+							}
+						}
+						else if(direction === 'left') {
+						    navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='" + (idx ? 0 : 1) + "']"));
+						}
+						break;
+                    // Bottom left
+					case "collection":
+                        idx = parseInt($(application.element.current).get('titleidx'));
+
+                        if(direction === 'right') {
+                            navigation.setFocusElement($('newtvshows').getElement("a[titleidx='0']"));
+                        } else if(direction === 'left') {
+                            navigation.setFocusElement($('newtvshows').getElement("a[titleidx='" + (numNewTVShows - 1) + "']"));
+                        } else if (idx === 0 && direction === 'up') {
+                            // Off top
+                            navigation.setFocusElement($('featuredpromotion').getElement("a"));
+                        } else if (idx + 1 === numNewCollections && direction === 'down') {
+                            // Off bottom
+                            navigation.setFocusElement($('actionbuttoncontainer').getElement("a[titleidx='0']"));
+                        } else if (direction === 'up') {
+                            // Up within collection
+                            navigation.setFocusElement($('newcollections').getElement("a[titleidx='" + (idx - 1) + "']"));
+                        } else if(direction === 'down'){
+                            // Down within collection
+                            navigation.setFocusElement($('newcollections').getElement("a[titleidx='" + (idx + 1) + "']"));
+                        }
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+
+	},
+	/* Event handler that handles loading specific genres in the wheels (primary/secondary) */
+	loadgenreview: function(payload){
+		var p = payload.args[0],
+		parent = null,
+		child = null,
+		childCollection = null,
+		idx = 0,
+		parentidx = 0,
+		childidx = 0,
+		parentid = 0;
+
+        // First check that the genre id is available
+        // If it is not, go to the default wheel (new releases) instead of showing an error
+        if (! $cn.utilities.haveGenreId(p.id)) {
+            //BrowseView.showMessage("message_content", application.resource.merch_messages.genre_unavailable);
+            $("merchpage").hide();
+            BrowseView.goHome();
+            return;
+        }
+
+        // Hide merchpage, do not use this.hide, since we have overriden some things
+        $("merchpage").hide();
+        
+		//Loop all the child collections
+		for(var item in $cn.data.slaveWheel) {
+			
+			// Loop the slave wheel items to find the selected genre and set some default values	
+			$cn.data.slaveWheel[item].each(function(genre){
+				if(genre.iD == p.id){
+					parentid = genre.parentId;
+					childCollection = $cn.data.slaveWheel[item];
+					child = genre;
+					
+					//Loop the selected child collection to find the selected genre
+					childCollection.each(function(item){			
+						if(child.iD == item.iD){
+							childidx = idx;
+						}
+						idx++;
+					});
+				}
+			});
+		
+		}
+		
+		//Loop the master wheel to find the wheel index and set the parent element
+		idx = 0;
+		$cn.data.masterWheel.each(function(item){
+			
+			if(parentid == item.iD){
+				parentidx = idx;
+				parent = item;
+			}
+			idx++;
+		});
+
+		BrowseView.goHome();
+			
+	    BrowseView.WheelControl.loadData($cn.data.masterWheel, $cn.data.slaveWheel, parentidx);
+	    BrowseView.WheelControl._slaveWheel.render(childCollection, childidx);
+
+		/* Fire wheel events that will set the wheel and display the correct titles in the grid */
+		application.events.publish('wheelrendered', {
+			sourceid: "WheelControl",
+			source: "slavedatasource",
+			selectedidx: childidx,
+			selectedvalue:  child.iD
+		});	    	
+
+		application.events.publish('wheelitemchanged', {
+			wheelinstance: "WheelControl",
+			sourceid: "WheelControl",
+			source: "slavedatasource",
+			selectedidx:  childidx,
+			selectedvalue:  child.iD
+		});
+		
+		// Set Focus to first element in grid
+		var anchors = $('titlegrid').getElementsByTagName("a");
+		if (anchors.length > 0) {
+			navigation.setFocusElement($('titlegrid').getElement(anchors[0].id));
+		}
+		else
+			navigation.setFocus('selectedslave');
+
+
+	},
+	loadtitleview: function(payload){
+
+		//$('dock').show();
+		$("merchpage").hide();
+
+	},
+	hide: function(){
+		
+		BrowseView.hideExtras();
+		$('titlegrid').show();
+		$('wheel').show();
+		$('dock').show();
+		navigation.setFocus('selectedmaster');
+		$("merchpage").hide();
+		
+	},
+	onBack: function(payload) {
+		if (payload) {
+			payload.preventDefault();
+        }
+
+	},
+    onRestoreState: function() {
+        if (BrowseView.currentState === 'merch-view') {
+            $('merchpage').show();
+        }
+    }
+},
+MerchControl = new Class(MerchControlProperties);
+//-----------------------------------------------------------------------------
+// messagepopup.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var MessagePopup = new Class({
+	Extends:ModalControl,
+	id: 'messagepopup',
+	callback: null,
+	spinnerPos: 1,
+    spinnerTimer: null,
+	initialize: function(id){
+    	this.parent(id);
+	},
+	draw: function() {
+		this.parent();
+		
+		var red = false; //$('uicontainer').className == 'redbuttons';
+		
+		var vstart1 = -413;
+		var vstart2 = -461;
+		
+		if(!red) {
+			vstart1 = -1004;
+			vstart2 = -1052;
+		}
+		
+		if ($(this.contentId).getElement(".spinnercontainer")) {
+		
+			var self = this;
+			this.spinnerTimer = new Timer();
+			this.spinnerTimer.Interval = 80;
+			this.spinnerTimer.Tick = function(){
+				if (document.getElementById('messagespinner')) {
+					self.spinnerPosition = (self.spinnerPosition + 1) % 16;
+					
+					var hpos = self.spinnerPosition * 80 * -1;
+					var vpos = vstart1;
+					
+					if(self.spinnerPosition > 7) {
+						hpos = (self.spinnerPosition - 8) * 80 * -1;
+						vpos = vstart2;
+					}
+					
+					var spinner = document.getElementById('messagespinner');
+					spinner.style.backgroundPosition = parseInt(hpos) + 'px ' + vpos + 'px';
+				}
+			}
+		}
+	},
+	initSpinner: function(){
+		
+        log.write("Loading Data");        
+        application.IsBusy = true;      
+        this.spinnerPosition = 1;
+        this.spinnerTimer.Start();
+       
+	},
+	deinitSpinner: function(){
+		this.spinnerTimer.Stop();
+//		$('messagespinner').hide();
+	},
+	loadData: function(content) {
+		this.callback = content.callback;
+		this.parent([content]);
+	},
+	show: function(fullscreen) {
+		
+		// Hide the window so it doesn't show
+		// before we update the position
+		var window = $("ModalWindow");
+		window.setStyle("visibility","hidden");
+		
+		this.parent();
+		
+		// Position the dialog.  NOTE: Must be done after
+		// showing the dialog as the measurement routine
+		// for items with visiblity set to none cause problems
+		// with the zorder used by the modal code.
+		var contentSize = $("messagemodalwrap").getSize();
+		
+		if(!fullscreen)
+		{
+			window.setStyles( {
+				top: (($("uicontainer").clientHeight - contentSize.y) / 2) + "px",
+				height: contentSize.y + "px",
+				visibility: null
+			});
+		} else {
+			window.setStyles( {
+				visibility: null
+			});
+		}
+
+		if(this.spinnerTimer) {
+			this.initSpinner();
+		}
+		application.isBusy = true;
+		application.events.subscribe(this, "blockednavigate", this.blockBusy.bind(this));
+	},
+	hide: function(result) {
+
+		this.parent();
+		application.isBusy = false;
+		
+		if(this.spinnerTimer) {
+			this.deinitSpinner();
+		}
+
+        // Caching the Popup is needed for callback that wish to use methods attached to it
+        BrowseView.MessagePopupCached = BrowseView.MessagePopup;
+		BrowseView.MessagePopup = null;
+		
+		$("ModalWindow").setStyles( {
+			top: null,
+			height: null
+		});
+		
+		log.write("Hiding modal, and now calling callback...");
+		if (this.callback) {
+			this.callback(result);
+		}
+
+        // All calback have fired, we can now clear the cache.
+        BrowseView.MessagePopupCached = null;
+
+		application.events.unsubscribe(this, "blockednavigate");
+	},
+	blockBusy: function(payload){
+		
+		var modalBtns = document.getElementById('ModalWindow').getElementsByTagName('a'),
+			isModalClick = false,
+			x;
+		
+		for(x = 0; x < modalBtns.length; x++){
+			
+			if(modalBtns[x].id == application.element.current){
+				var payload = {
+					event: payload.args[0].event,
+					direction: payload.args[0].direction,
+					current: application.element.current
+				};
+				
+	    		application.events.publish("navigate", payload);			
+				break;
+			}
+		}
+	}
+});
+//-----------------------------------------------------------------------------
+// modal.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+/**
+ * @author jmccabe
+ */
+var ModalControlProperties = {
+	id: 'modalcontrol',
+	persist: {},
+    controls:{},
+    buttons:[],
+    layoutIsDirty: true,
+	_data: [],
+    tpl: null,
+    scroll:false,
+	lastFocus: null,
+	firstFocus: null,
+	contentControlId: '',
+    isNowVisible: false,
+    contentId: 'ModalContent',
+    initialize: function(id, newContentId){
+		this.id = id;
+		//log.write(this.id + ".tpl");
+		if(newContentId) {
+			this.contentId = newContentId;
+		}
+    
+		this.tpl = new ui.template(this.contentId, application.ui.loadTpl(this.id + ".tpl"));
+		this.tpl.compile();
+		//log.write(log.dump(this.tpl));
+		
+    },
+    setCssClass: function(id) {
+		$('modalcontrol').erase('class');
+		$('modalcontrol').addClass(id);
+		
+		if(id != this.id) {
+			$('modalcontrol').addClass(this.id);
+		}
+    },
+    init: function(params, direction){
+		log.write('modalcontrol.init()');		
+        this.hide();
+        //Persist Params
+        if(params) {
+            this.persist = params;               
+        }      
+	},
+	cleanUI: function(){
+//		if($('titledetailscontainer')) {
+//			if($('titledetailscontainer').getChildren().length > 0){
+//				$('titledetailscontainer').getChildren().destroy();
+//			}
+//		}
+	},
+	/*
+	 * Load data will:
+	 * 1) Set the HTML source and buttons for the modal view
+	 * 2) Render the local controls
+	 */
+	loadData: function(content) {
+        log.write("loadData modal.js");
+		this._data = [];
+		//this.saveHistory();
+		this._data = content;		
+		this.draw();
+	},
+	/* Apply the template */
+	draw: function(){
+		log.write("draw modal.js");
+//		if(document.getElementById('ModalWindow')) {
+//			var v = document.getElementById('ModalWindow');
+//	        var p = v.parentNode;
+//	        
+//	        application.putInnerHTML(v, '');
+//	        p.removeChild(v);
+//			
+//			/* Add fresh div to work with. This should keep the dom clean */
+//			var newViewContainer = document.createElement('div');
+//			newViewContainer.setAttribute('id','ModalWindow');
+//			p.appendChild(newViewContainer);
+//			
+//			this.tpl = new ui.template(this.contentId, application.ui.loadTpl(this.id + ".tpl"));
+//			this.tpl.compile();
+//		}
+		
+		var self = this;
+		this.cleanUI();
+		this.tpl.empty();
+		this._data.each(function(item) {
+			
+			//log.write("modal item: "+ log.dump(item));
+			self.tpl.append(item);
+			
+		});
+		var tplStatus = this.tpl.apply();
+
+		if (!this.firstFocus) {
+			var defaultFocus = $(this.contentId).getElement(".default");
+			if (defaultFocus) 
+				this.firstFocus = defaultFocus.id;
+		}
+	},
+	html: function(content) {
+		$(this.contentId).set('html', content);
+	},
+    resetFocus: function() {
+
+        log.write("resetting modal focus");
+        if(application.element.current != null && application.element.current != '' && document.getElementById(application.element.current)) {
+            this.lastFocus = application.element.current;
+        }
+    },
+	show: function() {
+        this.isNowVisible = true;
+		log.write("showing a modal");
+		if(application.element.current != null && application.element.current != '' && document.getElementById(application.element.current)) {
+			this.lastFocus = application.element.current;			
+		}
+	
+		if(this.firstFocus) {
+			navigation.setFocus(this.firstFocus);
+		}
+		
+		this.setCssClass(this.id);
+		
+		//Custom style handler to ensure that styles always get overridden.
+		var styles = (application.resource.modalConfig[this.id]) ? application.resource.modalConfig[this.id] : (application.resource.modalConfig["default"]);
+		
+		for (style in styles) {
+		    $("ModalWindow").setStyle(style, styles[style]);
+		}
+
+        log.write("making modalcontrol visible");
+		$("modalcontrol").show();
+        //log.write(XML.toString(document.getElementById("modalcontainer")));
+        
+		application.events.subscribe(this, 'back', this.onBack.bind(this));
+	},
+	hide: function() {
+        this.isNowVisible = false;
+        log.write("..... hiding modal .....");
+		application.events.unsubscribe(this, "back");
+		
+		if(this.lastFocus) {
+            if (this.lastFocus === "playerctl" && (!$('playerctl') || ! $('playerctl').style || ! $('playerctl').style.display || $('playerctl').style.display === "none")) {
+                log.write("modal title view set focus");
+                BrowseView.TitleViewControl.setFocus();
+            } else {
+                log.write("modal title view nav focus");
+			    navigation.setFocus(this.lastFocus);
+            }
+		} else {
+			navigation.setFocus('dock-home');
+		}
+		
+		$("modalcontrol").hide();
+		var modalWindow = document.getElementById("ModalWindow");
+	    modalWindow.removeAttribute("style");	    
+	},
+	onBack: function(payload) {
+		if (payload)
+			payload.preventDefault();
+			
+		this.hide();
+	},
+    startPlay: function(titleid, passid) {
+        log.write("start play");
+        //If this is a rental then show purchase warning
+        var self = this;
+        var timer = $cn.utilities.showLoadingModal(2000, "Loading Title...");
+        $cn.methods.getPurchasedTitle(passid, titleid, function(cb){
+            $cn.utilities.clearLoadingSpinner(timer);
+            /* If this title is not in the pass cache then add it. The pass cache is used to see if the HD stream is available */
+            log.write("Current Pass: " + passid);
+            if(!$cn.data.PassCache[passid]){
+                log.write("Adding pass to pass cache");
+                $cn.data.PassCache[passid] = cb;
+            }
+
+            var showRentalWarning = false,
+                rentalPeriod = "24";
+            for(x = 0; x < cb.availableProducts.length; x++){
+                if(cb.availableProducts[x].purchaseType == "rent"){
+                    if($cn.utilities.getMeta("LicensesDelivered", cb.metaValues) == "0"){
+                        showRentalWarning = true;
+                        rentalPeriod = cb.availableProducts[x].rentalPeriod;
+                        break;
+                    }
+                }
+            }
+            if(showRentalWarning) {
+                log.write("---- rental pathway -----");
+                var messagepath = application.resource.checkout_messages.Rental_Warning;
+                var data = {
+                    Message: messagepath.Message.replace("##name##", cb.name),
+                    Content: messagepath.Content.replace("##rentalperiod##", rentalPeriod).replace("##expirationmessage##", cb.expirationMessage.replace("Expires", "")),
+                    Close:  "No",
+                    OK: "Yes",
+                    callback: function(result) {
+                        if(result) {
+                            self.hide();
+                            BrowseView.showPlay(titleid, passid, 0);
+                        }
+                    }
+                };
+                BrowseView.showMessage("message_okcancel", data);
+            }
+            else {
+                log.write("---- not rental pathway -----");
+                BrowseView.showPlay(titleid, passid, 0);
+            }
+
+        }.bind(this));
+    }
+},
+ModalControl = new Class(ModalControlProperties);
+//-----------------------------------------------------------------------------
+// pinpopup.js
+// Copyright (c) 2012 - 2013, Rovi Corporation.  All rights reserved.
+//-----------------------------------------------------------------------------
+ 
+var PinPopup = new Class({
+	Extends:ModalControl,
+	id: 'pinpopup',
+    _pinValues: [-1,-1,-1,-1],
+    _currentIndex: 0,
+	show5: false,
+	callback: null,
+	hideCallback: null,
+	initialize: function(){
+    	this.parent('pinpopup');
+        application.events.subscribe(this, "navigate", this.navigate.bind(this));
+        application.events.subscribe(this, "elementfocus", this.focus.bind(this));
+        application.events.subscribe(this, "elementblur", this.blur.bind(this));
+	},
+	select: function(payload) {
+		if(application.element.current.indexOf('Pin') == 0 && application.element.current.length == 4) {
+			var count = this.show5 ? 5 : 4;
+			if(payload.context._currentIndex < count) {
+				payload.context._currentIndex++;
+				if (payload.context._currentIndex < count) {
+					payload.context.moveFocusItems(payload);
+					navigation.setFocus('Pin' + payload.context._currentIndex);
+				}
+			}
+			
+			if(payload.context._currentIndex == count) {
+				payload.context.checkPin();
+			}
+		}
+	},
+	flashArrow: function(direction){
+		$('PinFocusUp').removeClass('hover');
+		$('PinFocusDown').removeClass('hover');
+		
+		if(direction == 'up'){
+			$('PinFocusUp').addClass('hover');
+		}
+		else {
+			$('PinFocusDown').addClass('hover');
+		}
+		
+		setTimeout(function(){
+			$('PinFocusUp').removeClass('hover');
+			$('PinFocusDown').removeClass('hover');
+		},200);
+	},
+	navigate: function(payload) {
+		
+		if (document.getElementById(application.element.current) && $(application.element.current).hasClass('numeric')) {	
+			payload.preventDefault();
+			var swapVal = true;
+			var count = this.show5 ? 5 : 4;
+			
+			switch(payload.args[0].direction) {
+				case "up" :
+					if(payload.context._pinValues[payload.context._currentIndex] < 9) {
+						payload.context._pinValues[payload.context._currentIndex]++;
+					}
+					else if(payload.context._pinValues[payload.context._currentIndex] == 9) {
+						payload.context._pinValues[payload.context._currentIndex] = 0;
+					}
+					
+					this.flashArrow(payload.args[0].direction);
+					
+					break;
+					
+				case "down" :
+					if(payload.context._pinValues[payload.context._currentIndex] > 0) { 
+						payload.context._pinValues[payload.context._currentIndex]--;
+					}
+					else if(payload.context._pinValues[payload.context._currentIndex] <= 0) {
+						payload.context._pinValues[payload.context._currentIndex] = 9;
+					}
+					
+					this.flashArrow(payload.args[0].direction);
+					
+					break;
+				case "left":
+					if((application.element.current.replace(/Pin/, '') * 1) > 0) {
+						payload.context._pinValues[payload.context._currentIndex] = -1;
+						payload.context._pinValues[payload.context._currentIndex - 1] = -1;
+						application.navigator.setFocus("Pin" + (payload.context._currentIndex - 1));
+					}
+					else {
+						swapVal = false;
+						application.navigator.setFocus("PinCancel");
+					}
+					break;
+				case "right":
+					if((application.element.current.replace(/Pin/, '') * 1) < (count - 1)) {
+						if(payload.context._pinValues[payload.context._currentIndex] > -1) {
+							payload.context._pinValues[payload.context._currentIndex + 1] = -1;
+							application.navigator.setFocus("Pin" + (payload.context._currentIndex + 1));
+						}
+					}
+					else {
+						swapVal = false;
+						this.checkPin();
+					}
+					break;
+			}		
+			
+			if(swapVal) {
+				var val = payload.context._pinValues[payload.context._currentIndex];
+				document.getElementById(application.element.current).innerHTML = val == -1 ? '' : val;
+			}
+		}
+	},
+	moveFocusItems: function(payload) {
+		$('PinFocusUp').setStyle('left', (parseInt(application.resource.pinPopup.left) + (payload.context._currentIndex * 102) + 'px'));
+		$('PinFocusDown').setStyle('left', (parseInt(application.resource.pinPopup.left) + (payload.context._currentIndex * 102) + 'px'));
+	},
+	focus: function(payload) {
+		
+		if (application.element.current.indexOf('Pin') == 0 && application.element.current.length == 4) {
+			
+			payload.context._currentIndex = application.element.current.replace(/Pin/, '') * 1;
+			log.write('Current Index: ' + payload.context._currentIndex);
+			
+			payload.context._resetPins();
+			if(payload.context._pinValues[payload.context._currentIndex] < 0) {
+				payload.context._pinValues[payload.context._currentIndex] = -1;
+			}
+			
+			var val = payload.context._pinValues[payload.context._currentIndex];
+			document.getElementById(application.element.current).innerHTML = val == -1 ? '' : val;
+			
+			
+			$('PinFocusUp').show();
+			$('PinFocusDown').show();
+			
+			$('PinIncorrect').hide();
+			$('PinNav').show();
+			payload.context.moveFocusItems(payload);
+		}
+		
+		if(application.element.current == 'PinCancel') {
+			$('PinFocusUp').hide();
+			$('PinFocusDown').hide();			
+		}
+		
+	},
+	show : function() {
+		this._pinValues = [-1,-1,-1,-1];
+		this.lastFocus = application.element.current;
+		this.parent();
+		
+		if(!this.show5) {
+			$('Pin4').getParent().hide();	
+		} else {
+			$('Pin4').getParent().show();	
+		}
+		application.events.subscribe(this, "back", this.handleBack.bind(this));
+		application.events.subscribe(this, "keydown", this.handleKeyPress.bind(this));		
+	},
+	unsubEvents: function(){
+		application.events.unsubscribe(this, "back");
+		application.events.unsubscribe(this, "keydown");
+	},
+	handleBack: function(payload){
+		payload.preventDefault();
+		this.unsubEvents();
+		this.hide();
+	},	
+	handleKeyPress: function(payload){
+		
+		if (document.getElementById(application.element.current) && $(application.element.current).hasClass("numeric")) {
+		
+			switch (payload.args[0].event.keyCode) {
+				case application.keys.KEY_1:
+					this.setCurrentVal(1, payload);
+					break;
+				case application.keys.KEY_2:
+					this.setCurrentVal(2, payload);
+					break;
+				case application.keys.KEY_3:
+					this.setCurrentVal(3, payload);
+					break;
+				case application.keys.KEY_4:
+					this.setCurrentVal(4, payload);
+					break;
+				case application.keys.KEY_5:
+					this.setCurrentVal(5, payload);
+					break;
+				case application.keys.KEY_6:
+					this.setCurrentVal(6, payload);
+					break;
+				case application.keys.KEY_7:
+					this.setCurrentVal(7, payload);
+					break;
+				case application.keys.KEY_8:
+					this.setCurrentVal(8, payload);
+					break;
+				case application.keys.KEY_9:
+					this.setCurrentVal(9, payload);
+					break;
+				case application.keys.KEY_0:
+					this.setCurrentVal(0, payload);
+					break;
+				default:
+					break;
+			}
+		}
+	},
+	setCurrentVal: function(num, payload){
+		this._pinValues[this._currentIndex] = num;
+		document.getElementById(application.element.current).innerHTML = num == -1 ? '' : num;
+		this.select(payload);
+	},
+	blur: function(payload) {
+		
+		if (application.element.current == 'Pin0') {
+
+			payload.context._resetPins();
+			
+		}
+	},
+	_resetPins: function() {
+		for(var i=0; i < 5; i++) {
+			if(this._pinValues[i] > -1) {
+				$('Pin' + i).innerHTML = '*';			
+			} else {
+				$('Pin' + i).innerHTML = '';
+			}
+		}
+	},
+	checkPin: function() {
+		
+		if(this.show5) {
+			this._pinValues[4] = '';
+		}
+		
+		$('Pin3').innerHTML = '*';
+		var pin =  this._pinValues.join('');
+		var self = this;
+		
+		if(application.authSupported) {
+			application.isBusy = true;
+			navigation.setFocusElement(null);
+			$cn.methods.checkParentPin(pin, function(result){
+				application.isBusy = false;
+				
+				if(result) {
+					self.hide();
+					
+					self.unsubEvents();
+					
+					if(self.callback){
+						self.callback.call(self);
+					}
+				} 
+				else {
+					self._pinValues = [-1,-1,-1,-1];
+					self._resetPins();
+					self._currentIndex = 0;
+					
+					application.navigator.setFocus("Pin0");
+					
+					$('PinIncorrect').show();
+					$('PinNav').hide();
+				}
+			});		
+		}
+		else {
+			self._pinValues = [-1,-1,-1,-1];
+			self._resetPins();
+			self._currentIndex = 0;
+			$(application.element.current).innerHTML = 0;
+			application.navigator.setFocus("Pin0");
+			
+			
+			$('PinIncorrect').show();
+			$('PinNav').hide();
+		}
+	},
+	hide: function(){
+		this.unsubEvents();
+		this.parent();
+	},
+	cancel: function(){
+		this.hide();
+		
+		//log.write("$cn.data.InitialLoad: " + $cn.data.InitialLoad + ", $cn.data.ContentIsFiltered: " + $cn.data.ContentIsFiltered);
+		
+		//if (!$cn.data.ContentIsFiltered) {
+		//	BrowseView.reset();
+		//}
+	}
+});

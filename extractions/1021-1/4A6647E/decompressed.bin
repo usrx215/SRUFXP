@@ -1,0 +1,279 @@
+wseView.showPlayer(payload.args[0].titleID, payload.args[0].streamID, payload.args[0].url, payload.args[0].startTimeSeconds, payload.args[0].isHd, payload.args[0].passID);
+                                } else {
+                                    application.events.publish("error", {
+                                        type : "OnNetworkDisconnected", titleID : payload.args[0].titleID, streamID : payload.args[0].streamID, url : payload.args[0].url, startTimeSeconds : payload.args[0].startTimeSeconds, isHd : payload.args[0].isHd, passID : payload.args[0].passID
+                                    });
+                                }
+                            });
+                        } else {
+                            application.events.publish('back');
+                        }
+                    }
+                };
+
+                this.showMessage(messagetype, data);
+                break;
+            case "OnAuthenticationFailed":
+                data = {
+                    Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, OK : messagepath.OK, Close : messagepath.Cancel, callback : function(result) {
+                        log.write("Error (Recoverable)..." + result);
+                        if(result) {
+                            application.navigator.setFocus(BrowseView.PlayerControl.lastFocus);
+                            BrowseView.showPlayer(payload.args[0].titleID, payload.args[0].streamID, payload.args[0].url, payload.args[0].startTimeSeconds, payload.args[0].isHd, payload.args[0].passID, payload.args[0].availableClosedCaptions);
+                        } else {
+                            BrowseView.PlayerControl.hasError = false;
+                            BrowseView.PlayerControl._handleReturnKey();
+                        }
+                    }
+                };
+
+                this.showMessage(messagetype, data);
+                break;
+            case "OnStreamNotFound":
+            // Unrecoverable player errors
+            case "OnStreamNotFound_trailer":
+            case "OnRenderError":
+            case "OnWideVineError_513":
+            case "OnWideVineError_515":
+            case "OnWideVineError_516":
+            case "OnWideVineError_517":
+            case "OnWideVineError_520":
+            case "OnWideVineError_521":
+            case "OnWideVineError_522":
+            case "OnWideVineError_523":
+            case "OnWideVineError_524":
+            case "OnWideVineError_525":
+            case "OnWideVineError_550":
+            case "OnWideVineError_570":
+                data = {
+                    Message : messagepath.Message, Content : messagepath.Content, Footer : messagepath.Footer, Close : messagepath.Cancel, callback : function(result) {
+                        log.write("Error (Unrecoverable)...");
+                        application.events.publish("back");
+                    }
+                };
+
+                this.showMessage(messagetype, data);
+                break;
+            case "show_play_error":
+                state = payload.args[0].state;
+                titleID = (payload.args[0].titleID) ? payload.args[0].titleID : '';
+
+                messagepath = application.resource[payload.args[0].type][state];
+                messagetype = 'message_standard';
+
+                data = {
+                    Message : messagepath.Message, OK : messagepath.OK, callback : function() {
+                        if(state == "Not_Owned") {
+                            // Trying to play a movie that they don't own.
+                            // Reload page as library page
+                            application.events.publish('loadtitleview', {
+                                id : titleID, noSaveState : true
+                            });
+                        }
+                    }
+                };
+
+                self.showMessage(messagetype, data);
+                break;
+            case "connectiontooslow_error":
+            	if(BandwidthCheck.callbackType == "purchase") {
+            		messagepath = application.resource["player_messages"][(payload.args[0].isHd) ? "connectiontooslow_error_hd" : "connectiontooslow_error_sd"];
+            	} else if(BandwidthCheck.callbackType == "player"){
+            		messagepath = application.resource["player_messages"]["connectiontooslow_error"];
+            	}
+                messagetype = 'message_error_connectiontooslow';
+
+                data = {
+                    Message : messagepath.Message, Content : messagepath.Content, OK : messagepath.OK, callback : function(result) {
+                        var cbParams;
+
+                        if(result) {
+                            if(BandwidthCheck.callbackParams) {
+                                log.write("Calling bandwidthcheck success callback.");
+                                cbParams = BandwidthCheck.callbackParams;
+
+                                if(BandwidthCheck.callbackType == "purchase") {
+                                    BrowseView.orderIsProcessing = false;
+                                    BrowseView.goCheckOut(cbParams.titleid, cbParams.skuid, cbParams.couponcode, cbParams.pinValidated, cbParams.bandwidthValidated);
+                                } else if(BandwidthCheck.callbackType == "player") {
+                                    BrowseView.PlayerControl._play(cbParams.url, cbParams.resume);
+                                }
+                            }
+                        } else {
+                            if(BandwidthCheck.callbackType == "player") {
+                                BrowseView.PlayerControl.bandwidthError = true;
+                                log.write("stopping player, and backing out to tile view");
+                                application.events.publish("back");
+                            }
+                        }
+                    }
+                };
+
+                this.CurrentProcessLoaded = true;
+                this.showMessage(messagetype, data);
+                break;
+            case "connectiontooslow_error_player":
+                messagepath = application.resource["player_messages"]["connectiontooslow_error_player"];
+                messagetype = 'message_error_connectiontooslow_player';
+
+                data = {
+                    Message : messagepath.Message, 
+                    Content : messagepath.Content, 
+                    OK : messagepath.OK,
+                    Cancel: messagepath.Cancel, 
+                    callback : function(result) {
+                        var cbParams = payload.args[0];
+                        if(result) {                        
+                            BrowseView.PlayerControl._resume();                        
+                        } else {  
+                            log.write("stopping player, and backing out to tile view");
+                            application.events.publish("stop", {event: {keycode: 70}}); 
+                        }
+                    }
+                };
+
+                this.CurrentProcessLoaded = true;
+                // true is for full screen
+                this.showMessage(messagetype, data, true);
+                break;
+            case "askabouthdswap_error":
+                messagepath = application.resource["player_messages"]["askabouthdswap_error"];
+                messagetype = 'message_error_askabouthd';
+
+                data = {
+                    Message     : messagepath.Message,
+                    Content     : messagepath.Content,
+                    Footer      : messagepath.Footer,
+                    TryAgain    : messagepath.TryAgain,
+                    OK          : messagepath.OK,
+                    Cancel      : messagepath.Cancel,
+                    callback    : function(result) {
+
+                        // The parameters passed in by the error
+                        var cbParams = payload.args[0];
+                        switch(result) {
+                            case 'tryagain':                               
+                                BrowseView.PlayerControl._resume();
+                                break;
+                            case 'ok':
+                                BrowseView.PlayerControl._handleHdSwap();
+                                break;
+                            case 'cancel':
+                                application.events.publish("stop", {event: {keycode: 70}});
+                                break;
+                        }
+                    }
+                };
+
+                this.CurrentProcessLoaded = true;
+                // true is for full screen
+                this.showMessage(messagetype, data, true);
+                break;
+            default:
+                break;
+        }
+
+    }
+};
+
+function PlaybackBandwidthTest(p) {
+    var cbParams,
+        params = p.split('?'),
+        checkDate,
+        checkSpeed,
+        count,
+        totalSpeed,
+        errorMethod;
+
+    //log.write("p> " + p);
+    //Value is in bytes per second
+    switch(params[0]) {
+        case "SpeedUpdate":
+            checkSpeed = parseInt(params[1], 10);
+            if(checkSpeed >= 0) {
+                BrowseView.bwTempTotalSpeed += checkSpeed;
+                BrowseView.bwTempCount += 1;
+            }
+            log.write("PlaybackBandwidthTest: SpeedUpdate: checkSpeed " + checkSpeed + "   avgspeed " + (BrowseView.bwTempTotalSpeed / BrowseView.bwTempCount));
+            break;
+        case "ProgressUpdate":
+            BrowseView.bwPercentProgress = parseInt(params[1], 10);
+            if(BrowseView.bwPercentProgress % 10 == 0)
+                log.write("PlaybackBandwidthTest: ProgressUpdate: " + BrowseView.bwPercentProgress);
+            break;
+        case "Complete":
+            count = BrowseView.bwTempCount;
+            totalSpeed = BrowseView.bwTempTotalSpeed;
+            // Reset for future use
+            BrowseView.bwPercentProgress = 0;
+            BrowseView.bwTempCount = 0;
+            BrowseView.bwTempTotalSpeed = 0;
+
+            // 1 is successful test
+            if(1 !== parseInt(params[1], 10)) {
+                log.write("PlaybackBandwidthTest: Complete: Error! " + parseInt(params[1], 10));
+                if(BandwidthCheck.callbackParams) {
+                    cbParams = BandwidthCheck.callbackParams;
+                    if(BandwidthCheck.callbackType == "purchase") {
+                        // We are still processing the order until we show the error
+                        application.events.publish("error", {
+                            type : "while_purchase_bw_internet_out", "recoverable" : false, "method" : "doPurchase", "params" : cbParams
+                        });
+                    } else if(BandwidthCheck.callbackType == "player") {
+                        // Could publish error here
+                    }
+                }
+                // Do not keep going, or that gives a false positive for the BW test
+                return;
+            }
+            log.write("BW Test completed");
+            checkDate = new Date();
+            checkSpeed = parseInt(totalSpeed / count, 10);
+            $cn.data.LastBandwidthCheck = checkDate;
+            $cn.data.LastBandwidthSpeed = checkSpeed;
+
+            log.write("Speedtest: " + checkSpeed + " bytes per sec.");
+            log.write("BandwidthCheck.lastRan: " + BandwidthCheck.lastRan);
+            log.write("Recording connection speed (duration): " + $cn.utilities.DateDiff(checkDate, BandwidthCheck.lastRan));
+
+            //Save connection speed to server
+            $cn.methods.recordSessionConnectionSpeedTest($cn.utilities.DateDiff(checkDate, BandwidthCheck.lastRan), function() {
+                var cbParams = BandwidthCheck.callbackParams;
+                $cn.data.speedchecked = true;
+
+                log.write("bw speeed: " + checkSpeed + ", mini bw speed: " + BandwidthCheck.successCondition);
+
+                if(BrowseView.MessagePopup) {
+                    BrowseView.MessagePopup.hide();
+                }
+
+                if(checkSpeed < BandwidthCheck.successCondition) {
+                    if(BandwidthCheck.callbackType == "purchase"){
+                        errorMethod = "doPurchase";
+                    }else if(BandwidthCheck.callbackType == "player") {
+                        errorMethod = "player";			
+						BrowseView.PlayerControl._clearAllBufferTimeouts();		
+                    }
+                    log.write('Connection Too Slow error Method: '+ errorMethod);
+                    application.events.publish("error", {
+                        type : "connectiontooslow_error",
+                        "method" : errorMethod,
+                        "params" : cbParams,
+                        isHd : (BandwidthCheck.successCondition == application.appSetting("HDMinimumBandwidth"))
+                    });
+                } else {
+                    if(BandwidthCheck.callbackParams) {
+                        log.write("Calling bandwidthcheck success callback.");
+                        if(BandwidthCheck.callbackType == "purchase") {
+                            BrowseView.orderIsProcessing = false;
+                            BrowseView.goCheckOut(cbParams.titleid, cbParams.skuid, cbParams.couponcode, cbParams.pinValidated, cbParams.bandwidthValidated);
+                        } else if(BandwidthCheck.callbackType == "player") {
+                            //Start playback
+                            BrowseView.PlayerControl._play(cbParams.url, cbParams.resume);
+                        }
+                    }
+                }
+            });
+            break;
+    }
+}

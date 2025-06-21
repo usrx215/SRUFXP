@@ -1,0 +1,1387 @@
+an><span class="warning"> </span>
+                    </div>
+                    <div class="ipResults">
+                      IP Address: <span class="theResult"> </span>
+                    </div>
+                    <div class="emailResults">
+                      Registered Email Address: <span class="theResult"> </span>
+                    </div>
+                    <a class="button" id="results-more-details" action="BrowseView.showSystemDetails()" down="results-more-details">
+                      <span class="moreInfo">More Details</span>
+                    </a>
+                    <a class="button" id="results-test-again"  action="BrowseView.showSystemStatus()" down="results-test-again"> Test Again</a>
+                  </div>
+                </div>
+              </div>
+              <div id="UV" class="panel">
+                <div>
+                  <p class="white title">UltraViolet Account</p>
+                  <p id="uvInfoUsername" class="hidden">Sign-in Name: {uvName}</p>
+                  <p id="uvInfoEmail" class="hidden">Email: {uvEmail}</p>
+                  <p id="uvInfoStatus" class="hidden">Status: {uvStatus}</p>
+                  <p id="UVmessage"> {uvMessage}</p>
+
+                </div>
+              </div>
+              <div id="RoxioNow" class="panel">
+                <p class="white">Coming Soon.</p>
+              </div>
+              <div id="DeviceInfo" class="panel">
+                <p class="white">Test Setup Page</p>
+                <p>
+                  <span class="white">AffId</span>: {affid}<br />
+                  <span class="white">Model Number</span>: {modelnumber}<br />
+                  <span class="white">Environment</span>: {env}<br />
+                  <span class="white">Device Type ID</span>: {devicetype}<br />
+                  <span class="white">Device ID</span>: {deviceid}<br />
+                  <span class="white">Firmware Version</span>: {firmwareversion}<br />
+                  <span class="white">Version</span>: {version}<br />
+                  <span class="white">Current App Build</span>: {build} <br />
+                  <span class="white">Remote Logging</span>: {debugmode} <br />
+                  <span class="white">Current Country</span>: {countryid} <br />
+                  <span class="white">User-Agent</span>: {useragent}
+                </p>
+              </div>
+              <div id="ChangeEnvironment" class="panel">
+                <p class="white">Current Environment</p>
+                <p>
+                  <span class="white">End Point</span>: {env}<br /><br />
+                  <a id="chngenv" class="button" action="BrowseView.showChangeEnv()" >Change Environment</a>
+                </p>
+              </div>
+              <div id="ConfigurationValues" class="panel">
+                <p class="white">Configuration Values</p>
+                <p>
+                  <span class="white">Debug Mode</span>: <span id="cdebug">{logging}</span> <a id="btnToggleLogging" class="button" action="BrowseView.SettingsPanel.toggleDebug()" left="selectedslave" >Toggle Console Logging</a> <br />
+                  <span class="white hidden">Remote Logging</span>: <span id="cremote" class="hidden">{debugmode}</span> <a id="btnToggleDebug" class="button hidden" action="BrowseView.SettingsPanel.toggleRemoteLogging()" left="selectedslave" >Toggle Remote Logging</a><br />
+                  <span class="white">Flixster Enabled</span>: <span id="cflixster">{flixster}</span> <a id="btnToggleFlixster" class="button" action="BrowseView.SettingsPanel.toggleFlixster()" left="selectedslave" >Toggle Flixster</a><br />
+                  <span class="white">Jinni Enabled</span>: <span id="cjinni">{jinni}</span> <a id="btnToggleJinni" class="button" action="BrowseView.SettingsPanel.toggleJinni()" left="selectedslave" >Toggle Jinni</a><br />
+                  <span class="white">Baseline Enabled</span>: <span id="cbaseline">{baseline}</span> <a id="btnToggleBaseline" class="button" action="BrowseView.SettingsPanel.toggleBaseline()" left="selectedslave" >Toggle Baseline</a><br />
+
+                </p>
+              </div>
+              <div id="AudioSupport" class="panel">
+                <p class="white">Coming Soon.</p>
+              </div>
+              <div id="Format" class="panel">
+                <div>
+                  <p id="settingsaudioheader" class="white">Choose a preferred audio format.</p>
+
+                  <div id="SettingsFormatContainer">
+                    <div id="StereoContainer" class="audiocontainer @@BrowseView.SettingsPanel.showAudioFormat('Stereo')@@">
+                      <div id="stereocheck" class="chk checkbox_@@BrowseView.SettingsPanel.selectedAudioFormat('Stereo')@@">
+                        <a id="btnsettingsaudiostereo" rel="audioanchor" action="BrowseView.SettingsPanel.selectAudioFormat('stereocheck', 'Stereo')" left="selectedslave"  right="btnsettingsaudiostereo"> </a>
+                      </div>
+                      <div id="stereochecklabel">
+                        <div id="sstereochecklabel" class="white heading icon">
+                          <div class="label">Stereo</div>
+                          <div id="sstereoexpress"> </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="DtsContainer" class="audiocontainer @@BrowseView.SettingsPanel.showAudioFormat('DTS')@@ hidden">
+                      <div id="dtscheck" class="chk checkbox_@@BrowseView.SettingsPanel.selectedAudioFormat('DTS')@@">
+                        <a id="btnsettingsaudiodts" rel="audioanchor" action="BrowseView.SettingsPanel.selectAudioFormat('dtscheck', 'DTS')" left="selectedslave"  right="btnsettingsaudiodts"> </a>
+                      </div>
+                      <div id="dtschecklabel">
+                        <div id="sdtschecklabel" class="white heading icon">
+                          <div class="label">DTS-HD™</div>
+                        </div>
+                      </div>
+                      <div id="dtsexpress51" class="@@BrowseView.SettingsPanel.showAudioType('DTS_Express_51')@@"> </div>
+                      <div id="dtsexpress20" class="@@BrowseView.SettingsPanel.showAudioType('DTS_Express_Stereo')@@"> </div>
+                    </div>
+                    <div id="DolbyContainer" class="audiocontainer @@BrowseView.SettingsPanel.showAudioFormat('Dolby')@@">
+                      <div id="dolbycheck" class="chk checkbox_@@BrowseView.SettingsPanel.selectedAudioFormat('Dolby')@@">
+                        <a id="btnsettingsaudiodolby" rel="audioanchor" action="BrowseView.SettingsPanel.selectAudioFormat('dolbycheck','Dolby')" left="selectedslave" right="btnsettingsaudiodolby"> </a>
+                      </div>
+                      <div id="dolbychecklabel">
+                        <div id="sdolbychecklabel" class="white heading icon">
+                          <div class="label">Dolby® Digital Plus</div>
+                        </div>
+                      </div>
+                      <div id="dolby51" class="@@BrowseView.SettingsPanel.showAudioType('Dolby_Digital_Plus_51')@@">  </div>
+                      <div id="dolbyplus" class="@@BrowseView.SettingsPanel.showAudioType('Dolby_Digital_Plus_Stereo')@@"> </div>
+                    </div>
+                    <div id="AudioPromoContainer">
+                      <a id="btnchecksurroundsound" class="button hidden" action="BrowseView.SettingsPanel.checkSurroundSound()" rel="audioanchor" left="selectedslave" >Check Surround 5.1 Setup</a>
+                      <a id="btnplaylogo" class="button hidden" action="BrowseView.SettingsPanel.playLogo()" rel="audioanchor" left="selectedslave" >Play Logo</a>
+
+                      <div id="promotext">
+                        <p id="settingsaacselected" class="hidden white audiopromo">AAC 2-channel stereo audio. AAC audio is supported by the majority of playback devices.</p>
+                        <p id="settingsdtsselected" class="hidden white audiopromo">DTS-HD™ is an advanced surround sound technology that delivers a premium home theater experience.</p>
+                        <p id="settingsdolbyselected" class="hidden white audiopromo">Dolby® Digital Plus brings cinematic surround sound to on-demand streaming movies. Delivering full-impact, discrete multi-channel audio, this advanced technology dramatically improves the listening experience of online entertainment.</p>
+                        <p>5.1 surround available on select titles. If audio is mute, set the audio format to Stereo and try again.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="CCTextOpacity" class="panel ccSettingsPanel">
+                <div>
+                  <p class="white ccSettingsTitle">Choose a preferred closed captions text opacity:</p>
+                  <div id="SettingsCCTextOpacityContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCTextOpacityDefault" class="checkbox_@@($cn.data.CCTextOpacity==null)||($cn.data.CCTextOpacity=='auto')@@" style="width:100%">
+                      <a id="btnCCTextOpacityDefault" action="BrowseView.SettingsPanel.setCCTextOpacity('Default')" up="btnCCTextOpacitySemiTransparent" down="btnCCTextOpacityOpaque" left="selectedslave"> </a>
+                      <div class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCTextOpacityOpaque" class="checkbox_@@$cn.data.CCTextOpacity=='100'@@">
+                        <a id="btnCCTextOpacityOpaque" action="BrowseView.SettingsPanel.setCCTextOpacity('Opaque')" up="btnCCTextOpacityDefault" down="btnCCTextOpacitySemiTransparent" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Opaque</span>
+                        </div>
+                      </div>
+                      <div id="CCTextOpacitySemiTransparent" class="checkbox_@@$cn.data.CCTextOpacity=='50'@@">
+                        <a id="btnCCTextOpacitySemiTransparent" action="BrowseView.SettingsPanel.setCCTextOpacity('SemiTransparent')" up="btnCCTextOpacityOpaque" down="btnCCTextOpacityDefault" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Semi-Transparent</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+                </div>
+              </div>
+              <div id="CCTextEdging" class="panel ccSettingsPanel">
+                <div>
+                  <p class="white ccSettingsTitle">Choose a preferred closed captions text edging:</p>
+                  <div id="SettingsCCTextEdgingContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCTextEdgingAuto" class="checkbox_@@($cn.data.CCTextEdge==null)||($cn.data.CCTextEdge=='auto')@@" style="width:100%">
+                      <a id="btnCCEdgingFontAuto" action="BrowseView.SettingsPanel.setCCTextEdge('auto')" up="btnCCTextEdgingUniform" down="btnCCTextEdgingNone" left="selectedslave" right="btnCCTextEdgingDepressed"> </a>
+                      <div class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCTextEdgingNone" class="checkbox_@@$cn.data.CCTextEdge=='none'@@">
+                        <a id="btnCCTextEdgingNone" action="BrowseView.SettingsPanel.setCCTextEdge('none')" up="btnCCEdgingFontAuto" down="btnCCTextEdgingRaised" left="selectedslave" right="btnCCTextEdgingDepressed"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">None</span>
+                        </div>
+                      </div>
+                      <div id="CCTextEdgingRaised" class="checkbox_@@$cn.data.CCTextEdge=='raised'@@">
+                        <a id="btnCCTextEdgingRaised" action="BrowseView.SettingsPanel.setCCTextEdge('raised')" up="btnCCTextEdgingNone" down="btnCCTextEdgingUniform" left="selectedslave" right="btnCCTextEdgingDrop_shadowed"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Raised</span>
+                        </div>
+                      </div>
+                      <div id="CCTextEdgingUniform" class="checkbox_@@$cn.data.CCTextEdge=='uniform'@@">
+                        <a id="btnCCTextEdgingUniform" action="BrowseView.SettingsPanel.setCCTextEdge('uniform')" up="btnCCTextEdgingRaised" down="btnCCEdgingFontAuto" left="selectedslave" right="btnCCTextEdgingDrop_shadowed"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Uniform</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ccRightColum clearfix">
+                      <div id="CCTextEdgingDepressed" class="checkbox_@@$cn.data.CCTextEdge=='depressed'@@">
+                        <a id="btnCCTextEdgingDepressed" action="BrowseView.SettingsPanel.setCCTextEdge('depressed')" up="btnCCTextEdgingDrop_shadowed" down="btnCCTextEdgingDrop_shadowed" left="btnCCTextEdgingNone"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Depressed</span>
+                        </div>
+                      </div>
+                      <div id="CCTextEdgingDrop_shadowed" class="checkbox_@@$cn.data.CCTextEdge=='drop_shadowed'@@">
+                        <a id="btnCCTextEdgingDrop_shadowed" action="BrowseView.SettingsPanel.setCCTextEdge('drop_shadowed')" up="btnCCTextEdgingDepressed" down="btnCCTextEdgingDepressed" left="btnCCTextEdgingRaised"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Drop Shadowed</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+                </div>
+              </div>
+              <div id="CCTextFont" class="panel ccSettingsPanel">
+                <div>
+                  <p class="white ccSettingsTitle">Choose a preferred closed captions text font style:</p>
+                  <div id="SettingsCCTextFontContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCTextFontAuto" class="checkbox_@@($cn.data.CCFont==null)||($cn.data.CCFont=='auto')@@" style="width:100%">
+                      <a id="btnCCTextFontAuto" action="BrowseView.SettingsPanel.setCCTextFont('auto')" up="btnCCTextFontProportionalSansSerif" down="btnCCTextFontMonospaceSerif" left="selectedslave" right="btnCCTextFontCasual"> </a>
+                      <div class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCTextFontMonospaceSerif" class="checkbox_@@$cn.data.CCFont=='monospaceSerif'@@">
+                        <a id="btnCCTextFontMonospaceSerif" action="BrowseView.SettingsPanel.setCCTextFont('monospaceSerif')" up="btnCCTextFontAuto" down="btnCCTextFontMonospaceSansSerif" left="selectedslave" right="btnCCTextFontCasual"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading" style="font-family:CC_monospaceSerif;">Style 1</span>
+                        </div>
+                      </div>
+                      <div id="CCTextFontMonospaceSansSerif" class="checkbox_@@$cn.data.CCFont=='monospaceSansSerif'@@">
+                        <a id="btnCCTextFontMonospaceSansSerif" action="BrowseView.SettingsPanel.setCCTextFont('monospaceSansSerif')" up="btnCCTextFontMonospaceSerif" down="btnCCTextFontProportionalSerif" left="selectedslave" right="btnCCTextFontCursive"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading" style="font-family:CC_monospaceSansSerif;">Style 2</span>
+                        </div>
+                      </div>
+                      <div id="CCTextFontProportionalSerif" class="checkbox_@@$cn.data.CCFont=='proportionalSerif'@@">
+                        <a id="btnCCTextFontProportionalSerif" action="BrowseView.SettingsPanel.setCCTextFont('proportionalSerif')" up="btnCCTextFontMonospaceSansSerif" down="btnCCTextFontProportionalSansSerif" left="selectedslave" right="btnCCTextFontSmallCaps"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading" style="font-family:CC_proportionalSerif;">Style 3</span>
+                        </div>
+                      </div>
+                      <div id="CCTextFontProportionalSansSerif" class="checkbox_@@$cn.data.CCFont=='proportionalSansSerif'@@">
+                        <a id="btnCCTextFontProportionalSansSerif" action="BrowseView.SettingsPanel.setCCTextFont('proportionalSansSerif')" up="btnCCTextFontProportionalSerif" down="btnCCTextFontAuto" left="selectedslave" right="btnCCTextFontSmallCaps"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading" style="font-family:CC_proportionalSansSerif;">Style 4</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ccRightColum clearfix">
+                      <div id="CCTextFontCasual" class="checkbox_@@$cn.data.CCFont=='casual'@@">
+                        <a id="btnCCTextFontCasual" action="BrowseView.SettingsPanel.setCCTextFont('casual')" up="btnCCTextFontSmallCaps" down="btnCCTextFontCursive" left="btnCCTextFontMonospaceSerif"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading" style="font-family:CC_casual;">Style 5</span>
+                        </div>
+                      </div>
+                      <div id="CCTextFontCursive" class="checkbox_@@$cn.data.CCFont=='cursive'@@">
+                        <a id="btnCCTextFontCursive" action="BrowseView.SettingsPanel.setCCTextFont('cursive')" up="btnCCTextFontCasual" down="btnCCTextFontSmallCaps" left="btnCCTextFontMonospaceSansSerif"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading" style="font-family:CC_cursive;">Style 6</span>
+                        </div>
+                      </div>
+                      <div id="CCTextFontSmallCaps" class="checkbox_@@$cn.data.CCFont=='smallCaps'@@">
+                        <a id="btnCCTextFontSmallCaps" action="BrowseView.SettingsPanel.setCCTextFont('smallCaps')" up="btnCCTextFontCursive" down="btnCCTextFontCasual" left="btnCCTextFontProportionalSerif"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading" style="font-family:CC_smallCaps;">Style 7</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+                </div>
+              </div>
+              <div id="CCTextColor" class="panel ccSettingsPanel">
+                <div>
+                  <p id="CCTextColorHeader" class="white ccSettingsTitle">Choose a preferred closed captions text color:</p>
+                  <div id="SettingsCCTextColorContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCTextColorAuto" class="checkbox_@@($cn.data.CCTextColor==null)||($cn.data.CCTextColor=='auto')@@" style="width:100%">
+                      <a id="btnCCTextColorAuto" action="BrowseView.SettingsPanel.setCCTextColor('auto')" left="selectedslave" up="btnCCTextColorGreen" down="btnCCTextColorWhite" right="btnCCTextColorBlue"> </a>
+                      <div id="CCTextColorAutolabel" class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCTextColorWhite" class="checkbox_@@$cn.data.CCTextColor=='white'@@">
+                        <a id="btnCCTextColorWhite" action="BrowseView.SettingsPanel.setCCTextColor('white')" left="selectedslave" up="btnCCTextColorAuto" down="btnCCTextColorBlack" right="btnCCTextColorBlue"> </a>
+                        <div id="CCTextColorWhitelabel" class="checkboxlabel">
+                          <span class="white heading">White</span>
+                        </div>
+                      </div>
+                      <div id="CCTextColorBlack" class="checkbox_@@$cn.data.CCTextColor=='black'@@">
+                        <a id="btnCCTextColorBlack" action="BrowseView.SettingsPanel.setCCTextColor('black')" left="selectedslave" up="btnCCTextColorWhite" down="btnCCTextColorRed" right="btnCCTextColorYellow"> </a>
+                        <div id="CCTextColorBlacklabel" class="checkboxlabel">
+                          <span class="white heading">Black</span>
+                        </div>
+                      </div>
+                      <div id="CCTextColorRed" class="checkbox_@@$cn.data.CCTextColor=='red'@@">
+                        <a id="btnCCTextColorRed" action="BrowseView.SettingsPanel.setCCTextColor('red')" left="selectedslave" up="btnCCTextColorBlack" down="btnCCTextColorGreen" right="btnCCTextColorMagenta"> </a>
+                        <div id="CCTextColorRedlabel" class="checkboxlabel">
+                          <span class="white heading">Red</span>
+                        </div>
+                      </div>
+                      <div id="CCTextColorGreen" class="checkbox_@@$cn.data.CCTextColor=='green'@@">
+                        <a id="btnCCTextColorGreen" action="BrowseView.SettingsPanel.setCCTextColor('green')" left="selectedslave" up="btnCCTextColorRed" down="btnCCTextColorAuto" right="btnCCTextColorCyan"> </a>
+                        <div id="CCTextColorGreenlabel" class="checkboxlabel">
+                          <span class="white heading">Green</span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="ccRightColum clearfix">
+                      <div id="CCTextColorBlue" class="checkbox_@@$cn.data.CCTextColor=='blue'@@">
+                        <a id="btnCCTextColorBlue" action="BrowseView.SettingsPanel.setCCTextColor('blue')" up="btnCCTextColorCyan" down="btnCCTextColorYellow" left="btnCCTextColorWhite"> </a>
+                        <div id="CCTextColorBluelabel"  class="checkboxlabel">
+                          <span class="white heading">Blue</span>
+                        </div>
+                      </div>
+                      <div id="CCTextColorYellow" class="checkbox_@@$cn.data.CCTextColor=='yellow'@@">
+                        <a id="btnCCTextColorYellow" action="BrowseView.SettingsPanel.setCCTextColor('yellow')" up="btnCCTextColorBlue" down="btnCCTextColorMagenta" left="btnCCTextColorBlack"> </a>
+                        <div id="CCTextColorYellowlabel"  class="checkboxlabel">
+                          <span class="white heading">Yellow</span>
+                        </div>
+                      </div>
+                      <div id="CCTextColorMagenta" class="checkbox_@@$cn.data.CCTextColor=='magenta'@@">
+                        <a id="btnCCTextColorMagenta" action="BrowseView.SettingsPanel.setCCTextColor('magenta')" up="btnCCTextColorYellow" down="btnCCTextColorCyan" left="btnCCTextColorRed"> </a>
+                        <div id="CCTextColorMagentalabel"  class="checkboxlabel">
+                          <span class="white heading">Magenta</span>
+                        </div>
+                      </div>
+                      <div id="CCTextColorCyan" class="checkbox_@@$cn.data.CCTextColor=='cyan'@@">
+                        <a id="btnCCTextColorCyan" action="BrowseView.SettingsPanel.setCCTextColor('cyan')" up="btnCCTextColorMagenta" down="btnCCTextColorBlue" left="btnCCTextColorGreen"> </a>
+                        <div id="CCTextColorCyanlabel"  class="checkboxlabel">
+                          <span class="white heading">Cyan</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+              </div>
+              <div id="CCTextSize" class="panel ccSettingsPanel">
+                <div>
+                  <p id="CCTextSizeHeader" class="white ccSettingsTitle">Choose a preferred closed captions text size:</p>
+                  <div id="SettingsCCTextSizeContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCTextSizeDefault" class="checkbox_@@($cn.data.CCTextSize==null)||($cn.data.CCTextSize=='auto')@@" style="width:100%">
+                      <a id="btnCCTextSizeDefault" action="BrowseView.SettingsPanel.setCCTextSize('default')" left="selectedslave" up="btnCCTextSizeExtralarge" down="btnCCTextSizeSmall"> </a>
+                      <div id="CCTextSizeDefaultlabel" class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCTextSizeSmall" class="checkbox_@@$cn.data.CCTextSize=='75'@@">
+                        <a id="btnCCTextSizeSmall" action="BrowseView.SettingsPanel.setCCTextSize('small')" left="selectedslave" up="btnCCTextSizeDefault" down="btnCCTextSizeMedium"> </a>
+                        <div id="CCTextSizeWhitelabel" class="checkboxlabel">
+                          <span class="white heading">Small</span>
+                        </div>
+                      </div>
+                      <div id="CCTextSizeMedium" class="checkbox_@@$cn.data.CCTextSize=='100'@@">
+                        <a id="btnCCTextSizeMedium" action="BrowseView.SettingsPanel.setCCTextSize('medium')" left="selectedslave" up="btnCCTextSizeSmall" down="btnCCTextSizeLarge"> </a>
+                        <div id="CCTextSizeBlacklabel" class="checkboxlabel">
+                          <span class="white heading">Medium</span>
+                        </div>
+                      </div>
+                      <div id="CCTextSizeLarge" class="checkbox_@@$cn.data.CCTextSize=='125'@@">
+                        <a id="btnCCTextSizeLarge" action="BrowseView.SettingsPanel.setCCTextSize('large')" left="selectedslave" up="btnCCTextSizeMedium" down="btnCCTextSizeExtralarge"> </a>
+                        <div id="CCTextSizeRedlabel" class="checkboxlabel">
+                          <span class="white heading">Large</span>
+                        </div>
+                      </div>
+                      <div id="CCTextSizeExtralarge" class="checkbox_@@$cn.data.CCTextSize=='150'@@">
+                        <a id="btnCCTextSizeExtralarge" action="BrowseView.SettingsPanel.setCCTextSize('extralarge')" left="selectedslave" up="btnCCTextSizeLarge" down="btnCCTextSizeDefault"> </a>
+                        <div id="CCTextSizeExtralargelabel" class="checkboxlabel">
+                          <span class="white heading">Extra Large</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+              </div>
+              <div id="CCBackgroundColor" class="panel ccSettingsPanel">
+                <div>
+                  <p id="CCBackgroundColorHeader" class="white ccSettingsTitle">Choose a preferred closed captions background color:</p>
+                  <div id="SettingsCCBackgroundColorContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCBackgroundColorAuto" class="checkbox_@@($cn.data.CCBackgroundColor==null)||($cn.data.CCBackgroundColor=='auto')@@" style="width:100%">
+                      <a id="btnCCBackgroundColorAuto" action="BrowseView.SettingsPanel.setCCBackgroundColor('auto')" left="selectedslave" up="btnCCBackgroundColorGreen" down="btnCCBackgroundColorWhite" right="btnCCBackgroundColorBlue"> </a>
+                      <div id="CCBackgroundColorAutolabel" class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCBackgroundColorWhite" class="checkbox_@@$cn.data.CCBackgroundColor=='white'@@">
+                        <a id="btnCCBackgroundColorWhite" action="BrowseView.SettingsPanel.setCCBackgroundColor('white')" left="selectedslave" up="btnCCBackgroundColorAuto" down="btnCCBackgroundColorBlack" right="btnCCBackgroundColorBlue"> </a>
+                        <div id="CCBackgroundColorWhitelabel" class="checkboxlabel">
+                          <span class="white heading">White</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundColorBlack" class="checkbox_@@$cn.data.CCBackgroundColor=='black'@@">
+                        <a id="btnCCBackgroundColorBlack" action="BrowseView.SettingsPanel.setCCBackgroundColor('black')" left="selectedslave" up="btnCCBackgroundColorWhite" down="btnCCBackgroundColorRed" right="btnCCBackgroundColorYellow"> </a>
+                        <div id="CCBackgroundColorBlacklabel" class="checkboxlabel">
+                          <span class="white heading">Black</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundColorRed" class="checkbox_@@$cn.data.CCBackgroundColor=='red'@@">
+                        <a id="btnCCBackgroundColorRed" action="BrowseView.SettingsPanel.setCCBackgroundColor('red')" left="selectedslave" up="btnCCBackgroundColorBlack" down="btnCCBackgroundColorGreen" right="btnCCBackgroundColorMagenta"> </a>
+                        <div id="CCBackgroundColorRedlabel" class="checkboxlabel">
+                          <span class="white heading">Red</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundColorGreen" class="checkbox_@@$cn.data.CCBackgroundColor=='green'@@">
+                        <a id="btnCCBackgroundColorGreen" action="BrowseView.SettingsPanel.setCCBackgroundColor('green')" left="selectedslave" up="btnCCBackgroundColorRed" down="btnCCBackgroundColorAuto" right="btnCCBackgroundColorCyan"> </a>
+                        <div id="CCBackgroundColorGreenlabel" class="checkboxlabel">
+                          <span class="white heading">Green</span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="ccRightColum clearfix">
+                      <div id="CCBackgroundColorBlue" class="checkbox_@@$cn.data.CCBackgroundColor=='blue'@@">
+                        <a id="btnCCBackgroundColorBlue" action="BrowseView.SettingsPanel.setCCBackgroundColor('blue')" up="btnCCBackgroundColorCyan" down="btnCCBackgroundColorYellow" left="btnCCBackgroundColorWhite"> </a>
+                        <div id="CCBackgroundColorBluelabel"  class="checkboxlabel">
+                          <span class="white heading">Blue</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundColorYellow" class="checkbox_@@$cn.data.CCBackgroundColor=='yellow'@@">
+                        <a id="btnCCBackgroundColorYellow" action="BrowseView.SettingsPanel.setCCBackgroundColor('yellow')" up="btnCCBackgroundColorBlue" down="btnCCBackgroundColorMagenta" left="btnCCBackgroundColorBlack"> </a>
+                        <div id="CCBackgroundColorYellowlabel"  class="checkboxlabel">
+                          <span class="white heading">Yellow</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundColorMagenta" class="checkbox_@@$cn.data.CCBackgroundColor=='magenta'@@">
+                        <a id="btnCCBackgroundColorMagenta" action="BrowseView.SettingsPanel.setCCBackgroundColor('magenta')" up="btnCCBackgroundColorYellow" down="btnCCBackgroundColorCyan" left="btnCCBackgroundColorRed"> </a>
+                        <div id="CCBackgroundColorMagentalabel"  class="checkboxlabel">
+                          <span class="white heading">Magenta</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundColorCyan" class="checkbox_@@$cn.data.CCBackgroundColor=='cyan'@@">
+                        <a id="btnCCBackgroundColorCyan" action="BrowseView.SettingsPanel.setCCBackgroundColor('cyan')" up="btnCCBackgroundColorMagenta" down="btnCCBackgroundColorBlue" left="btnCCBackgroundColorGreen"> </a>
+                        <div id="CCBackgroundColorCyanlabel"  class="checkboxlabel">
+                          <span class="white heading">Cyan</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+              </div>
+              <div id="CCBackgroundOpacity" class="panel ccSettingsPanel">
+                <div>
+                  <p class="white ccSettingsTitle">Choose a preferred closed captions background opacity:</p>
+                  <div id="SettingsCCBackgroundOpacityContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCBackgroundOpacityAuto" class="checkbox_@@($cn.data.CCBackgroundOpacity==null)||($cn.data.CCBackgroundOpacity=='auto')@@" style="width:100%">
+                      <a id="btnCCBackgroundOpacityAuto" action="BrowseView.SettingsPanel.setCCBackgroundOpacity('auto')" up="btnCCBackgroundOpacityTransparent" down="btnCCBackgroundOpacityOpaque" left="selectedslave"> </a>
+                      <div class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCBackgroundOpacityOpaque" class="checkbox_@@$cn.data.CCBackgroundOpacity=='100'@@">
+                        <a id="btnCCBackgroundOpacityOpaque" action="BrowseView.SettingsPanel.setCCBackgroundOpacity('opaque')" up="btnCCBackgroundOpacityAuto" down="btnCCBackgroundOpacitySemiTransparent" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Opaque</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundOpacitySemiTransparent" class="checkbox_@@$cn.data.CCBackgroundOpacity=='50'@@">
+                        <a id="btnCCBackgroundOpacitySemiTransparent" action="BrowseView.SettingsPanel.setCCBackgroundOpacity('semiTransparent')" up="btnCCBackgroundOpacityOpaque" down="btnCCBackgroundOpacityTransparent" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Semi-Transparent</span>
+                        </div>
+                      </div>
+                      <div id="CCBackgroundOpacityTransparent" class="checkbox_@@$cn.data.CCBackgroundOpacity=='0'@@">
+                        <a id="btnCCBackgroundOpacityTransparent" action="BrowseView.SettingsPanel.setCCBackgroundOpacity('transparent')" up="btnCCBackgroundOpacitySemiTransparent" down="btnCCBackgroundOpacityAuto" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Transparent</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+                </div>
+              </div>
+              <div id="CCWindowColor" class="panel ccSettingsPanel">
+                <div>
+                  <p id="CCWindowColorHeader" class="white ccSettingsTitle">Choose a preferred closed captions window color:</p>
+                  <div id="SettingsCCWindowColorContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCWindowColorAuto" class="checkbox_@@($cn.data.CCWindowColor==null)||($cn.data.CCWindowColor=='auto')@@" style="width:100%">
+                      <a id="btnCCWindowColorAuto" action="BrowseView.SettingsPanel.setCCWindowColor('auto')" left="selectedslave" up="btnCCWindowColorGreen" down="btnCCWindowColorWhite" right="btnCCWindowColorBlue"> </a>
+                      <div id="CCWindowColorAutolabel" class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCWindowColorWhite" class="checkbox_@@$cn.data.CCWindowColor=='white'@@">
+                        <a id="btnCCWindowColorWhite" action="BrowseView.SettingsPanel.setCCWindowColor('white')" left="selectedslave" up="btnCCWindowColorAuto" down="btnCCWindowColorBlack" right="btnCCWindowColorBlue"> </a>
+                        <div id="CCWindowColorWhitelabel" class="checkboxlabel">
+                          <span class="white heading">White</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowColorBlack" class="checkbox_@@$cn.data.CCWindowColor=='black'@@">
+                        <a id="btnCCWindowColorBlack" action="BrowseView.SettingsPanel.setCCWindowColor('black')" left="selectedslave" up="btnCCWindowColorWhite" down="btnCCWindowColorRed" right="btnCCWindowColorYellow"> </a>
+                        <div id="CCWindowColorBlacklabel" class="checkboxlabel">
+                          <span class="white heading">Black</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowColorRed" class="checkbox_@@$cn.data.CCWindowColor=='red'@@">
+                        <a id="btnCCWindowColorRed" action="BrowseView.SettingsPanel.setCCWindowColor('red')" left="selectedslave" up="btnCCWindowColorBlack" down="btnCCWindowColorGreen" right="btnCCWindowColorMagenta"> </a>
+                        <div id="CCWindowColorRedlabel" class="checkboxlabel">
+                          <span class="white heading">Red</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowColorGreen" class="checkbox_@@$cn.data.CCWindowColor=='green'@@">
+                        <a id="btnCCWindowColorGreen" action="BrowseView.SettingsPanel.setCCWindowColor('green')" left="selectedslave" up="btnCCWindowColorRed" down="btnCCWindowColorAuto" right="btnCCWindowColorCyan"> </a>
+                        <div id="CCWindowColorGreenlabel" class="checkboxlabel">
+                          <span class="white heading">Green</span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="ccRightColum clearfix">
+                      <div id="CCWindowColorBlue" class="checkbox_@@$cn.data.CCWindowColor=='blue'@@">
+                        <a id="btnCCWindowColorBlue" action="BrowseView.SettingsPanel.setCCWindowColor('blue')" up="btnCCWindowColorCyan" down="btnCCWindowColorYellow" left="btnCCWindowColorWhite"> </a>
+                        <div id="CCWindowColorBluelabel"  class="checkboxlabel">
+                          <span class="white heading">Blue</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowColorYellow" class="checkbox_@@$cn.data.CCWindowColor=='yellow'@@">
+                        <a id="btnCCWindowColorYellow" action="BrowseView.SettingsPanel.setCCWindowColor('yellow')" up="btnCCWindowColorBlue" down="btnCCWindowColorMagenta" left="btnCCWindowColorBlack"> </a>
+                        <div id="CCWindowColorYellowlabel"  class="checkboxlabel">
+                          <span class="white heading">Yellow</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowColorMagenta" class="checkbox_@@$cn.data.CCWindowColor=='magenta'@@">
+                        <a id="btnCCWindowColorMagenta" action="BrowseView.SettingsPanel.setCCWindowColor('magenta')" up="btnCCWindowColorYellow" down="btnCCWindowColorCyan" left="btnCCWindowColorRed"> </a>
+                        <div id="CCWindowColorMagentalabel"  class="checkboxlabel">
+                          <span class="white heading">Magenta</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowColorCyan" class="checkbox_@@$cn.data.CCWindowColor=='cyan'@@">
+                        <a id="btnCCWindowColorCyan" action="BrowseView.SettingsPanel.setCCWindowColor('cyan')" up="btnCCWindowColorMagenta" down="btnCCWindowColorBlue" left="btnCCWindowColorGreen"> </a>
+                        <div id="CCWindowColorCyanlabel"  class="checkboxlabel">
+                          <span class="white heading">Cyan</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+              </div>
+              <div id="CCWindowOpacity" class="panel ccSettingsPanel">
+                <div>
+                  <p class="white ccSettingsTitle">Choose a preferred closed captions window opacity:</p>
+                  <div id="SettingsCCWindowOpacityContainer" class="CCSettingsContainer clearfix">
+                    <div id="CCWindowOpacityAuto" class="checkbox_@@($cn.data.CCWindowOpacity==null)||($cn.data.CCWindowOpacity=='auto')@@" style="width:100%">
+                      <a id="btnCCWindowOpacityAuto" action="BrowseView.SettingsPanel.setCCWindowOpacity('auto')" up="btnCCWindowOpacityTransparent" down="btnCCWindowOpacityOpaque" left="selectedslave"> </a>
+                      <div class="checkboxlabel">
+                        <span class="white heading">Default</span>
+                      </div>
+                    </div>
+                    <div class="ccLeftColum clearfix">
+                      <div id="CCWindowOpacityOpaque" class="checkbox_@@$cn.data.CCWindowOpacity=='100'@@">
+                        <a id="btnCCWindowOpacityOpaque" action="BrowseView.SettingsPanel.setCCWindowOpacity('opaque')" up="btnCCWindowOpacityAuto" down="btnCCWindowOpacitySemiTransparent" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Opaque</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowOpacitySemiTransparent" class="checkbox_@@$cn.data.CCWindowOpacity=='50'@@">
+                        <a id="btnCCWindowOpacitySemiTransparent" action="BrowseView.SettingsPanel.setCCWindowOpacity('semiTransparent')" up="btnCCWindowOpacityOpaque" down="btnCCWindowOpacityTransparent" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Semi-Transparent</span>
+                        </div>
+                      </div>
+                      <div id="CCWindowOpacityTransparent" class="checkbox_@@$cn.data.CCWindowOpacity=='0'@@">
+                        <a id="btnCCWindowOpacityTransparent" action="BrowseView.SettingsPanel.setCCWindowOpacity('transparent')" up="btnCCWindowOpacitySemiTransparent" down="btnCCWindowOpacityAuto" left="selectedslave"> </a>
+                        <div class="checkboxlabel">
+                          <span class="white heading">Transparent</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ClosedCaptionPreview">@@BrowseView.SettingsPanel.getClosedCaptionPreview()@@</div>
+                </div>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="checkoutpanel">
+      <layout>
+        <tpl id="cartdetails.tpl">
+          <div>
+            <div class="subtotal row">
+              <div class="col1">Item Subtotal:</div>
+              <div class="col2">${amount_subtotal}</div>
+            </div>
+            <div class="coupon row hidden">
+              <div class="col1">Coupon(s):</div>
+              <div class="col2">-${amount_coupon}</div>
+            </div>
+            <div class="giftcard_coupon row hidden">
+              <div class="col1">Gift Card(s) and Coupon(s):</div>
+              <div class="col2">-${amount_total_discount}</div>
+            </div>
+            <div class="giftcard row hidden">
+              <div class="col1">Gift Card(s) and Coupon(s):</div>
+              <div class="col2">-${amount_giftcard}</div>
+            </div>
+            <div class="taxes row hidden">
+              <div class="col1">Applicable Taxes:</div>
+              <div class="col2">${amount_tax}</div>
+            </div>
+            <div class="total row white">
+              <div class="col1">
+                Total to {total_confirm}: <span class="white"> *</span>
+              </div>
+              <div class="col2">${amount_total}</div>
+            </div>
+            <div class="cccard row white hide">
+              <div class="col1">Credit Card ending in {lastfour}:</div>
+              <div class="col2">${amount_total}</div>
+            </div>
+            <div id="taxesString">{tax_string}</div>
+          </div>
+        </tpl>
+        <tpl id="checkout.buy">
+          <div id="checkout1" class="panel">
+            <div id="checkout_top">
+              <div class="title">{name}</div>
+              <div class="rating metafield">
+                <div id="ratingicon" class="{mPAARating}"> </div>
+              </div>
+              <div class="subtitle">@@BrowseView.TitleViewControl.getEpisodeShowSeason()@@</div>
+              <div class="subtitle">{episode}</div>
+              <div id="checkout_message">{message}</div>
+              <div id="cartdetails">
+              </div>
+            </div>
+            <div id="cartButtons" class="buttons">
+              <a id="checkout_order" class="button default" action="BrowseView.CheckoutPanel.goCheckOut()" rightaction="false" up="checkout_payment" down="checkout_redeem">Place Order</a>
+              <a id="checkout_redeem" class="button" action="BrowseView.goGiftCard(true,{sku})" up="checkout_order" down="checkout_payment">Redeem Gift Card or Coupon</a>
+              <div class="half">
+                <a id="checkout_payment" class="button left" action="BrowseView.CheckoutPanel.goPaymentBreakdown()" up="checkout_redeem" down="checkout_order" right="checkout_cancel">Payment Breakdown</a>
+                <a id="checkout_cancel" class="button right" action="BrowseView.showTitleDetails()" left="checkout_payment" up="checkout_redeem" down="checkout_order">Cancel Order</a>
+              </div>
+              <div id="mpaaWarning" >
+                <div id='movieWarning' class="hidden">Warning: This video is intended for mature audiences only. It may contain violence, sexual content, drug abuse and/or strong language. You must be 17 or older to Rent or Buy. By purchasing this item you are certifying that you are at least 17 years of age.</div>
+                <div id='tvWarning' class="hidden">Warning: This program is specifically designed to be viewed by adults and therefore may be unsuitable for children under 17. This program contains one or more of the following: graphic violence, explicit sexual activity or crude indecent language. You must be 17 or older to Rent or Buy. By purchasing this item you are certifying you are at least 17 years of age.</div>
+                <div id='matureWarning' class="hidden">Warning: This video is intended for mature audiences only. It contains explicit, sexually-orientated content and is intended for adults only. By purchasing this video you are certifying that you are over the age of 18 and an adult, as defined by the laws of the location in which you are currently located.</div>
+              </div>
+              <ul id="checkoutProductList" class="">
+                <li id="promotext" class="hidden">{merchstring}</li>
+                <li id="previousrental" class="hidden">Special upgrade price due to previous rental (normally ${amount_total})!</li>
+                <li id="previousSDpurchase" class="hidden">Special upgrade price due to previous SD purchase (normally ${amount_total})!</li>
+                <li id="specialpreorderprice" class="hidden">Special pre-order price!</li>
+                <li class="ownIt hidden">Own it today!</li>
+                <li class="checkoutRental hidden">Rent it today!</li>
+                <li id="uvPlayback" class="hidden">Playback on UltraViolet-enabled devices</li>
+                <li id="720phd" class="hidden">Stunning HD video</li>
+                <li id="1080phd" class="hidden">Stunning HD video</li>
+                <li class="checkoutRentalSD hidden">Easy 1-click rental with no trips to the video store</li>
+                <li id="digitalextras" class="hidden">Rovi Digital Extras included (playback available on select devices. Go to {extrasUrl} to learn more.)</li>
+                <li class="d2dCheckout hidden">Make digital copies of disc you already own</li>
+                <li class="d2dCheckout hidden">Playback Disc to Digital content on any device</li>
+                <li class="d2dCheckout hidden">Keep a safe on-line locker of all your media</li>
+                <li id="singlePlayback" class="hidden">Plays back on any CinemaNow-enabled device</li>
+                <li id="multiPlayback" class="hidden">Safely stored in your library for playback on any CinemaNow-enabled device</li>
+                <li class="ownIt hidden">Start building your movie library in the cloud</li>
+                <li id="3Dhd" class="hidden">Immersive, ultra realistic 3D HD video</li>
+              </ul>
+
+            </div>
+          </div>
+        </tpl>
+        <tpl id="checkout.freepreview">
+          <div id="checkout1" class="panel">
+            <div class="title">
+              {name} <div class="rating metafield">
+                <div id="ratingicon" class="{mPAARating}"> </div>
+              </div>
+            </div>
+            <div> </div>
+          </div>
+          <div class="buttons">
+            <a class="button" action="BrowseView.showFreePreview()">Play</a>
+          </div>
+        </tpl>
+        <div id="checkout_container"> </div>
+      </layout>
+    </control>
+    <control id="giftcard">
+      <layout>
+        <div id="giftcard">
+          <tpl id="giftcard.tpl">
+            <div class="giftcardcontent">
+              <p class="white heading">{headingTxt}</p>
+              <div id="giftcodeerror" class="error"> </div>
+              <div>
+                <a id="gcredeem" class="button" action="BrowseView.GiftCardPanel.redeem()" left="SkinnyTopBack" up="gcdone" down="gcdone">Redeem</a>
+                <a id="gcdone" class="button" action="BrowseView.hideGiftCard()" left="SkinnyTopBack" down="gcredeem">Close</a>
+                <div class="msgcontainer">
+                  <div class="msgelements">
+                    <div id="giftcodesredeemed" class="msgelement" >
+                      <span id="giftcodename" class="msgelemlabel">Total Redeemed Gift Cards:</span>
+                      <span id="giftcodetotal" class="msgelemvalue"> </span>
+                    </div>
+                    <div id="couponseredeemed" class="msgelement">
+                      <span id="couponname" class="msgelemlabel">Coupon:</span>
+                      <span id="coupontotal" class="msgelemvalue"> </span>
+                    </div>
+                    <div style="height:23px"> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="librarypanel">
+      <layout>
+        <div id="library">
+          <div id="librarytop">
+            <p class="white">Your Library is empty.</p>
+            <p>Press the Browse Store button, and browse for new movies or TV shows.</p>
+            <p class="libraryActivate">Activate your device to access videos in your Library.</p>
+            <div class="buttons">
+              <a id="btnLibraryActivate" action="BrowseView.Library.onActivate()" left="dock-library" down="btnLibraryActivate" class="button libraryActivate">Activate</a>
+              <a id="btnLibraryBrowseStore" action="BrowseView.goHome()" down="btnLibraryBrowseStore" class="button">Browse Store</a>
+            </div>
+          </div>
+        </div>
+      </layout>
+    </control>
+    <control id="messagepanel">
+      <layout>
+        <div>
+          <!-- This is required so compiler won't complain -->
+        </div>
+        <tpl id="wishlist_empty.tpl">
+          <div id="messagepanel_container">
+            <p class="white">Your Wish List is empty.</p>
+            <p>Press the Browse Store button, and browse for new movies or TV shows.</p>
+            <div class="buttons">
+              <a id="btnWishListHome" action="BrowseView.goHome()" class="button default" left="dock-wishlist" down="btnWishListHome">Browse Store</a>
+            </div>
+          </div>
+        </tpl>
+        <tpl id="wishlist_notactivated.tpl">
+          <div id="messagepanel_container">
+            <p class="white">Your Wish List is empty.</p>
+            <p>Press the Browse Store button, and browse for new movies or TV shows.</p>
+            <p>Activate your device to see your current Wish List.</p>
+            <div class="buttons">
+              <a id="btnWishListActivate" action="BrowseView.WishList.onActivate()" class="button default" left="dock-wishlist" down="btnWishListActivate" right="btnWishListHome">Activate</a>
+              <a id="btnWishListHome" action="BrowseView.goHome()" class="button" down="btnWishListHome" left="btnWishListActivate">Browse Store</a>
+            </div>
+          </div>
+        </tpl>
+      </layout>
+    </control>
+    <control id="player">
+      <layout>
+        <div id="PlayerLoading">
+          <div id="PlayerLogo"> </div>
+          <div id="PlayerSpinner"> </div>
+          <div id="PlayerLoadingProgressContainer">
+            <div id="PlayerLoadingProgress"> </div>
+          </div>
+          <div id="PlayerLoadingTitle"> </div>
+          <div id="PlayerLoadingCancel">
+            <a id="PlayerLoadingCancelButton" action="application.events.publish('back', {})" class="button">Cancel</a>
+          </div>
+          <div id="PlayerLoadingDescription"> </div>
+          <div id="SplashPoweredBy"> </div>
+          <div class="SplashCopyright">&#169; 2013 RMH All Rights Reserved.</div>
+        </div>
+        <div id="PlayerLoadingResume">
+          <div id="PlayerSpinnerResume"> </div>
+          <div id="PlayerLoadingResumeText">Loading Video...</div>
+        </div>
+        <div id="PlayerContainer" class="play">
+          <div id="TransportCenter">
+            <div id="TransportRW" class="trickplay white"> </div>
+            <div id="TransportFF" class="trickplay white"> </div>
+            <div id="TransportPause" class="trickplay white"> </div>
+            <div id="TransportSkipFF" class="trickplay white"> </div>
+            <div id="TransportSkipRW" class="trickplay white"> </div>
+          </div>
+          <div id="PlayerTop">
+            <div id="VideoTitle" class="white"> </div>
+            <div id="VideoSummary"> </div>
+            <div id="VideoQuality" style="position: relative">
+              <div id="audiotype"> </div>
+              <div id="BitrateNewSD" style="position: relative"> </div>
+              <div id="BitrateNewHD" style="position: relative"> </div>
+              <div class="videobadges" style="position: relative">
+                <div id="surround"> </div>
+                <div id="HD"> </div>
+              </div>
+              <div id="BitrateText" style="position: relative"> </div>
+              <div id="Bitrate"> </div>
+              <div id="audiobadges_player">
+                <span id="dtsexpress51_player" class="audiofield"> </span>
+                <span id="dtsexpress20_player" class="audiofield"> </span>
+                <span id="dolby51_player" class="audiofield"> </span>
+                <span id="dolbyplus_player" class="audiofield"> </span>
+             </div>
+            </div>
+          </div>
+          <div id="PlayerLocateBottom">
+            <div id="PlayerLocateBar">
+              <span id="Trick">
+                <div id="TrickRW" class="white"> </div>
+                <div id="TrickFF" class="white"> </div>
+                <div id="TrickSkipFF" class="white"> </div>
+                <div id="TrickSkipRW" class="white"> </div>
+                <div id="TrickText" class="white"> </div>
+              </span>
+              <div id="CurrentTime" class="white"> </div>
+              <div id="TimeSpent">0:00</div>
+              <div id="TimeRemain">0:00</div>
+              <div id="VideoProgressBG">
+                <div id="VideoStateIcon"> </div>
+                <div id="VideoProgressContainer" mousedownaction="log.write('onmousedown click on VideoProgressContainer')">
+                  <a id="playerlocate" class="button" mousedownaction="log.write('onmousedown click on playerlocate')" pointermouseout="log.write('onmouseout on playerlocate')" action="BrowseView.PlayerControl.onLocateToPosition()" up="transportPlayPause" down="transportPlayPause" left="playerlocate" right="playerlocate"> </a>
+                  <div id="VideoProgress"> </div>
+                  <div id="VideoProgressShade" mousedownaction="log.write('onmousedown click on VideoProgressShade')"> </div>
+                </div>
+              </div>
+            </div>
+            <div id="PlayerTransportBar">
+              <a id="transportSkipRW" class="playerbutton" action="BrowseView.PlayerControl.onTransportSkipRW()" up="playerlocate" down="playerlocate" left="CCState" right="transportRW"> </a>
+              <a id="transportRW" class="playerbutton" action="BrowseView.PlayerControl.onTransportRW()" up="playerlocate" down="playerlocate" left="transportSkipRW" right="transportPlayPause"> </a>
+              <a id="transportPlayPause" class="playerbutton" action="BrowseView.PlayerControl.onTransportPlayPause()" up="playerlocate" down="playerlocate" left="transportRW" right="transportStop"> </a>
+              <a id="transportStop" class="playerbutton" action="BrowseView.PlayerControl.onTransportStop()" up="playerlocate" down="playerlocate" left="transportPlayPause" right="transportFW"> </a>
+              <a id="transportFW" class="playerbutton" action="BrowseView.PlayerControl.onTransportFF()" up="playerlocate" down="playerlocate" left="transportStop" right="transportSkipFW"> </a>
+              <a id="transportSkipFW" class="playerbutton" action="BrowseView.PlayerControl.onTransportSkipFF()" up="playerlocate" down="playerlocate" left="transportFW" right="CCState"> </a>
+            </div>
+            <div id="ClosedCaptionIcon">
+              <a id="CCState" class="CCUnavailableOff" left="transportSkipFW" action="BrowseView.PlayerControl.onClosedCaptionToggle()" up="playerlocate" down="playerlocate" right="transportSkipRW" pointerfocus="BrowseView.PlayerControl.focusClosedCaptionToggle()"> </a>
+            </div>
+          </div>
+          <div id="ClosedCaption">
+            <div id="TimedTexts"><div id="TimedText0"> </div><div id="TimedText1"> </div><div id="TimedText2"> </div><div id="TimedText3"> </div></div>
+          </div>
+        </div>
+        <a id="playerctl"> </a>
+      </layout>
+    </control>
+    <control id="helppanel">
+      <layout>
+        <div>
+          <!-- This comment is neccessary so that the packager does not get angry -->
+        </div>
+        <tpl id="helppanel.tpl">
+          <div id="helpcontainer">
+            <div id="Custom" class="panel">
+              {custom}
+            </div>
+            <div id="BrowsingStore" class="panel">
+              <p class="heading white">BROWSING THE CINEMANOW STORE</p>
+              <ol class="field_@@BrowseView.HelpPanel.hideIfNoJinni()@@">
+                <li>
+                  <span>Select the Store button in the dock on the left side.</span>
+                </li>
+                <li>
+                  <span>On the Store page, choose a main browse category from the left wheel, e.g. "Movies".</span>
+                </li>
+                <li>
+                  <span>Choose a filter option from the right wheel, e.g. "New Releases".</span>
+                </li>
+                <li>
+                  <span>Select a title in the grid and use the Enter remote button to view the details page.</span>
+                </li>
+                <li>
+                  <span>To purchase the title, select the Rent/Buy button.</span>
+                </li>
+                <li>
+                  <span>To find similar titles, select the Similar button.</span>
+                </li>
+                <li>
+                  <span>To learn more about the title, select the More Info button.</span>
+                </li>
+                <li>
+                  <span>To rate a title, select the Rate It button and use the Left and Right remote buttons to set your rating.</span>
+                </li>
+                <li>
+                  <span>To browse individual seasons/episodes in a TV show, select the Seasons/Episodes button.</span>
+                </li>
+              </ol>
+              <ol class="field_@@BrowseView.HelpPanel.showIfNoJinni()@@">
+                <li>
+                  <span>Select the Store button in the dock on the left side.</span>
+                </li>
+                <li>
+                  <span>On the Store page, choose a main browse category from the left wheel, e.g. "Movies".</span>
+                </li>
+                <li>
+                  <span>Choose a filter option from the right wheel, e.g. "New Releases".</span>
+                </li>
+                <li>
+                  <span>Select a title in the grid and use the Enter remote button to view the details page.</span>
+                </li>
+                <li>
+                  <span>To purchase the title, select the Rent/Buy button.</span>
+                </li>
+                <li>
+                  <span>To rate a title, select the Rate It button and use the Left and Right remote buttons to set your rating.</span>
+                </li>
+                <li>
+                  <span>To browse individual seasons/episodes in a TV show, select the Seasons/Episodes button.</span>
+                </li>
+              </ol>
+            </div>
+            <div id="Searching" class="panel">
+              <p class="heading white">SEARCHING THE CINEMANOW STORE AND MY LIBRARY</p>
+              <ol class="field_@@BrowseView.HelpPanel.hideIfNoBaseline()@@">
+                <li>
+                  <span>Select the Search button from the dock on the left side.</span>
+                </li>
+                <li>
+                  <span>Search for a title, actor, director, writer, or keyword by choosing an option in the search wheel.</span>
+                </li>
+                <li>
+                  <span>Use the Up, Down, Left and Right remote buttons to select each character of the search phrase. Use the Enter remote button to enter each character when selected.</span>
+                </li>
+                <li>
+                  <span>If you are searching for an actor, director or writer, select their name when it appears in the list on the right side. A slide-out panel will appear with a grid of titles related to the selected name.</span>
+                </li>
+                <li>
+                  <span>Search results will appear on the right side when your search phrase matches items in the CinemaNow store or My Library.</span>
+                </li>
+                <li>
+                  <span>Select a title in the grid and use the Enter remote button to view the details page. If you already own the title, the library details page will be displayed.</span>
+                </li>
+              </ol>
+              <ol class="field_@@BrowseView.HelpPanel.showIfNoBaseline()@@">
+                <li>
+                  <span>Select the Search button from the dock on the left side.</span>
+                </li>
+                <li>
+                  <span>Search for a title or keyword by choosing an option in the search wheel.</span>
+                </li>
+                <li>
+                  <span>Use the Up, Down, Left and Right remote buttons to select each character of the search phrase. Use the Enter remote button to enter each character when selected.</span>
+                </li>
+                <li>
+                  <span>Search results will appear on the right side when your search phrase matches items in the CinemaNow store or My Library.</span>
+                </li>
+                <li>
+                  <span>Select a title in the grid and use the Enter remote button to view the details page. If you already own the title, the library details page will be displayed.</span>
+                </li>
+              </ol>
+            </div>
+            <div id="WishList" class="panel">
+              <p class="heading white">MANAGING YOUR CINEMANOW WISH LIST</p>
+              <ol>
+                <li>
+                  <span>Browse to a title details page and select the + Wish List button to add the title to your wish list.</span>
+                </li>
+                <li>
+                  <span>Select the Wish List button from the dock on the left side to view items in your wish list.</span>
+                </li>
+                <li>
+                  <span>Choose a category from the wheel.</span>
+                </li>
+                <li>
+                  <span>Select a title in the grid and use the Enter remote button to rent or buy it, view details, or remove it from your wish list.</span>
+                </li>
+              </ol>
+            </div>
+            <div id="GettingStarted" class="panel">
+              <p class="heading white">GETTING STARTED WITH CINEMANOW</p>
+              <p>Welcome to CinemaNow, where you can rent or buy hit Hollywood movies and TV shows, and watch them instantly on your TV! Choose from thousands of new release movies or catch up on episodes of your favorite TV shows, all commercial-free.</p>
+              <p>
+                CinemaNow is powered by Rovi, the cross-platform service that allows you buy once and watch anywhere. Learn more at <span class="url white">www.cinemanow.rovistore.com/info</span>.
+              </p>
+              <p>To activate the CinemaNow service, select the Settings button on the left, and then select the Activate Device button.</p>
+            </div>
+            <div id="Library" class="panel">
+              <p class="heading white">ACCESSING YOUR LIBRARY</p>
+              <ol class="field_@@BrowseView.HelpPanel.hideIfNoBaseline()@@">
+                <li>
+                  <span>Select the My Library button in the dock on the left side to access all titles in your library.</span>
+                </li>
+                <li>
+                  <span>The My Library page will allow access to purchases made on this device, and on your other CinemaNow devices.</span>
+                </li>
+                <li>
+                  <span>On the My Library page, choose a main browse category from the left wheel, e.g. "Movies".</span>
+                </li>
+                <li>
+                  <span>Choose a filter option from the right wheel, e.g. "All".</span>
+                </li>
+                <li>
+                  <span>Select a title in the grid and use the Enter remote button to view the details page.</span>
+                </li>
+                <li>
+                  <span>To play the title, select the Play or Resume Play button.</span>
+                </li>
+                <li>
+                  <span>To find similar titles, select the Similar button.</span>
+                </li>
+                <li>
+                  <span>To learn more about the title, select the More Info button.</span>
+                </li>
+                <li>
+                  <span>To rate a title, select the Rate It button and use the Left and Right remote buttons to set your rating.</span>
+                </li>
+                <li>
+                  <span>To browse individual seasons/episodes in a TV show, select the Seasons/Episodes button.</span>
+                </li>
+              </ol>
+              <ol class="field_@@BrowseView.HelpPanel.showIfNoBaseline()@@">
+                <li>
+                  <span>Select the My Library button in the dock on the left side to access all titles in your library.</span>
+                </li>
+                <li>
+                  <span>The My Library page will allow access to purchases made on this device, and on your other CinemaNow devices.</span>
+                </li>
+                <li>
+                  <span>On the My Library page, choose a main browse category from the left wheel, e.g. "Movies".</span>
+                </li>
+                <li>
+                  <span>Choose a filter option from the right wheel, e.g. "All".</span>
+                </li>
+                <li>
+                  <span>Select a title in the grid and use the Enter remote button to view the details page.</span>
+                </li>
+                <li>
+                  <span>To play the title, select the Play or Resume Play button.</span>
+                </li>
+                <li>
+                  <span>To rate a title, select the Rate It button and use the Left and Right remote buttons to set your rating.</span>
+                </li>
+                <li>
+                  <span>To browse individual seasons/episodes in a TV show, select the Seasons/Episodes button.</span>
+                </li>
+              </ol>
+            </div>
+            <div id="ParentalControls" class="panel">
+              <p class="heading white">CONFIGURING AND MANAGING PARENTAL CONTROLS</p>
+              <ol>
+                <li>
+                  <span>
+                    Go to <span class="url white">www.cinemanow.com/parent</span> and configure parental controls for your CinemaNow account. You can create a PIN, and choose which kinds of rated content to restrict when parental controls are enabled on a device.
+                  </span>
+                </li>
+                <li>
+                  <span>To enable parental controls on this device, select the Parental Controls button in the dock on the left side, and enable the Parental Controls checkbox.</span>
+                </li>
+                <li>
+                  <span>To automatically enable parental controls each time the application is launched, select the Parental Controls button in the dock on the left side, and enable the Automatically Enable Parental Controls on Launch checkbox.</span>
+                </li>
+                <li>
+                  <span>To require the PIN to be entered when making purchases, select the Settings button in the dock on the left side, choose Family from the left wheel, Require PIN for Purchases from the right wheel, and enable the checkbox.</span>
+                </li>
+                <li>
+                  <span>
+                    Each of the parental control settings can also be changed remotely, via a web browser. Go to <span class="url white">www.cinemanow.com/parent</span> to change settings for this device.
+                  </span>
+                </li>
+              </ol>
+            </div>
+            <div id="OnscreenControls" class="panel">
+              <p class="heading white">USING THE ON-SCREEN CONTROLS</p>
+              <p>Using CinemaNow is easy:</p>
+              <ol>
+                <li>
+                  <span>Select an option from the dock on the left side to access the main sections of the CinemaNow application.</span>
+                </li>
+                <li>
+                  <span>Select a wheel, and use the Up and Down remote buttons to choose an option in a wheel.</span>
+                </li>
+                <li>
+                  <span>Use the Up, Down, Left and Right remote buttons to browse through a title grid.</span>
+                </li>
+                <li>
+                  <span>Select a scroll bar on the right side of a title grid, and use the Up and Down remote buttons to quickly page through the titles.</span>
+                </li>
+                <li>
+                  <span>Select a title in a grid, and use the Enter remote button to view the details page for the selected title.</span>
+                </li>
+              </ol>
+            </div>
+            <div id="CustomerSupport" class="panel">
+              <p class="heading white">CONTACTING CUSTOMER SUPPORT</p>
+              <p>
+                If you need help viewing a video or have other questions about CinemaNow, go to <span class="url white">www.cinemanow.com/support</span> where you can search our Knowledgebase or contact one of our agents.
+              </p>
+            </div>
+            <div id="RentingBuying" class="panel">
+              <p class="heading white">RENTING OR BUYING MOVIES AND TV SHOWS</p>
+              <ol>
+                <li>
+                  <span>On a title details page, select the Rent/Buy button.</span>
+                </li>
+                <li>
+                  <span>Using the Up and Down remote buttons, choose a purchase option from the wheel on the slide-out panel.</span>
+                </li>
+                <li>
+                  <span>If you have a CinemaNow Gift Card or Coupon, select the Redeem Gift Card or Coupon button and enter your code. The value of your Gift Card or Coupon will be applied to your order.</span>
+                </li>
+                <li>
+                  <span>Select the Place Order button.</span>
+                </li>
+                <li>
+                  <span>When the purchase confirmation message appears, select the Play button to start playing your video.</span>
+                </li>
+              </ol>
+            </div>
+            <div id="Ultraviolet" class="panel">
+              <p class="heading white">DISCOVER ULTRAVIOLET</p>
+              <ol>
+                <li>
+                  <span>UltraViolet is an all-new way to collect, access, and enjoy your movies and TV shows in the cloud - brought to you by a growing list of companies building UltraViolet into their online stores, video apps, and devices.</span>
+                </li>
+                <li>
+                  <span>Instantly stream from the cloud to computers, TVs, tablets or smartphones. Watch wherever you go, however you choose. </span>
+                </li>
+                <li>
+                  <span>To buy an UltraViolet title and play your UltraViolet titles from within your CinemaNow library, you first need to link your CinemaNow account with an UltraViolet account.</span>
+                </li>
+                <li>
+                  <span>
+                    Go to <span class="url white">www.cinemanow.com/account</span> to link your CinemaNow account to an UltraViolet account.
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    Find out more about UltraViolet, go to <span class="url white">www.uvvu.com</span>
+                  </span>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </tpl>
+      </layout>
+    </control>
+    <control id="envchangepopup">
+      <layout>
+        <div>
+          <!-- This comment is neccessary so that the packager does not get angry -->
+        </div>
+        <tpl id="envchange.tpl">
+          <div>
+            <div class="title">Switch Environment</div>
+            <div id="envchangebtns"> </div>
+          </div>
+        </tpl>
+      </layout>
+    </control>
+    <control id="merchpage">
+      <layout>
+        <div id="merchlogo"> </div>
+        <div id="featuredcontainer">
+          <div id="featureditleheader" class="hdr"> </div>
+          <div id="featuredpromotion">
+            <tpl id="merch_feature.tpl">
+              <div class="featuredtitle">
+                <a id="f_button" titleid="{titleID}" class="featuredpromotion" action="application.events.publish('loadtitleview', {id: {titleID}})">
+                  <div id="merchFeatureFrame">
+                    <img src="{boxartPrefix}"/>
+                  </div>
+                </a>
+                <div class="title-text">
+                  <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                    <tr>
+                      <td align="center"> {name} </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </tpl>
+          </div>
+        </div>
+        <div id="newcollectioncontainer">
+          <div id="newcollectionheader" class="hdr"> </div>
+          <div id="newcollections">
+            <tpl id="merch_collection.tpl">
+              <div class="featuredcollection">
+                <a titleid="{genreID}" class="collection" titleidx="{titleidx}" action="application.events.publish('loadgenreview', {id: {genreID}})">
+                  <img src="{boxArtPrefix}"/>
+                </a>
+                <div class="title-text">
+                  <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                    <tr>
+                      <td align="center"> {name} </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </tpl>
+          </div>
+        </div>
+        <div id="newcontentcontainer">
+          <div id="newmoviescontainer">
+            <div id="newmovieheader" class="hdr"> </div>
+            <div id="newmovies" class="titlecontainer">
+              <tpl id="merch_newmovies.tpl">
+                <div class="title">
+                  <a titleid="{titleID}" titleidx="{titleidx}" class="newmovie" action="application.events.publish('loadtitleview', {id: {titleID}})">
+                    <img src="http://cache.cinemanow.com/images/boxart/v2_107/{boxartPrefix}v2_107.jpg"/>
+                  </a>
+                  <div class="title-text">
+                    <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                      <tr>
+                        <td align="center"> {name} </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </tpl>
+            </div>
+          </div>
+          <div id="newtvcontainer">
+            <div id="newtvshowheader" class="hdr"> </div>
+            <div id="newtvshows" class="titlecontainer">
+              <tpl id="merch_newtvshows.tpl">
+                <div class="title">
+                  <a titleid="{titleID}" class="newtvshows" titleidx="{titleidx}" action="application.events.publish('loadtitleview', {id: {titleID}})">
+                    <img src="http://cache.cinemanow.com/images/boxart/v2_107/{boxartPrefix}v2_107.jpg"/>
+                  </a>
+                  <div class="title-text">
+                    <table cellpadding="0" height="100%" width="100%" cellspacing="0">
+                      <tr>
+                        <td align="center"> {name} </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </tpl>
+            </div>
+          </div>
+        </div>
+        <div id="actionbuttoncontainer">
+          <tpl id="merchactionbuttons.tpl">
+            <div>
+              <a id="merch_{actionKey}" titleidx="{titleidx}" action="BrowseView.MerchControl.keydown('{actionKey}')" class="button"> {text} </a>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+    <control id="signin">
+      <layout>
+        <div id="horizontallogo"> </div>
+        <div class="matteback"> </div>
+        <div id="signincontainer">
+          <tpl id="signin_activate.tpl">
+            <div>
+              <div id="SigninTitle">Sign In To Activate</div>
+              <div id="SigninSubmessage" class="{className}">{message}</div>
+              <div id="SigninSubSubmessage">Existing User</div>
+              <table class="signin_form">
+                <tr>
+                  <td class="label">User Name:</td>
+                  <td class="input" colspan="2">
+                    <a id="SignInUserName" class="textbox default"> </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label">Password:</td>
+                  <td class="input">
+                    <a id="SignInPassword" class="textbox"> </a>
+                  </td>
+                  <td class="">
+                    <a class="button forgotpassword" action="BrowseView.SignInControl.forgotpassword('signin_activate')">Forgot Password?</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td> </td>
+                  <td class="buttonbar" colspan="2">
+                    <a class="button" action="BrowseView.SignInControl.activate('signin_activate')">Activate</a>
+                  </td>
+                </tr>
+              </table>
+              <div class="createaccountcontainer">
+                <div class="createaccounttop"> </div>
+                <div class="createaccountmiddle">
+                  <div class="star"> </div>
+                  <div class="helptext">
+                    <div class="white">New User</div>
+                    <div>
+                      Ready to activate your device? Creating an account gives you immediate benefits:
+                      <ul>
+                        <li>Instant rentals and purchases are 1-click away</li>
+                        <li>Access the latest new releases every Tuesday</li>
+                        <li>Securely store movies and TV shows in your CinemaNow library!</li>
+                      </ul>
+                      <a class="button" action="BrowseView.SignInControl.createaccount('signin_activate')">Create Account</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="createaccountbottom"> </div>
+                <div class="cancelbuttons">
+                  <a class="button" action="BrowseView.SignInControl.hide()">Cancel</a>
+                </div>
+              </div>
+            </div>
+          </tpl>
+          <tpl id="signin_validateuser.tpl">
+            <div>
+              <div id="SigninTitle">Sign In</div>
+              <table class="signin_form_login">
+                <tr>
+                  <td class="label">User Name:</td>
+                  <td class="input" colspan="2">
+                    <a id="SignInUserName" class="textbox default"> </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label">Password:</td>
+                  <td class="input">
+                    <a id="SignInPassword" class="textbox"> </a>
+                  </td>
+                  <td class="">
+                    <a class="button forgotpassword" action="BrowseView.SignInControl.forgotpassword('signin_activate')">Forgot Password?</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td> </td>
+                  <td class="buttonbar login" colspan="2">
+                    <a class="button" action="BrowseView.SignInControl.signin()">Continue</a>
+                    <a class="button" action="BrowseView.SignInControl.hide()">Cancel</a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </tpl>
+        </div>
+      </layout>
+    </control>
+  </controls>
+  <views>
+    <view id="store">
+      <layout>
+        <div id="browse" class="container">
+
+          <control id="modalcontrol" />
+          <control id="welcome"/>
+          <control id="activatefullscreen"/>
+          <control id="merchpage" />
+          <div id="logo"> </div>
+          <control id="dock" />
+          <control id="signin" />
+          <div id="mainstage">
+            <control id="genericloader" />
+            <control id="titledetails" />
+            <div id="WheelSeparator" class="wheel-separator">
+              <div id="WheelThumb" class="wheel-thumb-left"> </div>
+            </div>
+            <div id="titledetailsmask" action="log.write('titledetailsmask action')" pointerfocus="log.write('titledetailsmask pointerfocus')" pointeraction="BrowseView.hideTitleDetailsMask()" >
+            </div>
+            <control id="wheel" class="browse" />
+            <control id="singlewheel" class="search" />
+            <control id="keyboard" class="search" />
+            <div id="gridview">
+              <control id="gridloader" />
+              <control id="titlegrid" class="browse search" />
+              <control id="imagegrid" class="browse" />
+              <control id="biogrid" class="browse" />
+              <control id="reviewgrid" class="browse" />
+              <control id="creditsgrid" class="browse" />
+              <control id="techgrid" class="browse" />
+              <control id="scrollbar" class="browse" />
+            </div>
+            <control id="disctodigitalgrid" />
+            <control id="settingspanel" />
+            <control id="checkoutpanel" />
+            <control id="librarypanel" />
+            <control id="messagepanel" />
+            <div id="ScreenSeparator">
+              <div id="ScreenSeparatorThumb" class="wheel-thumb-right"> </div>
+            </div>
+            <div id="searchPanelMask" action="log.write('searchPanelMask action')" pointerfocus="log.write('searchPanelMask pointerfocus')" pointeraction="application.events.publish('elementfocus', { focusedelem: 'KeyboardKeyBACKTop' })" >
+            </div>
+            <div id="HorizontalFadeTop">
+              <div class="buffer"> </div>
+            </div>
+            <div id="HorizontalFade">
+              <div class="buffer"> </div>
+            </div>
+          </div>
+          <control id="skinnykeyboard" />
+          <control id="legal" />
+          <control id="confirmpopup" />
+          <control id="ratepopup" />
+          <control id="envchangepopup" />
+          <control id="audiopopup" />
+          <control id="helppanel" />
+          <control id="pinpopup" />
+          <control id="giftcard" />
+          <control id="changeuserpopup" />
+          <control id="activate" />
+          <control id="messagepopup" />
+          <control id="imagepopup" />
+          <control id="speedpopup" />
+          <control id="systemstatuspopup" />
+          <control id="player" />
+        </div>
+      </layout>
+    </view>
+  </views>
+</ui>
