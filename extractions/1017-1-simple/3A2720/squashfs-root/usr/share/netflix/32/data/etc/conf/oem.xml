@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_root>
+  <config_data>
+    <dpi_mgk>false</dpi_mgk>
+    <key_repeat_style>PRESS+PRESS+RELEASE</key_repeat_style>
+    <surface_cache_capacity>20971520</surface_cache_capacity>
+    <text_cache_capacity>3145728</text_cache_capacity>
+    <log_cache_capacity>262144</log_cache_capacity>
+    <ui_cache_capacity>32768</ui_cache_capacity>
+    <disk_cache_capacity>0</disk_cache_capacity>
+    <disk_cache_path>/tmp/nf/gibbon</disk_cache_path>
+    <cache_path>/misc/nf/cache</cache_path>
+    <resource_cache_capacity>5242880</resource_cache_capacity>
+    <opaque_format>RGBA32_PM</opaque_format>
+    <alpha_format>RGBA32_PM</alpha_format>
+    <garbage_collect_timeout>10000</garbage_collect_timeout>
+    <no_platform_surface_decoders/>
+  </config_data>
+</config_root>

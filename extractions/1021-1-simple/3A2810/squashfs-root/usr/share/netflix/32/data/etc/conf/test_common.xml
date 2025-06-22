@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_root>
+  <config_data>
+    <nccp_url>http://mvc102qa.netflix.com:7001/nccp/controller</nccp_url>
+  </config_data>
+</config_root>
+

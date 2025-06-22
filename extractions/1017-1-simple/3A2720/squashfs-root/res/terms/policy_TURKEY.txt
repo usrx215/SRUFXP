@@ -1,0 +1,256 @@
+SAMSUNG SERVIS’NİN GİZLİLİK POLİTİKASI
+
+Samsung Electronics Co., Ltd. ("Samsung") araç (application) hizmetimizin ziyaretçilerinin, 
+kullanıcılarının ve müşterilerinin çevrimiçi gizliliğini korumaya büyük önem vermektedir. Aşağıda 
+açıklanan gizlilik politikası ("Gizlilik Politikası") yalnızca Samsung Servis tarafından sağlanan araç 
+galerisi ve çevrimiçi hizmetler (topluca "Samsung Servis") için geçerlidir. Gizlilik Politikasının amacı, 
+Samsung Servis’yi ziyaret ettiğiniz veya Samsung Servis’ye üye olduğunuz zaman sizin hakkınızda 
+topladığımız bilgi türleri, bu bilgileri nasıl kullanabileceğimiz ve bu bilgilerin üçüncü şahıslara 
+açıklanıp açıklanmayacağı ve açıklanacak ise hangi yolla açıklanacağı hakkında sizi 
+bilgilendirmektir. Bu gizlilik politikası, Samsung Servis aracılığıyla içerik ve hizmetlerine ulaştığınız 
+üçüncü kişilere doğrudan sağlanan kişisel bilgiler için uygulanmaz. İçerik veya Hizmetine ulaştığınız 
+üçüncü kişi hizmetlerinin uygulanacak gizlilik politikasını kontrol etmelisiniz.
+
+Samsung Servis Samsung tarafından Kore Cumhuriyeti’nden işletilir ve kontrol edilir ve Samsung 
+Servis ile Samsung’un ve Samsung’un herhangi bir İştirakinin, Kore Cumhuriyeti dışındaki bir 
+eyaletin, ülkenin veya bölgenin kanunlarına veya yargı yetkisine tabi kılınması öngörülmemiştir. 
+Kanunların izin verdiği ölçüde, Samsung, Samsung Servis’nin veya herhangi bir bölümünün belirli bir 
+yargı çevresinde kullanılmaya uygun veya hazır olduğunu beyan veya garanti etmemektedir. 
+Samsung Servis’ye girmeyi tercih eden kişiler, bunu kendi takdirleriyle ve riski kendilerine ait 
+olacak şekilde yaparlar ve bütün yerel kanunlara, tüzüklere ve yönetmeliklere uymakla 
+yükümlüdürler.
+
+Samsung Servis’nin bütün kullanıcılarının, kendilerinden talep edildiğinde doğru, güncel, eksiksiz ve 
+kesin kişisel bilgiler vermeleri gerekmektedir. İyi niyet çerçevesinde yanlış, asılsız, sahte veya hileli 
+olduğunu veya Gizlilik Politikasına aykırı olduğunu veya Gizlilik Politikasını ihlal ettiğini 
+düşündüğümüz tüm bilgileri reddedecek ve sileceğiz.
+
+Samsung Servis hizmeti kapsamında tarafınıza onay verme imkânı tanınacaktır ve onayınız 
+istenecektir. Bu onay dışında, Samsung Servis’yi kullanmanız veya Samsung Servis’ye üye olmanız, 
+Gizlilik Politikasını kabul ettiğiniz ve aşağıda açıklanan şekilde kişisel bilgilerinizin tarafımızdan 
+toplanmasını, kullanılmasını, açıklanmasını, aktarılmasını, işlenmesini ve saklanmasını kabul 
+ettiğiniz şeklinde yorumlanacaktır. Belirli zamanlarda, çevrimdışı yolla toplanan kişisel bilgileri 
+çevrimiçi veritabanlarımıza aktarabiliriz veya bu bilgileri online veritabanımızda birleştirebiliriz 
+veya çevrimdışı bilgileri elektronik ortamda saklayabiliriz. Çevrimiçi olarak topladığımız kişisel 
+bilgileri, İştiraklerimizden, pazarlama şirketlerinden veya Reklam Verenlerden alınan bilgiler dahil 
+olmak üzere diğer kaynaklardan gelen bilgilerle de birleştirebiliriz. Bu Gizlilik Politikası, söz 
+konusu bütün kişisel bilgileri kapsamaktadır ve belirli bir hizmet, özellik, işlev veya promosyon 
+faaliyeti ile ilgili kullanıcılık veya üyelik konumunuzun sona erdirilmesi, bitmesi, durdurulması, 
+askıya alınması veya herhangi bir nedenle kaldırılması durumunda dahi, Samsung Servis kullanıcısı 
+olduğunuz sürece geçerliliğini koruyacaktır.
+
+
+1. TOPLADIĞIMIZ BİLGİLER
+
+Kişisel Bilgiler
+
+Kayıt formları, araştırmalar ve anketler gibi Samsung Servis’deki çeşitli yerlerde isim, e-posta 
+adresi, posta adresi, ev veya iş telefonu gibi "kişisel" bilgileri vermenizi isteyebiliriz. Kişisel bilgileri 
+topladığımızdan muhtemelen haberiniz olacaktır; zira kişisel bilgileri ancak çevrimiçi formlarımız 
+ve anketlerimiz aracılığıyla kendi rızanızla verdiğiniz durumlarda toplamaktayız. Samsung Servis’yi 
+kullanmak için bize herhangi bir bilgi vermek zorunda değilsiniz, ancak bazı bilgileri vermemeyi 
+tercih ettiğiniz takdirde Samsung Servis üzerinde bütün hizmetlerden tamamen 
+yararlanamayabilirsiniz. Samsung Servis aracılığıyla kişisel bilgiler verdiğiniz takdirde, bu bilgiler 
+tarafımızca toplanacak ve saklanacaktır.
+
+
+Kişisel Olmayan Bilgiler
+
+Samsung Servis’yi kullanırken, tarafınızdan "kişisel olmayan" bilgiler de isteyebiliriz. "Kişisel 
+olmayan bilgiler", demografik bilgiler (yaş, cinsiyet, gelir, eğitim, meslek, posta kodu vb.) gibi, tek 
+başına, kimliğinizi belirlemek veya sizinle şahsen bağlantı kurmak için kullanılamayacak olan 
+bilgiler olarak tanımlanmaktadır. Kişisel olmayan bilgiler, IP adresi ve diğer anonim bilgiler gibi 
+Samsung Servis’nin kullanılmasıyla ilgili teknik bilgileri de içerebilir. Kişisel olmayan bilgiler, 
+Samsung Servis’yi kullanmak suretiyle tarafımıza verdiğiniz, Samsung Servis’nin arama 
+fonksiyonlarına girdiğiniz terimler gibi bilgileri de kapsayabilir. Kişisel olmayan bilgileri uygun 
+gördüğümüz herhangi bir şekilde kullanma veya açıklama hakkını saklı tutmaktayız.
+
+
+
+
+2. TOPLADIĞIMIZ BİLGİLERİN KULLANILMASI
+
+Hizmetlerimiz
+
+Kişisel bilgilerinizi, talep edebileceğiniz veya gerekli görebileceğiniz bir hizmeti sunmak, 
+tarafınızla haberleşmek ve çevrimiçi anketlere katılmanızı sağlamak amacıyla kullanmaktayız. 
+Kullanıcılarımız hakkında topladığımız kişisel olmayan bilgileri ise kadın ve erkek kullanıcıların 
+yüzdesi, kullanıcıların coğrafi dağılımı, kullanıcıların yaş aralıkları, bunların bir bileşimi ve/veya 
+diğer demografik istatistikler vb. web sitemizle ilgili demografik bilgileri tespit etmek için 
+kullanıyoruz. Topladığımız kişisel veya kişisel olmayan bilgileri Samsung Servis’nin nasıl 
+kullanıldığını analiz etmek, Samsung Servis’nin içeriğini geliştirmek amacıyla doğrudan pazarlama 
+da dahil olmak üzere pazarlama ve promosyon etkinlikleri için de kullanabiliriz , dolayısıyla biz 
+veya ilgili şirketlerimiz, sizi ilgilendirdiğini düşündüğümüz ürünler ve hizmetler hakkında bilgi 
+gönderebiliriz.
+E-Posta Haberleşmeleri
+
+Tarafımıza soru veya yorum içeren bir e-posta gönderdiğiniz takdirde, sorularınıza veya 
+yorumlarınıza cevap vermek için kişisel bilgilerinizi kullanabilir ve bu soruları veya yorumları ileride 
+referans almak üzere saklayabiliriz. Ancak, böyle bir e-postaya verdiğimiz cevap dışında; e-posta 
+haberleşmesi gerektiren belirli bir hizmeti talep etmemiş, tarafınızla e-posta ile bağlantı 
+kurulmasına onay vermemiş olmanız halinde ve menfaatinize olabileceğini düşündüğümüz ürünler 
+ve hizmetler hakkında tarafınızı bilgilendirmek amacıyla (tarafımızdan ya da ilgili şirket 
+tarafından) gönderdiğimiz e-postalar haricinde, standart uygulamalarımız arasında e-posta ile 
+iletişim bulunmamaktadır. Tarafınıza Samsung Servis veya reklam verenlerimiz hakkında bilgi 
+içeren ve e-posta adresinize gönderilecek olan elektronik bir bültene abone olma imkanı 
+sunulacaktır. Ancak, tarafınıza tercihlerinizi değiştirme ve bu mesajların gönderilmemesini isteme 
+seçeneği de sunulacaktır.
+
+3. BİLGİLERİN ÜÇÜNCÜ ŞAHISLARA AÇIKLANMASI
+
+Toplu Bilgiler
+
+Bu Gizlilik Politikasında açıkça belirtilmedikçe, kişisel bilgileriniz izniniz olmadan bize bağlı 
+olmayan bir üçüncü şahısla paylaşılmamaktadır. Demografik bilgiler gibi toplu bilgiler ve 
+istatistiksel analizlerimiz, tarafımızca reklam verenler veya diğer iş ortakları dahil üçüncü 
+şahıslara açıklanabilecektir. Bu toplu bilgiler kişisel bilgilerinizi içermemektedir.
+
+ORTAK MARKALI HİZMETLER VE ÖZELLİKLER
+
+Samsung Servis, başka bir şirketle veya İştiraklerimizle ("Ortak") düzenlediğimiz etkinlikler 
+ve/veya promosyonlar vb. ortak markalı hizmetler ve özellikler de sağlayabilir. Bu hizmetler ve 
+özellikler, Samsung Servis’nin ve/veya Ortağımızın web sitesinde yer alabilir. Kişisel bilgileriniz 
+tarafımızca ortağımızla paylaşılabilir ve ortak markalı bir hizmeti veya özelliği kendi rızanızla 
+kullanmanız veya böyle bir hizmete ve özelliğe üye olmanız, gerek Samsung Servis’ye gerekse 
+Ortağımıza, Kayıtlı Kullanıcı kayıt işlemi sırasında verdiğiniz kişisel bilgilerin toplanması ve/veya 
+ortak markalı bir özelliği veya hizmeti sağlamak amacıyla, pazarlama amacıyla veya idari 
+amaçlarla kullanılması için izin verdiğiniz anlamına gelmektedir. Bir Ortağın kişisel bilgilerinizi 
+gelecekte pazarlama amacıyla kullanmamasını tercih ediyorsanız, Ortakla doğrudan bağlantı 
+kurmanız gerekmektedir.
+
+Hizmet Sağlayıcılar
+
+Birtakım hizmetleri sağlamamızda yardımcı olmaları için bazen bize bağlı olmayan firmaları 
+kullanmaktayız. Örneğin, reklam, pazarlama ve promosyon konularında yardım almak, e-posta 
+hizmetleri vermek veya online hizmetlerimizi kolaylaştırmak amacıyla üçüncü şahısları (ücretli 
+giriş hizmeti sağlayıcı dahil) kullanabilmekteyiz. Bu durumlarda, kişisel bilgilerinizi bu üçüncü 
+şahıslarla paylaşmamız gerekebilir. Bu şirketlere, kişisel bilgilerinizi yalnızca ilgili ürünü veya 
+hizmeti tedarik etmek amacıyla kullanma şartı getirmekteyiz ve bu şirketlere kişisel bilgilerinizi 
+başka hiçbir nedenle kullanma izni vermemekteyiz.
+
+Bazen bir üçüncü şahıs sponsorla birlikte promosyon kampanyası düzenlemekteyiz. Böyle bir 
+kampanyaya katıldığınız takdirde, sponsorun sunduğu bir ürünü veya diğer özel promosyon 
+hizmetini tarafınıza iletmek için kişisel bilgilerinize ihtiyaç duyduğu durumlarda, kişisel bilgilerinizi 
+sponsorla paylaşabilmekteyiz.
+
+Samsung Servis’yi Kapsayan Ticari İşlemler
+
+Samsung Servis gelişmeyi sürdürdükçe, başka şirketlerle alım, satım gibi veya her ikisini kapsayan 
+ticari işlemler yapabilmekteyiz. Bu durumda, tarafımızca veya diğer şirketler tarafından toplanan 
+kişisel ve kişisel olmayan bilgiler, işlem kapsamında muhtemelen devredilecektir. Böyle bir işleme 
+dahil olduğumuz takdirde, e-posta haberleşmeleri konusunda bize yöneltilen taleplerin 
+karşılanmasını sağlamaya çalışacağız.
+
+Üçüncü Şahıs Reklam Verenler
+
+Belirli reklamları tarafınıza ulaştırmak için üçüncü şahıs reklam şirketlerini kullanabilmekteyiz. Bu 
+şirketler, ilginizi çekebilecek ürünler ve hizmetler için reklam vermek amacıyla Samsung Servis’ye 
+yaptığınız ziyaretler hakkında kişisel olmayan bilgileri toplayacaklardır. Bu şirketler ayrıca, 
+hedeflenen bir reklam, pazar araştırması yapmak amacıyla ve diğer benzeri amaçlarla kullanılmak 
+üzere kişisel olmayan bilgilerinizi toplayabilirler. Bu şirketler kendi tanımlama bilgilerini (cookies) 
+bilgisayarınıza koyabilirler. Bir üçüncü şahıs reklam verenin bu bilgileri toplamasını ve kullanmasını 
+engellemek istiyorsanız, doğrudan onun web sitesini ziyaret edebilir ve bu tercihinizi işleme 
+koydurabilirsiniz.
+
+Açıklama Yapılacak Diğer Durumlar
+
+Kanunlar, bir mahkeme kararı veya diğer resmi merci veya icra mercii veya düzenleyici bir kurum 
+şart koştuğu veya talep ettiği takdirde; haklarımızı kullanmak ve sözleşmelerimizin ifa edilmesini 
+sağlamak amacıyla veya örneğin Samsung Servis’nin ve Samsung’un, kullanıcılarımızın veya başka 
+kişilerin haklarını, mallarını veya güvenliğini teminat altına almak için söz konusu bilgileri 
+açıklamanın gerekli veya uygun olduğuna iyi niyet çerçevesinde kanaat getirdiğimiz takdirde 
+kişisel bilgileri açıklayabilmekteyiz.
+
+4. ÇOCUKLAR
+
+Samsung Servis, ebeveynlerin denetimi olmadan çocukların kullanımına yönelik olarak 
+tasarlanmamıştır. On üç yaşın altında olan kişilerin Samsung Servis aracılığıyla kişisel bilgi 
+vermemesini talep ediyoruz. On üç yaş altı çocukların kişisel bilgilerini bilinçli olarak 
+toplamamakta ve dolayısıyla bu bilgileri üçüncü şahıslara bilinçli olarak aktarmamaktayız.
+
+5. TOPLADIĞIMIZ BİLGİLERİN GÜVENLİĞİ
+
+Kişisel bilgilerinizin güvenliği bizim için önemlidir. Kişisel bilgilerinizi korumak için fiziksel, 
+elektronik önlemler ve prosedüre ilişkin önlemler uygulamaktayız. Ancak bilgilerin elektronik yolla 
+aktarılmasında her zaman risk söz konusudur. Topladığımız kişisel bilgiler kontrol ettiğimiz 
+veritabanlarında tutulmaktadır. Tarafımızca uygun görüldüğü takdirde, bilgilerinizi korumak için, 
+güvenlik duvarları ve şifreleme teknolojisi gibi sektörde geçerli standartları taşıyan güvenlik 
+önlemleri kullanmaktayız. Ancak veritabanlarımızın güvenliğini ve verdiğiniz bilgilerin internetten 
+bize aktarılırken ele geçirilmeyeceğini garanti edemeyiz.
+
+
+
+6. SOHBET ODALARI VE HALKA AÇIK DİĞER ALANLAR
+
+Sohbet, kullanıcı yorumu, bülten panosu fonksiyonları veya halka açık diğer fonksiyonlar 
+sunabilmekteyiz ve gönderdiğiniz bir mesaj, diğer kullanıcıların erişebileceği, halka açık bilgi olarak 
+değerlendirilmektedir. Gönderilen mesajlar Samsung Servis’nin Araçlara İlişkin Kullanım Koşullarına 
+tabidir. Ekran adınızda kişisel bilgileri veya başka kullanıcılara açık olabilecek diğer bilgileri 
+kullanmamaya özen göstermelisiniz.
+
+Arşivlenmiş Bilgiler.
+
+İnternet ağ kayıtlarının, veritabanının, diğer sistemlerin ve bilgilerin arşivlerini saklamaktayız. 
+Lütfen bu bilgilerin bazılarının aktif veritabanından silindikten sonra arşivde kalmasının mümkün 
+olduğunu göz önünde bulundurun. Arşivleri, afet sonrası kurtarma için ve yasal ve pazarlamayla 
+ilgisiz diğer amaçlarla saklamaktayız.
+7. YARIŞMALAR VE ÇEKİLİŞLER
+
+Samsung Servis’de, yarışmalar ve çekilişler gibi promosyonlara katılmak için her zaman kayıt 
+yaptırılması gerekli olmayabilir. Bunlar için ayrı bir kayıt veya giriş işlemi uygulanabilir ve ad-
+soyad, ikamet adresi, şehir, ülke ve posta kodu, e-posta adresi, telefon numarası ve doğum tarihi 
+gibi kişisel bilgileri vermeniz gerekebilir. Giriş sayfasında ve/veya Kurallarda, ilgili promosyonun 
+kesin şartları açıklanacaktır. Bu tür pek çok promosyonla bağlantılı olarak Reklam Verenlerimizin 
+özel tekliflerine katılma imkanınız da bulunacaktır.
+
+
+8. KULLANICILARIN KARŞIDAN VİDEO YÜKLEMESİ
+
+Tarafımıza içerik göndermek suretiyle Samsung Servis’ye katkıda bulunan kayıtlı kullanıcılar, 
+kendilerine ait videoların gösterilmesi için Samsung Servis’de ve faaliyet gösterdiğimiz veya 
+hizmet verdiğimiz herhangi bir platformda veya bu özellik bir Ortakla bağlantılı olarak 
+sunuluyorsa Ortağın web sitesinde bazı kişisel bilgilerinin yayınlanmasını kabul etmektedirler. 
+Karşıdan video yükleyen kayıtlı kullanıcıların başka kişisel bilgiler vermeleri de gerekli olabilir.
+
+9. BİLGİLERİN AKTARILMASI
+Samsung Servis’nin Almanya ve Amerika Birleşik Devletleri’nde bulunan sunucuları aracılığıyla 
+tarafımıza sağlanan kişisel bilgileri aktaracağız ve saklayacağız. Ayrıca tarafınızdan edindiğimiz 
+kişisel bilgileri Kore Cumhuriyeti’ne, yargılama yetkiniz dışındaki diğer ülkelere, ilgili şirketlere 
+veya bu gizlilik politikasında atıf yapılan üçüncü kişilere aktarabiliriz. Kişisel bilgilerinizi tarafımıza 
+vererek, bu bilgilerin yargılama yetkiniz dışına çıkarılmasına onay vermiş sayılmaktasınız.
+
+
+
+
+10. TOPLADIĞIMIZ BİLGİLERİN DOĞRULUĞU
+
+Bu Gizlilik Politikası, kişisel bilgilerinizin doğruluğu veya kişisel bilgilerinizin kullanılması ile ilgili 
+sorularınızı info@( ).com adresine veya normal postayla aşağıdaki adrese gönderebilirsiniz:
+
+Samsung Servis
+SAMSUNG ELECTRONICS, CO., LTD.
+416 Maetan-3Dong,
+Yeongtong-Gu, Suwon-City,
+Gyeonggi-Do, Korea 443-742
+Attn: Privacy Policy Department
+(Gizlilik Politikası Departmanı’nın dikkatine)
+
+Bilgilerinizi değiştirme talebinin elimize geçmesi üzerine, Samsung Servis’yi işletmek amacıyla 
+aktif olarak kullandığımız veritabanlarında tutulan bütün kişisel bilgilerinizin mümkün olan en kısa 
+sürede duruma uygun olarak güncellenmesini, düzeltilmesini, değiştirilmesini veya silinmesini 
+sağlamak için makul çaba göstereceğiz.
+
+Ancak, Samsung Servis’nin aktif veritabanlarından kaldırdığımız veya bu veritabanlarında 
+değiştirdiğimiz bilgileri arşiv dosyalarında muhafaza etme hakkını saklı tutmaktayız. 
+Anlaşmazlıkları çözmek, sorunları gidermek ve Araçlara İlişkin Son Kullanıcı Koşullarını uygulamak 
+amacıyla bu bilgileri saklayabiliriz.
+
+Ayrıca, tarafımıza vermiş olduğunuz her bilgi kaydını silmek teknolojik olarak mümkün değildir. 
+Kişisel bilgilerinizin bir kopyası silinemez bir biçimde var olabilmekte ve bu kopyanın yerini 
+belirlemek güç veya imkansız olabilmektedir.
+
+Bu Gizlilik Politikası, 3 Mart 2010’dan itibaren geçerlidir ve Samsung’un Kurumsal Gizlilik 
+Politikasına uygundur. Bu Gizlilik Politikasını herhangi bir anda değiştirme hakkını saklı 
+tutmaktayız. Ayrıca Gizlilik Politikasında yapılan değişiklikler, yürürlüğe girdikleri anda 
+tarafımızca ilan edilecektir. Bu Gizlilik Politikasını düzenli olarak gözden geçirmenizi tavsiye 
+etmekteyiz.

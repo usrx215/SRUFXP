@@ -1,0 +1,256 @@
+SAMSUNG SERVICE Integritetspolicy
+
+Samsung Electronics Co Ltd. ( "Samsung") är angelägna om att skydda integriteten online för vår 
+applikationstjänsts besökare, användare och kunder. Den integritetspolicy som anges nedan 
+( "Integritetspolicy") gäller bara för Samsung Apps och online-tjänster som tillhandahålls av 
+Samsung Service (tillsammans, "Samsung Service"). Syftet med den här Integritetspolicyn är att 
+informera dig om vilken typ av information vi samlar in om dig när du besöker eller accepterar 
+Samsung Service, hur vi använder den informationen, samt om och hur vi lämnar ut den till tredje 
+man. Denna Integritetsspolicy gäller inte personuppgifter som du lämnar direkt till tredje part, 
+vars tjänster eller innehåll du tillträder via Samsung Service. Du bör kontrollera utomstående 
+tjänste- och innehållsleverantörers aktuella Integritetspolicy.
+
+Samsung Service kontrolleras och drivs av Samsung från Sydkorea. De som väljer att besöka 
+Samsung Service gör det på eget initiativ och är ansvariga för att följa alla lokala lagar, regler 
+och förordningar.
+
+Alla användare av Samsung Service är skyldiga att uppge sann, aktuell, fullständig och korrekt 
+personlig information när ombedda, och vi kommer att förkasta och ta bort information som vi 
+i god tro anser vara felaktig, falsk, förfalskat eller bedräglig, eller oförenlig med eller i strid med 
+Integritetsspolicyn.
+
+Vi ger dig en möjlighet att samtycka till villkoren i denna Integritetsspolicy som en del av 
+Samsung Service. Oavsett sådant medgivande, kommer din användning eller deltagande i 
+Samsung Service att tolkas som ditt godkännande av Integritetspolicyn samt vår insamling, 
+användning, avslöjande, överföring, hantering och lagring av din personliga information enligt 
+nedan. Vi kan från tid till annan, komma att överföra eller slå ihop personlig information som 
+samlats in offline till våra onlinedatabaser eller lagra offline-information i elektronisk form. Vi 
+kan också komma att kombinera personlig information som vi samlar in online med information 
+från andra källor, inklusive information från våra andra bolag, samarbetspartners, 
+marknadsföringsföretag, eller annonsörer. Denna Integritetspolicy avser all sådan personlig 
+information och gäller så länge du är en användare av Samsung Service, även om din användning 
+av eller deltagande i en viss tjänst, egenskap, funktion eller PR-verksamhet avslutas, utgår, 
+upphör, avbryts eller avaktiveras av någon anledning.
+
+1. INSAMLING AV INFORMATION
+
+Personlig information
+
+På olika platser på Samsung Service, såsom i registreringsformulär, undersökningar och enkäter, 
+kan vi begära att du förser oss med "personlig" information, som ditt namn, e-postadress, 
+postadress, telefonnummer till hem eller arbete. Du kommer förhoppningsvis att veta när vi 
+samlar in personlig information, eftersom vi försöka samla in personlig information enbart när 
+du frivilligt skickar det till oss via våra onlineblanketter och formulär. Även om du inte behöver 
+förse oss med någon information för att använda Samsung Service kan du inte till fullo 
+utnyttja alla tjänster på Samsung Service om du väljer att inte lämna vissa uppgifter. Om du 
+väljer att ge oss personlig information via Samsung Service, kommer vi att samla in och behålla 
+denna information i enlighet med denna Integritetspolicy.
+
+Icke-personlig information
+
+När du använder Samsung Service, kan vi samla in även "icke-personlig" information. Vi anser 
+"icke-personlig information" vara information som i sig inte kan användas för att identifiera eller 
+kontakta dig personligen, såsom demografisk information (ålder, kön, inkomst, utbildning, yrke, 
+postnummer, etc.). Icke-personlig information kan också omfatta teknisk information och 
+anonym data avseende din användning av Samsung Service. Icke-personlig information kan 
+också innehålla information som du lämnar oss genom din användning av Samsung Service, t.ex. 
+ord som du anger i sökfunktioner på Samsung Service. Vi förbehåller oss rätten att använda eller 
+avslöja icke-personlig information på alla sätt vi finner lämpligt.
+
+2. ANVÄNDNING AV INSAMLAD INFORMATION
+
+Våra tjänster
+
+Vi använder din personliga information för att förse dig med tjänster som du efterfrågar eller 
+behöver, för att kommunicera med dig och låta dig delta i online-undersökningar. Vi använder 
+insamlad icke-personlig information om våra användare för att förstå vår webbplats demografi, 
+såsom andelen manliga och kvinnliga användare, den geografiska fördelningen av våra användare, 
+åldersintervall för våra användare, en kombination av ovanstående och/eller annan demografi. Vi 
+kan också använda insamlad personlig och icke-personlig information för att analysera hur 
+Samsung Service används, för att förbättra innehållet i Samsung Service och för marknadsföring 
+och PR-insatser, inklusive direkt marknadsföring, så att vi eller någon av våra närstående 
+företag kan skicka dig information om produkter och tjänster som vi tror kan vara av intresse 
+för dig.
+
+Kommunikation via e-post
+
+Om du skickar e-post till oss med frågor eller kommentarer, kan vi använda din personliga 
+information för att svara på dina frågor eller kommentarer och vi kan spara dina frågor eller 
+kommentarer för framtida ärenden. Bortsett från våra svar på sådant e-postmeddelande, det är 
+inte vår praxis att skicka e-post till dig om du inte efterfrågar någon speciell tjänst som innebär 
+att e-postkommunikation, samtycker du till att bli kontaktad via e-post och att vi (antingen 
+själva eller närstående bolag) sänder dig information om produkter och tjänster som vi tror kan 
+vara av intresse för dig. Du har möjlighet att prenumerera på ett elektroniskt nyhetsbrev som 
+innehåller information om Samsung Service eller våra annonsörer till din e-postadress. Du kan 
+även ändra dina inställningar och välja bort att få dessa meddelanden.
+
+3. INFORMATION TILL TREDJE PART
+
+Insamlad information
+
+Förutom vad som specifikt anges i denna Integritetspolicy, ger vi inte utan ditt tillstånd ut din 
+personliga information till någon icke-närstående tredje part. Vi kan komma att avslöja insamlad 
+information, såsom demografisk information, och våra statistiska analyser till tredje part, 
+inklusive annonsörer eller andra affärspartners. Sådan insamlad information inkluderar inte din 
+personliga information.
+
+
+
+Gemensamt marknadsförda tjänster och funktioner
+
+Samsung Service kan också erbjuda gemensamt marknadsförda tjänster och funktioner, såsom 
+evenemang och/eller kampanjer som vi satt ihop med ett annat bolag eller med våra bolag 
+( "Marknadsföringspartner"). Sådana tjänster och funktioner kan finnas på Samsung Service 
+och/eller på vår Marknadsföringspartners webbplats. Vi kan komma att dela med oss av din 
+personliga information till våra Marknadsföringspartners. Din frivilliga användning av, eller 
+deltagande i, en gemensamt marknadsförd tjänst eller funktion innebär att du accepterar och 
+ger ditt medgivande till att både Samsung Service och vår Marknadsföringspartner samlar in och 
+använder din personliga information som givits under registreringsprocessen och/eller i samband 
+med den särskilt gemensamt marknadsförda funktionen eller tjänsten för fullgörande av 
+funktionen eller tjänsten och för marknadsföring eller administrativa ändamål. Om du vill stoppa 
+en Marknadsföringspartners framtida användning av din personliga information I 
+marknadsföringssyfte, måste du kontakta Marknadsföringspartnern direkt.
+Tjänsteleverantörer
+
+Vi engagerar ibland utomstående företag för att hjälpa oss att erbjuda dig vissa tjänster. Till 
+exempel kan vi använda tredje part (inklusive leverantör av betalningsgateway) för reklam, 
+marknadsföring och PR-stöd, tillhandahållande av e-posttjänster, eller för att underlätta våra 
+online-tjänster. I dessa fall kan vi behöva lämna ut din personliga information till dem. Vi kräver 
+att dessa företag använder din personliga information endast för tillhandahållande av den 
+specifika produkten eller tjänsten och tillåter inte att de använder din personliga information för 
+någon annan anledning.
+
+Vi erbjuder ibland kampanjer tillsammans med utomstående sponsorer. Om du väljer att delta i 
+en av dessa kampanjer, kan vi komma att lämna ut din information till sponsorerna om de 
+behöver det för att skicka dig en produkt eller något annat speciellt erbjudande.
+
+Affärstransaktioner som involverar Samsung Service
+
+Allt eftersom Samsung Service fortsätter att utvecklas, kan vi komma att bedriva kommersiella 
+transaktioner, såsom köp, försäljning eller kombination av dessa med andra företag. Om så sker, 
+kommer personlig och icke-personlig information som vi eller andra företag har samlat in 
+sannolikt att överföras som en del av transaktionen. Om vi deltar i en sådan transaktion, 
+kommer vi att försöka se till så att önskemålen om e-postkommunikation kommer att beaktas 
+av berörda tredje parter.
+
+Utomstående annonsörer
+
+Vi kan komma att använda utomstående reklamföretag för att leverera specifik reklam till dig. 
+Dessa företag kan komma att samla in icke-personlig information om dina besök på Samsung 
+Service i syfte att tillhandahålla annonser om varor och tjänster som kan vara av intresse för 
+dig. Dessa företag kan också komma att den samla in din icke-personliga information för att 
+användas i riktad reklam, marknadsundersökningar och andra liknande ändamål. Dessa företag 
+kan placera sina egna cookies på din dator. Om du vill förhindra att en utomstående annonsör 
+samlar in och använder denna information kan du besöka den utomstående annonsörens 
+webbplats direkt och anmäla detta.
+
+Övriga upplysningar
+
+Vi kan komma att lämna ut personlig information när vi är tvingade eller när vi uppmanas att 
+göra det enligt lag, domstolsbeslut, myndighet, brottsbekämpande organ eller tillsynsmyndighet, 
+för att genomföra och tillämpa våra rättigheter och avtal; eller när vi i god tro anser att 
+offentliggörande av denna information är nödvändigt eller tillrådligt, inklusive till exempel, för 
+att skydda rättigheter, egendom eller säkerhet för Samsung Service och Samsung, våra 
+användare, eller andra.
+4. BARN
+
+Samsung Service är inte avsedd att användas av barn utan föräldrarnas tillsyn. Vi uppmanar alla 
+under tretton år att inte lämna någon personlig information via Samsung Service. Vi samlar inte 
+medvetet in personlig information från barn under tretton år och vi sprider därför inte medvetet 
+sådan information till tredje part.
+
+5. SÄKERHET FÖR INSAMLAD INFORMATION
+
+Säkerheten för din personliga information är viktig för oss. Vi har fysiska, elektroniska 
+säkerhetsgarantier och rutiner för att säkra din personliga information. Det finns dock alltid 
+vissa risker vid överföring av information elektroniskt. Den personliga information som vi samlar 
+in lagras i databaser som vi kontrollerar. För att skydda din information använder vi 
+säkerhetsåtgärder i överensstämmelse med industristandarder, såsom brandväggar och 
+krypteringsteknik såsom vi bedömer lämpligt. Däremot kan vi inte garantera säkerheten för 
+våra databaser, inte heller kan vi garantera att informationen du lämnar inte kommer inte att 
+avlyssnas under överföringen till oss via Internet.
+
+6.  CHATRUM OCH ANDRA OFFENTLIGA FUNKTIONER
+
+Vi kan erbjuda chattar, användarrecensioner, anslagstavlor eller andra offentliga funktioner och 
+alla meddelanden från dig betraktas som offentlig information tillgänglig för andra användare. 
+Eventuella meddelanden styrs av Samsung Service's Användarvillkor för Applikationer. Du bör 
+vara noga med att inte använda personlig information i skärmnamn eller annan information som 
+kan vara offentligt tillgängligt för andra användare.
+
+
+
+Arkiverad information.
+
+Vi upprätthåller arkiv av webbloggar, databaser och andra system och information. Observera 
+att det är möjligt att en del av denna information förblir arkiverad efter det att vi tagit bort 
+informationen från den aktiva databasen. Vi upprätthåller arkiv för katastrofåterställning, 
+rättsliga och andra icke-marknadsföringsåtgärder.
+
+
+7.  TÄVLINGAR
+
+Registrering krävs inte alltid för att delta i kampanjer såsom tävlingar på Samsung Service. Dessa 
+kan ha en separat registrerings- eller deltagningsprocess och kan kräva att du uppger personlig 
+information som ditt för-och efternamn, gatuadress, ort, delstat och postnummer, 
+e-postadress, telefonnummer och födelsedatum. Förstasidan och/eller föreskrifter kommer att 
+ange de särskilda krav som finns för den berörda kampanjen. Du kan också få möjlighet att välja 
+speciella erbjudanden från våra annonsörer i samband med många av dessa typer av erbjudanden.
+
+8.   UPPLADDNING AV ANVÄNDARVIDEO
+
+Registrerade användare som deltar genom att skicka in material till oss samtycker till att viss 
+personlig information läggs ut på Samsung Service och på andra plattformer som vi använder 
+eller erbjuder tjänster på, eller, om en sådan funktion erbjuds i samband med en 
+Marknadsföringspartner, på vår Marknadsföringspartners hemsida i samband med visningen av 
+användarens video. Registrerade användare som laddar upp videoklipp kan också behöva lämna in 
+ytterligare personlig information.
+
+
+
+9. ÖVERFÖRING AV INFORMATION
+
+Vi kommer att överföra och lagra personlig information som du lämnar till oss via Samsung 
+Service, på servrar placerade i Tyskland och USA. Vi kan också komma att överföra personlig 
+information till Sydkorea eller till andra länder utanför din jurisdiktion till våra närstående bolag 
+eller tredje part som anges i denna Integritetspolicy. Genom att lämna din personliga 
+information till oss godkänner du att vi överför din information utanför din jurisdiktion.
+
+10. RIKTIGHETEN I INSAMLAD INFORMATION
+
+Frågor om denna Integritetspolicy, riktigheten av din personliga information eller användning av 
+din personliga information ska skickas via e-post till intertv@samsung.com, eller med vanlig post 
+till:
+
+Samsung Service
+SAMSUNG ELECTRONICS, CO., LTD.
+416 Maetan-3Dong,
+Yeongtong-Gu, Suwon-City,
+Gyeonggi-Do, Korea 443-742
+Attn: Privacy Policy Department
+
+Alternativt kontakta:
+
+Samsung Electronics Nordic AB
+Box 1235
+164 28 Kista
+Sverige
+
+info@samsung.se
+
+När vi fått en förfrågan om att ändra din information, kommer vi att göra rimliga 
+ansträngningar för att säkerställa att all din personliga information som lagras i databaser som 
+vi aktivt använder för Samsung Service kommer att uppdateras, korrigeras, ändras eller tas bort, 
+såsom är lämpligt, snarast det är praktiskt möjligt.
+
+Däremot förbehåller vi oss rätten att behålla i våra arkiverade filer all information bortagen 
+eller ändrad information i våra aktiva Samsung Service-databaser. Vi får behålla sådan 
+information för att lösa tvister, felsöka problem och upprätthålla våra Användarvillkor för 
+Applikationen. Dessutom är det inte tekniskt möjligt att ta bort varje enskild data av den 
+information som du har gett oss. En kopia av din personliga information kan finnas i en outplånlig 
+form som är svår eller omöjlig för oss att lokalisera.
+
+Denna Integritetsspolicy träder i kraft den 03 mars 2010, och överensstämmer med Samsungs 
+bolagsintegritetspolicy. Vi förbehåller oss rätten att ändra denna Integritetspolicy när som 
+helst, och kommer att posta väsentliga förändringar i denna Integritetspolicy så fort de börjar 
+gälla. Vänligen kontrollera denna Integritetspolicy regelbundet.

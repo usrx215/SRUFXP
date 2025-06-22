@@ -1,0 +1,545 @@
+Samsung Service privacy policy
+
+Samsung Electronics Co., Ltd. ("Samsung") is committed to protecting the online privacy of 
+visitors, users and customers of our application service. The privacy policy set forth below (the 
+"Privacy Policy") applies only to online services provided by Samsung (collectively, "Samsung 
+Service"). The purpose of this Privacy Policy is to inform you about the types of information we 
+gather about you when you visit or submit information to Samsung Service, how we may use 
+that information, and if and how we disclose it to third parties. This Privacy Policy does not 
+apply to personal information that you provide directly to third parties whose services or 
+content you access via Samsung Service. You should check the applicable privacy policy of any 
+third party service providers whose service or content you access.
+
+Samsung Service is controlled and operated by Samsung from the Republic of Korea, and is not 
+intended to subject Samsung or any of Samsung's Affiliated Entities to the laws or jurisdiction 
+of any state, country or territory other than that of the Republic of Korea. To the extent 
+permitted by law, Samsung does not represent or warrant that Samsung Service, or any part 
+thereof, is appropriate or available for use in any particular jurisdiction. Those who choose to 
+access Samsung Service do so on their own initiative and at their own risk, and are responsible 
+for complying with all local laws, rules and regulations.
+
+All users of Samsung Service are required to provide true, current, complete and accurate 
+personal information when prompted and we will reject and delete any entry that we believe in 
+good faith to be incorrect, false, falsified, or fraudulent, or inconsistent with or in violation of 
+the Privacy Policy.
+
+We will provide you with an opportunity to give your consent to the terms of this Privacy Policy 
+as part of the Samsung Service. Separate from such consent, your use or participation in 
+Samsung Service will be construed as your acceptance of the Privacy Policy and of our collection, 
+use, disclosure, transfer, management and storage of your personal information as described 
+below. We may, from time to time, transfer or merge any personal information collected off-
+line to our online databases or store off-line information in an electronic format. We may also 
+combine personal information we collect online with information available from other sources, 
+including information received from our Affiliates, marketing companies, or Advertisers. This 
+Privacy Policy covers all such personal information and will remain in full force and effect as long 
+as you are a user of Samsung Service, even if your use of or participation in any particular 
+service, feature, function or promotional activity terminates, expires, ceases, is suspended or 
+deactivated for any reason.
+
+
+
+
+
+1. INFORMATION THAT WE COLLECT
+
+Personal Information
+
+At various locations on Samsung Service, such as in registration forms, surveys, and polls, we 
+may request that you supply us with "personal" information, such as your name, e-mail address, 
+mailing address, home or work telephone number. You will hopefully know when we are 
+collecting personal information, because We attempt to collect personal information only when 
+you voluntarily submit it to us through our online forms and questionnaires or through other 
+offline means. Although you do not have to provide us with any information to use Samsung 
+Service, you may not be able to fully utilize all of the services on Samsung Service if you choose 
+not to provide certain information. If you do choose to give us personal information through 
+Samsung Service, we will collect and retain that information in accordance with this Privacy 
+Policy.
+Non-Personal Information
+
+When you use Samsung Service, we may also collect "non-personal" information. We consider 
+"non-personal information" to be information that, by itself, cannot be used to identify or 
+contact you personally, such as demographic information (your age, gender, education, 
+profession, zip code, etc.). Non-personal information may also include technical information, 
+such as your IP address and other anonymous data involving your use of Samsung Service. Non-
+personal information may also include information that you provide us through your use of 
+Samsung Service, such as the terms you enter into the search functions of Samsung Service. We 
+reserve the right to use or disclose non-personal information pursuant to this Privacy Policy.
+
+
+
+
+2. USE OF INFORMATION WE COLLECT
+
+Our Services
+
+We use your personal information to provide you with any services that you may request or 
+require, to communicate with you and to allow you to participate in online surveys. We use 
+aggregated non-personal information about our users to understand our website's 
+demographics, such as the percentage of male and female users, the geographic distribution of 
+our users, the age ranges of our users, a combination of these and/or other demographics. We 
+may also use the personal or non-personal information we collect to analyze how Samsung 
+Service is being used, and to improve the content of Samsung Service, and for marketing and 
+promotional efforts, including direct marketing, so that we or any of our related companies can 
+send you information about products and services which we believe may be of interest to you.
+
+E-mail Communications
+
+If you send us an e-mail with questions or comments, we may use your personal information to 
+respond to your questions or comments, and we may save your questions or comments for 
+future reference. However, aside from our reply to such an e-mail, it is not our standard practice 
+to send you e-mail unless you request a particular service that involves e-mail communications, 
+you otherwise consent to being contacted by e-mail, and to send you (either ourselves or a 
+related company) information about products and services which we believe may be of interest 
+to you. You will have the opportunity to subscribe to an electronic newsletter that will send 
+information about Samsung Service or our advertisers to your e-mail address. However, we will 
+provide you with the option to change your preferences and opt-out of receiving those 
+communications.
+
+
+3. DISCLOSURE OF INFORMATION TO THIRD PARTIES
+
+Aggregate Information
+
+Except as specifically set forth in this Privacy Policy, we do not share your personal information 
+with any non-affiliated third party without your permission. We may disclose aggregate 
+information, such as demographic information, and our statistical analyses to third parties, 
+including advertisers or other business partners. This aggregate information does not include 
+your personal information.
+
+Co-Branded Services and Features
+
+Samsung Service may also offer co-branded services and features, such as events and/or 
+promotions that we put together with another company or with our Affiliates ("Co-Branded 
+Partner"). Such services and features may be hosted on Samsung Service and/or on our Co-
+Branded Partner's website. We may share your personal information with our Co-Branded 
+Partner and your voluntary use of, or participation in, a co-branded service or feature means 
+that you opt-in and give your affirmative consent to both Samsung Service and our Co-Branded 
+Partner to collect and use your personal information provided during the registration process 
+and/or in connection with the specific co-branded feature or service for the fulfilment of the 
+feature or service and for marketing or administrative purposes. If you wish to opt-out of a Co-
+Branded Partner's future use of your personal information for marketing purposes, you will need 
+to contact the Co-Branded Partner directly.
+
+Service Providers
+
+We sometimes engage unaffiliated businesses to assist us in providing you certain services. For 
+example, we may use third parties (including a payment gateway service provider) to provide 
+advertising, marketing and promotional assistance, provide e-mail services, or facilitate our 
+online services. In those instances, we may need to share your personal information with them. 
+We require these companies to use your personal information only to provide the particular 
+product or service and do not authorize them to use your personal information for any other 
+reason.
+
+We sometimes offer promotions in conjunction with a third party sponsor. If you choose to 
+participate in one of those promotions, we may share your information with the sponsor if they 
+need it to send you a product or other special promotion they offer.
+
+Business Transactions Involving Samsung Service
+As Samsung Service continues to develop, we may engage in commercial transactions such as 
+buying, selling or combination of such with other businesses. If so, personal and non-personal 
+information that we or other businesses have collected will likely be transferred as part of the 
+transaction. If we engage in such a business, we will attempt to ensure that requests made to us 
+regarding e-mail communications will be honored by relevant third parties.
+
+Third Party Advertisers
+
+We may use third-party advertising companies to deliver specific advertisements to you. These 
+companies would collect non-personal information about your visits to Samsung Service in order 
+to provide advertisements about products and services that may be of interest to you. These 
+companies may also aggregate your non-personal information for use in targeted advertising, 
+marketing research, and other similar purposes. These companies may place their own cookies on 
+your computer. If you want to prevent a third-party advertiser from collecting and using this 
+information, you may visit each third-party advertiser's website directly and opt-out.
+
+
+Other Disclosures
+
+We may disclose personal information when we are required or requested to do so by law, court 
+order or other government or law enforcement authority or regulatory agency; to enforce or 
+apply our rights and agreements; or when we believe in good faith that disclosing this 
+information is necessary or advisable, including, for example, to protect the rights, property, or 
+safety of Samsung Service and Samsung, our users, or others.
+
+4. CHILDREN
+
+Samsung Service is not designed for use by children without their parent's supervision. We ask 
+that anyone under the age of thirteen not submit any personal information through Samsung 
+Service. We do not knowingly collect any personal information from children under the age of 
+thirteen, and therefore we do not knowingly distribute such information to third parties.
+5. SECURITY OF THE INFORMATION WE COLLECT
+
+The security of your personal information is important to us. We maintain physical, electronic, 
+and procedural safeguards to secure your personal information. However, there is always some 
+risk in transmitting information electronically. The personal information we collect is stored 
+within databases that we control. As we deem appropriate, we use security measures consistent 
+with industry standards, such as firewalls and encryption technology, to protect your 
+information. However, we cannot guarantee the security of our databases, nor can we 
+guarantee that information you supply will not be intercepted while being transmitted to us 
+over the Internet.
+
+6. CHAT ROOMS AND OTHER PUBLIC AREAS
+
+We may offer chat, user reviews, bulletin boards, or other public functions and any posting by 
+you is considered public information available to other users. Any posting is governed by 
+Samsung Service's End User Terms and Conditions for Applications. You should take care to not 
+use personal information in your screen name or other information that might be publicly 
+available to other users.
+
+Archived Information.
+
+We maintain archives of its web logs, database, and other systems and information. Please note 
+that it is possible some of this information may remain archived after we delete the information 
+from its active database. We maintain archives for disaster recovery, legal and other non-
+marketing purposes.
+
+
+
+7. CONTESTS AND SWEEPSTAKES
+
+Registration may not always be required to enter promotions such as contests and sweepstakes 
+on Samsung Service. These may have a separate registration or entry process and may require 
+your submission of personal information such as your first and last name, street address, city, 
+state and zip code, e-mail address, telephone number and date of birth. The entry page and/or 
+Rules will provide the specific requirements for the promotion involved. You may also have the 
+opportunity to opt-in to special offers from our advertisers in connection with many of these 
+types of promotions.
+
+8. USER VIDEO UPLOAD
+
+Registered users that participate by submitting content to us agree to have certain personal 
+information posted on Samsung Service and on any platform on which we operate or provide 
+services, or, if such feature is offered in connection with a Co-Branded Partner, on our Co-
+Branded Partner's website in connection with the display of the user's video. Registered users 
+that upload videos may also be required to submit additional personal information.
+
+9. TRANSFER OF INFORMATION
+
+We will transfer and store personal information you provide to us via the Samsung Service on 
+servers located in Germany and the United States. We may also transfer personal information 
+we collect from you to the Republic of Korea or to other countries outside of your jurisdiction 
+to our related companies or to the third parties referred to in this Privacy Policy. By providing 
+your personal information to us, you consent to us transferring your information outside of 
+your jurisdiction.
+
+
+10. ACCURACY OF THE INFORMATION WE COLLECT
+
+Any questions you may have regarding this Privacy Policy, the accuracy of your personal 
+information or the use of your personal information, or any requests to access your information 
+or that we correct, update, or remove your information in our databases, should be directed via 
+e-mail to intertv@samsung.com, or via regular mail to:
+
+Samsung Service
+SAMSUNG ELECTRONICS, CO., LTD.
+416 Maetan-3Dong,
+Yeongtong-Gu, Suwon-City,
+Gyeonggi-Do, Korea 443-742
+Attn: Privacy Policy Department
+
+After receiving a request to change your information, we will make reasonable efforts to ensure 
+that all of your personal information stored in databases we actively use to operate Samsung 
+Service will be updated, corrected, changed or deleted, as appropriate, as soon as reasonably 
+practicable.
+
+However, we reserve the right to retain in our archival files any information removed from, or 
+changed in, our active Samsung Service databases. We may retain such information to resolve 
+disputes, troubleshoot problems and enforce our End User Terms and Conditions for the 
+Application. In addition, it is not technologically possible to remove each and every record of the 
+information you have provided to us. A copy of your personal information may exist in a non-
+erasable form that will be difficult or impossible for us to locate.
+
+This Privacy Policy is effective as of March 03, 2010, and complies with Samsung's Corporate 
+Privacy Policy. We reserve the right to change this Privacy Policy at any time, and will post any 
+material changes to this Privacy Policy as soon as they go into effect. Please refer back to this 
+Privacy Policy on a regular basis.
+
+
+
+
+
+
+
+
+
+
+
+
+Charte Internet@TV relative à la protection de la vie privée
+
+Samsung Electronics Co., Ltd. (« Samsung ») s’engage à protéger la vie privée des visiteurs, 
+utilisateurs et clients de son service d’application en ligne. La charte relative à la protection de la 
+vie privée décrite ci-dessous (la « Charte Vie Privée »), ne s’applique qu’aux Samsung Apps et aux 
+services en ligne fournis par Internet@TV (collectivement « Internet@TV »). La finalité de cette 
+Charte Vie Privée est de vous informer quant aux catégories d’informations que nous collectons 
+à votre propos lorsque vous visitez ou soumettez des données à Internet@TV, de la manière 
+dont nous pouvons utiliser ces informations, et si et dans quelle mesure nous communiquons ces 
+informations à des tiers. Cette Charte Vie Privée ne s’applique pas aux informations que vous 
+fournissez directement à des tiers, lorsque vous accédez aux services ou au contenu de ces tiers 
+via Internet@TV. Lorsque vous accédez au service ou au contenu d’un fournisseur tiers, vous 
+devez consulter les chartes applicables dudit fournisseur tiers.
+
+Internet@TV est contrôlé et administré par Samsung à partir de la République de Corée (au 416, 
+Maetan-3Dong, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, Corée du Sud 443-742. Numéro 
+d'enregistrement de l'entrprise:124-81-00998). Dans les limites prévues par la loi applicable, 
+Samsung ne garantit pas qu’Internet@TV, ou toute partie de celui-ci, pourra être utilisé de 
+manière appropriée ni qu’il sera disponible dans tous les pays. Les personnes qui choisissent 
+d’accéder à Internet@TV le font de leur propre initiative et à leur propre risque, et doivent se 
+conformer aux lois, règlements et règles locaux applicables.
+
+Tous les utilisateurs de Internet@TV doivent fournir des informations personnelles exactes, à 
+jour, complètes et précises lorsqu’ils y sont invités et nous rejetterons et effacerons toutes 
+données que nous considérerons de bonne foi comme incorrectes, fausses, falsifiées ou 
+frauduleuses ou incompatibles avec ou en violation de notre Charte Vie Privée.
+
+Nous vous donnerons la possibilité d’accepter les dispositions de cette Charte Vie Privée dans le 
+cadre de l’Internet@TV. Outre votre consentement, votre utilisation ou votre participation à 
+Internet@TV vaudra acceptation de la Charte Vie Privée et de la collecte, de l’utilisation, de la 
+communication, du transfert, de l’administration et de la conservation de vos données 
+personnelles de la manière décrite ci-dessous. Nous pouvons, périodiquement, transférer ou 
+fusionner toutes données personnelles collectées hors ligne avec nos bases de données en ligne 
+ou stocker les informations collectées hors ligne dans un format électronique. Sauf en cas 
+d'objection de votre part, nous pouvons également combiner les données personnelles que nous 
+collectons en ligne avec des informations disponibles à partir d’autres sources, y compris des 
+informations reçues de nos affiliés, entreprises de marketing ou annonceurs publicitaires, pour 
+les seules finalités indiquées dans la présente Charte. La présente Charte Vie Privée couvre 
+toutes les données personnelles susmentionnées et restera en vigueur aussi longtemps que vous 
+serez un utilisateur d’Internet@TV, même si votre utilisation ou votre participation à tout(e) 
+service, fonction, fonctionnalité ou activité promotionnelle particulière prend fin, cesse, est 
+suspendu(e) ou désactivé(e) pour quelque raison que ce soit.
+1. INFORMATION QUE NOUS COLLECTONS
+
+Données personnelles
+
+A différents endroits sur Internet@TV, tels que dans les formulaires d’inscription, les enquêtes 
+et les sondages, nous pouvons vous demander de fournir des données « personnelles », telles que 
+votre nom, votre adresse électronique, votre adresse postale, votre numéro de téléphone 
+personnel ou professionnel ou adresse IP. Vous saurez quand nous collecterons des données 
+personnelles à votre égard, puisque nous ne collecterons des données personnelles que lorsque 
+vous nous les soumettrez volontairement au moyen nos formulaires et questionnaires en ligne. 
+Bien que vous ne soyez pas obligé de nous fournir des données pour utiliser Internet@TV, vous 
+pourriez ne pas être en mesure d’utiliser tous les services d’Internet@TV si vous décidiez de ne 
+pas fournir certaines informations. Si vous choisissez de nous fournir des données personnelles 
+sur Internet@TV, nous collecterons et conserverons ces données conformément à la présente 
+Charte Vie Privée.
+
+Données non-identifiables
+
+Lorsque vous utilisez Internet@TV, nous pouvons également collecter des données « non-
+identifiables ». Nous considérons comme « données non-identifiables » toute information qui, en 
+tant que telle, ne peut être utilisée pour vous identifier directement ou indirectement, ou vous 
+contacter personnellement, telle que des informations démographiques (votre âge, votre sexe, 
+vos revenus, votre formation, votre profession, votre code postal, etc.). Les données non-
+identifiables peuvent également inclure des informations techniques, telles que des informations 
+anonymes concernant votre utilisation de Internet@TV. Les données non-identifiables peuvent 
+également inclure des informations que vous nous fournissez à l’occasion de votre utilisation de 
+Internet@TV, telles que les mots clés que vous entrez dans les fonctions de recherche de 
+Internet@TV. Nous nous réservons le droit d’utiliser et de communiquer les données non-
+identifiables de toute manière que nous considérons appropriée.
+
+2. UTILISATION DES DONNEES QUE NOUS COLLECTONS
+
+Nos services
+
+Nous utilisons vos données personnelles afin de vous fournir les services que vous nous 
+demandez, pour communiquer avec vous et vous permettre de participer à des enquêtes en ligne. 
+Nous utilisons des données non-identifiables agrégées concernant nos utilisateurs pour 
+comprendre les données démographiques relatives à notre site web, telles que le pourcentage 
+d’hommes et de femmes, la répartition géographique de nos utilisateurs, les catégories d’âge de 
+nos utilisateurs ou une combinaison de ces données ou d’autres données démographiques. Nous 
+pouvons également utiliser les données personnelles ou les données non-identifiables que nous 
+collectons pour analyser comment Internet@TV est utilisé et pour améliorer le contenu de 
+Internet@TV, et en ce qui concerne les données personnelles seulement, à des fins marketing et 
+de promotion, y compris à des fins de marketing direct, de telle manière que nous ou toute autre 
+société à laquelle nous sommes liés, puissions vous envoyer des informations concernant des 
+produits ou des services dont nous pensons qu’ils pourraient vous intéresser.
+
+Communications électroniques
+
+Si vous nous envoyez un courrier électronique avec des questions ou commentaires, nous 
+pourrons utiliser ces données personnelles pour répondre à vos questions ou commentaires, et 
+nous pourrons également sauvegarder vos questions et commentaires pour une utilisation 
+ultérieure. En-dehors des réponses à vos e-mails, nous n’avons généralement pas pour pratique 
+de vous envoyer des courriers électroniques, à moins que vous ne nous demandiez un service 
+particulier qui nécessite des communications électroniques à des fins administratives, que vous 
+consentiez expressément à être contacté par e-mail (opt-in) aux fins de recevoir (de notre part 
+ou de la part d’une société à laquelle nous sommes liés) des informations à propos des produits 
+et services dont nous pensons qu’ils pourraient vous intéresser. Vous aurez la possibilité de vous 
+abonner à une lettre d’information électronique à propos de Internet@TV ou de nos annonceurs 
+qui vous sera envoyée à votre adresse électronique. Cependant, nous vous donnerons la 
+possibilité de modifier vos préférences et de vous opposer à de telles communications.
+
+3. COMMUNICATIONS D’INFORMATION A DES TIERS
+
+Informations agrégées
+
+Sauf disposition expresse contraire dans cette Charte Vie Privée, nous ne partageons pas vos 
+données personnelles avec des tiers non affiliés sans votre permission. Nous pouvons 
+communiquer des informations agrégées et nos analyses statistiques à des tiers, y compris des 
+annonceurs ou d’autres partenaires commerciaux. Ces informations agrégées n’incluent pas vos 
+informations personnelles.
+
+Services et fonctionnalités des co-partenaires
+
+Internet@TV peut aussi proposer des services et fonctionnalités avec ses co-partenaires, tels 
+que des évènements ou promotions que nous mettons en place avec une autre société ou avec 
+nos affiliés (« Co-Partenaires »). Ces services et fonctionnalités peuvent être hébergés sur le 
+site web de Internet@TV et/ou de nos Co-Partenaires. Nous pouvons également partager vos 
+données personnelles avec nos Co-Partenaires. Votre utilisation volontaire ou votre 
+participation à un service ou à une fonctionnalité d’un Co-Partenaire signifie que vous acceptez 
+que Internet@TV et notre Co-Partenaire collectent et utilisent vos données personnelles 
+fournies à l’occasion de la procédure d’inscription et/ou dans le cadre du service ou de la 
+fonctionnalité spécifique de ce Co-Partenaire pour l’exécution de ce service ou de cette 
+fonctionnalité, à des fins administratives. Si vous souhaitez recevoir des communications 
+marketing, vous pouvez donner votre accord par le biais du Service du Co-partenaire. Si vous 
+souhaitez par la suite vous opposer à l’utilisation future de vos données personnelles par un Co-
+Partenaire à des fins de marketing direct, vous aurez la possibilité de le faire en contactant 
+directement notre Co-Partenaire.
+
+Fournisseurs de service
+
+Nous faisons parfois appel a Samsung SDS Corp., Ltd., Megazone Corp. et/ou d'autres parties 
+tierces pour nous assister dans la prestation de certains services. Par exemple, nous pouvons 
+faire appel à des tiers (y compris à un fournisseur de service de plateforme de paiement) pour 
+nous fournir une assistance en matière de publicité, de marketing ou de promotion, nous fournir 
+des services de messagerie électronique ou faciliter nos services en ligne. Dans cette hypothèse, 
+nous pouvons être amenés à partager vos données personnelles avec eux. Nous exigeons que ces 
+sociétés utilisent vos données personnelles aux seules fins de fournir le service ou le produit en 
+question, en notre nom et suivant nos instructions. Nous ne les autorisons pas à utiliser vos 
+données personnelles à toute autre fin.
+Nous pouvons également proposer des promotions en partenariat avec un sponsor tiers. Si vous 
+choisissez de participer à l’une de ces promotions, nous pourrons partager vos données avec les 
+sponsors dans la mesure où elles sont nécessaires pour vous envoyer un produit ou une 
+promotion spéciale qu’ils proposent.
+
+Transactions impliquant Internet@TV
+
+Dans la mesure où Internet@TV continue à se développer, nous pouvons nous engager dans des 
+transactions, telles que l’achat, la vente ou une combinaison des deux avec d’autres entreprises. 
+Dans ce cas, les données personnelles et données non-identifiables que nous-mêmes ou d’autres 
+entreprises pourrions collectées, pourront être transférées dans le cadre de cette transaction. Si 
+nous nous engageons dans une telle transaction, nous nous assurerons que les requêtes que vous 
+nous aviez formulées concernant les communications par e-mail seront respectées par les tiers 
+concernés.
+
+Annonceurs tiers
+
+Nous pouvons avoir recours à des annonceurs tiers pour vous délivrer des publicités spécifiques. 
+Ces sociétés collecteront des données non-identifiables sur vos visites de Internet@TV afin de 
+fournir des publicités sur des produits et services qui pourraient vous intéresser. Ces sociétés 
+peuvent également agréger vos données non-identifiables à des fins de publicités ciblées, de 
+recherches marketing et autres finalités semblables. Ces sociétés peuvent placer leurs propres 
+cookies sur votre ordinateur. Si vous souhaitez empêcher ces annonceurs tiers de collecter ou 
+d’utiliser ces informations, vous pouvez visiter directement leurs sites web et exercer votre 
+droit d’objection.
+
+Autres communications
+
+Nous pouvons communiquer des données personnelles en vertu de la loi, d’une décision judiciaire 
+ou administrative ou à la demande de toute autre autorité chargée de l’application de la loi ou 
+organisation régulatrice ; afin de faire valoir ou d’appliquer nos droits et contrats; ou lorsque 
+nous pensons de bonne foi que la communication de l’information est nécessaire ou souhaitable, 
+y compris, par exemple, pour protéger les droits, la propriété ou la sécurité de Internet@TV et de 
+Samsung, de nos utilisateurs ou de tiers.
+
+4. MINEURS
+
+Internet@TV ne doit pas être utilisé par des mineurs sans la surveillance de leurs parents. Nous 
+demandons aux mineurs n’ayant pas atteint l’âge de treize ans de ne pas fournir de données 
+personnelles sur Internet@TV. Nous ne collectons pas intentionnellement des données 
+personnelles concernant des mineurs âgés de moins de treize ans, et nous ne communiquons pas 
+intentionnellement ces informations à des tiers.
+
+5. SÉCURITÉ DES DONNEES QUE NOUS COLLECTONS
+
+La sécurité de vos données personnelles est importante pour nous. Nous avons mis en place des 
+mesures de sécurité physique, électronique et procédurale pour assurer la sécurité de vos 
+données personnelles. Cependant, il y a toujours un risque lorsque l’on transmet une information 
+électroniquement. Les données personnelles que nous collectons sont stockées dans des bases 
+de données que nous contrôlons. Lorsque nous le jugeons opportun, nous utilisons des mesures 
+de sécurité conformes aux normes du secteur pour protéger vos données, tel que des pare-feu 
+et des technologies de cryptage. Cependant, nous ne pouvons garantir la sécurité de nos bases 
+de données ni que les données que vous fournissez ne seront pas interceptées lors de leur 
+transmission sur internet.
+6. FORUMS DE DISCUSSION ET AUTRE ESPACES PUBLICS
+
+Nous pouvons vous proposer des discussions (chats), commentaires d’utilisateurs, systèmes 
+d’affichage électronique (bulletin boards), ou autres espaces de discussion publique ; toute 
+information que vous postez en ligne sera considérée comme publique et mis à la disposition des 
+les autres utilisateurs. Toute mise en ligne est régie par les dispositions des Conditions 
+d’Utilisation pour les Applications à destination des utilisateurs finaux de Internet@TV. Veillez à 
+ne pas utiliser des données personnelles dans le nom que vous utilisez pour votre profil en ligne 
+ou d’autres informations qui pourraient être mis à la disposition d’autres utilisateurs.
+
+Informations archivées
+
+Nous tenons des archives des journaux web, des bases de données et autres systèmes et 
+informations. Veuillez noter qu’il est possible que certaines de ces informations puissent rester 
+archivées après avoir été effacées de la base de données active. Nous tenons des archives à des 
+fins de reprise sur sinistre, à des fins légales et autres finalités non-promotionnelles.
+
+7. CONCOURS ET LOTERIES
+
+Une inscription peut ne pas être nécessaire pour participer à des promotions telles que les 
+concours et loteries sur Internet@TV. Parfois, une inscription ou un processus de saisie séparé(e) 
+est nécessaire et vous devrez soumettre vos données personnelles telles que vos nom et 
+prénom, adresse, ville, département et code postal, adresse électronique, numéro de téléphone 
+et date de naissance. La page d’accueil et/ou le règlement indiquera les règles spécifiques 
+applicables à la promotion concernée. Vous aurez également la possibilité d’accepter de recevoir 
+des offres spéciales de nos annonceurs en relation avec ce type de promotions.
+
+
+8. TELECHARGEMENT DE VIDEOS D’UTILISATEURS
+
+Les utilisateurs inscrits qui nous soumettent du contenu acceptent que certaines données 
+personnelles soient affichées sur Internet@TV ou toute plateforme sur laquelle nous opérons 
+ou fournissons des services, ou si cette fonctionnalité est proposée en relation avec un Co-
+Partenaire, sur le site web de notre Co-Partenaire dans le cadre de l’affichage de la vidéo de 
+l’utilisateur. Il pourra également être demandé aux utilisateurs inscrits qui envoient des vidéos de 
+fournir des données personnelles supplémentaires.
+
+9. TRANSFERT DE DONNEES
+
+Nous transférerons les données personnelles que vous nous avez fournies par l’intermédiaire de 
+Internet@TV sur des serveurs situés en Allemagne et aux Etats-Unis à des fins de stockage. Il 
+est possible que nous transférions des données personnelles que nous avons collectées auprès de 
+vous vers la République de Corée ou vers d’autres pays que le vôtre, aux sociétés qui nous sont 
+liées ou aux tiers mentionnés dans cette Charte Vie Privée. Veuillez lire attentivement les autres 
+sections de ce document pour plus d'informations concernant le transfert d'informations 
+personnelles. En nous fournissant vos données personnelles, vous acceptez qu’elles soient 
+transférées en dehors de votre pays.
+
+
+10. EXACTITUDE DES DONNEES QUE NOUS COLLECTONS
+
+
+Si vous souhaitez exercer votre droit d'accès et de rectification de vos données personnelles, ou 
+pour vous opposer au traitement de vos données personnelles en application de la présente 
+Charte ou si vous avez des questions relatives à cette Charte Vie Privée, à l’exactitude de vos 
+données personnelles ou à l’utilisation de vos données personnelles, veuillez les adresser par 
+courrier électronique à intertv@samsung.com ou par courrier postal à :
+
+Internet@TV
+SAMSUNG ELECTRONICS, CO., Ltd.
+416 Maetan-3Dong,
+Yeongtong-Gu, Suwon-City,
+Gyeonggi-Do, Korea 443-410
+A l’attention du Département Charte Vie Privée
+
+Après réception d’une demande de modification de vos données, nous nous assurerons que vos 
+données personnelles stockées dans les bases de données actives que nous utilisons pour 
+exploiter Internet@TV seront mises à jour, corrigées, modifiées ou supprimées, de façon 
+appropriée, dès que cela sera raisonnablement possible.
+
+Cependant, nous nous réservons le droit de conserver dans nos archives toutes informations 
+retirées ou modifiées dans nos bases de données actives de Internet@TV. Nous pouvons 
+conserver ces informations pour résoudre des litiges et des problèmes et pour appliquer nos 
+Conditions d’Utilisation pour les Applications à destination des utilisateurs finaux. De plus, il n’est 
+pas techniquement possible de retirer toute trace de des données que vous nous avez fournies. 
+Une copie de vos données personnelles peut exister sous une forme non effaçable qu’il serait 
+difficile voire impossible pour nous de localiser.
+
+Cette Charte Vie Privée est entre en vigueur à partir du 3 mars 2010 et est conforme à la Charte 
+Vie Privée de la société Samsung. Nous nous réservons le droit de modifier cette Charte Vie 
+Privée à tout moment, et afficherons toutes modifications importantes de cette Charte Vie 
+Privée dès qu’elles entreront en vigueur. Vous devez consulter cette Charte Vie Privée de 
+manière régulière.

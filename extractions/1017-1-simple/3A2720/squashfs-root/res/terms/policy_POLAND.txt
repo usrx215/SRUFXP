@@ -1,0 +1,269 @@
+POLITYKA OCHRONY PRYWATNOŚCI INTERNET@TV
+
+(Samsung Electronics Co., Ltd.) ("Samsung") dąży do ochrony prywatności w sieci odwiedzających, 
+użytkowników i klientów naszej usługi aplikacji. Przedstawiona poniżej polityka ochrony 
+prywatności (“Polityka Ochrony Prywatności”) ma zastosowanie wyłącznie w odniesieniu do 
+Samsung Apps oraz usług internetowych świadczonych przez Internet@TV (zwanych dalej 
+łącznie „Internet@TV”). Celem niniejszej Polityki Ochrony Prywatności jest poinformowanie 
+użytkowników o rodzajach informacji, które zbieramy o użytkownikach podczas ich wizyty w 
+Internet@TV, sposobach wykorzystania takich informacji oraz o tym, czy i w jaki sposób 
+ujawniamy te informacje osobom trzecim. Niniejsza Polityka Ochrony Prywatności nie dotyczy 
+danych osobowych podawanych przez użytkownika bezpośrednio osobom trzecim, do których 
+usług lub treści użytkownik uzyskuje dostęp poprzez Internet@TV. Użytkownik powinien 
+sprawdzić odpowiednią politykę ochrony prywatności osób trzecich świadczących usługi, do 
+których usług lub treści uzyskuje dostęp.
+Internet@TV jest kontrolowany i obsługiwany przez Samsung z Republiki Korei, i nie ma 
+poddawać Samsung ani żadnej z jej Spółek Powiązanych przepisom prawa lub jurysdykcji 
+jakiegokolwiek stanu, państwa lub terytorium innego niż Republika Korei. W zakresie 
+dozwolonym przez prawo, Samsung nie oświadcza ani nie zapewnia, że Internet@TV, lub jego 
+część, może być stosowana lub dostępna w danej jurysdykcji. Osoby odwiedzające 
+Internet@TV robią to z własnej woli i na własne ryzyko oraz są odpowiedzialne za 
+przestrzeganie wszystkich miejscowych praw, zasad i regulaminów.
+
+Wszyscy użytkownicy Internet@TV powinni dostarczyć na żądanie prawdziwe, aktualne, pełne i 
+dokładne dane osobowe, zaś wszelkie wpisy, które w dobrej wierze uznamy na nieprawidłowe, 
+niezgodne z prawdą, sfałszowane, fałszywe, niezgodne z Polityką Ochrony Prywatności lub ją 
+naruszające zostaną przez nas odrzucone i usunięte.
+
+W ramach naszej usługi Internet@TV umożliwimy użytkownikom wyrażenie zgody na warunki 
+niniejszej Polityki Ochrony Prywatności. Oprócz powyższej zgody, korzystanie przez 
+użytkownika z Internet@TV lub udział w Internet@TV zostanie uznane za akceptację 
+postanowień Polityki Ochrony Prywatności oraz wyrażenie zgody na zbieranie, wykorzystanie, 
+ujawnianie, przekazywanie, zarządzanie i przechowywanie przez nas danych osobowych 
+użytkowników, zgodnie z przedstawionym poniżej opisem. Możemy również przenosić lub 
+wprowadzać dane osobowe zebrane poza Internetem do naszej internetowej bazy danych lub 
+przechowywać takie dane osobowe w formie elektronicznej. Możemy również łączyć dane 
+osobowe zebrane w Internecie z informacjami dostępnymi z innych źródeł, np. otrzymanymi od 
+naszych Podmiotów Powiązanych, firm marketingowych czy Reklamodawców. Niniejsza 
+Polityka Ochrony Prywatności ma zastosowanie do wszystkich powyższych danych osobowych i 
+będzie obowiązywać przez cały okres korzystania z Internet@TV przez danego użytkownika, 
+nawet w przypadku, gdy jego korzystanie z danej usługi, elementu, funkcji czy promocji zostanie 
+zakończone, wygaśnie, zostanie zawieszone lub dezaktywowane z dowolnej przyczyny.
+
+1. ZBIERANE PRZEZ NAS INFORMACJE
+
+Dane osobowe
+
+W różnych miejscach na Internet@TV, np. w formularzach zgłoszeniowych, ankietach i 
+kwestionariuszach, użytkownicy mogą być poproszeni o wprowadzenie danych „osobowych”, 
+takich jak imię i nazwisko, adres e-mail, adres korespondencyjny czy też numer telefonu (do 
+pracy lub domowego). Mamy nadzieję, że użytkownicy będą świadomi, kiedy są zbierane ich 
+dane, ponieważ naszym zamiarem jest zbieranie danych osobowych wyłącznie w przypadku, gdy 
+użytkownicy wprowadzą je dobrowolnie do naszych formularzy i kwestionariuszy. Pomimo, że 
+ujawnienie takich informacji w celu korzystania z Internet@TV jest dobrowolne, bez podania 
+określonych danych użytkownik może nie być w stanie w pełni korzystać z wszystkich usług na 
+Internet@TV. Wszelkie informacje uzyskane od użytkowników za pośrednictwem Internet@TV 
+będą przez nas zbierane i przechowywane zgodnie z niniejszą Polityką Ochrony Prywatności.
+Dane „ogólne”, nieumożliwiające określenia tożsamości osoby
+
+Poprzez Internet@TV możemy również zbierać „ogólne” dane na temat użytkowników. Za 
+dane „ogólne” uważamy informacje, na podstawie których nie można zidentyfikować danego 
+użytkownika lub uzyskać z nim kontaktu, np. dane demograficzne (wiek użytkownika, płeć, 
+dochód, wykształcenie, zawód, kod pocztowy itp.). Dane ogólne mogą również obejmować dane 
+techniczne, takie jak adres IP użytkownika oraz inne anonimowe informacje dotyczące 
+korzystania z Internet@TV. Dane ogólne mogą również obejmować informacje zdobyte w 
+trakcie korzystania przez użytkowników z Internet@TV, np. wyrazy wprowadzane w funkcji 
+wyszukiwania Internet@TV. Zastrzegamy sobie prawo do wykorzystania lub ujawniania danych 
+ogólnych w sposób, jaki uznamy za stosowny.
+
+
+
+2. WYKORZYSTANIE ZEBRANYCH INFORMACJI
+
+Nasze Usługi
+
+Zebrane dane osobowe naszych użytkowników wykorzystujemy w celu świadczenia żądanych 
+usług, komunikacji z użytkownikami oraz celu umożliwienia użytkownikom uczestniczenia w 
+naszych ankietach internetowych. W oparciu o zbiorcze dane ogólne dotyczące naszych 
+użytkowników możemy dokonać analizy danych demograficznych na temat naszych 
+użytkowników, np. procentu użytkowników płci męskiej i żeńskiej, obszarów geograficznych, z 
+których pochodzą, wieku użytkowników oraz innych danych demograficznych lub kombinacji 
+powyższych danych. Możemy również wykorzystywać zebrane przez nas dane osobowe i 
+ogólne, aby analizować sposób korzystania z Internet@TV oraz ulepszyć jego zawartość, a 
+także dla celów marketingowych i promocyjnych, w tym – po uzyskaniu uprzedniej zgody 
+użytkownika - w celu prowadzenia marketingu bezpośredniego poprzez przesyłanie 
+użytkownikom przez nas lub nasze spółki powiązane informacji o produktach i usługach, które 
+naszym zdaniem mogą ich zainteresować.
+
+Poczta elektroniczna
+
+W przypadku otrzymania od użytkownika wiadomości elektronicznej z pytaniem lub uwagami, 
+możemy wykorzystać dane osobowe tego użytkownika, aby udzielić mu odpowiedzi, możemy 
+też zachować pytania lub uwagi użytkownika dla celów przyszłej komunikacji. Jednakże, poza 
+udzielaniem odpowiedzi na tego rodzaju wiadomości, z zasady nie wysyłamy użytkownikom 
+wiadomości elektronicznych, chyba że poproszą nas o usługę obejmującą taki rodzaj 
+komunikacji, lub w inny sposób wyrażą zgodę na nawiązanie z nimi kontaktu za pośrednictwem 
+poczty elektronicznej, jak również otrzymywanie (od nas lub spółki powiązanej) informacji na 
+temat produktów i usług, które naszym zdaniem mogą ich zainteresować. Użytkownicy mogą 
+zamówić subskrypcję naszej broszury elektronicznej, w której zawierać będziemy informacje na 
+temat Internet@TV lub naszych reklamodawców i którą wysyłać będziemy na adres poczty 
+elektronicznej danego użytkownika. Jednakże użytkownik będzie mógł zmienić zdanie i 
+zrezygnować z otrzymywania tych wiadomości.
+
+3. UJAWNIANIE INFORMACJI OSOBOM TRZECIM
+
+Informacje zbiorcze
+
+Z wyjątkiem przypadków określonych wyraźnie w niniejszej Polityce Ochrony Prywatności, bez 
+zgody użytkowników nie ujawniamy ich danych osobowych osobom trzecim. Osobom trzecim, 
+w tym reklamodawcom czy kontrahentom, możemy ujawniać informacje zbiorcze, np. dane 
+demograficzne i nasze analizy statystyczne. Informacje takie nie obejmują danych osobowych 
+użytkowników.
+
+Usługi firmowane wspólnie
+
+Internet@TV może również oferować usługi firmowane wspólnie (“co-branded”), np. imprezy 
+i/lub promocje organizowane wspólnie z inną spółką lub naszym Podmiotem Powiązanym 
+(„Partner Wspólnej Marki”). Usługi takie mogą być oferowane na Internet@TV i/lub witrynie 
+naszego Partnera Wspólnej Marki. Nasz Partner Wspólnej Marki może otrzymywać od nas dane 
+osobowe użytkowników; a jeśli użytkownik dobrowolnie zdecyduje się skorzystać z tego 
+rodzaju usług firmowanych wspólnie, oznaczać to będzie, że udziela zgody zarówno 
+Internet@TV, jak i Partnerowi Wspólnej Marki na zbieranie i wykorzystywanie jego danych 
+osobowych wprowadzonych w procesie rejestracji użytkownika i/lub w związku z określoną 
+usługą firmowaną wspólnie dla celów świadczenia takiej usługi lub dla celów marketingowych czy 
+administracyjnych. Skorzystanie przez użytkownika z możliwości cofnięcia Partnerowi Wspólnej 
+Marki zgody na korzystanie zdanych osobowych użytkownika dla celów marketingowych 
+wymaga bezpośredniego kontaktu z tym Partnerem Wspólnej Marki.
+Usługodawcy
+
+W niektórych przypadkach, zatrudniamy niezwiązane z nami spółki w charakterze usługodawców. 
+Na przykład, możemy zatrudnić spółki zewnętrzne (w tym operatorów bramek płatności) na 
+potrzeby świadczenia usług reklamowych, marketingowych i promocyjnych, obsługi poczty 
+elektronicznej lub wsparcia naszych usług internetowych. W takich przypadkach, może zaistnieć 
+potrzeba udostępnienia tym spółkom danych osobowych użytkowników. Wymagamy, aby takie 
+spółki wykorzystywały tego rodzaju informacje wyłącznie dla celów dostarczenia określonego 
+produktu czy świadczenia określonej usługi i nie upoważniamy ich do korzystania z takich danych 
+osobowych z jakichkolwiek innych powodów.
+
+Okazjonalnie oferujemy również promocje organizowane wspólnie z zewnętrznym sponsorem. 
+Jeżeli dany użytkownik będzie chciał wziąć udział w takiej promocji, może zaistnieć potrzeba 
+udostępnienia sponsorowi informacji na jego temat dla celów wysłania użytkownikowi produktu 
+lub innego rodzaju oferty promocyjnej.
+
+Transakcje dotyczące Internet@TV
+
+Ponieważ Internet@TV rozwija się, mogą mieć miejsce transakcje kupna, sprzedaży lub 
+połączenia z innymi spółkami. W takim przypadku, zebrane przez nas dane osobowe i ogólne 
+mogą zostać przeniesione do innej spółki w ramach takiej transakcji. Dołożymy wówczas 
+wszelkich starań, aby odpowiednie osoby trzecie spełniły życzenia użytkowników dotyczące 
+korespondencji e-mail.
+
+Zewnętrzni reklamodawcy
+
+Możemy przy pomocy zewnętrznych spółek reklamowych dostarczać poszczególnym 
+użytkownikom określone reklamy. Spółki te będą zbierać ogólne informacje na temat osób 
+odwiedzających Internet@TV, tak aby reklamować interesujące użytkowników produkty i 
+usługi. Spółki takie mogą również gromadzić informacje ogólne dla celów reklamy indywidualnej, 
+badań marketingowych i innych, podobnych celów. Powyższe spółki mogą również umieszczać 
+swoje pliki cookies na komputerze użytkownika. Jeżeli użytkownik nie zgadza się, aby 
+zewnętrzni reklamodawcy zbierali i wykorzystywali informacje na jego temat, może skorzystać 
+z możliwości wejścia bezpośrednio na stronę takiego reklamodawcy i cofnięcia zgody.
+
+Inne ujawnienia
+
+Możemy ujawniać dane osobowe, gdy wymagać będzie tego prawo lub nakaz sądowy lub zażąda 
+tego organ władzy państwowej lub organy ścigania bądź organy administracyjne; w celu 
+wyegzekwowania naszych praw lub umów; lub w przypadku, gdy w dobrej wierze uznamy, że 
+ujawnienie takich informacji jest niezbędne lub zalecane, na przykład w celu ochrony praw, 
+własności czy bezpieczeństwa Internet@TV i Samsung, naszych użytkowników i innych osób.
+4. DZIECI
+
+Internet@TV nie jest przeznaczona dla dzieci, które korzystałyby z niej bez nadzoru rodziców. 
+Prosimy, aby osoby poniżej 18 roku życia nie udostępniały żadnych danych osobowych na 
+Internet@TV. W przypadku użytkowników, którzy ukończyli 13, ale nie ukończyli 18 roku życia, 
+muszą oni uzyskać zgodę przedstawiciela ustawowego na udostępnianie ich danych osobowych. 
+Bez wiedzy ich przedstawicieli ustawowych, nie zbieramy świadomie informacji od osób poniżej 
+osiemnastego roku życia i w związku z tym nie udostępniamy świadomie takich informacji 
+osobom trzecim.
+
+5. BEZPIECZEŃSTWO ZEBRANYCH PRZEZ NAS INFORMACJI
+
+Bezpieczeństwo zebranych od użytkowników danych ma dla nas duże znaczenie. W tym celu 
+stosujemy zabezpieczenia fizyczne, elektroniczne oraz proceduralne. Nie można jednak 
+całkowicie wykluczyć ryzyka w przypadku przesyłu takich informacji drogą elektroniczną. 
+Gromadzone przez nas dane osobowe przechowywane są w zarządzanej przez nas bazie 
+danych. W celu zabezpieczenia danych użytkowników stosujemy środki, które w naszej opinii 
+spełniają normy obowiązujące na rynku, np. zapory ogniowe czy technologię kodowania. Nie 
+możemy jednak zagwarantować pełnej ochrony naszych baz danych ani zapewnić, że 
+dostarczone przez użytkowników informacje nie zostaną przechwycone w trakcie transmisji 
+przez Internet.
+
+6. POKOJE ROZMÓW (CHATÓW) I INNE OBSZARY PUBLICZNE
+
+W przypadku oferowanych przez nas pokojów rozmów (chatów), komentarzy użytkowników, 
+elektronicznych biuletynów informacyjnych i innych podobnych funkcji, wszystkie zamieszczane 
+przez użytkowników informacje są uznawane za informacje podane do wiadomości publicznej, 
+udostępniane innym użytkownikom. Wszystkie posty podlegają Warunkom korzystania przez 
+użytkowników końcowych z Aplikacji Internet@TV. Należy pamiętać, aby nie podawać żadnych 
+danych osobowych w nazwie użytkownika widocznej na ekranie czy w innych informacjach, do 
+których inni użytkownicy mogą mieć publiczny dostęp.
+
+Archiwizacja informacji
+
+Przechowujemy dane na temat logowań, bazy danych oraz innych systemów i informacji. 
+Prosimy pamiętać, że niektóre z powyższych informacji mogą pozostać w naszych archiwach po 
+ich usunięciu z aktywnej bazy danych. Archiwa takie przechowujemy w celu awaryjnego odzysku 
+danych, jak również ze względów prawnych i dla celów marketingowych.
+
+7. KONKURSY I LOTERIE
+
+Aby wziąć udział w konkursach czy loteriach na Internet@TV nie zawsze będzie wymagana 
+rejestracja. Takie konkursy mogą podlegać oddzielnej rejestracji czy procedurze przystępowania 
+i mogą również wymagać podania danych osobowych obejmujących imię i nazwisko, adres, 
+miasto, kraj i kod pocztowy, adres e-mail, numer telefonu i datę urodzenia. Wszystkie szczegóły 
+na temat warunków przystąpienia do danej promocji zamieszczone będą na stronie wejściowej 
+i/lub na stronie zawierającej Regulamin. W związku z wieloma takimi promocjami, użytkownicy 
+mogą również wyrazić zgodę na korzystanie z ofert specjalnych naszych reklamodawców.
+
+8. UMIESZCZANIE FILMÓW PRZEZ UŻYTKOWNIKÓW
+
+Zarejestrowani użytkownicy, którzy dostarczają nam swoje materiały, wyrażają zgodę na 
+umieszczenie ich niektórych danych osobowych, w związku z zamieszczeniem ich filmu, na 
+Internet@TV oraz innych platformach, z których korzystamy lub na których świadczymy swoje 
+usługi; lub, jeżeli usługa ta jest oferowana w związku z Partnerem Wspólnej Marki - na witrynie 
+Partnera Wspólnej Marki. Zarejestrowani użytkownicy, którzy publikują swoje filmy na witrynie 
+mogą być również proszeni o podanie dodatkowych danych osobowych.
+
+9. TRANSFER INFORMACJI
+
+Dane osobowe przekazywane nam przez użytkowników za pomocą Internet@TV będą 
+transferowane i przechowywane na serwerach znajdujących się w Niemczech i Stanach 
+Zjednoczonych. Zbierane od użytkowników dane osobowe mogą być również transferowane do 
+Republiki Korei lub do innych krajów jurysdykcji zagranicznych do naszych podmiotów 
+powiązanych lub do osób trzecich, o których mowa w niniejszej Polityce Ochrony Prywatności. 
+Przekazanie przez użytkownika danych osobowych jest równoznaczne z wyrażeniem przez 
+niego zgody na dokonywanie transferu danych poza obszar jurysdykcji użytkownika.
+
+
+
+10. RZETELNOŚĆ ZBIERANYCH PRZEZ NAS DANYCH
+
+Wszelkie pytania dotyczące niniejszej Polityki Ochrony Prywatności, rzetelności danych 
+osobowych użytkowników lub ich wykorzystywania prosimy kierować drogą elektroniczną na 
+adres: interv@samsung.com lub listownie na adres:
+
+Internet@TV
+SAMSUNG ELECTRONICS, CO., LTD.
+416 Maetan-3Dong,
+
+Yeongtong-Gu, Suwon-City,
+
+Gyeonggi-Do, Korea 443-742
+Do: Dział Polityki Ochrony Prywatności
+Po otrzymaniu wiadomości od użytkownika, dołożymy wszelkich starań, aby w jak najkrótszym 
+terminie zaktualizować, skorygować, zmienić lub usunąć dane użytkownika przechowywane w 
+naszej bazie danych wykorzystywanej do bieżącego prowadzenia Internet@TV.
+Zastrzegamy jednak prawo do zachowania w naszym archiwum wszelkich danych, usuniętych lub 
+zmienionych w naszej aktywnej bazie danych Internet@TV. Informacje takie możemy 
+wykorzystywać dla celów rozwiązywania sporów, problemów oraz egzekwowania Warunków 
+korzystania przez użytkowników końcowych z Aplikacji. Ponadto, usunięcie wszystkich 
+rekordów otrzymanych od użytkownika nie jest możliwe z technicznego punktu widzenia. Na 
+przykład, kopie danych użytkownika mogą pozostać nieusunięte w miejscach, które będzie 
+bardzo trudno zlokalizować, lub w ogóle nie będzie to możliwe.
+
+Niniejsza Polityka Prywatności wchodzi w życie z dniem 3 marzec 2010 r. i zgodna jest z 
+Korporacyjną Polityką Ochrony Prywatności spółki Samsung. Zastrzegamy prawo do 
+wprowadzania istotnych zmian w niniejszej Polityce Ochrony Prywatności w dowolnym 
+momencie. W takim przypadku dokonamy niezwłocznej publikacji wprowadzonych zmian i 
+powiadomimy użytkowników o zmianach. Prosimy o regularne przeglądanie niniejszej Polityki 
+Ochrony Prywatności.

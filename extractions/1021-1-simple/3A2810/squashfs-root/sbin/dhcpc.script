@@ -1,0 +1,263 @@
+#!/bin/sh
+#	@author CC Ma
+#	@date	2009/03/20
+#	@brief
+#		dhcpc event handling script
+#
+
+usage() {
+	echo "Usage: $0 {start/stop/restart/show} interface ..."
+	exit 1
+}
+
+checkDNS(){
+	if [ -f  /var/EnDns.info ]; then
+	ret=`cat "/var/EnDns.info"` 
+	else
+	ret=1;
+	fi	
+}
+
+
+
+stop() {
+	if=$1
+	if [ -f /var/udhcpc-$1.pid ] ; then
+	   echo -n "kill udhcpc pid : "
+	   cat /var/udhcpc-$1.pid
+        kill -12 `cat /var/udhcpc-$if.pid` > /dev/null 2>&1
+        kill `cat /var/udhcpc-$1.pid` > /dev/null 2>&1
+      # ifconfig $if down
+       ifconfig $if 0.0.0.0
+       ret=$?
+       if [ $needDNS = 1 ]; then
+       echo "<dhcp> we need to refresh DNS"
+       cat /dev/null > /etc/resolv.conf
+       fi		
+		rm -f /var/udhcpc-$1.pid
+		rm -f $2
+	else
+	    echo -n "no udhcpc pid can't be killed, but udhcpc id is "
+	    ps | grep "/sbin/udhcpc -i" | awk '{print $1}' | head -n 1 > /var/udhcpc.pid	    
+	    cat /var/udhcpc.pid
+        kill `cat /var/udhcpc.pid` > /dev/null 2>&1
+        rm -f /var/udhcpc.pid
+        ret=1
+    fi
+    
+    # We should consider the situation that using DHCP and PPPoE at the same time.
+    # If we stop DHCP and clean dns setting here, we may clean up DNS server that used by PPPoE 
+    cat /dev/null > /etc/resolv.conf
+    cat /dev/null > $2
+}
+
+start() {
+   if=$1
+   # stop $if
+#   if [ -f /var/udhcpc-$if.pid ] ; then
+#	   echo -n "kill udhcpc pid : "
+#	   cat /var/udhcpc-$if.pid
+#	   kill `cat /var/udhcpc-$if.pid` > /dev/null 2>&1       
+#       ret=$?
+#       cat /dev/null > /etc/resolv.conf		
+#	   rm -f /var/udhcpc-$if.pid
+#	   rm -f $2
+#	else
+#	    echo -n "no udhcpc pid can't be killed, but udhcpc id is "
+#	    ps | grep "/sbin/udhcpc -i" | awk '{print $1}' | head -n 1 > /var/udhcpc.pid	    
+#	    cat /var/udhcpc.pid
+#	    kill `cat /var/udhcpc.pid` > /dev/null 2>&1
+#	    rm -f /var/udhcpc.pid
+#		ret=1
+#    fi
+#  [ $ret = 0 ] && sleep 1
+   #SH Lin@20100614, clear network information for indicating DHCP progress.
+   #IF IP becomes 0.0.0.0, that means system hasn't recieved DHCP IP yet.  
+   #cat /dev/null > $2
+   
+   #SH Lin@20100506, fix ip rapidly changing when works with some DMS AP. ex: Dlink DIR-855, Linksys WRH54G
+   #If system already got ip from dhcp, just renew the lease from dhcp server.
+   #Otherwise, clean up and re-invoke udhcpc to aquire a new ip address. 
+
+   if [ -f /var/udhcpc-$if.pid ] && [ -f /var/dhcpc.ip ] ; then
+       echo "<dhcpc script>Find previous IP address, just renew it "
+	   #ip=`cat /var/dhcpc.ip`
+	   #lease=`cat /var/dhcpc.lease`
+	   cat /dev/null > /var/dhcp_server
+       	   
+	   echo "<dhcpc script>kill -SIGUSR1 `cat /var/udhcpc-$if.pid`"
+	   kill -10 `cat /var/udhcpc-$if.pid` 2>&1 | tee /var/dhcpc.renew
+	   cat /var/dhcpc.renew
+	   
+     echo "Renewing DHCP lease..."
+	   count=0
+	   while [ ! -s /var/dhcp_server ]
+	        do sleep 3
+	           echo "Renewing DHCP lease..."
+	           count=`expr $count + 1`
+	           if [ $count -gt 10 ] || [ ! -f /var/udhcpc-$if.pid ] ; then
+	                echo "Renew Fail"
+	                stop $1 $2
+	                exit 1
+	           fi
+	        done
+     echo "<dhcpc script>Renew Compelete"
+     
+     ip=`cat /var/dhcpc.ip`
+	   lease=`cat /var/dhcpc.lease`
+	   echo "Lease of $ip obtained, lease time $lease" > /var/dhcpc.log	   #generate dhcpc.log to tell system dhcp renew success
+   else
+       echo "<dhcpc script>No previous IP address, call udhcpc to get a new one."
+	   
+	   echo "<dhcpc script>Cleaing up remaining udhcpc process in the system."
+	   if [ -f /var/udhcpc-$if.pid ] ; then
+	       echo -n "<dhcpc script>kill udhcpc pid : "
+	       cat /var/udhcpc-$if.pid
+	       kill `cat /var/udhcpc-$if.pid` > /dev/null 2>&1       
+           ret=$?
+           if [ $needDNS = 1 ]; then
+           echo "<dhcp> we need to refresh DNS"
+           cat /dev/null > /etc/resolv.conf	
+           fi	
+	       rm -f /var/udhcpc-$if.pid
+	       rm -f $2
+	   else
+	       echo -n "<dhcpc script>no udhcpc pid can be killed, but udhcpc id is "
+	       ps | grep "/sbin/udhcpc -i" | awk '{print $1}' | head -n 1 > /var/udhcpc.pid	    
+	       cat /var/udhcpc.pid
+	       kill `cat /var/udhcpc.pid` > /dev/null 2>&1
+	       rm -f /var/udhcpc.pid
+		   ret=1
+       fi
+	   
+       echo "<dhcpc script>Invoke new udhcpc process."
+       echo -n "<dhcpc script>/sbin/udhcpc -i $if -s /usr/share/udhcpc/default.script -p /var/udhcpc-$if.pid -n -t 5 -T 2 -a... "
+       cat /dev/null > /var/udhcpc-$if.pid   
+       /sbin/udhcpc -i $if -s /usr/share/udhcpc/default.script -p /var/udhcpc-$if.pid -n -t 5 -T 2 -a | tee /var/dhcpc.log
+   fi
+
+   cat /var/dhcpc.log | grep time
+   ret=$?
+   	
+   netif=$1
+   if [ "$3" = 0 ] ; then		
+       tmp=$2
+       cat /dev/null > $tmp
+       ifconfig $netif | grep HWaddr | awk '{print "MAC " $5}' > $tmp
+       ifconfig $netif | grep inet | awk '{print $2}' | sed -e "s/addr\://" | awk '{print "IP " $0}' >> $tmp
+       ifconfig $netif | grep inet | awk '{print $4}' | sed -e "s/Mask\://" | awk '{print "Subnet " $0}' >> $tmp
+       route -n | grep $netif | grep UG | awk '{print "router " $2}' >> $tmp
+       cat /etc/resolv.conf | grep nameserver | awk '{print "DNS " $2}' >> $tmp
+   else
+       echo "set network info $netif"
+       /sbin/netinfc set MAC `ifconfig $netif | grep HWaddr | awk '{print $5}'`        
+       /sbin/netinfc set IP `ifconfig $netif | grep inet | awk '{print $2}' | sed -e "s/addr\://"`       
+       /sbin/netinfc set Subnet `ifconfig $netif | grep inet | awk '{print $4}' | sed -e "s/Mask\://"`
+	     if [ $needDNS = 1 ] ; then
+       	d1="`cat /etc/resolv.conf | grep -m 1 nameserver | awk '{print $2}'`"
+       	d2="`cat /etc/resolv.conf | grep -v $d1 | grep nameserver`"
+       
+       	/sbin/netinfc set DNS1 `cat /etc/resolv.conf | grep -m 1 nameserver | awk '{print $2}'`
+       	if [ -n "$d2" ] ; then         
+         	/sbin/netinfc set DNS2 `cat /etc/resolv.conf | grep -v $d1 | grep nameserver | awk '{print $2}'`
+       	fi       
+       fi
+       
+       r1="`route -n | grep UG `"
+       if [ -n "$r1" ] ; then           
+         /sbin/netinfc set router `route -n | grep UG | awk '{print $2}'`
+       fi
+    fi
+    echo "127.0.0.1		localhost.localdomain localhost" > /etc/hosts
+    echo "`ifconfig $netif | grep inet | awk '{print $2}' | sed -e "s/addr\://"`	`cat /etc/hostname`" >> /etc/hosts	    
+    #hywu@20091209, for netflix webAPI override DNS forward.
+    if [ -e "/misc/nf/hosts" ] ; then
+    	cat /misc/nf/hosts >> /etc/hosts
+    fi
+}
+
+[ -z "$1" ] && echo "Error: should be called from dhcpc" && exit 1
+
+checkDNS 
+needDNS=$ret
+
+case "$1" in
+	start)
+	   # [Start]
+		if [ -z "$2" ] ; then
+		  echo "Please define network interface"
+		  exit 1
+		fi	
+		echo -n "[Starting] dhcp client on interface $2 ... "
+		if [ -z "$3" ] ; then
+		  echo "Please define netinfo tmp"
+		  exit 1
+		fi
+		if [ -z "$4" ] ; then
+		  echo "Please define netinf daemon is used or not"
+		  exit 1
+		fi
+		start $2 $3 $4
+		;;
+	stop)		
+	   # [Stop]
+		if [ -z "$2" ] ; then
+		  echo "Please define network interface"
+		  exit 1
+		fi
+		if [ -z "$3" ] ; then
+		  echo "Please define netinfo tmp"
+		  exit 1
+		fi
+		echo -n "[Stoping] dhcp client on interface $2 ... "
+		stop $2 $3
+		;;		
+	show)
+		# [Show]
+		if [ -z "$2" ] ; then
+		  echo "Please define network interface"
+		  exit 1
+		fi
+		if [ -z "$3" ] ; then
+		  echo "Please define netinfo tmp"
+		  exit 1
+		fi
+		netif=$2
+		tmp=$3
+		cat /dev/null > $tmp
+       ifconfig $netif | grep HWaddr | awk '{print "MAC " $5}' > $tmp
+       ifconfig $netif | grep inet | awk '{print $2}' | sed -e "s/addr\://" | awk '{print "IP " $0}' >> $tmp
+       ifconfig $netif | grep inet | awk '{print $4}' | sed -e "s/Mask\://" | awk '{print "Subnet " $0}' >> $tmp
+       route -n | grep "$2" | grep UG | awk '{print "router " $2}' >> $tmp
+       cat /etc/resolv.conf | grep nameserver | awk '{print "DNS " $2}' >> $tmp       
+       ret=$?       
+		;;	
+	restart)		
+	   # [Restart]
+		if [ -z "$2" ] ; then
+		  echo "Please define network interface"
+		  exit 1
+		fi
+		echo -n "[Restarting] dhcp client on interface $2 ... "
+		if [ -z "$3" ] ; then
+		  echo "Please define netinfo tmp"
+		  exit 1
+		fi
+		if [ -z "$4" ] ; then
+		  echo "Please define netinf daemon is used or not"
+		  exit 1
+		fi
+		start $2 $3 $4
+		;;	
+	*)
+		usage
+	;;	
+esac
+
+if [ $ret = 0 ] ; then
+	echo " OK"
+	exit 0
+else
+	echo " FAIL"
+	exit 1
+fi 

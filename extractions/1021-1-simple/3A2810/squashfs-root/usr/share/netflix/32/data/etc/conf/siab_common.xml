@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_root>
+  <config_data>
+    <nccp_cert>etc/certs/siab_ca.pem</nccp_cert>
+    <nccp_url>https://siab.netflix.com/nccp/controller</nccp_url>
+  </config_data>
+</config_root>

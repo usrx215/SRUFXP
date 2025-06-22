@@ -1,0 +1,246 @@
+###################################################################
+# 
+#    Maple Key-Configuration File
+# 
+###################################################################
+
+# DONOT use just the name with just one character for function key
+
+Keyboard Key Map
+
+#	Power		=	KEY_COMMA
+	76 : KEY_COMMA
+
+#	TV	 		=	KEY_DOT
+	77 : KEY_DOT
+
+#	ON/OFF		=	Can't receive this key event
+
+#	1			=	KEY_1
+	101 : KEY_1
+
+#	2	 		=	KEY_2
+	98 : KEY_2
+
+#	3	 		=	KEY_3
+	6 : KEY_3
+
+#	4	 		=	KEY_4
+	8 : KEY_4
+
+#	5	 		=	KEY_5
+	9 : KEY_5
+
+#	6	 		=	KEY_6
+	10 : KEY_6
+
+#	7	 		=	KEY_7
+	12 : KEY_7
+
+#	8	 		=	KEY_8
+	13 : KEY_8
+
+#	9	 		=	KEY_9
+	14 : KEY_9
+
+#	-	 		=	KEY_MINUS
+	35 : KEY_MINUS
+
+#	0	 		=	KEY_0
+	17 : KEY_0
+
+#	PRE-CH		=	KEY_F11
+	259 : KEY_F11
+
+#	VOL +		=	KEY_F1
+	7 : KEY_F1
+
+#	VOL -		=	KEY_F2
+	11 : KEY_F2
+
+#	CH +		=	KEY_F3
+	68 : KEY_F3
+
+#	CH -		=	KEY_F4
+	65 : KEY_F4
+
+#	MUTE		=	KEY_F5
+	27 : KEY_F5
+
+#	SOURCE		=	KEY_F6
+	222 : KEY_F6
+
+#	CHLIST		=	KEY_F7
+	84 : KEY_F7
+
+#	MENU		=	KEY_F8
+	262 : KEY_F8
+
+#	W.LINK		=	KEY_F9
+	115 : KEY_F9
+
+#	TOOLS		=	KEY_F10
+	75 : KEY_F10
+
+#	RETURN		=	KEY_BACKSPACE
+	88 : KEY_BACKSPACE
+
+#	UP	 		=	KEY_ARROW_UP
+	29460 : KEY_ARROW_UP
+
+#	DOWN		=	KEY_ARROW_DOWN
+	29461 : KEY_ARROW_DOWN
+
+#	LEFT	 		=	KEY_ARROW_LEFT
+	4 : KEY_ARROW_LEFT
+
+#	RIGHT		=	KEY_ARROW_RIGHT
+	5 : KEY_ARROW_RIGHT
+
+#	WHEEL DOWN	=	KEY_PAGEDN
+	29469	 : KEY_PAGEDN
+
+#	WHEEL UP	=	KEY_PAGEUP
+	29468 : KEY_PAGEUP
+
+#	ENTER		=	KEY_ENTER
+	29443 : KEY_ENTER
+
+#	INFO	 	=	KEY_TAB
+	31 : KEY_TAB
+
+#	EXIT	 		=	KEY_ESC
+	45 : KEY_ESC
+
+#	RED	 		=	KEY_R
+	108 : KEY_R
+
+#	GREEN	 	=	KEY_G
+	20 : KEY_G
+
+#	YELLOW	 	=	KEY_Y
+	21 : KEY_Y
+
+#	BLUE	 	=	KEY_B
+	22 : KEY_B
+
+#	CC	 		=	KEY_Q
+	118 : KEY_Q
+
+#	INFO.L	 	=	KEY_W
+	147 : KEY_W
+
+#	DMA	 		=	KEY_E
+	 260	 : KEY_E
+
+#	E.MODE	 	=	KEY_A
+	148 : KEY_A
+
+#	CONTENT	 	=	KEY_S
+	261 : KEY_S
+
+#	FAV.CH		=	KEY_D
+	256 : KEY_D
+
+#	RW	 		=	KEY_U
+	69 : KEY_U
+
+#	PAUSE	 	=	KEY_I
+	74 : KEY_I
+
+#	FF	 		=	KEY_O
+	72 : KEY_O
+
+#	REC	 		=	KEY_J
+	192 : KEY_J
+
+#	PLAY	 	=	KEY_K
+	71 : KEY_K
+
+#	STOP	 	=	KEY_L
+	70 : KEY_L
+
+#	FF_	 		=	KEY_P
+	1078 : KEY_P
+
+#	RW_	 		=	KEY_T
+	1080 : KEY_T
+
+#	11        	= KEY_C
+	73 : KEY_C
+
+#	REPEAT        	= KEY_H
+	78 : KEY_H
+
+#	TTX_MIX        	= KEY_F
+	650 : KEY_F
+
+#	DISC_MENU        	= KEY_M
+	1086 : KEY_M
+
+#	12        	= KEY_N
+	1057 : KEY_N
+
+#	3D        	= KEY_V
+	1219 : KEY_V
+
+#	SUB_TITLE      = KEY_X
+	1089 : KEY_X
+
+#	QUICK_REPLAY       	= KEY_Z
+	1236 : KEY_Z
+
+#	KEY_PANNEL_POWER	= KEY_PAD_0
+	614 : KEY_PAD_0
+	
+#	KEY_PANNEL_CHUP	= KEY_PAD_1
+	105 : KEY_PAD_1
+	
+#	KEY_PANNEL_CHDOWN	= KEY_PAD_2
+	106 : KEY_PAD_2
+	
+#	KEY_PANNEL_VOLUP	= KEY_PAD_3
+	203 : KEY_PAD_3
+	
+#	KEY_PANNEL_VOLDOWN= KEY_PAD_4
+	204 : KEY_PAD_4
+	
+#	KEY_PANNEL_ENTER	= KEY_PAD_5
+	309 : KEY_PAD_5
+	
+#	KEY_PANNEL_MENU	= KEY_PAD_6
+	613 : KEY_PAD_6
+	
+#	KEY_PANNEL_SOURCE	= KEY_PAD_7
+	612 : KEY_PAD_7
+
+#	KEY_TTX_MIX		= KEY_PAD_8
+	650 : KEY_PAD_8
+
+#	KEY_GUIDE		= KEY_PAD_9
+	651 : KEY_PAD_9
+
+#	KEY_SUBTITLE	= KEY_PAD_STAR
+	652 : KEY_PAD_STAR
+
+#	KEY_ASPECT		= KEY_PAD_PLUS
+	653 : KEY_PAD_PLUS
+
+#	KEY_DOLBY_SRR	= KEY_PAD_MINUS
+	654 : KEY_PAD_MINUS
+
+#	KEY_MTS        	= KEY_PAD_DOT
+	655 : KEY_PAD_DOT
+
+#	D_KEY_FRONT_PLAY       	= KEY_PAD_SLASH
+	71 : KEY_PAD_SLASH
+
+	
+# To use new key code, remove comment char 
+
+#	29443 : KEY_ENTER
+#	29460 : KEY_ARROW_UP
+#	29461: KEY_ARROW_DOWN
+#	22 : KEY_B
+#	29468 : KEY_PAGEUP
+#	29469 : KEY_PAGEDN

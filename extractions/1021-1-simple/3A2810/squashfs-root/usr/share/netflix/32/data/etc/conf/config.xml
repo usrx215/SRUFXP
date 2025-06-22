@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_root>
+  <config_data>
+    <include>etc/conf/common.xml</include>
+    <include>etc/conf/oem.xml</include>
+  </config_data>
+</config_root>

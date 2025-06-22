@@ -1,0 +1,11 @@
+prefix=/proj/mtk94150/p4_views/hui.yan/WS_MTK94150_Workspace/OSS/BDP_V301/BDP_Linux/oss/source/webp/libwebp-0.2.1/../../../library/webp/webp-0.2.1/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name:		libwebp
+Description:	Library for the WebP graphics format
+Version:	0.2.1
+Cflags:		-I${includedir}
+Libs:		-L${libdir} -lwebp
+Libs.private:	-lm

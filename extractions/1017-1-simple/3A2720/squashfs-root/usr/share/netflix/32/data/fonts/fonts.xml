@@ -1,0 +1,93 @@
+<fontManager>
+    <settings>
+        <hinting>true</hinting>
+        <autohinter>false</autohinter>
+        <hinting_mode>normal</hinting_mode>
+    </settings>
+	<fonts>
+		<Arial_for_Netflix>
+            <settings>
+                <aliases>Helvetica, Sans, serif</aliases>
+            </settings>
+            <regular>
+                <file>fonts/Arial_for_Netflix-R.ttf</file>
+            </regular>
+            <bold>
+                <file>fonts/Arial_for_Netflix-B.ttf</file>
+            </bold>
+            <italic>
+                <file>fonts/Arial_for_Netflix-I.ttf</file>
+            </italic>
+            <boldItalic>
+                <file>fonts/Arial_for_Netflix-I.ttf</file>
+                <settings>
+                    <embolden>true</embolden>
+                </settings>
+            </boldItalic>
+		</Arial_for_Netflix>
+        
+        <CC_Monospaced_serif>
+            <settings>
+                <synthesize>true</synthesize>
+            </settings>
+            <regular>
+                <file>fonts/ScreenSerifMonoForNetflix.ttf</file>
+            </regular>
+        </CC_Monospaced_serif>        
+        
+        <CC_Proportional_serif>
+            <settings>
+                <synthesize>true</synthesize>
+            </settings>
+            <regular>
+                <file>fonts/ScreenSerifForNetflix.ttf</file>
+            </regular>
+        </CC_Proportional_serif>
+        
+        <CC_Monospaced_sanserif>
+            <settings>
+                <synthesize>true</synthesize>
+            </settings>
+            <regular>
+                <file>fonts/ScreenSansMonoForNetflix.ttf</file>
+            </regular>
+        </CC_Monospaced_sanserif>
+        
+        <CC_Proportional_sanserif>
+            <settings>
+                <synthesize>true</synthesize>
+            </settings>
+            <regular>
+                <file>fonts/Arial_for_Netflix-R.ttf</file>
+            </regular>
+        </CC_Proportional_sanserif>
+        
+        <CC_Casual>
+            <settings>
+                <synthesize>true</synthesize>
+            </settings>
+            <regular>
+                <file>fonts/AshleyScriptForNetflix.ttf</file>
+            </regular>
+        </CC_Casual>
+        
+        <CC_Cursive>
+            <settings>
+                <synthesize>true</synthesize>
+            </settings>
+            <regular>
+                <file>fonts/FloridianScriptForNetflix.ttf</file>
+            </regular>
+        </CC_Cursive>
+        
+        <CC_Smallcaps>
+            <settings>
+                <synthesize>true</synthesize>
+            </settings>
+            <regular>
+                <file>fonts/PlateGothicForNetflix.ttf</file>
+            </regular>
+        </CC_Smallcaps>
+
+	</fonts>
+</fontManager>

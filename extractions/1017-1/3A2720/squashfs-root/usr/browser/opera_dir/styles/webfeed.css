@@ -1,0 +1,617 @@
+@charset "utf-8";
+/* Stylesheet for Opera webfeeds */
+/* Copyright 2008 Opera Software */
+
+#strings {
+	display: none !important;
+}
+
+@media tv, handheld {
+	html {
+		font-size: 150%;
+	}
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	font: normal 13px sans-serif;
+	background: #fff;
+	color: #444;
+	height: 100%;
+	width: 100%;
+}
+
+a {
+	color: inherit;
+}
+
+li {
+	list-style-type: none;
+}
+
+li a, table a {
+	display: block;
+}
+
+h1,h2,h3 {
+	color: #333;
+	padding: 0.2em 0.3em;
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+body > div > .header h1 {
+	text-transform: capitalize;
+	text-align: center;
+}
+
+body > div:target > .header h1 {
+	color: #b00;
+}
+
+fieldset {
+	padding: 4px 5px 0px 5px;
+	border: 0;
+}
+
+legend {
+	display: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+body > div > .controls {
+	float: left;
+	background: #fff;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border-top: 1px solid #bbb;
+}
+
+body > div > .controls > a {
+	float: left;
+	background: #ddd;
+	color: #333;
+	margin: 2px 5px 2px 6px;
+	padding: 1px 2px;
+	border: 1px solid #bbb;
+	text-transform: capitalize;
+}
+
+body > div > .controls > a[href='#feedEntryToggleFlag'] {
+	background: url('images/flag.png') no-repeat #ddd;
+	background-position: 2px 0px;
+	padding-left: 20px;
+	/*content: 'flag this article';*/
+}
+
+body > div {
+	border-left: 1px solid #999;
+	border-width: 0 1px;
+}
+
+
+
+#feedEntries input:disabled,
+#feedEntries input:disabled + label {
+	opacity: .5;
+}
+
+#feedEntries label[for='search'] {
+	float: right;
+}
+
+#feedEntries label input {
+	float: right;
+	margin: -1px 0px 2px 5px;
+	width: 7em;
+}
+
+
+/*
+ *	screen
+ */
+@media screen {
+
+	.handheld {
+		display: none;
+	}
+	
+	#feedEntries {
+		float: right;
+		width: 74%;
+		height: 50%;
+		min-height: 160px;
+		max-width: 74%;
+		overflow: auto;
+		border-bottom: 1px solid #ccc;
+	}
+	
+	#feedEntry {
+		float: right;
+		width:  74%;
+		max-width: 74%;
+		background: url('images/shadow.gif') repeat-x top left #fff;
+	}
+	
+	#feedsList {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width:  25%;
+		border: 0;
+		margin-left: .15em;
+	}
+
+	#settings {
+		float: left;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		border: 0;
+		z-index: 2;
+		background: #fff;
+		display: none;
+	}
+	
+	#settingsHeader {
+		float: left;
+		width: 95%;
+	}
+	
+	#darkBox {
+		position: absolute;
+		height: 100px;
+		width: 100px;
+		display: none;
+		background: url(images/darkBox.png) #000;
+		z-index: 32768;
+	}
+	
+	#settings:target { /* , #settings:target + #darkBox */
+		display: block;
+	}
+	
+	body > div > .header {
+
+	}
+
+	body > div > .controls {
+		float: left;
+	}
+
+	#feedEntriesWrapper {
+		width: 100%;
+	}
+	
+	#feedEntriesWrapper > table > tbody > tr > * {
+		width: 100%;
+		border: inherit;
+	}
+
+	#feedEntry .content {
+
+	}
+	
+	body > div > .header > h1 {
+
+	}
+
+	#feedsListWrapper {
+
+	}
+
+	#feedsList a {
+
+	}
+
+	#feedHeader {
+
+	}
+	
+	#feedEntriesInfos {
+		width: 100%;
+		text-align: center;
+		margin-top: -0.5em;
+		margin-bottom: 0.7em;
+		color: #777;
+	}
+
+}
+
+
+
+
+/*
+ *	handheld
+ */
+@media handheld, tv, projection {
+
+	h1 {
+		font-size: 1.3em;
+	}
+	
+	h2 {
+		font-size: 1.2em;
+	}
+	
+	h3 {
+		font-size: 1.1em;
+	}
+
+	body > div {
+		display: none;
+	}
+	
+	body > div:target {
+		display: block;
+		padding: 1em;
+		border: 0;
+	}
+	
+	.header {
+		background: url(images/section.png) top left repeat-x;
+		margin-bottom: 1em;
+	}
+	
+	body > div > .controls {
+
+	}
+
+	#feedEntries .header img {
+		display: none;
+	}
+	
+	#feedEntriesHeader,
+	#feedEntriesTable > tbody > tr > *:first-child,
+	#feedEntriesTable > tbody > tr > *:last-child {
+		display: none;
+	}
+	
+	#noFeedEntries > tr > * {
+		display: table-cell !important;
+	}
+
+	#feedsListWrapper > ul > li {
+		background-color: #fff !important;
+	}
+	
+	#feedEntriesInfos {
+		width: 100%;
+		text-align: center;
+		margin-top: -0.5em;
+		margin-bottom: 0.7em;
+		color: #777;
+	}
+	
+}
+
+#subscribeControls {
+
+}
+
+
+/*
+ *	feedEntries
+ */
+#feedEntries .header img {
+	display: none;
+}
+
+#feedEntries .header img[src^=''] {
+	width: 88px;
+	height: 31px;
+	border: 0;
+	background: lime;
+}
+
+
+/*
+ *	feedEntriesTable
+ */
+#feedEntriesTable {
+	float: left;
+	max-height: 100%;
+	width: 100%;
+	max-width: 100%;
+	overflow: auto;
+}
+
+#feedEntriesWrapper > table > tbody > tr {
+/*	border-top: 1px solid transparent;
+	background-color: #fff;*/
+	width: 100%;
+}
+
+#feedEntriesTable > * > tr > * {
+	padding: .2em;
+	text-align: left;
+	margin: 0;
+	border-top: inherit;
+	width: 100%;
+}
+
+#feedEntriesTable > thead > tr > th {
+	border-bottom: 1px solid #eee;
+	background: #333 center left no-repeat;
+	color: #fff;
+	width: 100%;
+}
+
+#feedEntriesTable > * > tr > *:first-child {
+	width: 2.5em;
+	max-width: 2.5em;
+	background-repeat: no-repeat;
+	background-image: url(images/flag.png);
+	background-position: 0 -16px;
+}
+
+#feedEntriesTable > tbody > tr > td:nth-child(2) em {
+	font-style: normal;
+	background: #ff9;
+	color: #930;
+}
+
+@media screen {
+
+	#feedEntriesTable > * > tr > *:nth-child(2) {
+		border-left: 1px dashed #ccc;
+		border-right: 1px dashed #ccc;
+	}
+	
+}
+
+#feedEntriesTable > tbody > tr > *+*+* {
+
+}
+
+#feedEntriesTable tr[rel] {
+	background: #f8f8f8;
+	border-color: #f8f8f8;
+}
+
+
+
+/*
+ *	feedEntry
+ */
+
+#feedEntryHeader {
+	text-align: left;
+	margin-top: 0.5em;
+}
+
+#feedEntryContent {
+	clear: both;
+	padding: 1em 0.5em;
+	background-color: #f8f8f8;
+	border: 1px solid #ccc;
+	border-width: 1px 0;
+}
+
+#feedEntryContent:empty {
+	content: 'No content';
+	color: #999;
+}
+
+#feedEntryContent a {
+	text-decoration: underline;
+	color: #669;
+}
+
+#feedEntryContent a:hover {
+	background: #ffc;
+	color: #600;
+}
+
+#feedEntryImageHolder {
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+
+#feedEntryContent img {
+	max-width: 95%;
+	display: inline-block;
+	border: 1px solid #999;
+	padding: 2px;
+	background: #fff;
+	margin: 2px;
+}
+
+/*#feedEntryContent *[src]:after {
+	position: relative;
+	display: block;
+	content: '( ' attr(src) ' )';
+	color: #060;
+}*/
+
+#feedEntryContent table {
+	border: 1px solid #000;
+	background: #fff;
+}
+
+#feedEntryContent td,
+#feedEntryContent th {
+	margin: 0;
+	padding: .5em;
+	border: 1px solid #ccc;
+}
+
+
+/*
+ *	feedList
+ */
+#feedsList li {
+	display: block;
+	line-height: 20px;
+	white-space: nowrap;
+}
+
+#feedsList li > a {
+	display: inline;
+	overflow: hidden;
+}
+
+#feedsList ul > li > ul > li > a[href='#settings'] {
+	content: '';
+	background-image: url(images/customize.gif);
+	background-position: 2px -1px;
+	padding-left: 17px;
+}
+
+#feedsList ul > li#smartGroup_preview > ul > li > a[href='#settings'] {
+	opacity: .25;
+}
+
+#feedsList ul > li > ul > li > a+a {
+	background-image: url(images/defaultFavicon.png);
+	background-position: 2px 1px;
+}
+
+#feedsListWrapper > ul > li {
+	background-position: left top;
+	background-color: #fff;
+	border-bottom: 1px solid #ddd;
+}
+
+#feedsList ul > li > a {
+	padding-left: 20px;
+	background-image: url(images/folder.png);
+	background-position: 1px 1px;
+	background-repeat: no-repeat;
+	line-height: 20px;
+}
+
+#feedsList ul > li.smartGroup > a {
+	background: url(images/smartGroup.png) no-repeat;
+}
+
+#feedsListWrapper > ul > li > a {
+	display: block;
+	text-transform: capitalize;
+}
+
+#feedsListWrapper > ul {
+	padding-top: 4px;
+}
+
+#feedsListWrapper > ul > li {
+	background: #fff;
+	margin: 0 4px 8px 4px;
+	border-top: 1px solid transparent;
+	overflow: hidden;
+}
+
+#feedsListWrapper > ul > li:nth-child(2n+1) {
+	background-color: #fff;
+}
+
+#feedsListWrapper > ul > li > ul > li {
+/*	border-top: 1px solid transparent;
+	white-space: pre;
+	-o-text-overflow: ellipsis;*/
+}
+
+.header > img {
+	background: lime;
+	display: none;
+}
+
+
+/*
+ *	settings
+ */
+#settings form {
+	float: left;
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 97%;
+	background: #ddd;
+	border: 1px solid #000;
+	padding: 0.5em;
+}
+
+#settings hr {
+	clear: both;
+	margin: .25em;
+	height: 1px;
+	border: 0;
+	background: #ccc;
+}
+
+#settings label {
+	float: left;
+	display: block;
+	text-align: right;
+	margin: 3px 5px 0 0;
+	width: 48%;
+}
+
+#settings button {
+	float: right;
+	display: block;
+	margin: 1em 0;
+	padding: 0 1em;
+}
+
+#settings [type='text'], select {
+	float: left;
+	margin: 0 0 3px 0;
+	width: 48%;
+}
+
+#settings [type='checkbox'] {
+	float: left;
+	margin: 2px;
+}
+
+@media screen,tv,projection {
+
+	#settings form {
+		float: left;
+		top: 0;
+		margin-left: 1%;
+		width: 98%;
+		background: #ddd;
+		border: 1px solid #000;
+		padding: 0;
+	}
+
+	#settings .controls {
+		display: none;
+	}
+
+	#settings button {
+		width: 21%;
+		max-width: 10em;
+		margin: 2em .25em 1em .25em;
+	}
+	
+}
+
+
+#feedEntriesSubscription span {
+	display: none;
+}
+
+/*
+*:focus
+{
+	color: #000;
+}
+*/

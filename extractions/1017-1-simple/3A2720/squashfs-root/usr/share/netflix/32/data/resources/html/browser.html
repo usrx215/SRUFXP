@@ -1,0 +1,181 @@
+<!--
+    gibbon: ./netflix -U /html/browser.html -i
+    browser: http://foobar.netflix.com:6359/html/browser.html?q=&nbpdHost=http://foobar.netflix.com:6359/
+    test: state.activeState._view._domView.children[0].text = "hi"
+-->
+<html>
+<body>
+<script type="text/javascript" src="/js/NetflixBridge.js"></script>
+<script type="text/javascript" src="/js/PartnerBridge.js"></script>
+
+<script type="text/javascript">
+
+(function() {
+
+var _location;
+
+nrdp._nbpdAsync = false;
+
+// debugging hook for using a browser's JS engine talking to NBPD.
+nrdp.gibbon.eval = window.eval;
+
+nrdp.gibbon.__defineGetter__("location", function() { return _location; });
+nrdp.gibbon.__defineSetter__("location",
+                             function(l) {
+                                 nrdp.gibbon.scene.widget = null;
+                                 window.location = window.location.pathname + "?redir=" + encodeURIComponent(l);
+                             });
+
+nrdp.gibbon.loadScript = function(request, cb) {
+    var scr = document.createElement("script");
+    scr.src = nrdp.gibbon._resolveUrl(request.url);
+    scr.onload = cb;
+    document.body.appendChild(scr);
+};
+
+function turnDomKeyEventIntoGibbonKeyEvent(event) {
+    var evt = {
+        type: "key",
+        data: {
+            type: (event.type == "keyup" ? "release" : "press"),
+            count: 1,
+            repeat: false,
+            code: event.which,
+            key: event.keyIdentifier
+        }
+    };
+    nrdp.gibbon.beginPendingSync();
+    nrdp._callEventListeners("gibbon", evt);
+    nrdp.gibbon.endPendingSync();
+}
+
+var _realDocumentAddListener = document.addEventListener.bind(document);
+var _realDocumentRemoveListener = document.removeEventListener.bind(document);
+
+_realDocumentAddListener("keyup", turnDomKeyEventIntoGibbonKeyEvent);
+_realDocumentAddListener("keydown", turnDomKeyEventIntoGibbonKeyEvent);
+
+var _keyListeners = {
+    keyup: [],
+    keydown: []
+};
+
+document.addEventListener =
+    (function () {
+         var evtTypeMap = { keyup: "release", keydown: "press" };
+
+         function preventDefault () {}
+
+         function nrdpListener (type, fn) {
+             return function (e) {
+                 var data = e.data;
+                 if (data.type === type) {
+                     data.which = data.keCode = data.code;
+                     data.preventDefault = preventDefault;
+                     fn(data);
+                 }
+             };
+         }
+
+         return function(evt, callback) {
+             var type, wrapper;
+
+             switch (evt) {
+             case "keyup":
+             case "keydown":
+                 wrapper = nrdpListener(evtTypeMap[evt], callback);
+                 nrdp.gibbon.addEventListener("key", wrapper);
+                 break;
+             default:
+                 _realDocumentAddListener.apply(document, arguments);
+                 return;
+             }
+
+             if (_keyListeners[evt]) {
+                 _keyListeners[evt].push({
+                                             orgListener: callback,
+                                             nrdpListener: wrapper
+                                         });
+             }
+         };
+     }());
+
+document.removeEventListener =
+    function(evt, listener) {
+
+        if (evt != "keyup" && evt != "keydown") {
+            _realDocumentRemoveListener.apply(document, arguments);
+            return;
+        }
+
+        var len = _keyListeners[evt].length,
+            i, lst,
+            nrdpEvt = (evt === "keyup" || evt === "keydown") ? "key" : evt
+        ;
+
+        for (i=0; i<len; i++) {
+            lst = this._listeners[evt][i];
+            if (lst.orgListener === listener) {
+                nrdp.gibbon.removeEventListener(nrdpEvt, lst.nrdpListener);
+                this._listeners[evt].splice(i, 1);
+                break;
+            }
+        }
+    };
+
+document.__defineGetter__("cookie", function() { return nrdp.gibbon.cookie; });
+document.__defineSetter__("cookie", function(c) { nrdp.gibbon.cookie = c; });
+
+// still use the gibbon timeouts instead of the ones provided by the browser
+window.clearTimeout = function(id) {  if(id !== undefined) nrdp.gibbon.clearTimeout(id); };
+window.setTimeout = function(cb, interval) { return nrdp.gibbon.setTimeout(cb, interval, true); };
+window.setInterval = function(cb, interval) { return nrdp.gibbon.setTimeout(function() { cb(); return interval; }, interval, false); };
+window.clearInterval = function(id) { if(id !== undefined) nrdp.gibbon.clearTimeout(id); };
+
+function updateScreenshot() {
+    document.getElementById("screenshot").src ="/img/screenshot?" + Math.random();
+}
+
+function loadMainPage() {
+    document.getElementById("screenshot").onload = function() { setTimeout(updateScreenshot, 1000); };
+    updateScreenshot();
+    var urlParams = location.search;
+    var getParam = function(key) {
+        var sIdx = urlParams.indexOf(key), sep, eIdx;
+        if (sIdx !== -1) {
+            sep = urlParams.charAt(sIdx - 1);
+            if (!sep || sep === "?" || sep === "&") {
+                eIdx = urlParams.indexOf("&", sIdx);
+                return urlParams.substring(sIdx + (key.length + 1), eIdx !== -1 && eIdx || urlParams.length);
+            }
+        }
+        return undefined;
+    };
+    var nbpdHost = getParam("redir") || "/js/start.js";
+    nrdp.gibbon.load({url: decodeURIComponent(nbpdHost)},
+                     function(evt) {
+                         nrdp.gibbon._baseUrl = evt.finalURL;
+                         _location = evt.finalURL;
+
+                         // load them this way because it fixes exception traces
+                         var scr = document.createElement("script");
+                         scr.src = evt.finalURL;
+                         scr.onload = function() {
+                             // we deprived the UI of their chance to get this
+                             var loadedEvt = document.createEvent("Event");
+                             loadedEvt.initEvent("DOMContentLoaded", true, true);
+                             document.dispatchEvent(loadedEvt);
+                         };
+                         document.body.appendChild(scr);
+                     });
+}
+
+nrdp.addEventListener("init", loadMainPage);
+nrdp.init();
+
+})();
+
+</script>
+<img src="" id="screenshot">
+</body>
+</html>

@@ -1,0 +1,44 @@
+/lib/modules/2.6.35/BDP/msdos.ko: /lib/modules/2.6.35/BDP/fat.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/sata_mt85xx_mod.ko: /lib/modules/2.6.35/BDP/libata.ko
+/lib/modules/2.6.35/BDP/ftdi_sio.ko: /lib/modules/2.6.35/BDP/usbserial.ko /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/rm.ko: /lib/modules/2.6.35/BDP/cbagent.ko /lib/modules/2.6.35/BDP/kmem.ko /lib/modules/2.6.35/BDP/osai.ko /lib/modules/2.6.35/BDP/drvcli.ko /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/cbagent.ko: /lib/modules/2.6.35/BDP/kmem.ko /lib/modules/2.6.35/BDP/osai.ko /lib/modules/2.6.35/BDP/drvcli.ko /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/rtutil5572sta.ko: /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/jbd.ko:
+/lib/modules/2.6.35/BDP/bdpdrv.ko: /lib/modules/2.6.35/BDP/decry.ko /lib/modules/2.6.35/BDP/rm.ko /lib/modules/2.6.35/BDP/cbagent.ko /lib/modules/2.6.35/BDP/kmem.ko /lib/modules/2.6.35/BDP/osai.ko /lib/modules/2.6.35/BDP/drvcli.ko /lib/modules/2.6.35/BDP/tz.ko /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/fusion.ko:
+/lib/modules/2.6.35/BDP/nls_iso8859_1.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/sr_mod.ko: /lib/modules/2.6.35/BDP/cdrom.ko
+/lib/modules/2.6.35/BDP/bsp.ko: /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/nls_utf8.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/fuse.ko:
+/lib/modules/2.6.35/BDP/tz.ko: /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/rt5572sta.ko: /lib/modules/2.6.35/BDP/rtutil5572sta.ko /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/nls_base.ko:
+/lib/modules/2.6.35/BDP/musb_hdrc.ko: /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/ntfs.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/kmem.ko: /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/usbserial.ko: /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/mtk_hcd.ko: /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/mbcache.ko:
+/lib/modules/2.6.35/BDP/rtnet5572sta.ko: /lib/modules/2.6.35/BDP/rt5572sta.ko /lib/modules/2.6.35/BDP/rtutil5572sta.ko /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/fat.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/ecryptfs.ko:
+/lib/modules/2.6.35/BDP/drvuart.ko: /lib/modules/2.6.35/BDP/cbagent.ko /lib/modules/2.6.35/BDP/kmem.ko /lib/modules/2.6.35/BDP/osai.ko /lib/modules/2.6.35/BDP/drvcli.ko /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/dbg_utility.ko:
+/lib/modules/2.6.35/BDP/ext3.ko: /lib/modules/2.6.35/BDP/jbd.ko /lib/modules/2.6.35/BDP/mbcache.ko
+/lib/modules/2.6.35/BDP/vfat.ko: /lib/modules/2.6.35/BDP/fat.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/usbhid.ko: /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/udf.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/decry.ko: /lib/modules/2.6.35/BDP/tz.ko /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/drvcli.ko: /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/drv_mem.ko: /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/isofs.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/osai.ko: /lib/modules/2.6.35/BDP/drvcli.ko /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/usb-storage.ko: /lib/modules/2.6.35/BDP/usbcore.ko /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/usbcore.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/nls_ascii.ko: /lib/modules/2.6.35/BDP/nls_base.ko
+/lib/modules/2.6.35/BDP/libata.ko:
+/lib/modules/2.6.35/BDP/pdown.ko: /lib/modules/2.6.35/BDP/tz.ko /lib/modules/2.6.35/BDP/drv_mem.ko /lib/modules/2.6.35/BDP/bsp.ko /lib/modules/2.6.35/BDP/dbg_utility.ko
+/lib/modules/2.6.35/BDP/cdrom.ko:
+/lib/modules/2.6.35/BDP/nls_cp437.ko: /lib/modules/2.6.35/BDP/nls_base.ko

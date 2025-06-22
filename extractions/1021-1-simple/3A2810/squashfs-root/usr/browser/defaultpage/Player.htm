@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Player</title>
+<style type="text/css">
+<!--
+.PBtime {color: #FFFFFF; }
+body{margin:0px;padding:0px 0 0 0;background-color:#fff;}
+-->
+</style>
+</head>
+<script language="javascript" type="text/javascript">
+var barwidth=0; 
+var isPause=0;
+var isFullScreen=0;
+var hTimer
+
+
+function loadUrl(url) {
+	document.getElementById("dummyframe").src = url;
+}
+
+function control(cmd) {
+	loadUrl("control://" + cmd);
+	return false;
+}
+
+
+
+function changescreen()
+{
+    if (isFullScreen == 1)
+    {
+        isFullScreen = 0;
+        control("normalscreen");
+    }
+    else
+    {
+        isFullScreen = 1;
+        control("fullscreen");
+    }
+}
+
+function play()
+{
+    if (isPause == 1)
+    {
+    	control("play");
+    }
+    else
+    {
+    	control("pause");
+    }
+
+}
+
+
+function UpdateStatus(statusString)
+{
+
+    if (statusString == "playing")
+    {
+    	document.PlayPauseBtn.src = "Player/Player_Pause_Normal.png";
+    	isPause = 0;
+    }
+    else if (statusString == "pause")
+    {
+    	document.PlayPauseBtn.src = "Player/Player_Play_Normal.png";
+    	isPause = 1;
+    }
+	
+}
+
+
+function UpdatePlayTime(timeString)
+{
+	document.getElementById("PlayTime").innerHTML = timeString
+}
+
+
+
+
+function UpdateTotalTime(timeString)
+{
+	//document.getElementById("TotalTime").innerHTML = timeString
+	document.getElementById("TotalTime").innerHTML = "/" + timeString
+	document.getElementById("PlayTime").innerHTML = "00:00:00"
+}
+
+
+//update progress bar and buffer bar
+function UpdateBarLen(progressBarLen, bufferBarLen)
+{
+	var maxBarLen = 960
+	
+	if (progressBarLen > maxBarLen)	
+	{
+		progressBarLen = maxBarLen
+	}
+
+	if (bufferBarLen > maxBarLen)	
+	{
+		bufferBarLen = maxBarLen
+	}	
+  
+  document.progressBar.width = progressBarLen
+  document.bufferBar.width = bufferBarLen 
+}
+
+
+
+
+//timeout callback, notify browser stub timeout
+function CtrlBarTimer()
+{
+	control("timerout")
+}
+
+
+function StartTimer()
+{
+	//set interval in ms, trigger automaticly untill call clearInterval()
+	hTimer = setInterval('CtrlBarTimer()',1000)		
+}
+
+
+function StopTimer()
+{
+	clearInterval(hTimer);
+}
+
+</script> 
+<body style="opacity: .3">
+<div align="center">	
+<iframe id="dummyframe" src="about:blank" width="0" height="0" scrolling="no" frameborder="0" align="middle" valign="middle"></iframe> </div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
+  <tr>
+    <td width="50" height="35" background="Player/Player_Bg_H.png" >
+      <div align="right">
+        <img src="Player/Player_Pause_Normal.png" alt="" name="PlayPauseBtn" width="33" height="33" border="0" id="PlayPauseBtn" onclick="play()" style="cursor:hand"/>
+      </div>
+    </td>
+    
+    <td width=75% background="Player/Player_Bg_H.png" id=background ><div align="left">
+      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="10" background="Player/Player_ProgressBar_Bg_H.png">	          
+	          <img src="Player/Player_ProgressBar2_Bg_H.png" width="0" height="10" name="progressBar" id=progressBar style='position:relative'/>	                     
+	          <img src="Player/Player_ProgressBar_Bg_Buffer_H.png" width="0" height="10" name="bufferBar" id=bufferBar style='position:relative; margin-left:-5px'/>
+          </td>    
+          	
+        </tr>
+      </table>
+    </td>   
+    
+	    
+    <td width="40" background="Player/Player_Bg_H.png" align="right"><div align="right"><span id="PlayTime" class="PBtime" >00:00:00</span></div></td>
+    <td width="40" background="Player/Player_Bg_H.png" align="left"><div align="left"><span id="TotalTime" class="PBtime">/00:00:00</span></div></td>
+    <td width="40" background="Player/Player_Bg_H.png">
+      <div aligh="left">
+        <img src="Player/Player_UnFullScreen_Normal.png" width="33" height="33" border="0" name="FullScreenBtn" id="FulScreenBtn" onclick="changescreen()" style="cursor:hand;position:relative; margin-left:-12px">
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

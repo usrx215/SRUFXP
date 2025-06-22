@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_root>
+  <config_data>
+    <include>etc/conf/common.xml</include>
+    <cache_text/>
+    <disable_logabsolute>true</disable_logabsolute>
+    <!-- <ui_boot_url>https://tenfootui.netflix.com/htmltvui/projects/release/Gibbon/latest/native/Plus/start.js</ui_boot_url> -->
+    <!-- <ui_boot_url>http://lgux-smagnuson.corp.netflix.com/smagnuson/gibbon/web/native/Plus/start.js</ui_boot_url> -->
+    <!-- <ui_boot_url_params></ui_boot_url_params> -->
+    <ui_boot_url>https://uiboot.netflix.com/apps/gibbontvui/upgrade_policy</ui_boot_url>
+    <include>etc/conf/oem.xml</include>
+  </config_data>
+</config_root>

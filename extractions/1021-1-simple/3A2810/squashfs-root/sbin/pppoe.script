@@ -1,0 +1,125 @@
+#!/bin/sh
+#   @auther SH Lin
+#   @date   2011/7/13
+#   @brief
+#           Start and Stop PPPoE connection
+
+usage() {
+    echo "Usage: $0 [ start | stop | restart ] {interface} {username} {password} "
+    exit 1
+}
+
+start() {
+#Check if PPPoE connection exists
+    if [ -f /var/run/ppp0.pid ] ; then
+        #There is PPPoE connection exists
+        echo "<PPPoE Script>PPPoE connection exists"
+        ret=0
+        exit 0
+    fi
+    
+    #Setting up DNS descriptor
+    echo "<PPPoE Script>Setting up DNS descriptor"
+    echo "<PPPoE Script>ln -s /var/resolv.conf /etc/ppp/ -f" 
+    ln -s /var/resolv.conf /etc/ppp/ -f
+    echo "<PPPoE Script>ln -s /var/resolv.conf /etc/     -f"
+    ln -s /var/resolv.conf /etc/     -f
+        
+    #Create ppp device
+    echo "<PPPoE Script>Create ppp device"
+    echo "<PPPoE Script>mknod /dev/ppp c 108 0"
+    mknod /dev/ppp c 108 0
+        
+    #Delete default route which is not set by PPPoE
+    echo "<PPPoE Script>Delete default route which is not set by PPPoE"
+    echo "<PPPoE Script>route del default"
+    route del default
+        
+    #Create PPPoE connection by usename / password
+    echo "<PPPoE Script>Create PPPoE connection by usename / password"
+    
+    echo "<PPPoE Script>pppd pty '/usr/local/sbin/pppoe -p /var/run/pppoe.conf-pppoe.pid.pppoe -I $1 -T 80 -U -m 1412' noipdefault noauth default-asyncmap defaultroute hide-password nodetach mtu 1492 mru 1492 noaccomp nodeflate nopcomp novj lcp-echo-interval 20 lcp-echo-failure 3 usepeerdns debug user "$2" password "$3" &"        
+    #Don't know why cannot replace eth0 with $1, need more check on this...
+    #Currently we use eth0 by default    
+    #pppd pty '/usr/local/sbin/pppoe -p /var/run/pppoe.conf-pppoe.pid.pppoe -I eth0 -T 80 -U -m 1412' noipdefault noauth default-asyncmap defaultroute hide-password nodetach mtu 1492 mru 1492 noaccomp nodeflate nopcomp novj lcp-echo-interval 20 lcp-echo-failure 3 usepeerdns debug user "$2" password "$3" &
+    pppd pty '/usr/local/sbin/pppoe -p /var/run/pppoe.conf-pppoe.pid.pppoe -I eth0 -T 80 -U -m 1412' noipdefault noauth default-asyncmap defaultroute nodetach mtu 1492 mru 1492 lcp-echo-interval 20 lcp-echo-failure 3 usepeerdns user "$2" password "$3" &
+    
+    IPINFO="/var/pppoeinfo"
+    cat /dev/null > $IPINFO
+    ifconfig ppp0 | grep inet > $IPINFO
+    count=0
+    while [ ! -s $IPINFO ] 
+        do sleep 1
+           echo "<PPPoE Script> Waiting for connect..., `expr 10 - $count` seconds left"
+           count=`expr $count + 1`
+           if [ $count -gt 10 ] ; then
+              echo "<PPPoE Script> PPPoE connect failed"
+              #Clean up stuff created by PPPoE
+              rm -f /var/run/*
+              rm -f /var/pppoeinfo
+              ret=1
+              exit 1
+           fi
+           ifconfig ppp0 | grep inet > $IPINFO
+        done                                          
+        
+    echo "127.0.0.1		localhost.localdomain localhost" > /etc/hosts
+    echo "`ifconfig ppp0 | grep inet | awk '{print $2}' | sed -e "s/addr\://"`	`cat /etc/hostname`" >> /etc/hosts
+    
+    ifconfig ppp0 | grep inet | awk '{print $2}' | sed -e "s/addr\://" | awk '{print "IP " $0}' > $IPINFO
+    ifconfig ppp0 | grep inet | awk '{print $4}' | sed -e "s/Mask\://" | awk '{print "Subnet " $0}' >> $IPINFO
+    ifconfig ppp0 | grep inet | awk '{print $3}' | sed -e "s/P-t-P\://" | awk '{print "router " $0}' >> $IPINFO
+    cat /etc/resolv.conf | grep nameserver | awk '{print "DNS " $2}' >> $IPINFO
+    
+    echo "<PPPoE Script> PPPoE connected successfully"
+    ret=0            
+}
+
+stop() {
+    #Singal pppd to stop
+    echo "<PPPoE Script>Singal pppd to stop"
+    echo "<PPPoE Script>kill `cat /var/run/ppp0.pid`"
+    kill `cat /var/run/ppp?.pid`
+    
+    #Clean up stuff created by PPPoE
+    rm -f /var/run/*
+    rm -f /var/pppoeinfo
+    ret=0
+}
+
+#echo "<PPPoE Script> params: $#"
+if [ $# \< 1 ] ; then
+    usage
+fi
+
+case "$1" in
+    start)
+        # PPPoE start        
+        start $2 $3 $4
+        ;;
+        
+    stop)
+        # PPPoE stop
+        stop        
+        ;;
+        
+    restart)
+        stop
+               
+        #Sleep 1 second to wait for stop take effects
+        sleep 1
+                
+        start $2 $3 $4
+        ;;
+    *)
+        usage
+        ;;
+esac 
+
+if [ $ret = 0 ] ; then
+    echo "<PPPoE Script> PPPoE $1 on $2 OK"
+    exit 0
+else
+    echo "<PPPoE Script> PPPoE $1 on $2 failed"
+    exit 0     
+fi 

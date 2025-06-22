@@ -1,0 +1,221 @@
+1. Genel Yasal Uyarı
+
+Bu donanımla erişilebilen bütün içerik ve hizmetler üçüncü şahıslara aittir ve telif hakkı, patent, 
+ticari marka ve/veya diğer fikri mülkiyet kanunları ile korunmaktadır. Bu içerik ve hizmetler 
+yalnızca sizin kişisel kullanımınız için sağlanmıştır ve ticari amaçla kullanılamaz. Herhangi bir içerik 
+veya hizmet, içerik sahibinin veya servis sağlayıcının onay vermediği bir şekilde kullanılamaz. 
+Yukarıdakilerle sınırlı olmaksızın, işbu genel yasal uyarı ile açıkça müsaade edilmedikçe ve ilgili 
+mevzuatın Samsung’un sınırlama getirmesine engel olmadığı ölçüde ilgili içerik sahibi veya servis 
+sağlayıcının açık onayı olmaksızın, bu donanımla gösterilen bir içeriği veya hizmeti herhangi bir 
+şekilde veya ortamda tadil etmek, kopyalamak, yeniden yayınlamak, yüklemek, ilan etmek, 
+aktarmak, çevirmek, satmak, ondan türev eser yaratmak, kullanmak veya dağıtmak yasaktır.
+
+DONANIMIN KULLANIMINDAN DOĞAN RİSKİN YALNIZCA TARAFINIZA AİT OLDUĞUNU VE 
+KANUNLARIN İZİN VERDİĞİ ÖLÇÜDE; YETERLİ KALİTE, PERFORMANS VE DOĞRULUK İLE İLGİLİ 
+HER TÜRLÜ RİSKİN TARAFINIZCA ÜSTLENİLDİĞİNİ AÇIKÇA BEYAN VE KABUL ETMEKTESİNİZ. 
+KANUNLARIN İZİN VERDİĞİ ÖLÇÜDE, DONANIM İLE ÜÇÜNCÜ ŞAHISLARA AİT BÜTÜN İÇERİK VE 
+HİZMETLER, AÇIK VEYA ZIMNİ HİÇBİR GARANTİ, ŞART VEYA TAAHHÜT VERİLMEKSİZİN, 
+"OLDUĞU GİBİ" ESASINDA SAĞLANMAKTADIR. SAMSUNG, KANUNLARIN İMKAN VERDİĞİ 
+ÖLÇÜDE, DONANIM VEHERHANGİ BİR İÇERİK İLE HİZMETLERE İLİŞKİN OLARAK, SATILABİLİRLİK, 
+YETERLİ KALİTE, BELİRLİ BİR AMACA UYGUNLUK, DOĞRULUK, MÜDAHALESİZ KULLANIM VE 
+ÜÇÜNCÜ ŞAHISLARIN HAKLARININ İHLAL EDİLMEMESİ KONULARINDAKİ GARANTİLER, 
+ŞARTLAR VE TAAHHÜTLER DAHİL OLMAK, ANCAK BUNLARLA SINIRLI OLMAMAK ÜZERE TÜM 
+AÇIK VEYA ZIMNİ GARANTİLERİ, ŞARTLARI VE TAAHHÜTLERİ AÇIKÇA REDDETMEKTEDİR. 
+KANUNLARIN İZİN VERDİĞİ ÖLÇÜDE, SAMSUNG BU DONANIMLA SAĞLANAN BİR İÇERİĞİN VEYA 
+HİZMETİN DOĞRU, GEÇERLİ, GÜNCEL, YASAL VEYA EKSİKSİZ OLDUĞUNU GARANTİ 
+ETMEMEKTEDİR VE DONANIMIN, İÇERİĞİN VEYA HİZMETLERİN GEREKSİNİMLERİNİZİ 
+KARŞILAYACAĞINI VEYA DONANIMIN VEYA HİZMETLERİN KESİNTİSİZ VEYA HATASIZ 
+OLACAĞINI GARANTİ ETMEMEKTEDİR. SAMSUNG, SÖZ KONUSU ZARARLARIN ORTAYA 
+ÇIKMA OLASILIĞI KENDİSİNE BİLDİRİLMİŞ OLSA DAHİ, DONANIMIN İÇERDİĞİ BİR BİLGİDEN 
+KAYNAKLANAN VEYA DONANIMIN KULLANILMASININ SONUCUNDA VEYA SİZİN VEYA BİR 
+ÜÇÜNCÜ ŞAHSIN ERİŞTİĞİ BİR İÇERİĞİN VEYA HİZMETİN KULLANILMASININ SONUCUNDA 
+ORTAYA ÇIKAN DOĞRUDAN, DOLAYLI, ARIZİ, ÖZEL VEYA MADDİ ZARARLARDAN, 
+AVUKATLIK ÜCRETLERİNDEN, GİDERLERDEN VEYA DİĞER ZARARLARDAN İHMAL DAHİL HİÇBİR 
+DURUMDA, AKİT VEYA HAKSIZ FİİL ÇERÇEVESİNDE KANUNLARIN İZİN VERDİĞİ ÖLÇÜDE 
+SORUMLU OLMAYACAKTIR.
+
+BAZI KANUNLAR, GARANTİ VEYA ŞARTLAR ÖNGÖREBİLİR VEYA SAMSUNG’UN ÜZERİNE, 
+HARİÇ TUTULAMAYAN, SINIRLANAMAYAN VEYA SINIRLI ŞEKİLDE YAPILABİLMESİ DIŞINDA 
+AZALTILAMAYAN SORUMLULUK YÜKLEYEBİLİR. İŞBU HİZMET ŞARTLARI, KANUN 
+HÜKÜMLERİNE TABİ OLARAK YORUMLANMALIDIR. BU KANUN HÜKÜMLERİNİN UYGULANMASI 
+HALİNDE, SAMSUNG’UN İSTEĞİNE BAĞLI OLARAK VE YAPABİLECEĞİ ÖLÇÜ ÇERÇEVESİNDE 
+SAMSUNG’UN SORUMLULUĞU HİZMETLERLE İLGİLİ OLARAK (A) HİZMETLERİN TEKRAR 
+SAĞLANMASI VEYA (B) HİZMETLERİN TEKRAR SAĞLANMASINA İLİŞKİN ÜCRETLERİN ÖDENMESİ 
+DURUMLARINDA; VE ÜRÜNLERLE İLGLİ OLARAK (A) ÜRÜNLERİN DEĞİŞTİRİLMESİ VEYA EŞDEĞER 
+ÜRÜNLERİN TEDARİK EDİLMESİ (B) ÜRÜNLERİN ONARILMASI (C) ÜRÜNLERİN DEĞİŞTİRİLMESİ 
+VEYA EŞDEĞER ÜRÜNLERİN TEDARİK EDİLMESİ İÇİN ÜCRETLERİN ÖDENMESİ VEYA (D) 
+ÜRÜNLERİN ONARIMI İÇİN ÜCRET ÖDENMESİ İLE SINIRLANDIRACAKTIR.
+
+Kurulum süreci esnasında tanımladığınız ülkenin konumu, üçüncü şahıslara ait içeriklere, reklamlara 
+ve hizmetlere erişim amacıyla bağlantı(link) sağlayabilir. Üçüncü şahıslara ait içerik ve bağlı(link) 
+siteler kontrolümüz altında değildir ve bu web sitelerin içerikleri tarafımızca incelenmemiştir, 
+ayrıca bu sitelerin onarımı, içeriğine erişimi veya bunların uygunluğu hususunda tarafımızca 
+herhangi bir sorumluluk kabul edilmemektedir. Tanımladığınız ülke konumu ve 3. şahıslara ait web 
+sitelerine bağlantınız dolayısıyla doğan risklerin tamamen tarafınıza ait olduğunu ve sitelerde ilan 
+edilmiş kullanım ve gizlilik koşullarını incelemenin ve bunlara riayet etmenin sorumluluğunuz 
+kapsamında olduğunu beyan ve kabul etmektesiniz. Kanunların izin verdiği ölçüde, seçtiğiniz 
+ülkenin konumuyla ilgili olarak izinsiz üçüncü kişilere ait içeriğe erişim sebebiyle veya bununla 
+bağlantılı olarak ortaya çıkan doğrudan, dolaylı, arızi, özel veya maddi zararlardan, avukatlık 
+ücretlerinden, giderlerden veya diğer zararlardan dolayı Samsung’un herhangi bir sorumluluğu 
+olmayacaktır.
+
+Üçüncü şahıs hizmetleri ihbarda bulunulmaksızın değiştirilebilir, askıya alınabilir, kaldırılabilir, 
+durdurulabilir veya kesintiye uğrayabilir veya bu hizmetlere erişim herhangi bir anda ihbarda 
+bulunmaksızın engellenebilir veya kısıtlanabilir, ve Samsung bir içeriğin veya hizmetin herhangi bir 
+süre boyunca sağlanacağına dair hiçbir beyan veya teminat vermemektedir. İçerik ve hizmetler, 
+üçüncü şahıslar tarafından, Samsung’un kontrolüne tabi olmayan ağlar ve iletim araçları kanalıyla 
+sağlanmaktadır. Bu yasal uyarının genel kapsamını sınırlandırmamak üzereve kanunların izin 
+verdiği ölçüde, Samsung, bu donanımla kullanıma sunulan bir içeriğin veya hizmetin değiştirilmesi, 
+kesintiye uğratılması, devreden çıkarılması, kaldırılması veya askıya alınması konusunda kesinlikle 
+sorumluluk veya yükümlülük kabul etmemektedir. Samsung herhangi bir durumda, ihbarda 
+bulunmaksızın veya sorumluluk altına girmeksizin, bazı hizmetlerin veya içeriğin kullanımına veya 
+bu hizmetlere erişime sınırlamalar getirebilir.
+
+Samsung, içerikle ve hizmetlerle ilgili olarak müşterilere hizmet vermekten sorumlu veya yükümlü 
+değildir. İçerik veya hizmetler ile ilgili her türlü soru veya talep, doğrudan ilgili içerik ve hizmet 
+sağlayıcılara yöneltilmelidir.
+
+
+
+2. Şart ve Koşullar
+
+ARAÇLARA İLİŞKİN SON KULLANICININ ŞART VE KOŞULLARI
+
+Samsung Servis’ye ("Samsung Servis") hoş geldiniz. Yerleştirilebilir ve yürütülebilir yazılım 
+uygulamasını ["Araç" (Application)] indirmek ve kurmak, fonksiyonları ve hizmetleri ("Hizmetler") 
+kullanmak ve/veya Araçla içeriklere ("İçerikler") erişmek ve onları TV’nizde görüntülemek 
+suretiyle, aşağıdaki Kullanım Koşullarının yasal bağlayıcılığını kabul etmektesiniz. Kanunların imkân 
+verdiği ölçüde Samsung, işbu Kullanım Koşullarını, tarafınıza ihbarda bulunarak veya 
+bulunmaksızın belirli zamanlarda değiştirme veya güncelleme hakkını saklı tutmaktadır.
+
+TANIMLAR
+
+"İçerik"; filmler, videolar, yazılımlar, oyunlar, tasarımlar, resimler, çizimler, görüntüler, müzik ve 
+bilgiler dâhil, ancak bunlarla sınırlı olmamak üzere Samsung’a bağlı olmayan üçüncü şahıslarca her 
+türlü ortamda ve formatta, halihazırda sunulan veya gelecekte veya sunulacak olan gerçek ve 
+sanal maddi ve manevi bütün işitsel ve görsel unsurları, fikirleri ve bunlardan türetilmiş eserleri 
+ifade eder. "Hizmet"; müzik, film, mesaj, bilgi, tedarik, elden çıkarma, satış, alım, kiralama ve 
+danışmanlık hizmetleri dahil, ancak bunlarla sınırlı olmamak üzere, Samsung veya Samsung’a bağlı 
+olmayan üçüncü şahısların sunduğu ve genellikle internetten temin edilebilecek olan her türlü 
+hizmeti ifade eder. Samsung belirli zamanlarda bazı Hizmetleri ve/veya İçerikleri kullanımınıza 
+sunabilir ve bu durumlarda, söz konusu Hizmetleri ve İçerikleri kullanırken bu Kullanım Koşullarına 
+uymanız gereklidir. İçerikler ve Hizmetler yerel kanunlara ve yönetmeliklere uyulmak şartıyla, 
+yerel olarak hazırlanabilir ve oluşturulabilir; yararlanacağınız İçeriklerin ve Hizmetlerin türleri ve 
+seviyeleri konusunda ikamet ettiğiniz ve bulunduğunuz yere bağlı olarak sınırlamalar uygulanır. 
+Araçların kullanımına ilişkin koşullar; ilgili yerdeki, ülkedeki ve bölgedeki kanunlara tabi olmak 
+şartıyla her ülkeye, bölgeye veya piyasaya göre değişiklik gösterebilir.
+
+ARACIN KULLANIMI
+
+Araç (Application), 13 yaş veya üzeri kişilerin kullanımına yöneliktir. En az 13 yaşında veya üzeri 
+yaşta değilseniz veya kanunen veya başka bir nedenle Samsung Servis’yi kullanmanıza sınırlama 
+getirilmiş ise, Araçları kullanmaya son vermeniz gerekmektedir. 18 veya üzeri yaşta değilseniz, 
+Araçları kullanmadan önce ebeveyninizden veya velinizden izin almanız zorunludur. Araçları 
+kullanmak ve Kullanım Koşullarını kabul etmek suretiyle, en az 13 yaşında olduğunuzu, 13-18 arası 
+yaşta iseniz ebeveyninizden izin almış olduğunuzu ve Kullanım Koşullarını kabul etmenizi 
+sınırlandıran başka bir durum olmadığını teyit etmiş bulunuyorsunuz.
+
+Araç ve Araçla sağlanan İçerik ve Hizmetler yalnızca kişisel, ticari olmayan amaçlarla sınırlı olmak 
+üzere kullanılabilir. Başka bir amaçla kullanım yasaktır.
+
+Araçla sağlanan İçeriğe ve/veya Hizmete çevrimiçi veya başka yolla erişmek için kayıt 
+yaptırılması, bir kullanıcı hesabı açılması ve/veya ücret ödenmesi gerekebilir. Kayıt işlemi, kişisel 
+bilgilerin verilmesini ve başkalarıyla paylaşılamayacak benzersiz, gizli bir şifrenin seçilmesini 
+gerektirebilir. Verdiğiniz tüm kişisel bilgiler, Gizlilik Politikamız uyarınca tarafımızca 
+saklanacaktır. Kişisel bilgileriniz eksiksiz, doğru ve SİZE AİT olmalıdır. Aracın kullanımıyla bağlantılı 
+olarak bir hesap açmak için üçüncü bir şahsa ait kişisel bilgileri kullanamazsınız ve başkalarının 
+hesaplarına giremezsiniz. SAMSUNG, ASILSIZ BİLGİLERLE HESAP AÇILAN DURUMLAR DAHİL 
+OLMAK ÜZERE ARAÇLARIN KULLANIMININ BU KULLANIM KOŞULLARINI İHLAL ETTİĞİNİ 
+TESPİT ETTİĞİ TAKDİRDE, KULLANICI HESABINI BLOKE ETME HAKKINI SAKLI TUTAR. 
+Araçlarla sunulan ve ücret ödenmesini gerektiren İçeriğe ve Hizmete, ilgili ücreti ödememiş kişiler 
+erişemezler. Üçüncü şahıs tedarikçilerce sunulan veya sağlanan bir Hizmet veya İçerik için kayıt 
+yaptırılması, bir kullanıcı hesabı açılması ve/veya ücret ödenmesi gerekiyorsa, söz konusu işlemler 
+bu üçüncü şahısların Hizmet ve/veya İçerik politikalarına ve koşullarına tabi olacaktır.
+
+SAMSUNG UYGULAMALARIYLA ARACIN ÖZEL KULLANIMI
+
+Samsung uygulamalarıyla, aracın bazı İçerik ve/veya Hizmetine erişmek için kayıt yaptırılması ve 
+bir kullanıcı hesabı açtırılması ve/veya ücret ödenmesi gerekebilir. Kayıt işlemi, kullanıcı hesabı 
+açtırılması ve ücretin ödenmesi üçüncü bir şahıs (ücretli giriş hizmeti sağlayıcı dahil) tarafından 
+yürütülen web sayfası üzerinden tamamlanabilir. Bu kayıt işlemi, kişisel bilgilerin verilmesini ve 
+başkalarıyla paylaşılamayacak benzersiz, gizli bir şifrenin seçilmesini gerektirebilir. Üçüncü şahıs 
+tedarikçilerce Samsung aracılığıyla sunulan veya sağlanan bir Hizmet veya İçerik için kayıt 
+yaptırılması, bir kullanıcı hesabı açılması ve/veya bu üçüncü bir şahısa ait web sayfası üzerinden 
+ücret ödenmesi gerekiyorsa, söz konusu işlemler bu üçüncü şahısların Hizmet ve/veya İçerik 
+politikalarına ve koşullarına tabi olacaktır.
+
+SINIRLAMALAR VE YASAKLAR
+
+Hiçbir Araç, İçerik ve/veya Hizmet (kısmen veya tamamen) tarafınızca veya (tarafınızca 
+yönlendirilen) bir üçüncü şahıs tarafından teşhir edilemez, kopyalanamaz, hafızaya alınamaz, tadil 
+edilemez, satılamaz, yayınlanamaz veya dağıtılamaz ve tarafınızca Samsung’dan veya bu İçeriğin 
+ve/veya Hizmetin ilgili sahiplerinden veya hak sahiplerinden gerekli bütün yetkiler ve izinler 
+alınmadıkça, söz konusu işlemlerin yapılması yasaktır. Aracın veya Araçla sağlanan İçeriğin ve 
+Hizmetin izinsiz kullanılması yasaktır ve cezai takibatla sonuçlanabilir ve/veya hukuki sorumluluk 
+doğurabilir.
+
+Aracı, kanuna aykırı amaçlar dahil olmak üzere başka herhangi bir amaçla; istenmeyen teklif veya 
+reklam vermek, bir kişinin veya kuruluşun kimliğine bürünmek veya bir kişiyle veya kuruluşla 
+bağlantılı olunduğuna dair asılsız iddiada bulunmak, başkalarını yanlış tanıtmak, taciz etmek, 
+dolandırmak veya karalamak, müstehcen veya mütecaviz materyal yayınlamak, Aracı olumsuz 
+tanıtmak amacıyla veya ticari bir amaçla kullanmanız yasaktır. İşbu Koşullar aracılığıyla izin 
+verilmedikçe ve ilgili mevzuatın Samsung’un sınırlama getirmesine engel olmadığı ölçüde Aracı 
+parçalarına ayırmak, üzerinde tersine mühendislik yapmak, kurcalamak veya Araçla zararlı kodlar 
+göndermek veya diğer kullanıcılara ait bilgileri toplamak yasaktır. Samsung Servis’de veya 
+sunucularında yer alan veya bunlar ile sağlanan İçeriğin veya Hizmetin işlerliğini kesintiye 
+uğratmak veya bu İçeriği veya Hizmeti değiştirerek bozmak veya başkalarının Samsung Servis’yi 
+kullanmasını uygunsuz herhangi bir şekilde etkilemek amacıyla herhangi bir işlem yapmak 
+yasaktır. LÜTFEN SAMSUNG SERVIS’YE ERİŞİMİ KENDİ TAKDİRİMİZE BAĞLI OLARAK HERHANGİ 
+BİR NEDENLE ENGELLEME HAKKINI SAKLI TUTTUĞUMUZU GÖZ ÖNÜNDE BULUNDURUN.
+
+LİSANSIN VERİLMESİ
+
+Bu Kullanım Koşullarına eksiksiz şekilde uymanız şartıyla, Samsung; tarafınıza, İçeriği ve Hizmeti 
+yalnızca kendi TV’nizden görüntülemek, almak veya başka surette kullanmak (yalnızca izin 
+verildiği ölçüde) üzere Aracı (Application) indirmeye ve kullanmaya yönelik münhasır olmayan, 
+sınırlı bir lisans vermektedir. Araca ilişkin olarak başka bir hak verilmemektedir. İçerik ve Hizmet 
+için verilen hakların kapsamı, ilgili İçeriğin ve Hizmetin koşullarına ve ilgili İçerik ve Hizmet 
+sağlayıcıların koyduğu veya talep ettiği diğer lisans şartlarına ve sınırlamalarına tabi olacaktır. 
+Fikri mülkiyet hakları dahil Araca, İçeriğe ve Hizmete ilişkin bütün haklar, Samsung’un veya İçeriğe 
+ve Hizmete lisans veren kişilerin veya İçeriğin ve Hizmetin sahiplerinin mülkiyetinde kalacaktır.
+
+
+TEMİNATLAR VE YÜKÜMLÜLÜKLER: FERAGAT
+Kanunların imkan verdiği ölçüde Araç, İçerik ve Hizmet; Araç, İçerik ve Hizmetin kalitesi, 
+güvenilirliği, performansı, amacı veya doğruluğu dahil ancak bununla sınırlı olmayan konularla ilgili 
+hiçbir açık veya zımni garanti verilmeksizin, "olduğu gibi" esasında size sağlanmaktadır. Aracın 
+kullanılmasına ve işlevine ilişkin bütün riskleri üstlenmeyi ve Samsung’u veya Samsung’un herhangi 
+bir holding şirketini, yönetim kurulu üyesini, personelini, ortağını veya reklam veren kuruluşunu 
+Aracın kullanılmasından ve işlevinden veya İçerikten veya Hizmetten kaynaklananlar dâhil, ancak 
+bunlarla sınırlı olmamak üzere herhangi bir zararı, kaybı tazminatını, dolaylı, cezai, arızi zararları 
+veya avukatlık ücretlerini de kapsayan maddi veya gayri maddi hiçbir zarardan, ziyandan veya 
+hasardan sorumlu tutmamayı kabul etmektesiniz. Samsung, üçüncü şahıslara ait olan ve Araç 
+üzerinden ulaşabilecek İçerikten veya Hizmetten sorumlu tutulmayacaktır veya Aracın içerdiği 
+veya üçüncü şahıslarca Araçla yayılan zararlı kodlardan sorumlu tutulmayacaktır. Samsung 
+İçerikte veya Hizmette kesinti, gecikme veya hata olmayacağını ve bu İçeriğin ve Hizmetin sürekli 
+sağlanabileceğini garanti etmemektedir. Samsung İçerikte veya Hizmette belirtilen herhangi bir 
+fikri, ürünü, kişiyi veya görüşü desteklememektedir.
+Bazı kanunlar, garanti veya şartları kapsayabilir veya Samsung’un üzerine, hariç tutulamayan, 
+sınırlanamayan veya kısıtlı olarak sınırlanmak dışında azaltılamayan sorumluluk yükleyebilir. İşbu 
+hizmet şartları, kanun hükümleri çerçevesinde yorumlanmalıdır. Bu kanun hükümleri uygulanırsa 
+Samsung’un isteğine bağlı olarak ve yapabileceği ölçü çerçevesinde Samsung’un sorumluluğu (a) 
+hizmetlerin tekrar sağlanması veya (b) hizmetlerin tekrar sağlanmasına ilişkin ücretlerin ödenmesi 
+durumlarında; ve (a) ürünlerin değiştirilmesi veya eşdeğer ürünlerin tedarik edilmesi (b) ürünlerin 
+onarılması (c) ürünlerin değiştirilmesi veya eşdeğer ürünlerin tedarik edilmesi için ücretlerin 
+ödenmesi veya (d) ürünlerin onarımı için ücret ödenmesi ile sınırlandırılacaktır.
+Aracın, İçeriğin ve Hizmetin kullanılmasından doğan bütün zararlara, ziyanlara, giderlere veya 
+masraflara ilişkin bütün sorumluluk tarafınıza aittir. Samsung, kanunların imkan verdiği ölçüde, 
+Aracın, İçeriğin ve Hizmetin (kayıt yaptırmak, kullanıcı hesabı açtırmak ve/veya ücret ödemek 
+gerekip gerekmediğine bakılmaksızın) kullanılmasıyla ilgili olarak hiçbir sorumluluk 
+üstlenmemektedir. Kullanım Koşullarının herhangi bir hükmünün yasadışı veya infaz edilemez 
+olması veya söz konusu bir hükmü ihlal ettiğimize dair bir iddiada bulunulması, diğer hükümleri 
+etkilemeyecektir veya geçersiz kılmayacaktır. Kullanım Koşullarında yer alan haklardan veya 
+hükümlerden Samsung’un yazılı onayı olmaksızın feragat edilemez.
+
+UYGULANACAK HUKUK VE YARGI YETKİSİ
+
+Bu Kullanım Koşulları Kore Cumhuriyeti kanunlarına tabi olacaktır; Kullanım Koşullarını kabul 
+etmek ve Aracı kullanmak suretiyle, Kullanım Koşullarının ve Araçlarla ilgili bütün diğer konuların 
+her bakımdan, orada imzalanan ve tamamen bu ülkede ifa edilecek olan sözleşmeye uygulanan 
+Kore Cumhuriyeti kanunları çerçevesinde yorumlanacağını ve Kore Cumhuriyeti mahkemelerinin 
+münhasır olmayan yargı yetkisine tabi olacağını kabul etmektesiniz.

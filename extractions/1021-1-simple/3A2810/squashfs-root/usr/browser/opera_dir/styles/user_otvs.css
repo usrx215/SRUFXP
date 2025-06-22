@@ -1,0 +1,26 @@
+body
+{
+    color: #ffffff;
+}
+
+input[type=button]
+{
+    background-color: #dddddd;
+    color: #000000;
+}
+
+input, textarea
+{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    color: #ffffff;
+}
+
+pre
+{
+    color: #ffffff;
+}

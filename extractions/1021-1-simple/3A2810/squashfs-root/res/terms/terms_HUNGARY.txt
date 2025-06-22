@@ -1,0 +1,272 @@
+1. Általános Felelősség Kizárás
+
+Minden, a jelen eszközön keresztül hozzáférhető tartalom vagy szolgáltatás jogosultja 
+valamely harmadik személy. Ezek a tartalmak és szolgáltatások szerzői jog, szabadalmi oltalom, 
+védjegy oltalom és/vagy más szellemi tulajdonra vonatkozó jog által védettek. Az ilyen 
+tartalmakat és szolgáltatásokat kizárólag az Ön személyes, és nem-kereskedelmi célú 
+felhasználása érdekében nyújtják. Ön egyik tartalmat vagy szolgáltatást sem használhatja 
+olyan módon, amelyet a tartalom jogosultja vagy a szolgáltató nem engedélyezett. A fentiek 
+korlátozása nélkül, kivéve, ha a jelen dokumentum kifejezetten lehetővé teszi, illetve kivéve és 
+olyan mértékben, amilyen mértékben az alkalmazandó jog lehetővé teszi annak kizárását a 
+Samsung számára az Ön tekintetében, a megfelelő tartalom jogosultja vagy a szolgáltató 
+kifejezett felhatalmazásának hiányában Ön nem módosíthatja, másolhatja le, teheti újból 
+közzé, töltheti fel, adhatja át, fordíthatja le, értékesítheti, készíthet belőle származékos 
+művet, élhet vissza vele, továbbá nem terjesztheti semmilyen módon és semmilyen médiumon a 
+jelen eszközön megjelenített tartalmat vagy szolgáltatást.
+
+ÖN KIFEJEZETTEN ELISMERI ÉS ELFOGADJA, HOGY AZ ESZKÖZT KIZÁRÓLAG SAJÁT 
+KOCKÁZATÁRA HASZNÁLJA, ÉS A JOG ÁLTAL MEGENGEDETT MÉRTÉKIG A MEGFELELŐ 
+MINŐSÉGGEL, TELJESÍTÉSSEL ÉS PONTOSSÁGGAL KAPCSOLATOS TELJES KOCKÁZATOT ÖN 
+VISELI. A JOG ÁLTAL MEGENGEDETT MÉRTÉKIG, AZ ESZKÖZ ÉS A HARMADIK SZEMÉLY 
+TARTALMAK ÉS SZOLGÁLTATÁSOK ÚGY KERÜLNEK BIZTOSÍTÁSRA, "AHOGY VANNAK", 
+BÁRMILYEN, ILLETVE KIFEJEZETT VAGY HALLGATÓLAGOS SZAVATOSSÁG, FELTÉTEL, 
+KIJELENTÉS VAGY KÖTELEZETTSÉGVÁLLALÁS NÉLKÜL. A JOG ÁLTAL MEGENGEDETT 
+MÉRTÉKIG A SAMSUNG KIFEJEZETTEN KIZÁR MINDEN SZAVATOSSÁGOT, FELTÉTELT, 
+KIJELENTÉST VAGY KÖTELEZETTSÉGVÁLLALÁST (LEGYEN AZ KIFEJEZETT, VAGY 
+HALLGATÓLAGOS) AZ ESZKÖZ, ILLETVE BÁRMELY SZOLGÁLTATÁS VAGY TARTALOM 
+TEKINTETÉBEN, ÍGY KÜLÖNÖSEN, DE NEM KIZÁRÓLAG A FORGALMAZHATÓSÁGÉRT, 
+MEGFELELŐ MINŐSÉGÉRT, VALAMELY MEGHATÁROZOTT CÉLRA VALÓ ALKALMASSÁGÉRT, 
+IDŐSZERŰSÉGÉRT (PONTOSSÁGÉRT), MEGFELELŐ ÉLVEZHETŐSÉGÉRT, ÉS AZÉRT, HOGY AZ 
+NEM SÉRTI HARMADIK SZEMÉLY JOGAIT. A JOG ÁLTAL MEGENGEDETT MÉRTÉKIG A 
+SAMSUNG NEM GARANTÁLJA SEMMILYEN, A JELEN ESZKÖZÖN KERESZTÜL HOZZÁFÉRHETŐ 
+TARTALOM VAGY SZOLGÁLTATÁS PONTOSSÁGÁT, VALÓDISÁGÁT, IDŐSZERŰSÉGÉT, 
+JOGSZERŰSÉGÉT VAGY TELJESSÉGÉT ÉS A JOG ÁLTAL MEGENGEDETT MÉRTÉKBEN 
+SEMMILYEN SZAVATOSSÁGOT NEM VÁLLAL AZÉRT, HOGY AZ ESZKÖZ, TARTALOM VAGY 
+SZOLGÁLTATÁS MEGFELEL AZ ÖN ELVÁRÁSAINAK, VAGY AZÉRT, HOGY A 
+SZOLGÁLTATÁSOK VAGY AZ ESZKÖZ MŰKÖDÉSE MEGSZAKÍTÁS ÉS HIBAMENTES LESZ. A 
+SAMSUNG SEMMILYEN KÖRÜLMÉNYEK KÖZÖTT, BELEÉRTVE A GONDATLANSÁGOT IS, NEM 
+FELEL SEMMILYEN SZERZŐDÉSBŐL EREDŐ VAGY SZERZŐDÉSEN KÍVÜL OKOZOTT 
+KÖZVETLEN, KÖZVETETT, VÉLETLEN, SPECIÁLIS VAGY KÖVETKEZMÉNYES KÁRÉRT, 
+ELMARADT HASZONÉRT VAGY BEVÉTEL KIESÉSÉÉRT, KAMAT VAGY ÜZLET ELVESZTÉSÉÉRT, 
+ADAT MEGSÉRÜLÉSÉÉRT, ÜGYVÉDI MUNKADÍJÉRT, KÖLTSÉGEKÉRT VAGY BÁRMELY MÁS 
+KÁRÉRT, AMELY OLYAN INFORMÁCIÓ MIATT, VAGY AZZAL ÖSSZEFÜGGÉSBEN KELETKEZIK, 
+AMELYET AZ ESZKÖZ TARTALMAZ, VAGY AZ ESZKÖZ HASZNÁLATÁVAL ÖSSZEFÜGGÉSBEN 
+KELETKEZETT, ILLETVE A TARTALOM VAGY A SZOLGÁLTATÁS ÖN VAGY BÁRMELY 
+HARMADIK SZEMÉLY ÁLTALI HASZNÁLATÁBÓL ERED, MÉG AKKOR SEM, HA A KÁROK 
+BEKÖVETKEZÉSÉNEK LEHETŐSÉGÉRE FIGYELMEZTETTÉK IS. BIZONYOS JOGSZABÁLYOK 
+OLYAN SZAVATOSSÁGOT, KÖTELEZETTSÉGET, VAGY FELTÉTELT ÍRHATNAK ELŐ A 
+SAMSUNG TEKINTETÉBEN, AMELYEK NEM ZÁRHATÓAK KI, KORLÁTOZHATÓAK VAGY 
+MÓDOSÍTHATÓAK, LEGFELJEBB KORLÁTOZOTT MÉRTÉKBEN. A JELEN SZOLGÁLTATÁSI 
+FELTÉTELEKET EZEKKEL A JOGSZABÁLYOKKAL ÖSSZHANGBAN KELL ÉRTELMEZNI. HA EZEK 
+A JOGSZABÁLYI RENDELKEZÉSEK ALKALMAZANDÓAK, AMILYEN MÉRTÉKBEN LEHET, 
+SAMSUNG FELELŐSSÉGE KORLÁTOZOTT, ÉS VÁLASZTÁSÁTÓL FÜGGŐEN A 
+SZOLGÁLTATÁSOK ESETÉBEN A KÖVETKEZŐK SZERINT ALAKUL (A) A SZOLGÁLTATÁS 
+MEGISMÉTLÉSE; VAGY (B) A SZOLGÁLTATÁS ÚJBÓLI NYÚJTÁSA KÖLTSÉGÉNEK A 
+MEGFIZETÉSE; ÁRUK ESETÉBEN (A) AZ ÁRU KICSERÉLÉSE VAGY AZONOS JELLEGŰ ÁRU 
+ÚJBÓLI SZOLGÁLTATÁSA; (B) KIJAVÍTÁS, (C) AZ ÁRU KICSERÉLÉSI KÖLTSÉGÉNEK VAGY 
+AZONOS JELLEGŰ ÁRU BESZERZÉSI KÖLTSÉGÉNEK A MEGFIZETÉSE; VAGY (D) AZ ÁRU 
+MEGJAVÍTTATÁSI KÖLTSÉGÉNEK KIFIZETÉSE. ÖN ELISMERI, HOGY A JELEN FELTÉTELEKBŐL 
+SZÁRMAZÓ ELŐNYÖK MEGFELELŐ KOMPENZÁCIÓT JELENTENEK SAMSUNG FELELŐSSÉGÉNEK 
+KIZÁRÁSÁÉRT, ILLETVE KORLÁTOZÁSÁÉRT.
+
+Az a földrajzi hely (ország), amelyet a telepítés során azonosított (megjelölt), elérhetővé tehet 
+hyper-linkeken keresztül harmadik fél tartalmakat, reklámokat, szolgáltatásokat. A harmadik 
+fél tartalmak és a belinkelt weboldalak nem állnak ellenőrzésünk alatt, nem vizsgáltuk meg 
+ezeknek a tartalmát, és nem tartozunk semmilyen felelősséggel ezeknek az elérhetőségéért, 
+karbantartásáért, tartalmáért vagy megfelelőségéért. Ön kifejezetten elismeri és egyetért 
+azzal, hogy a földrajzi helynek (ország) az azonosítása, és a harmadik fél weboldalhoz való 
+hozzáférés kizárólag az Ön felelőssége, illetve az Ön kockázatára történik, és az Ön felelőssége 
+az, hogy a harmadik fél weboldalak felhasználási és adatvédelmi szabályait megismerje és 
+betartsa. Ön kifejezettel elismeri és egyetért azzal, hogy a jog által megengedett mértékig, a 
+Samsung semmilyen körülmények között nem felel sem közvetlen, közvetett, véletlen, speciális 
+vagy következményes kárért, ügyvédi munkadíjért, költségekért vagy bármilyen más kárért, 
+amelyek azzal kapcsolatban keletkeztek, hogy Ön jogosultatlanul használta ezeket a 
+weboldalakat, tartalmakat, illetve amelyek a földrajzi hely megjelölésével kapcsolatban 
+keletkeztek.
+
+A harmadik személyek által nyújtott szolgáltatások bármikor figyelmeztetés nélkül 
+megváltozhatnak, felfüggesztésre, eltávolításra kerülhetnek, megszűnhetnek vagy 
+megszakadhatnak, vagy a hozzáférés megszakításra, megtagadásra kerülhet, és így a Samsung 
+nem vállal semmilyen kötelezettséget illetve szavatosságot arra, hogy valamely tartalom vagy 
+szolgáltatás bármilyen időtartamra elérhető marad. A tartalmat és a szolgáltatásokat harmadik 
+személyek továbbítják hálózatok és továbbító állomások segítségével, amelyek felett a 
+Samsung semmilyen joggal, illetve befolyással nem rendelkezik. A jelen felelősség-kizárás 
+általános jellegének korlátozása nélkül, a Samsung a jog által megengedett mértékig 
+kifejezetten kizár minden felelősséget bármely, jelen eszközön keresztül elérhető tartalom 
+vagy szolgáltatás megváltozásáért, megszakadásáért, elérhetetlenné tételéért, eltávolításáért 
+vagy felfüggesztéséért. A Samsung bármikor jogosult bármely felelősség és figyelmeztetés 
+nélkül valamely szolgáltatás vagy tartalom elérhetőségét vagy felhasználását korlátozni.
+
+A Samsung semmilyen felelősséggel nem tartozik a tartalommal vagy szolgáltatással 
+összefüggő vevőszolgáltért. Valamennyi, a szolgáltatással vagy tartalommal összefüggő 
+kérdést vagy kérést közvetlenül a megfelelő tartalomszolgáltatónak, vagy szolgáltatónak kell 
+feltenni illetve címezni.
+
+2. VÉGFELHASZNÁLÓI FELHASZNÁLÁSI SZERZŐDÉSI FELTÉTELEK ALKALMAZÁSOKHOZ
+
+Köszöntjük az Internet@TV-n („Internet@TV”). Amennyiben beágyazható és futtatható 
+alkalmazást („Alkalmazást”) tölt le és telepít, valamint a funkciókat és szolgáltatásokat 
+(„Szolgáltatások”) használja, és/vagy a tartalmakhoz („Tartalmak”) csatlakozik és azokat az 
+Alkalmazáson keresztül az eszközén megjeleníti, Önt az alábbi Felhasználási (Szerződései) 
+Feltételek jogilag kötik. A Samsung a jogszabályok által megengedett legteljesebb mértékben 
+fenntartja magának a jogot arra, hogy a jelen Felhasználási Feltételeket, akár az Ön 
+értesítésével vagy anélkül, időről időre módosítsa, vagy korszerűsítse.
+
+
+DEFINÍCIÓK
+
+A „Tartalom” kifejezés minden, a Samsung, vagy a Samsunghoz nem kapcsolódó harmadik 
+személyek által nyújtott audió és videó egységet és ötletet jelent, ideértve, de nem kizárólag, 
+bármely médiumon vagy formátumban, jelenleg létező vagy jövőben létrehozott filmet, videót, 
+szoftvert, játékot, rajzot, arcképet, műalkotást, képet, zenét és minden információt, 
+érzékelhetőeket és nem érzékelhetőeket, beleértve a származékos műveket is. A 
+„Szolgáltatások”fogalma az interneten tipikusan elérhető valamennyi szolgáltatástípust jelenti, 
+amelyet a Samsung vagy a Samsunghoz nem kapcsolódó harmadik személyek kínálnak, ideértve, 
+de nem kizárólag a zenéhez, filmhez, üzenetküldéshez, információhoz való hozzáférést, 
+továbbá, amelyek lehetőséget nyújtanak beszerzésre, elidegenítésre, eladásra, vásárlása, 
+bérletre vagy konzultációra. A Samsung időről időre közvetlenül is ajánlhat Önnek, illetve 
+hozzáférhetővé tehet az Ön számára bizonyos Szolgáltatásokat és/vagy Tartalmakat, amely 
+esetben az ilyen Szolgáltatásokat és Tartalmakat Ön a jelen Felhasználási Feltételek szerint 
+használhatja. A Tartalmak és Szolgáltatások helyileg az adott földrajzi területen alkalmazandó 
+jogszabályoknak megfelelően készülhetnek és jöhetnek létre, és Ön lakhelyétől és tartózkodási 
+helyétől függően csak bizonyos típusú és szintű Szolgáltatásokhoz és Tartalmakhoz férhet 
+hozzá. Az Alkalmazások használatára vonatkozó feltételek országonként, régiónként és 
+piaconként különbőzek lehetnek, az alkalmazandó helyi, országos vagy regionális jogtól függően.
+
+
+AZ ALKALMAZÁSOK HASZNÁLATA
+
+A Widget a 14. életévüket betöltött, vagy idősebb személyek használatára készült. Ha Ön még 
+nem töltötte be 14. életévét, vagy Önt jogszabály korlátozza, vagy egyéb okból nem jogosult 
+az Internet@TV-nek a használatára, kérjük, ne használja tovább az Alkalmazást. Ha Ön még 
+nem töltötte be a 18. életévét, akkor Ön csak szülője vagy gondnoka előzetes egyetértésével 
+használhatja az Alkalmazást. Az Alkalmazás használatával, és a jelen Felhasználási Feltételek 
+elfogadásával Ön igazolja, hogy 14. életévét betöltötte, rendelkezik szülői hozzájárulással, 
+amennyiben 14. és 18. év közötti, és egyéb módón sem korlátozott abban, hogy a jelen 
+Felhasználási Feltételeket elfogadja.
+
+Az Alkalmazás és annak Tartalma, valamint a Szolgáltatások kizárólag személyes, nem üzleti 
+célokra használhatók. Azok minden egyéb célú használata tilos.
+
+Az Alkalmazás Tartalmához és / vagy Szolgáltatásához való online vagy egyéb hozzáférés 
+regisztrációt, felhasználói fiók létrehozását, és/vagy díjfizetést igényelhet. A regisztrációhoz 
+szükség lehet arra, hogy személyes adatot adjon meg, továbbá egyedi jelszót válasszon, 
+amelyet nem oszthat meg másokkal. Valamennyi, Ön által megadott személyes adatot az 
+Adatvédelmi Szabályzattal összhangban kezelünk. A megadott személyes adatoknak teljesnek, 
+pontosnak és az ÖN személyes adatainak kell lennie. Nem használhatja fel harmadik személyek 
+személyes adatait az Alkalmazás használatához kapcsolódó felhasználói fiók létrehozása során, 
+és nem használhatja mások felhasználói fiókját. A SAMSUNG FENNTARTJA MAGÁNAK A 
+JOGOT, HOGY BÁRMELY FELHASZNÁLÓI FIÓKOT ZÁROLJON, AMENNYIBEN ÉSSZERŰEN 
+ARRA A KÖVETKEZTETÉSRE JUT, HOGY AZ ALKALMAZÁS HASZNÁLATA A JELEN 
+FELHASZNÁLÁSI FELTÉTELEKET MEGSÉRTI, IDEÉRTVE FELHASZNÁLÓI FIÓK LÉTREHOZÁSÁT 
+HAMIS ADATOK FELHASZNÁLÁSÁVAL. Az Alkalmazásokon keresztül nyújtott olyan 
+Tartalomhoz és Szolgáltatáshoz, amelyek díjfizetéshez kötöttek, nem férhetnek hozzá olyan 
+személy, aki a megfelelő díjat nem fizette meg. Amennyiben valamely harmadik fél szolgáltató 
+által ajánlott vagy nyújtott Szolgáltatás vagy Tartalom regisztrációt, felhasználói fiók 
+létrehozását, és/vagy díjfizetést igényel, az ilyen regisztrációra, felhasználói fiók létrehozásra, 
+és/vagy díjra a kérdéses harmadik fél szolgáltatóknak a Szolgáltatásra és / vagy a Tartalomra 
+vonatkozó szabályzatai, felhasználási feltételei az irányadók.
+
+AZ ALKALMAZÁSOK SAMMSUNG APPS-ON KERESZTÜL TÖRTÉNŐ SPECIÁLIS HASZNÁLATA
+
+Ahhoz, hogy bizonyos a Samsung Apps keretében elérhető Tartalmakhoz és/vagy 
+Szolgáltatásokhoz a Samsung Apps-on keresztül hozzáférjen, szüksége lehet regisztrációra, 
+felhasználói fiók létrehozására, és/vagy díj fizetésére. Elképzelhető, hogy az ilyen regisztrációra 
+és felhasználói fiók létrehozására, valamint díj fizetésére olyan weboldalon kerül sor, amelyet 
+harmadik személy üzemeltet (beleértve a fizetési szolgáltató igénybevételét is). A 
+regisztrációhoz szükség lehet arra, hogy a kérdéses harmadik személy számára személyes 
+adatokat adjon meg, továbbá olyan egyedi, titkos jelszó létrehozására, amelyet nem oszthat 
+meg másokkal. Amennyiben az ilyen harmadik személy weboldalon a Samsung Apps-en keresztül 
+elérhető Tartalom vagy Szolgáltatás tekintetében regisztráció, felhasználói fiók létrehozása, 
+és/vagy díjfizetés szükséges, a fentiekre a kérdéses harmadik fél szabályzatai, illetve a 
+Szolgáltatásokra és/vagy Tartalmakra vonatkozó (szerződési) feltételei irányadók.
+
+
+KORLÁTOZÁSOK ÉS TILALMAK
+
+Sem Ön, sem (az Ön irányításával) más személyek nem közvetíthetnek, nem másolhatnak 
+(kivéve, amennyiben az alkalmazandó jog lehetővé teszi, biztonsági másolatot készíthetnek), 
+nem tárolhatnak, nem módosíthatnak, nem adhatnak el, nem hozhatnak nyilvánosságra vagy 
+terjeszthetnek (sem részben sem egészben) valamely Alkalmazást, Tartalmat és/vagy 
+Szolgáltatást; az ilyen közvetítést (megjelenítés), másolás, tárolás, módosítás, értékesítés, 
+megjelentetés vagy terjesztés tilos, kivéve, ha Ön valamennyi szükséges jogosultságot és 
+engedélyt beszerezte a Samsungtól, vagy a Tartalom és / vagy Szolgáltatás megfelelő 
+tulajdonosaitól vagy jogosultjaitól. Az Alkalmazás, vagy annak Tartalma és Szolgáltatásai 
+jogosulatlan használata tilos, és büntetőjogi eljárást és / vagy polgári jogi felelősséget vonhat 
+maga után.
+
+Az Alkalmazást nem használhatja fel egyéb célokra; ideértve az olyan illegális célokat, mint 
+kéretlen ajánlatok vagy reklámok küldése, önmagának valamely más természetes vagy jogi 
+személyként történő feltüntetése, vagy kapcsolat látszatának kialakítása, mások lejáratása, 
+zaklatása, megtévesztése vagy rágalmazása, obszcén vagy tisztességtelen sértő anyagok 
+elhelyezése, az Alkalmazás negatív színben való feltüntetése, továbbá minden kereskedelmi 
+célt. Kivéve, ha a Felhasználási Feltételek kifejezetten lehetővé teszi, illetve kivéve és olyan 
+mértékben, amilyen értékben az alkalmazandó jog lehetővé teszi annak kizárását a Samsung 
+számára az Ön tekintetében, Ön nem fejtheti vissza, nem próbálhatja meg szétszedni vagy 
+befolyásolni az Alkalmazást, illetve nem továbbíthat rosszindulatú kódot, vagy nem gyűjthet 
+másokról információt az Alkalmazás felhasználásával. Nem tehet lépéseket annak érdekében, 
+hogy valamely az Internet@TV -n vagy szerverein lévő, vagy onnan nyújtott Tartalom vagy 
+Szolgáltatás működését megszakítsa, vagy befolyásolja, illetve, hogy bármilyen módon 
+tisztességtelenül befolyásolja, amint mások élvezik az Internet@TV használatát. MÉG 
+EGYSZER FELHÍVJUK A FIGYELMÉT, HOGY FENNTARTJUK A JOGOT ARRA, HOGY 
+BÁRMILYEN OKNÁL FOGVA, SAJÁT BELÁTÁSUNK SZERINT ZÁROLJUK AZ INTERNET@TV-
+HEZ VALÓ HOZZÁFÉRÉST.
+
+
+FELHASZNÁLÁSI JOG
+
+Amennyiben a jelen Felhasználási Feltételeket teljes mértékben betartja, a Samsung nem 
+kizárólagos, korlátozott jogosultságot biztosít Önnek arra, hogy letöltse és felhasználja az 
+Alkalmazást annak érdekében, hogy kizárólag a TV készülékén keresztül Tartalmat és 
+Szolgáltatást jelenítsen meg, kapjon, vagy (kizárólag a megengedett mértékig) egyéb módon 
+használjon. Az Alkalmazással kapcsolatban semmilyen egyéb jogot nem szerez. A Tartalomhoz 
+és Szolgáltatáshoz kapcsolódó jogokat az adott Tartalomra és Szolgáltatásra vonatkozó 
+felhasználási feltételek, valamint azok a további felhasználási követelmények és korlátozások 
+szabályozzák, amelyeket az adott Tartalom vagy Szolgáltatás nyújtója előír. Az Alkalmazásra, 
+valamint a Tartalomra és Szolgáltatásra vonatkozó minden jog, ideértve a szellemi 
+alkotásokhoz fűződő jogokat is, a Samsungot, illetve a Tartalom vagy Szolgáltatás jogosultját 
+vagy tulajdonosát illeti meg.
+
+
+SZAVATOSSÁG ÉS FELELŐSSÉG:
+FELELŐSSÉGKORLÁTOZÁS
+
+Az Alkalmazás, Tartalom és Szolgáltatás, a jogszabályok által megengedett mértékig bármilyen 
+garancia vagy szavatosságvállalás, feltétel, kijelentés vagy kötelezettségvállalás nélkül (legyen 
+az kifejezett vagy hallgatólagos) kerül szolgáltatásra, úgy, „amint van”, ideértve, de nem 
+kizárólag azok minőségét, megbízhatóságát, működését, célját vagy pontosságát. Elfogadja, 
+hogy az Alkalmazás, funkciói és szolgáltatásai használatából eredő minden kockázatot Ön visel, 
+és sem a Samsung, sem bármely alkalmazotti csoportja, igazgatója, munkavállalója, partnere 
+vagy hirdetője nem tehető felelőssé az Alkalmazás, funkciói és szolgáltatásai, vagy a Tartalom 
+vagy Szolgáltatás használatából eredő vagyoni vagy nemvagyoni károkért, 
+veszteségekért, elmaradt haszonért, bevételért, elvesztett kamatért vagy üzleti lehetőségért, 
+sérelmekért, ideértve, de nem kizárólag a kiegyenlítő, következményi, büntető, járulékos vagy 
+ügyvédi költségeket. A Samsung nem felelős semmilyen, az Alkalmazáson keresztül elérhető, 
+harmadik fél által szolgáltatott Tartalomért vagy Szolgáltatásért, továbbá a Samsung nem 
+felel harmadik felek által az Alkalmazáson elhelyezett vagy azon keresztül közvetített 
+rosszindulatú kódért. A Samsung nem garantálja, hogy a Tartalom vagy Szolgáltatás 
+megszakítás nélküli, késedelem nélküli és pontos, továbbá nem garantálja az ilyen Tartalom és 
+Szolgáltatás folyamatos elérhetőségét. A Samsung nem azonosul a Tartalomban vagy 
+Szolgáltatásban megjelenő elméletek, termékek, személyek vagy vélemények egyikével sem.
+
+Bizonyos jogszabályok olyan szavatosságot, kötelezettséget, vagy feltételt írhatnak elő a 
+Samsung tekintetében, amelyek nem zárhatóak ki, korlátozhatóak vagy módosíthatóak, 
+legfeljebb korlátozott mértékben. A jelen szolgáltatási feltételeket ezekkel a jogszabályokkal 
+összhangban kell értelmezni. Ha ezek a jogszabályi rendelkezések alkalmazandóak, amilyen 
+mértékben lehet, Samsung felelőssége korlátozott, és választásától függően a szolgáltatások 
+esetében a következők szerint alakul (a) a szolgáltatás megismétlése; vagy (b) a szolgáltatás 
+újbóli nyújtása költségének a megfizetése; áruk esetében (a) az áru kicserélése vagy azonos 
+jellegű áru újbóli szolgáltatása; (b) kijavítás, (c) az áru kicserélési költségének vagy azonos 
+jellegű áru beszerzési költségének a megfizetése; vagy (d) az áru megjavíttatási költségének 
+kifizetése. Ön elismeri, hogy a jelen Felhasználási Feltételekből származó előnyök megfelelő 
+kompenzációt jelentenek Samsung felelősségének kizárásáért, illetve korlátozásáért.
+Ön visel minden, az Alkalmazás, a Tartalom és Szolgáltatás használatából eredő kárt, 
+veszteséget, költséget vagy sérelmet. A Samsung a jogszabályok által megengedett teljes 
+mértékben kizárja a felelősségét az Alkalmazás, a Tartalom és Szolgáltatás Ön általi 
+használatával kapcsolatban (tekintet nélkül arra, hogy felhasználáshoz szükséges-e 
+regisztráció, felhasználói fiók létrehozása, és/vagy díj fizetése). Ha valamely rendelkezés 
+jogszerűtlen vagy kikényszeríthetetlen, illetve azzal vádolnak minket, hogy megsértettük 
+valamely rendelkezést, az nem érinti, illetve nem teszi érvénytelenné a többi rendelkezést. 
+Ezekről a jogokról és rendelkezésekről a Samsung előzetes írásbeli hozzájárulása nélkül nem 
+lehet lemondani.
+
+
+IRÁNYDÓ JOG ÉS ELJÁRÓ BÍRÓSÁG
+
+Jelen Felhasználási Feltételekre a Koreai Köztársaság joga az irányadó, és Ön a jelen 
+Felhasználási Feltételek elfogadásával és az Alkalmazás használatával elfogadja, hogy a jelen 
+Felhasználási Feltételeket, valamint az Alkalmazással kapcsolatos minden egyéb kérdést teljes 
+mértékben a Koreai Köztársaság joga szerint kell értelmezni, amely a jelen megállapodás 
+létrejöttére és teljes fennállására alkalmazandó, kivéve, amennyiben az alkalmazandó jog 
+másképp rendelkezik, továbbá Ön aláveti magát a Koreai Köztársaság bíróságai nem 
+kizárólagos joghatóságának.

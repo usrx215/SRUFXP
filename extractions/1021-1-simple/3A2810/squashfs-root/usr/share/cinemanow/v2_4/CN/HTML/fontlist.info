@@ -1,0 +1,12 @@
+###################################################################
+# 
+#    Maple Font List File
+# 
+###################################################################
+
+Font List
+    ddt_cd_bd	: ddt_cd_bd.ttf
+    ddt_cd_sb   : ddt_cd_sb.ttf
+    ddt_cd_bk   : ddt_cd_bk.ttf
+    ddt_cd_rg   : ddt_cd_rg.ttf : default
+    

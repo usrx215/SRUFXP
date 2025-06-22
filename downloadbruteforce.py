@@ -5,7 +5,7 @@ import time
 # Configuration
 MS_STEP = 1
 TIMEOUT = 5
-SLEEP_BETWEEN_REQUESTS = 0.05  # 50ms between requests
+SLEEP_BETWEEN_REQUESTS = 0.0001  # 50ms between requests
 RETRY_DELAY = 1  # seconds
 MAX_RETRIES = 3
 OUTFILE = "found_urls.txt"
@@ -88,7 +88,7 @@ def run_firmware_search():
             continue
 
         if version < (1017, 1):
-            ts_start = "20130101000000000"
+            ts_start = "20140101001635033"
             ts_end   = "20140310114737045"
         elif version > (1017, 1):
             ts_start = "20140310114737046"

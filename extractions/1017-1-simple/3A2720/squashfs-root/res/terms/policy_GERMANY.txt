@@ -1,0 +1,283 @@
+DATENSCHUTZRICHTINIE FÜR SAMSUNG-SERVICES
+
+Die nachstehend aufgeführte Datenschutzrichtlinie (die "Datenschutzrichtlinie") ist anwendbar 
+auf die Samsung-Services "Smart TV" und Online-Services, -Funktionen, -Einrichtungen, 
+-Produkte und andere Services, die unmittelbar durch die Samsung Electronics Co., Ltd. 
+("Samsung") zur Verfügung gestellt werden (die "Samsung-Services"). Samsung hat sich dazu 
+verpflichtet, die Privatsphäre der Besucher, Nutzer und Kunden aller Samsung-Services zu 
+schützen. Der Zweck dieser Datenschutzrichtlinie ist es, über die Arten der Informationen zu 
+informieren, die wir über Sie erheben, wenn Sie Samsung-Services besuchen oder im Rahmen der 
+Samsung Services Informationen eingeben, wie wir diese Informationen nutzen und wann und 
+wie wir sie Dritten gegenüber offen legen. Diese Datenschutzrichtlinie ist auf Informationen 
+über Sie anwendbar, die erhoben werden von Samsung, einer Gesellschaft innerhalb der Samsung 
+Unternehmensgruppe oder einer anderen unter der Marke Samsung auftretenden Gesellschaft 
+("die Samsung Konzerngesellschaften"). Eine vollständige Liste der Samsung 
+Konzerngesellschaften ist auf Verlangen verfügbar.
+
+Diese Datenschutzrichtlinie findet keine Anwendung auf personenbezogene Informationen, die 
+Sie unmittelbar Dritten zur Verfügung stellen, auf deren Dienstleistungen oder Inhalte Sie über 
+die Samsung-Services zugreifen. Sie sollten sich über die anwendbaren Datenschutzgrundsätze 
+dritter Dienstleister vergewissern, auf deren Dienstleistungen oder Inhalte Sie zugreifen.
+
+Die Samsung-Services werden von Samsung aus der Republik Korea heraus kontrolliert und 
+betrieben, und es ist nicht beabsichtigt, Samsung oder eine der Samsung Konzerngesellschaften 
+den Gesetzen bzw. der Rechtsordnung eines anderen Staates, Landes oder Territoriums zu 
+unterwerfen als der Republik Korea. Samsung befolgt die Datenschutzgrundsätze der EU sowie 
+nationale Datenschutzgrundsätze, sofern und soweit diese anwendbar sind.
+
+Alle Nutzer der Samsung-Services müssen auf Anforderung richtige, aktuelle, vollständige und 
+genaue personenbezogene Informationen abgeben, und wir werden jede Eingabe zurückweisen 
+und löschen, von der wir nach Treu und Glauben annehmen, dass sie unrichtig, falsch oder 
+gefälscht ist, arglistig erfolgt bzw. nicht im Einklang mit der Datenschutzrichtlinie steht oder 
+gegen sie verstößt.
+
+Wir werden Ihnen Gelegenheit geben, Ihre Zustimmung zu den Regelungen dieser 
+Datenschutzrichtlinie zu geben, und zwar im Rahmen der Samsung-Services.
+
+1. VON UNS ERFASSTE INFORMATIONEN
+
+Personenbezogene Informationen
+
+An verschiedenen Stellen der Samsung-Services, wie beispielsweise der Erstellung der 
+ID, der Registrierung Ihres Produkts, beim Kauf oder Herunterladen einer Produkt- oder 
+Softwareaktualisierung, in Registrierungsformularen, Umfragen und Abstimmungen bitten wir 
+Sie möglicherweise darum, uns personenbezogene Informationen zu übermitteln, die sich auf Sie 
+beziehen und Sie identifizieren, wie beispielsweise Ihr Name, Ihre Emailadresse, Ihre 
+Postadresse, Ihre Heim- oder dienstliche Telefonnummer. Sie werden wissen, wann wir 
+personenbezogene Informationen erheben, weil wir anstreben, personenbezogene 
+Informationen nur dann zu erheben, wenn Sie uns diese freiwillig geben, und zwar über unsere 
+Online-Formulare und Fragebögen, SMS-Textkampagnen oder durch andere freiwillige Mittel, 
+online oder offline. Obwohl Sie uns keine Informationen geben müssen, um die Samsung-
+Services zu nutzen, sind Sie möglicherweise nicht dazu in der Lage, alle Samsung-Services 
+vollumfänglich zu nutzen, wenn Sie sich dazu entscheiden, uns bestimmte Informationen nicht zu 
+geben. Wenn Sie sich dazu entscheiden, uns über die Samsung-Services personenbezogene 
+Informationen zu geben, werden wir diese Informationen im Einklang mit dieser 
+Datenschutzrichtlinie erheben und speichern. In dieser Datenschutzrichtlinie verwenden wir die 
+Begriffe ‘personenbezogene Informationen’, ‘Informationen über Sie’ oder ‘Ihre Informationen’ 
+synonym.
+
+Cookies und andere Technologien
+
+Hin und wieder setzen die Samsung-Services "Cookies" ein, oder andere Technologien wie 
+beispielsweise „Web Beacons". Diese Technologien unterstützen uns dabei, das Nutzerverhalten 
+besser zu verstehen, uns Internetseiten, Services oder Anwendungen mitzuteilen, die Sie besucht 
+oder auf die Sie zugegriffen haben, ferner ermöglichen sie uns Werbemaßnahmen und Suchen im 
+Internet und messen deren Erfolgswirksamkeit, machen Ihre Erfahrungen mit den Samsung-
+Services attraktiver und individueller. Falls Sie Cookies oder solche anderen Technologien 
+deaktivieren möchten, können Sie die auf Ihrem Samsung Gerät gespeicherten Daten über eine 
+Einstellung auf Ihrem Samsung Gerät löschen.
+
+
+2. NUTZUNG DER VON UNS ERFASSTEN INFORMATIONEN
+
+Unsere Services
+
+Wir nutzen Ihre personenbezogenen Informationen für folgende Zwecke:
+● um Sie bei Samsung-Services zu registrieren;
+● um Samsung-Services zu verwalten (einschließlich der Durchführung von Suchen oder 
+Anfragen nach bestimmten Inhalten, der Empfehlung von Inhalten, der Zurverfügungstellung 
+von Blogs, offenen Foren, Diskussionsseiten oder personalisierter Merkmale);
+● um Kundenumfragen durchzuführen;
+● um mit Ihnen zu kommunizieren;
+● zur Führung interner Aufzeichnungen;
+● zu Marketingzwecken (vorbehaltlich des nachfolgenden Abschnitts Direktmarketing / 
+Mitteilungen per Email); und
+● um Verlosungen, Preisausschreiben oder Werbeaktionen durchzuführen.
+
+Alles Vorstehende ist auf die Nutzung Ihrer personenbezogenen Informationen zu den 
+genannten Zwecken durch eine Samsung Konzerngesellschaft in gleicher Weise anwendbar.
+
+Wir nutzen aggregierte nicht personenbezogene Informationen über unsere Nutzer, um die 
+Demographie unserer Internetseite zu erfassen, wie beispielsweise die geographische Verteilung 
+unserer Nutzer, die Anzahl der Nutzer, die eine bestimmte Stelle besuchen, eine Kombination 
+daraus und/oder anderer demographischer Daten.
+
+Mitteilungen per Email
+
+Wenn Sie uns eine Email mit Fragen oder Anmerkungen senden, können wir Ihre 
+personenbezogenen Informationen dazu nutzen, um auf Ihre Fragen oder Anmerkungen zu 
+antworten, und wir können Ihre Fragen oder Anmerkungen zur künftigen Bezugnahme speichern. 
+Es entspricht jedoch nicht unserem Standardverfahren, Ihnen über unsere Antwort auf eine 
+solche Email hinaus Emails zu senden, es sei denn, Sie fordern einen speziellen Dienst an, der 
+Mitteilungen per Email mit sich bringt, oder Sie stimmen anderweitig zu, von uns per Email 
+angesprochen zu werden oder von uns (entweder von uns selbst oder einem mit uns verbundenen 
+Unternehmen) Informationen über Produkte und Dienstleistungen zu erhalten, die nach unserer 
+Auffassung für Sie von Interesse sein könnten. Möglicherweise wird Ihnen die Gelegenheit 
+gegeben, einen elektronischen Newsletter zu abonnieren, mit dem Informationen über Samsung-
+Services oder unsere Werbekunden an Ihre Emailadresse gesandt werden. Wir werden Ihnen 
+jedoch die Option zur Verfügung stellen, Ihre Präferenzen zu ändern und den Erhalt dieser 
+Mitteilungen abzuwählen.
+
+
+
+3. OFFENLEGUNG VON INFORMATIONEN GEGENÜBER DRITTEN
+
+Sofern nicht eigens in dieser Datenschutzrichtlinie aufgeführt, legen wir Ihre 
+personenbezogenen Informationen ohne Ihre Erlaubnis keinem Dritten gegenüber offen, 
+ausgenommen:
+
+● gegenüber einer Samsung Konzerngesellschaft zum Zwecke der Erbringung der Services Ihnen 
+gegenüber, wobei die Samsung Electronics Co., Ltd. verantwortliche Stelle bleibt;
+● sofern es erforderlich ist, um es unseren Mitarbeitern, Angestellten, Beauftragten, 
+Auftragnehmern, Lieferanten oder Handelspartnern zu ermöglichen, uns gegenüber eine 
+Dienstleistung zu erbringen oder für uns eine Funktion zu erfüllen (einschließlich der Erbringung 
+von Marketingunterstützung, Marktforschung oder Kundendienstleistungen, der Verwaltung 
+Ihres Kontos, der Erhebung und Verarbeitung Ihrer personenbezogenen Informationen der 
+Lieferung von Produkten oder Dienstleistungen, die wir Ihnen jetzt oder künftig zur Verfügung 
+stellen, oder Verlosungen, Preisausschreiben oder Werbeaktionen);
+● gegenüber unseren berufsmäßigen Beratern;
+● gegenüber dem Käufer oder möglichen Käufer unserer Rechte und Pflichten in Bezug auf die 
+Samsung-Services; oder
+● sofern es erforderlich ist, um unsere berechtigten Interessen zu verfolgen, oder falls wir dazu 
+rechtlich gezwungen sind oder es uns rechtlich gestattet ist.
+
+Wir können aggregierte Information wie beispielsweise demographische Informationen und 
+unsere statistischen Analysen Dritten gegenüber offen legen, einschließlich Werbekunden oder 
+anderer Geschäftspartner. Diese aggregierten Informationen beinhalten Ihre 
+personenbezogenen Informationen nicht.
+
+Bei einer Offenlegung Ihrer personenbezogenen Informationen durch uns an einen sorgfältig 
+ausgewählten Dritten oder einen in dieser Datenschutzrichtlinie bezeichneten Dritten werden wir 
+das Datenschutzrecht befolgen, indem wir sicherstellen, dass Vereinbarungen bestehen, die 
+dafür sorgen, dass der Dritte Ihre personenbezogenen Informationen nicht für andere Zwecke 
+nutzt als für die von uns näher angegebenen und im Einklang mit den in dieser 
+Datenschutzrichtlinie umrissenen Zwecke, und sie sicher verwahrt.
+
+4. KINDER
+
+Die Samsung-Services sind nicht zur Nutzung durch Kinder ohne die Aufsicht ihrer Eltern gedacht. 
+Wir bitten darum, dass niemand unter einem Alter von dreizehn (13) Jahren über Samsung-
+Services personenbezogene Informationen übermittelt. Wir wissen, dass wegen des sozialen 
+Charakters und der gemeinsamen Nutzung des Fernsehens und der Betrachtung von Videos auch 
+Kinder unter dem Alter von dreizehn (13) Jahren möglicherweise manchmal einen Samsung Dienst 
+in einem familiären oder anderen sozialen Umfeld nutzen, aber sie dürfen dies nur unter der 
+Anleitung und Aufsicht eines Elternteils bzw. eines Erziehungsberechtigten tun. Wir erheben nicht 
+wissentlich personenbezogene Informationen von Kindern unter dem Alter von dreizehn (13) 
+Jahren und leiten deshalb nicht wissentlich solche Informationen an Dritte weiter. Falls wir 
+erkennen, dass wir die personenbezogenen Informationen eines Kindes unter dem Alter von 
+dreizehn (13) Jahren erhoben haben, werden wir Maßnahmen ergreifen, um solche Informationen 
+sobald wie möglich zu löschen.
+
+5. SICHERHEIT DER VON UNS ERFASSTEN INFORMATIONEN
+
+Die Sicherheit Ihrer personenbezogenen Informationen ist uns wichtig. Wir unterhalten 
+physische, elektronische und verfahrensmäßige Sicherheitsvorkehrungen, um Ihre 
+personenbezogenen Informationen zu schützen. Bitte denken Sie jedoch daran, dass es bei der 
+elektronischen Übermittlung von Informationen vor der Erfassung durch uns immer ein gewisses 
+Risiko gibt. Die von uns erfassten personenbezogenen Informationen werden in Datenbanken 
+gespeichert, über die wir die Kontrolle ausüben. Wir verwenden zum Schutze Ihrer Informationen 
+Sicherheitsmaßnahmen im Einklang mit Branchenstandards, die wir für angemessen erachten, wie 
+beispielsweise Firewalls und Verschlüsselungstechnologien. Wir beschränken den Zugang zu 
+personenbezogenen Informationen auf Mitarbeiter, Auftragnehmer und Beauftragte, die diese 
+Informationen kennen müssen, um Samsung-Services zu betreiben, zu entwickeln oder zu 
+verbessern. Diese Personen sind durch Vertraulichkeitsverpflichtungen gebunden und können 
+disziplinarischen Maßnahmen einschließlich Kündigung und strafrechtlicher Verfolgung 
+unterliegen, wenn sie diese Verpflichtungen nicht einhalten.
+
+6. CHAT-RÄUME UND ANDERE ÖFFENTLICHE BEREICHE
+
+Wir bieten möglicherweise Chat-Räume, Nutzerbewertungen, Foren oder andere öffentliche 
+Funktionen an, und Einträge durch Sie sind als öffentliche Informationen zu betrachten, die 
+anderen Nutzern zugänglich sind. Alle Einträge unterliegen den Geschäftsbedingungen für 
+Endnutzer der Samsung-Services. Sie sollten darauf achten, keine personenbezogenen 
+Informationen in Ihrem öffentlich sichtbaren Namen zu verwenden, oder andere Informationen, 
+die anderen Nutzern öffentlich zugänglich sein könnten. Bitte beachten Sie, dass es dann, wenn 
+sich Ihr Samsung Gerät an einem auch anderen Personen zugänglichen Ort befindet, wie 
+beispielsweise einem Wohnzimmer oder in einem anderen gemeinschaftlichen Umfeld, in Ihrer 
+Verantwortlichkeit liegt, den Zugang zu dem Gerät in diesem gemeinschaftlich genutzten Umfeld 
+zu regeln und auf dem Gerät gespeicherte personenbezogene Informationen zu schützen. Wie 
+bei jedem gemeinschaftlich genutzten Gerät möchten Sie möglicherweise bestimmte Samsung-
+Services (oder Dienstleistungen Dritter) verlassen, auf die Sie über die Samsung-Services 
+zugegriffen haben, um die unbeabsichtigte Teilung von Informationen mit anderen zu 
+verhindern, die Zugriff auf das Gerät haben. Bestimmte Informationen betreffend die von Ihnen 
+besuchten Internetseiten oder Gegenstände, die Sie betrachtet haben, können auf Ihrem Gerät 
+gespeichert werden und andere Personen, die Zugriff auf das Gerät haben, können 
+möglicherweise darauf zugreifen oder dies sehen; in manchen Fällen mag dies Informationen 
+über Bild- oder Videoinhalte aufdecken, die Sie angefordert haben oder die Ihnen über den 
+Samsung Dienst geliefert worden sind. Wenn Sie die Einzelheiten Ihrer Aktivität als Nutzer 
+gegenüber anderen Personen privat halten möchten, sollten Sie erwägen, das Gerät in einem 
+sichereren oder privaten Umfeld zu benutzen.
+
+7. NUTZERGENERIERTER UPLOAD VON INHALTEN
+
+Eingaben, die Sie in öffentlichen Bereichen der Samsung-Services machen, wie beispielsweise in 
+Foren („Öffentliche Bereiche"), sind öffentlich. Wir kontrollieren nicht die Handlungen anderer 
+Nutzer der Samsung-Services in Bezug auf die von Ihnen in Öffentliche Bereiche eingestellten 
+Informationen und sind dafür auch nicht verantwortlich. Zusätzlich werden Informationen, die 
+Sie in Öffentlichen Bereichen eingeben, möglicherweise durch Dritte erfasst, um Ihnen 
+unerbetene Mitteilungen zukommen zu lassen, oder zu anderen Zwecken.
+
+
+8. WETTBEWERBE UND WETTSPIELE
+
+Eine Registrierung ist möglicherweise nicht immer erforderlich, um über Samsung-Services auf 
+Werbeaktionen wie Wettbewerbe und Wettspiele zugreifen zu können. Diese können ein 
+gesondertes Registrierungs- oder Zugriffsverfahren aufweisen und fordern möglicherweise Ihre 
+Eingabe personenbezogener Informationen an, wie beispielsweise Ihres Vornamens, 
+Nachnamens, der Straßenanschrift, der Stadt, des Staates/Landes und der Postleitzahl, der 
+Emailadresse, der Telefonnummer und des Geburtsdatums. Die Eingabeseite und/oder die Regeln 
+werden die spezifischen Anforderungen der betreffenden Werbeaktion benennen. Sie haben 
+möglicherweise auch die Gelegenheit, im Zusammenhang mit dieser Art von Werbeaktionen 
+spezielle Angebote unserer Werbekunden zu wählen.
+
+
+
+9. INTERNATIONALE ÜBERMITTLUNG VON INFORMATIONEN
+
+Wir übermitteln möglicherweise uns von Ihnen über Samsung-Services gegebene 
+personenbezogene Informationen an Server, die sich in Deutschland und in den Vereinigten 
+Staaten befinden, wo sie möglicherweise gespeichert werden. Wir übermitteln möglicherweise 
+auch von Ihnen erhobene personenbezogene Informationen in die Republik Korea oder in andere 
+Länder außerhalb Ihrer Rechtsordnung an unsere Samsung Konzerngesellschaften oder an die in 
+dieser Datenschutzrichtlinie aufgeführten Dritten. Mit der Übermittlung Ihrer 
+personenbezogenen Informationen an uns erlauben Sie uns, Ihre Informationen an Orte 
+außerhalb Ihrer Rechtsordnung zu übermitteln.
+
+Von Ihnen gegebene Information können an Unternehmen überall auf der Welt übertragen oder 
+von ihnen eingesehen werden, wie in dieser Datenschutzrichtlinie beschrieben. Samsung befolgt 
+die vom U.S. Wirtschaftsministerium erlassenen "Safe Harbour" Rahmenregeln betreffend die 
+Erhebung, Nutzung und Speicherung Personenbezogener Daten, die von Organisationen im 
+Europäischen Wirtschaftsraum und in der Schweiz erhoben wurden. Für weitere Einzelheiten 
+verweisen wir auf das „Safe Harbour" Programm des U.S. Wirtschaftsministeriums unter 
+http://www.export.gov/safeharbor/eu/eg_main_018365.asp.
+
+10. RICHTIGKEIT DER VON UNS ERFASSTEN INFORMATIONEN
+
+Fragen, die Sie zu dieser Datenschutzrichtlinie oder zur Richtigkeit Ihrer personenbezogenen 
+Informationen oder der Nutzung Ihrer personenbezogenen Informationen haben, oder 
+Anfragen auf Zugang zu Ihren Informationen oder auf Korrektur, Aktualisierung oder 
+Beseitigung Ihrer Informationen in unseren Datenbanken sollten per Email gerichtet werden an 
+den Datenschutzbeauftragten /Kundenservicebeauftragten unter intertv@samsung.com, oder 
+per normaler Post an:
+
+Samsung Smart TV
+SAMSUNG ELECTRONICS, CO., LTD.
+416 Maetan-3Dong,
+Yeongtong-Gu, Suwon-City,
+Gyeonggi-Do, Korea 443-742
+Attn: VD Business Unit-Open Solution
+
+Als Nutzer aus Deutschland können Sie Ihre Anfrage auch richten an:
+
+Samsung Smart TV
+SAMSUNG ELECTRONICS GMBH
+Rechtsabteilung
+Am Kronberger Hang 6
+65824 Schwalbach/Ts.
+Falls wir eine Aufforderung erhalten, Ihre Informationen zu ändern, werden wir uns angemessen 
+bemühen, sicherzustellen, dass alle Ihre in Datenbanken gespeicherten personenbezogenen 
+Informationen, die wir aktiv nutzen, um Samsung-Services zu betreiben, sobald wie angemessen 
+möglich aktualisiert, korrigiert, geändert bzw. gelöscht werden.
+
+Wir werden personenbezogene Informationen nicht länger aufbewahren als dies für die Zwecke, 
+zu denen sie gedacht waren, erforderlich ist, oder als es nach einem Vertrag oder gesetzlich 
+verlangt wird. Wir unterhalten jedoch Archive von Web-Logs, Datenbanken und anderen 
+Systemen und Daten. Bitte beachten Sie, dass die Möglichkeit besteht, dass manche dieser Daten 
+archiviert bleiben, nachdem wir die Daten aus ihrer aktiven Datenbank löschen. Wie führen 
+Archive zur Notfallbewältigung, zu rechtlichen und anderen Zwecken außerhalb des Marketings.
+
+
+Diese Datenschutzrichtlinie tritt am 1. Februar 2011 in Kraft und steht im Einklang mit der 
+Unternehmens-Datenschutzrichtlinie von Samsung. Wir behalten uns das Recht vor, diese 
+Datenschutzrichtlinie jederzeit zu ändern, und werden wesentliche Änderungen dieser 
+Datenschutzrichtlinie bekannt geben, sobald sie wirksam werden.

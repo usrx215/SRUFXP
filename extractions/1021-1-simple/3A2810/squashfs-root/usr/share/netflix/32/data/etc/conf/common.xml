@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_root>
+  <config_data>
+    <ui_boot_url>/html/error.html</ui_boot_url>
+    <ui_cache_capacity>32768</ui_cache_capacity>
+    <log_cache_capacity>262144</log_cache_capacity>
+    <disable_dnscache>1</disable_dnscache>
+    <cached_dns_domains>secure.netflix.com;api-global.netflix.com</cached_dns_domains>
+    <ui_url_params>q=%QUERY_PARAMS%</ui_url_params>
+    <ui_boot_url_params>v=2.0&amp;e=%ESN%&amp;dw=%DEVICE_WIDTH%&amp;dh=%DEVICE_HEIGHT%&amp;dar=%DEVICE_ASPECT_RATIO%&amp;device_type=%ESN_PREFIX%&amp;certification_version=%CERTIFICATION_VERSION%&amp;sdk_version=%NRDAPP_VERSION%&amp;nrdapp_version=%NRDAPP_VERSION%&amp;nrdlib_version=%NRDLIB_VERSION%&amp;mdxlib_version=%MDXLIB_VERSION%&amp;sw_version=%SOFTWARE_VERSION%&amp;q=%QUERY_PARAMS%</ui_boot_url_params>
+    <nccp_url>https://nrdp.nccp.netflix.com/nccp/controller</nccp_url>
+    <nccp_v6_url>https://nrdpv6.nccp.netflix.com/nccp/controller</nccp_v6_url>
+    <binary_hash>6faed89f9f547875be8519356b8d23d3</binary_hash>
+  </config_data>
+</config_root>

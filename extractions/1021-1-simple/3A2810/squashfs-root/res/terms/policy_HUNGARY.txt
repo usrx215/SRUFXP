@@ -1,0 +1,283 @@
+INTERNET@TV. ADATVÉDELMI SZABÁLYZAT
+
+A Samsung Electronics Co., Ltd. ("Samsung") elkötelezett annak érdekében, hogy megóvja a 
+Alkalmazás látogatóinak, felhasználóinak és vásárlóinak online magánéletét. A jelen 
+adatvédelmi szabályzat („Adatvédelmi Szabályzat") kizárólag a Samsung Apps-ra és az 
+Internet@TV által nyújtott online szolgáltatásokra (együttesen „Internet@TV") vonatkozik. A 
+jelen Adatvédelmi Szabályzat célja, hogy tájékoztassa Önt az információk köréről, amelyet 
+Önről gyűjtünk, mikor meglátogatja az Internet@TV -t vagy bármit feltölt, arról, hogy hogyan 
+használhatjuk fel ezt az összegyűjtött információt, valamint, hogy milyen esetben és 
+feltételekkel adjuk át azt harmadik személyek részére. A jelen Adatvédelmi Szabályzat nem 
+vonatkozik azokra a személyes adatokra, amelyeket közvetlenül harmadik személyek részére 
+adott meg, akiknek a tartalmát vagy szolgáltatásait az Internet@TV-n keresztül igénybe vette. 
+Javasoljuk, hogy ismerje meg azoknak a harmadik fél szolgáltatóknak az adatvédelmi 
+szabályzatát, akiknek a szolgáltatását igénybe veszi, vagy tartalmához hozzáfér.
+A Samsung az Internet@TV-t a Koreai Köztársaságból irányítja és üzemelteti, és a Samsungnak 
+nem áll szándékában az, hogy a Samsung vagy valamely leányvállalata ezáltal - a Koreai 
+Köztársaság joghatóságán kívül - bármely más állam, ország vagy terület joghatóság alá 
+kerüljön.. A jog által megengedett mértékig, a Samsung nem vállal felelősséget és nem szavatol 
+azért, hogy az Internet@TV, vagy annak bármely része megfelelő, vagy elérhető valamely 
+államból. Azok a személyek, akik úgy határoznak, hogy kapcsolódnak (hozzáférnek) az 
+Internet@TV -hez, ezt saját elhatározásukból és saját felelősségükre teszik, és felelősek a 
+helyi törvények, jogszabályok, rendelkezések betartásáért.
+
+Az Internet@TV minden felhasználója köteles felhívás esetén igaz, aktuális, teljes körű és 
+pontos személyes adatokat megadni, és elutasítunk, valamint törlünk minden olyan belépést, 
+illetve bejegyzést, amelyről jóhiszeműen eljárva feltételezzük, hogy hibás, hamis, hamisított 
+vagy tisztességtelen, vagy amely ellentmond a jelen Adatvédelmi Szabályzatnak, vagy azt sérti.
+
+Lehetőséget biztosítunk az Ön számára arra, hogy az Internet@TV szolgáltatás keretében Ön 
+önkéntesen elfogadja a jelen Adatvédelmi Szabályzatot (önkéntes hozzájárulás). A 
+hozzájárulástól függetlenül, az Internet@TV használata vagy az Ön közreműködése az 
+Internet@TV-ben az Adatvédelmi Szabályzat elfogadásának minősül, továbbá az Ön 
+hozzájárulásának ahhoz, hogy az alábbiak szerint gyűjtsük, felhasználjuk, átadjuk, továbbítsuk, 
+kezeljük és tároljuk személyes adatait. Időről időre továbbíthatunk illetve egyesíthetünk 
+valamely offline gyűjtött személyes adatot az online adatbázisunkban, illetve offline 
+információt elektronikus formában tárolhatunk. Továbbá összekapcsolhatjuk az általunk online 
+gyűjtött személyes adatokat más forrásból származó információval, ideértve a Kapcsolódó 
+Vállalkozásoktól, a marketing cégektől vagy a Hirdetőktől származó információkat. A jelen 
+Adatvédelmi Szabályzat az összes említett személyes adatra vonatkozik, és mindaddig 
+hatályban marad, ameddig Ön az Internet@TV felhasználója, még abban az esetben is, 
+amennyiben az Ön használata vagy részvétele valamely szolgáltatás, kiegészítő funkcionalitás, 
+funkció vagy promóciós tevékenység tekintetében befejeződik, lejár, megszűnik, 
+felfüggesztésre vagy bármely okból kikapcsolásra kerül, kivéve, amennyiben a jog másképp 
+rendelkezik.
+
+1. AZ ÁLTALUNK GYŰJTÖTT INFORMÁCIÓ
+
+Személyes adatok
+
+Az Internet@TV egyes felületein, például regisztrációs nyomtatványokon, kutatások és 
+felmérések során arra kérhetjük, hogy adjon meg számunkra olyan „személyes" adatokat, mint a 
+neve, e-mail címe, postacíme, otthoni vagy munkahelyi telefonszáma. Ön remélhetőleg 
+tisztában lesz azzal, amikor személyes adatot gyűjtünk, ugyanis csak akkor kísérelünk meg 
+személyes adatokat gyűjteni, amikor Ön önként adja azt meg részünkre online 
+nyomtatványaink vagy kérdőíveink felhasználásával. Ugyan az Internet@TV látogatásához nem 
+szükséges semmilyen információt megadnia, azonban, amennyiben úgy dönt, hogy bizonyos 
+információt nem ad meg részünkre, lehetséges, hogy nem tudja teljes mértékben használni az 
+Internet@TV nyújtotta szolgáltatásokat. Amennyiben úgy dönt, hogy személyes adatokat ad 
+részünkre az Internet@TV-n, akkor ezt az a jelen Adatvédelmi Szabályzattal összhangban 
+összegyűjtjük és megőrizzük.
+
+Személyes adatnak nem minősülő információ
+
+Amikor Ön az Internet@TV-t használja „személyes adatnak nem minősülő" információt is 
+gyűjthetünk. Olyan információt tekintünk „személyes adatnak nem minősülő" információnak, 
+amely önmagában nem alkalmas arra, hogy Önt azonosítsa, vagy Önnel kapcsolatba hozható 
+legyen, például demográfiai adatok (életkora, neme, jövedelme, iskolázottsága, szakmája, 
+irányítószáma… stb.). A személyes adatnak nem minősülő információ lehet továbbá technikai 
+információ mint például az Ön IP címe és egyéb anonim adat az Internet@TV Ön általi 
+használatával kapcsolatban. Személyes adatnak nem minősülő információ lehet továbbá az, 
+amelyet Ön az Internet@TV használatával szolgáltat részünkre, például a kifejezések, 
+amelyeket az Internet@TV keresési funkcióiban használ. Fenntartjuk a jogot, hogy a személyes 
+adatnak nem minősülő információt bármely, általunk megfelelőnek tartott módon 
+felhasználjuk, vagy nyilvánosságra hozzuk.
+
+2. AZ ÁLTALUNK ÖSSZEGYŰJTÖTT INFORMÁCIÓ FELHASZNÁLÁSA
+
+Szolgáltatásaink
+
+Az Ön személyes adatait arra használjuk fel, hogy bármely olyan szolgáltatást nyújthassunk 
+Önnek, amelyet igényel vagy megrendel, hogy kommunikáljunk Önnel, valamint, hogy lehetővé 
+tegyük az Ön részvételét online felméréseinkben. A felhasználóinkról gyűjtött, összesített, 
+személyes adatnak nem minősülő információt arra használjuk fel, hogy az Internet@TV 
+demográfiai jellemzőit megismerjük, például a női és férfi felhasználók arányát, felhasználóink 
+földrajzi eloszlását, felhasználóink életkor szerinti megoszlását, a fenti és/vagy további 
+demográfiai mutatók kombinációit. A fentieken túl a személyes adatokat és a személyes 
+adatnak nem minősülő információt, amelyet összegyűjtünk, felhasználjuk annak érdekében is, 
+hogy elemezzük az Internet@TV használatát, javítsunk tartalmán, továbbá felhasználjuk 
+marketing- és reklámcélokra is, beleértve a direkt marketing megkereséseket, amelynek során 
+mi vagy bármely velünk kapcsolatban álló társaság információt küldhet az Ön részére olyan 
+szolgáltatásokkal vagy termékekkel kapcsolatban, amelyekről úgy véljük, hogy érdekelheti Önt.
+
+E-mail kommunikáció
+
+Ha Ön e-mailben kérdéssel vagy megjegyzéssel fordul hozzánk, akkor felhasználhatjuk az Ön 
+személyes adatait annak érdekében, hogy kérdéseire vagy megjegyzéseire válaszoljunk, és 
+megőrizhetjük kérdéseit vagy megjegyzéseit annak érdekében, hogy arra a jövőben 
+hivatkozzunk. Eltekintve attól, hogy megválaszoljuk az Ön fent említett e-mailjeit, nem 
+általános gyakorlatunk az, hogy e-mailt küldjünk Önnek, kivéve, ha Ön egy olyan szolgáltatást 
+igényel, amely e-mail kommunikációt foglal magába, vagy Ön másképp hozzájárul ahhoz, hogy 
+e-mailben kapcsolatba léphessenek Önnel (beleértve társaságunkat és más kapcsolódó 
+társaságot is) és információt kapjon olyan termékekről és szolgáltatásokról, amelyek 
+feltételezésünk szerint érdekelhetik Önt. Önnek lehetősége van arra, hogy feliratkozzon egy 
+elektronikus hírlevélre, amely az Internet@TV-ről és hirdetőinkről küld információt az e-mail 
+címére. Azonban lehetőséget biztosítunk Önnek arra, hogy beállítását megváltoztassa, és úgy 
+rendelkezzen, hogy a jövőben nem kíván ilyen közleményeket kapni (opt-out).
+
+3. INFORMÁCIÓ ÁTADÁSA HARMADIK SZEMÉLYEK RÉSZÉRE
+
+Összesített információ
+
+A jelen Adatvédelmi Szabályzatban kifejezetten meghatározott esetek kivételével az Ön 
+hozzájárulása nélkül nem osztjuk meg személyes adatait hozzánk nem kapcsolódó harmadik 
+felekkel. Összesített információt, mint például a demográfiai információt és statisztikai 
+elemzéseinket átadhatjuk harmadik felek részére, ideértve a hirdetőket és egyéb üzleti 
+partnereket. Az ilyen összesített információ nem tartalmazza az Ön személyes adatait.
+
+Co-brand szolgáltatások és kiegészítő funkcionalitások
+
+Az Internet@TV co-branded (közös brand alatti) szolgáltatásokat és kiegészítő 
+funkcionalitásokat is nyújthat, mint például olyan eseményeket és/vagy hirdetéseket, amelyeket 
+egy másik társasággal vagy Kapcsolódó Vállalkozásunkkal („Co-Branded Partner") együttesen 
+állítottunk össze. Az ilyen szolgáltatásokat és kiegészítő funkcionalitásokat az Internet@TV 
+és/vagy a Co-Branded Partner honlapja tartalmazhatja. Ön elfogadja és hozzájárul ahhoz, hogy 
+Co-Branded Partnerünkkel megosztjuk személyes adatait, és azzal, hogy Ön önkéntesen 
+igénybe vesz valamely co-branded szolgáltatást vagy kiegészítő funkcionalitást, vagy ebben 
+közreműködik, azzal hozzájárul ahhoz és önkéntesen beleegyezik abba, hogy mind az 
+Internet@TV, mind a Co-Branded Partner gyűjtse és felhasználja a co-brand alatti kiegészítő 
+funkcionalitás vagy szolgáltatás teljesítéséhez, valamint marketing vagy adminisztrációs 
+célokra az Ön személyes adatait, amelyeket a regisztrációs eljárás során és/vagy a 
+meghatározott co-brand alatti kiegészítő funkcionalitással vagy szolgáltatással kapcsolatban 
+adott meg. Amennyiben szeretné, hogy valamely Co-Branded Partner a jövőben ne használja fel 
+az Ön személyes adatait marketing célokra, akkor közvetlenül a Co-Branded Partnerrel kell 
+kapcsolatba lépnie.
+
+Szolgáltatók
+
+Időnként bizonyos Önnek nyújtott szolgáltatásokhoz hozzánk nem kapcsolódó szolgáltatók 
+segítségét vesszük igénybe (beleértve fizetési szolgáltatókat is). Így például harmadik feleket 
+vehetünk igénybe, akik hirdetési, marketing, és promóciós segítséget, e-mail szolgáltatásokat 
+nyújtanak, vagy online szolgáltatásainkat támogatják. Ezekben az esetekben szükséges lehet 
+az, hogy az Ön személyes adatait megosszuk ezekkel a felekkel. Megköveteljük ezektől a 
+felektől, hogy az Ön személyes adatait kizárólag a meghatározott termék vagy szolgáltatás 
+nyújtásához használják fel, és nem jogosítjuk fel őket arra, hogy az Ön személyes adatait 
+bármely egyéb célra felhasználhassák.
+ 
+Időnként harmadik felekkel (támogatókkal) közösen ajánlhatunk promóciókat. Amennyiben Ön 
+úgy határoz, hogy részt vesz ilyen promócióban, akkor Ön elfogadja, hogy adatait 
+megoszthatjuk a támogatóval, amennyiben ez szükséges ahhoz, hogy a támogató elküldhesse 
+Önnek a terméket vagy egyéb meghatározott reklámot, amelyet ajánl.
+
+Üzleti tranzakciók, amelyekben az Internet@TV is érintett
+
+Mivel az Internet@TV folyamatos fejlődik, ezért más társaságokkal kereskedelmi ügyleteket 
+köthetünk, mint például vétel, eladás, vagy ezek kombinációja. Amennyiben ilyen ügyletre sor 
+kerül, az általunk vagy más társaságok által gyűjtött személyes adatok és személyes adatnak 
+nem minősülő információk nagy valószínűséggel átadásra kerülhetnek az adott ügylet 
+részeként. Amennyiben ilyen ügyletben veszünk részt, intézkedéseket teszünk annak 
+biztosítása érdekében, hogy az e-mail közleményekkel kapcsolatban hozzánk intézett kérését 
+a releváns harmadik felek is tiszteletben tartsák.
+
+Harmadik fél hirdetők
+
+Harmadik fél reklámszolgáltatókat (közzétevő) vehetünk igénybe, hogy meghatározott 
+hirdetéseket jutassunk el Önhöz. Ezek a társaságok személyes adatnak nem minősülő 
+információt gyűjthetnek az Ön Internet@TV-n tett látogatásairól annak érdekében, hogy olyan 
+termékek és szolgáltatások kerülhessenek reklámozásra, amelyek számot tarthatnak az Ön 
+érdeklődésére. Ezek a társaságok továbbá összesíthetik az Önnel kapcsolatos személyes 
+adatnak nem minősülő információkat, hogy azt célzott reklámkampány, marketingkutatás vagy 
+más hasonló célból felhasználják. A fenti társaságok elhelyezhetik saját sütijeiket az Ön 
+számítógépén. Amennyiben meg kívánja előzni, hogy harmadik fél reklámozó (hirdető) a fentiek 
+alapján információt gyűjtsön és használjon, látogassa meg az egyes reklámozók honlapját, és 
+tiltsa le ezt a tevékenységet.
+
+Adattovábbítás / nyilvánosságra hozatal egyéb formái
+
+Személyes adat átadására (nyilvánosságra hozatalára) akkor kerülhet sor, ha azt jogszabály, 
+bírósági határozat vagy egyéb kormányzati vagy közigazgatási hatóság vagy szabályozó 
+hivatal megkívánja vagy megköveteli; annak érdekében, hogy jogainkat vagy 
+megállapodásainkat kikényszeríthessük vagy alkalmazhassuk; vagy, amennyiben, jóhiszeműen 
+eljárva, okkal feltételezhetjük, hogy az információ átadása szükséges vagy ajánlott, ideértve 
+például, hogy megvédjük az Internet@TV és a Samsung, a felhasználóink vagy mások jogait, 
+vagyonát és biztonságát.
+
+4. GYERMEKEK
+
+Az Internet@TV-t nem úgy tervezték, hogy azt gyermekek szüleik felügyelete nélkül 
+használják. Megkérünk minden tizennegyedik életévét be nem töltött személyt, hogy ne adjon 
+meg személyes adatot az Internet@TV-n. Nem gyűjtünk szándékosan (tudatosan) semmilyen 
+személyes adatot tizennégy év alatti gyermekektől, és ennek megfelelően, nem adjuk át 
+szándékosan az ilyen adatot harmadik személyek részére.
+
+5. AZ ÁLTALUNK GYŰJTÖTT INFORMÁCIÓ BIZTONSÁGA
+
+Az Ön személyes adatainak biztonsága fontos számunkra. A Samsung az Ön személyes 
+adatainak biztonsága érdekében megfelelő fizikai, elektronikus és eljárási védelmet biztosít. 
+Ugyanakkor információk elektronikus továbbítása mindig rejt magában kockázatot. Az általunk 
+összegyűjtött személyes adatokat olyan adatbázisban tároljuk, amely felett az ellenőrzési 
+jogot mi gyakoroljuk. Az Ön adatainak védelme érdekében meghozzuk az általunk alkalmasnak 
+tartott, az iparági szokásoknak megfelelő biztonsági intézkedéseket, úgy mint tűzfal vagy 
+titkosítás alkalmazását. Azonban adatbázisaink biztonságát nem tudjuk garantálni, és azt sem, 
+hogy az Ön által megadott információt nem ismerik meg vagy tartóztatják fel mások, miközben 
+az az Interneten részünkre továbbításra kerül.
+
+6. CSEVEGŐSZOBA ÉS EGYÉB NYILVÁNOS TERÜLETEK
+
+Csevegő szobát, felhasználói értékelési lehetőséget, üzenő falakat, valamint egyéb nyilvános 
+szolgáltatásokat (funkciókat) biztosíthatunk; ha Ön ezeknek a keretében információt ad meg, 
+az nyilvánosság számára közzétett információnak minősül, amelyet más felhasználók is 
+megismerhetnek. Minden közzétételre a az Internet@TV Végfelhasználói Felhasználási 
+Szerződési Feltételek Alkalmazásokhoz az irányadó. Kérjük, ügyeljen arra, hogy 
+felhasználónevében vagy egyéb információban, amely más felhasználhatók számára 
+nyilvánosan elérhetővé válhat, ne használjon személyes adatot.
+
+Archivált információ. Archiváljuk a webes naplófájlokat, az adatbázisokat és egyéb 
+rendszereket és információkat. Felhívjuk a figyelmét, hogy elképzelhető, hogy miután egy 
+információt törlünk az aktív adatbázisból, annak archivált változata fennmarad. Az archív 
+rendszereket katasztrófa-helyreállítás, jogi, és egyéb, nem marketing célokra tartjuk fenn, amíg 
+azt az alkalmazandó jog lehetővé teszi.
+
+7. JÁTÉKOK ÉS SORSOLÁSOK
+
+Nem minden esetben szükséges regisztráció ahhoz, hogy az Internet@TV-n részt vehessen 
+olyan promóciós kampányokban, mint promóciós játék vagy sorsolások. Ezeknek külön 
+regisztrációs vagy jelentkezési eljárása lehet, amely megkívánhatja, hogy Ön személyes 
+adatokat adjon meg, úgy mint kereszt- és vezetéknevet, utcanevet, várost, államot, 
+irányítószámot, e-mail címet, telefonszámot és születési évet. A (be)jelentkezései oldal és/vagy 
+a Szabályzat meghatározza a specifikus követelményeket, amelyek az adott promócióhoz 
+kapcsolódnak. Önnek lehetősége lehet továbbá arra, hogy az ilyen típusú promóciók 
+többségével kapcsolatban hirdetőink speciális ajánlatára jelentkezzen.
+
+8. FELHASZNÁLÓI VIDEÓ-FELTÖLTÉS
+
+Azok a regisztrált felhasználóink, akik tartalom szolgáltatásával működnek közre beleegyeznek 
+abba, hogy bizonyos személyes adataik megjelenjenek a felhasználó videójának közvetítéséhez 
+kapcsolódva az Internet@TV-n, vagy bármely platformon, amelyen működünk, vagy ahova 
+szolgáltatunk, vagy amennyiben a szolgáltatást egy Co-Branded Partnerrel kapcsoltban 
+ajánljuk, a Co-Branded Partner honlapján. Azoktól a regisztrált felhasználóinktól, akik videót 
+töltenek fel, további személyes adatok megadását kérhetjük. A regisztrált felhasználók 
+szavatolnak azért, hogy a feltöltött videó nem sérti semmilyen harmadik személy semmilyen 
+jogát, különösen nem szellemi alkotáshoz fűződő jogait, vagy más módon nem jogsértő.
+
+9. Adattovábbítás
+
+A Samsung az Ön által az Internet@TV-n keresztül megadott személyes adatokat 
+németországi és az Amerikai Egyesült Államokban található szervereire továbbítja, illetve itt 
+tárolja azokat. A jelen Adatvédelmi Szabályzat alapján jogosultak vagyunk az Öntől gyűjtött 
+személyes adatokat továbbítani a Koreai Köztársaságba, vagy az Ön országán kívül más 
+államba is kapcsolódó vállalkozásokhoz vagy olyan harmadik személyekhez, amelyekre a jelen 
+Adatvédelmi Szabályzatban hivatkoztunk. Személyes adatainak megadásával Ön hozzájárul 
+ahhoz, hogy személyes adatait az Ön államán kívül más államba is továbbítsuk, akár olyan 
+országba is, ahol az adatvédelem szintje alacsonyabb, mint az Ön államában.
+10. AZ ÁLTALUNK GYŰJTÖTT ADATOK PONTOSSÁGA
+
+Bármely a jelen Adatvédelmi Szabályzattal, személyes adatai pontosságával, felhasználásával 
+kapcsolatos kérdést, vagy azok kijavítására, frissítésére, vagy eltávolítására irányuló kérést az 
+intertv@samsung.com e-mail címre, vagy az alábbi postai címre küldje:
+
+Internet@TV
+SAMSUNG ELECTRONICS, CO., LTD.
+416 Maetan-3Dong,
+Yeongtong-Gu, Suwon-City,
+Gyeonggi-Do, Korea 443-742
+Attn: Privacy Policy Department (az Adatvédelmi osztály figyelmébe)
+
+Miután kézhez kaptuk valamely adata megváltoztatására irányuló kérését, minden ésszerű 
+lépést megteszünk annak érdekében, hogy ésszerű időn belül biztosítsuk, hogy az Ön összes 
+személyes adata, amelyet aktívan használunk az Internet@TV működtetéséhez, 
+értelemszerűen kijavításra, változtatásra vagy törlésre kerüljön.
+
+Azonban fenntartjuk a jogot, hogy az archív fájljainkban megőrizzünk minden információt, 
+amely aktív Internet@TV adatbázisainkból eltávolításra vagy megváltoztatásra került. Az ilyen 
+információt viták megoldása, hibaelhárítás és a Végfelhasználói Felhasználási Szerződési 
+Feltételek Alkalmazásokhoz kikényszerítése érdekében őrizzük meg. Ezen felül, technikailag 
+nem megoldható, hogy az Ön által rendelkezésünkre bocsátott információ minden egyes 
+rekordját eltávolítsuk. Nem kizárt, hogy az Ön személyes adatainak egy másolata törölhetetlen 
+formátumban létezik, amelyet nehéz vagy lehetetlen lenne számunkra beazonosítani.
+
+Jelen Adatvédelmi Szabályzat Március 3, 2010 napjától hatályos, és összhangban áll a Samsung 
+Társasági Adatvédelmi Szabályzatával. Fenntartjuk a jogot, hogy jelen Adatvédelmi 
+Szabályzatot bármikor módosíthassuk; a jelen Adatvédelmi Szabályzat bármely érdemi 
+módosítását közöljük, amint az hatályba lép. Kérjük rendszeresen olvassa el jelen Adatvédelmi 
+Szabályzatot.

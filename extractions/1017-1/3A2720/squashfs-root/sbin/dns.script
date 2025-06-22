@@ -1,0 +1,52 @@
+#!/bin/sh
+#	@author CC Ma
+#	@date	2009/03/26
+#	@brief
+#		dns event handling script
+#
+
+RESOLV_CONF="/etc/resolv.conf"
+
+usage() {
+	echo "Usage: $0 {set/clean} dns..."
+	exit 1
+}
+
+clean() {
+  # clean /etc/resolv.conf 
+  cat /dev/null > $RESOLV_CONF
+}
+
+show() {  
+  cat $RESOLV_CONF
+}
+ 
+count=1
+if [ $# \< $count ] ; then
+	usage
+fi
+
+case "$1" in
+	set)	    
+		clean
+		i=2
+		local total=$#		
+		while [ $i -le $total ];
+		do
+		  shift
+		  local dns=$1
+		  echo "adding dns " $dns
+		  echo nameserver "$dns" >> $RESOLV_CONF
+		  i=`expr $i + 1`		   
+		done		
+		show
+		;;
+
+	clean)
+		clean
+		;;
+		
+	*)
+		usage
+	;;	
+esac
