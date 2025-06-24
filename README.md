@@ -1,4 +1,4 @@
-# SRUFXP
+# Samsung RUF eXtraction Project
 Samsung RUF File Extraction Project. Our goal is to successfully understand Samsung's RUF files for Samsung DVD & Blu-Ray players, designed for updating your player over USB.  
 
   
